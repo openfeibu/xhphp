@@ -1649,8 +1649,7 @@ class RequestBase{
 			$data = curl_exec($curl_handle);
 			if($data === false)
 			{
-				\Log::error(serialize(curl_error($curl_handle)));
-				// throw new Exception('CURL ERROR: ' . curl_error($curl_handle));
+				throw new Exception('CURL ERROR: ' . curl_error($curl_handle));
 			}
 		}
 		catch(Exception $e)
