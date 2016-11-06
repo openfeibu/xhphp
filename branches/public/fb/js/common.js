@@ -21,8 +21,8 @@
   doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);
 
- // var locahost ="http://xhplus.feibu.info";
- var locahost ="http://xh.feibu.info";
+  var locahost ="http://xhplus.feibu.info";
+ //var locahost ="http://xh.feibu.info";
  // var locahost ="http://192.168.0.9:8084";
  // var locahost ="http://192.168.0.99:8080/xh/server.php";
 var tab =window.location.hash.replace(/#\//,"");
