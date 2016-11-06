@@ -195,7 +195,7 @@ class ReportNetworkFailureController extends Controller
 		}else if($checkByToken['code'] == 401){
 			return [
                 'code' => 401,
-                'detail' => '还未绑定学号',
+                'detail' => '还未绑定学号 ',
             ];
 		}		
 	}
