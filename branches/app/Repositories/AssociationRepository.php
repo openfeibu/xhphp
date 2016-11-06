@@ -464,9 +464,9 @@ class AssociationRepository
 		$associationNotice->notice = $notice;
 		
 		if($associationNotice->save()){
-			return 200;
+			return true;
 		}else{
-			return 403;
+			throw new \App\Exceptions\Custom\OutputServerMessageException('请求失败');
 		}
 	}
 
