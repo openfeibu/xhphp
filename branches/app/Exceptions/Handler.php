@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
-        $response = $this->handle($e, $request);
+        $response = $this->handle($e, $request);	
         if ($response) {
             return $response;
         }
@@ -198,6 +198,7 @@ class Handler extends ExceptionHandler
                                                     'Access-Control-Allow-Headers' => 'Origin, Content-Type, Cookie, Accept',
                                                     'Access-Control-Allow-Methods' => 'GET, POST, PATCH, PUT, OPTIONS',
                                                     'Access-Control-Allow-Credentials' => 'true']);
-
+												
+		
     }
 }

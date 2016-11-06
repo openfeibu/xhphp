@@ -19,7 +19,7 @@ return [
 	//找回密码
 	'reset' => 'SMS_13420677',
 
-	'changAli' => 'SMS_13575032',
+	'changeAli' => 'SMS_13575032',
 
 	'resetPayPassword' => 'SMS_13525034',
 ];

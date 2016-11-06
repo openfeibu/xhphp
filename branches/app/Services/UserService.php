@@ -294,6 +294,7 @@ class UserService
         if ($param['platform'] == 'web') {
             return true;
         }
+       
         return $this->userRepository->bindDeviceToken($param);
     }
 

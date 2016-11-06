@@ -6,7 +6,7 @@
     if (!clientWidth)
     {
       return;
-    }
+    } 
     else if(clientWidth>750){
       docEl.style.fontSize = 100 + 'px';
     }
@@ -22,10 +22,9 @@
 })(document, window);
 
  // var locahost ="http://xhplus.feibu.info";
- //var locahost ="http://xh.feibu.info";
+ var locahost ="http://xh.feibu.info";
  // var locahost ="http://192.168.0.9:8084";
  // var locahost ="http://192.168.0.99:8080/xh/server.php";
- var locahost = "http://xh.flyexp.cn";
 var tab =window.location.hash.replace(/#\//,"");
 var locaTime = 600000; //十分钟  全局缓存
 $.ajaxSetup({
@@ -51,7 +50,7 @@ function htmlRemoveClass(className){
 //储存缓存
 function setItem(a,b){
    if(window.localStorage){
-     var storage = window.localStorage;
+     var storage = window.localStorage; 
      storage.setItem(a,b);//设置a储存b;
      var time=new Date().getTime(); //获取时间戳
      storage.setItem(a+"time",time);//设置a储存b;
@@ -60,11 +59,11 @@ function setItem(a,b){
 //获取缓存
 function getItem(a){
    if(window.localStorage){
-     var storage = window.localStorage;
+     var storage = window.localStorage; 
      if(storage.getItem(a) != undefined){
        var b = storage.getItem(a);//获取a的内容;
        var c = storage.getItem(a+"time");//获取a的时间戳;
-       return [b,c];
+       return [b,c];  
      }else{
         return false;
      }
@@ -75,7 +74,7 @@ function getItem(a){
 //获取缓存并判断是否过期 true:过期 false:未过期
 function getItemATime(a){
    if(window.localStorage){
-     var storage = window.localStorage;
+     var storage = window.localStorage; 
      if(storage.getItem(a) != undefined){
        var b = storage.getItem(a);//获取a的内容;
        var c = storage.getItem(a+"time");//获取a的时间戳;
@@ -86,7 +85,7 @@ function getItemATime(a){
           return true;
        }else{
         return false;
-       }
+       }  
      }else{
         return true;
      }
@@ -98,7 +97,7 @@ function getItemATime(a){
 function GetString(name)
 {
      var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-     var r = window.location.search.substr(1).match(reg);
+     var r = window.location.search.substr(1).match(reg); 
      if(r!=null)return  unescape(r[2]); return null;
 }
 //时间转时间戳
@@ -107,8 +106,8 @@ function toUnix(date){
     return false;
   }
 
-   date = date.substring(0,19);
-  date = date.replace(/-/g,'/');
+   date = date.substring(0,19);    
+  date = date.replace(/-/g,'/'); 
   return timestamp = new Date(date).getTime();
 }
 //话题点赞
@@ -123,7 +122,7 @@ function thumbUp(obj,topic_id){
       fb_alert(data.detail);
     }
     if(data.code == 200){
-
+      
       if(data.isthumb == 1){
          $(obj).parents(".topic_bottom").find(".zan").text("取消");
       }else if(data.isthumb == '-1'){
@@ -192,8 +191,8 @@ function delecommentFun(obj,comment_id){
   })
 }
 //返回上一页
-function returnUp(){
-
+function returnUp(){  
+  
   window.history.go(-1);
 }
 
@@ -255,7 +254,7 @@ function routDom(obj){
   if(obj){
     obj.show();
   }
-
+  
 }
 //提示框
 var fb_time;
@@ -294,7 +293,7 @@ function is_alipay(a){
     $(".alipay_alert").remove();
 
   }
-
+  
 }
 //获取时间是什么时候之前  例如1天前  传入格式 2016-08-24 23:23
 function afterTime(a){
@@ -335,11 +334,11 @@ function addScroll(){
 
 }
 //话题换行
-function ClearBr(key) {
-  key = key.replace(/<\/?.+?>/g,"</p><p>");
-  key = key.replace(/[\r\n]/g, "</p><p>");
-  return key;
-}
+function ClearBr(key) { 
+  key = key.replace(/<\/?.+?>/g,"</p><p>"); 
+  key = key.replace(/[\r\n]/g, "</p><p>"); 
+  return key; 
+} 
 //获取字符串长度（汉字算1个字符，字母数字算半个）
 function getByteLen(val) {
   var len = 0;
@@ -415,10 +414,10 @@ var fb_error ={
       //           window.location.href = "../login.html";
       //           return;
       //        }
-      //        if(data.code == "200"){
-
+      //        if(data.code == "200"){    
+               
       //        }else{
-      //            fb_alert(data.detail);
+      //            fb_alert(data.detail);    
       //          }
       // }).error(function(xhr,errorText,errorType){
       //         alert('网络超时，请稍后再试')

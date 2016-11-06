@@ -18,6 +18,7 @@ class CreateTopicTable extends Migration
             $table->string('type', 50)->comment('类型');
             $table->text('content')->comment('内容');
             $table->text('img')->default('')->comment('图片');
+            $table->text('thumb')->default('')->comment('缩略图');
             $table->integer('view_num')->default(1)->comment('话题阅读量');
             $table->integer('comment_num')->default(0)->comment('话题评论量');
             $table->integer('favourites_count')->default(0)->comment('点赞量');

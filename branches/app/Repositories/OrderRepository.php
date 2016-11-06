@@ -37,7 +37,7 @@ class OrderRepository
                     ->select(DB::raw('order.oid, user.openid, user.nickname, user.avatar_url, order.destination, order.description, order.fee, order.created_at , CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num,CASE order.status WHEN "new" THEN "可接单" WHEN "accepted" THEN "已接单" WHEN "finish" THEN "已接单" WHEN "completed" THEN "已完成" END as order_status,order.status as status'))
                     ->whereIn('order.status', ['new','accepted','finish','completed'])
                    // ->where('order.created_at', '>', date('Y-m-d H:i:s',strtotime("-1 day")))
-                   	->orderBy('order_status_num','ASC')
+                   	/* ->orderBy('order_status_num','ASC') */
                     ->orderBy('order.created_at', 'desc')
                     ->skip(10 * $page - 10)
                     ->take(10)

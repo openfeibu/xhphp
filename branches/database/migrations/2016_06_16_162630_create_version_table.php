@@ -19,6 +19,7 @@ class CreateVersionTable extends Migration
             $table->string('name')->comment('版本名');
             $table->text('detail')->comment('更新说明');
             $table->string('download')->comment('下载链接');
+            $table->tinyInteger('compulsion')->comment('是否强制检查更新');
             $table->timestamps();
         });
     }
