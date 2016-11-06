@@ -56,7 +56,7 @@ class ReportNetworkFailureController extends Controller
         $help->validateParameter($rule);
 		
 		$result = $this->network_login($request->account,$request->password,$help);
-		if ($result['http_code'] == 302 && $result['redirect_url'] == "http://211.66.88.6/xyw/xmain.asp") {
+		if ($result['http_code'] == 302 && !empty($result['redirect_url'])) {
 			$uid = $user->getUser()->uid;
 			$networkReport = NetworkReport::where('uid',$uid)
 											->orderBy('id','desc')
@@ -105,7 +105,7 @@ class ReportNetworkFailureController extends Controller
 										->first();	
 		if($networkReport){
 			$result = $this->network_login($networkReport->account,\Crypt::decrypt($networkReport->password),$help);
-			if ($result['http_code'] === 302 and $result['redirect_url']) {
+			if ($result['http_code'] === 302 and !empty($result['redirect_url'])) {
 				return [
 					'code' => 200,
 					'detail' => '账号密码正确',
