@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta content="telephone=no" name="format-detection" />
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- UC应用模式 --> 
+  <meta name="browsermode" content="application">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- UC禁止放大字体 -->
+  <meta name="wap-font-scale" content="no">
+  <title>校汇Plus | 校汇 </title>
+  <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活" />
+  <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+  <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+  <link rel="shortcut icon" href="../icon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/index.css">
+  <link rel="stylesheet" type="text/css" href="../css/info.css">
+  <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/common.js"></script>
+  <script type="text/javascript" src="../js/director.js"></script>
+  <script type="text/javascript" src="../js/updata.js"></script>
+  <script type="text/javascript" src="../js/md5.js"></script>
+</head>
+<body class='bge8'>
+	<section class='main' style="padding-bottom:0">
+		<div class="wallet routes">
+  			<div class="header_title">
+          <p>我的钱包</p>
+          <div class="return" onclick="returnUp()">
+            </div>
+        </div>
+        <div class="mywallet pt1">
+          <div class="walletCount">
+              <label for="">余额账户(元):</label>
+              <div class="wallet_number">-.--</div>
+          </div>
+          <ul>
+           <li><a href="#/getmoney"><label for="">提现</label></a></li> 
+           <li><a href="#/walletDetail"><label for="">钱包明细</label></a></li>
+          </ul>
+          <ul>
+             <li><a href="#/alipay"><label for="">账户信息</label></a></li> 
+             <li><a href="#/passWord"><label for="">支付密码管理</label></a></li>
+          </ul>
+          <ul>
+             <li><a href="../statement/money.html"><label for="">钱包说明</label></a></li>
+          </ul>
+        </div>
+    </div>
+    <div class="walletInline routes"></div>
+  </section>
+
+</body>
+<script>
+  var routes = {
+        '/walletDetail': walletDetail,
+        '/wallet': wallet,
+        '/passWord':passWord,
+        '/alipay':alipay,
+        '/alipay/updata':updataAlipay,
+        '/getmoney':getmoney,
+      };
+      var router = Router(routes);
+      router.init("/wallet");
+    
+
+    function walletDetail(){
+      $(".walletInline").html("");
+     routDom($(".walletInline"))
+      $.get('walletDetail.html',function(data){
+        $(".walletInline").html(data)
+      })
+    }
+    function wallet(){
+    routDom($(".wallet"))
+    $(window).off("scroll"); //解除滚动事件
+    $("#loading,#loaded").remove(); //出现提示
+    var wallet_number;
+    var token = window.localStorage.token;
+    $.getJSON(locahost+'/user/getWallet/?token='+token,function(data){
+        if(data.code == 2001){
+          fb_alert(fb_error["2001"]);
+          window.location.href = "../login.html";
+        }
+        wallet_number = data.data.wallet;
+        $(".walletCount .wallet_number").text(wallet_number)
+        window.localStorage.wallet_number = wallet_number;
+        window.localStorage.is_paypassword = data.data.is_paypassword;
+        window.localStorage.is_alipay = data.data.is_alipay;
+    })
+    }
+
+    //支付密码管理
+    function passWord(){
+      var is_paypassword = window.localStorage.is_paypassword;
+
+      if(is_paypassword == 1){
+        //已设置支付密码
+          $(".walletInline").html("");
+          routDom($(".walletInline"))  
+          $.get('walletGlList.html',function(data){
+            $(".walletInline").html(data)
+          })
+      }else{
+        //未设置支付密码
+          $(".walletInline").html("");
+          routDom($(".walletInline"))
+          $.get('setWalletPass.html',function(data){
+            $(".walletInline").html(data)
+          })
+      }
+    }
+    //支付宝账号管理
+    function alipay(){
+      var alipay = window.localStorage.is_alipay;
+      if(alipay == 1){
+        //已设置账号
+          $(".walletInline").html("");
+          routDom($(".walletInline"))  
+          $.get('alipayList.html',function(data){
+            $(".walletInline").html(data)
+          })
+      }else{
+        //未设置账号
+          $(".walletInline").html("");
+          routDom($(".walletInline"))
+          $.get('setAlipay.html',function(data){
+            $(".walletInline").html(data)
+          })
+      }
+    }
+    //修改提现支付宝
+    function updataAlipay(){
+      $(".walletInline").html("");
+          routDom($(".walletInline"))
+          $.get('updataAlipay.html',function(data){
+            $(".walletInline").html(data)
+        })
+    }
+    //提现
+    function getmoney(){
+      $(".walletInline").html("");
+          routDom($(".walletInline"))
+          $.get('getmoney.html',function(data){
+            $(".walletInline").html(data)
+        })
+    }
+</script>
+</html>
