@@ -392,7 +392,19 @@ class AssociationRepository
 		$resArr=array_merge($temArr,$Member); 
 		return $resArr;
 	}
-
+	public function getAssociationAllMemberUids($aid)
+	{
+		return AssociationMember::select(DB::raw('association_review.uid as uid'))
+								->leftJoin('user', 'association_member.uid', '=', 'user.uid')
+								->leftJoin('association_review', 'association_member.uid', '=', 'association_review.uid')
+								->leftJoin('association', 'association_member.aid', '=', 'association.aid')
+								->where('association_member.aid',$aid)
+								->where('association_review.status','passed')
+								->whereNull('association_member.deleted_at')
+								->groupBy('association_review.uid')
+								->orderBy('association_member.amid','asc')
+								->get();
+	}
 	public function updateMemberLevel($aid,$level,$uid,$token_uid)
 	{
 		$token_associationMember = AssociationMember::where('aid',$aid)
@@ -452,9 +464,9 @@ class AssociationRepository
 		$associationNotice->notice = $notice;
 		
 		if($associationNotice->save()){
-			return 200;
+			return true;
 		}else{
-			return 403;
+			throw new \App\Exceptions\Custom\OutputServerMessageException('请求失败');
 		}
 	}
 
