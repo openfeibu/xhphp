@@ -344,7 +344,12 @@ class AssociationService
 		}
 		return $associationMembers;
 	}
-	
+	/*获取社团所有成员*/
+	public function getAssociationAllMemberUids ($aid)
+	{
+		$associationMembers = $this->associationRepository->getAssociationAllMemberUids($aid);
+		return $associationMembers;
+	}
 	/*更新成员等级*/
 	public function updateMemberLevel($aid,$level,$uid)
 	{
