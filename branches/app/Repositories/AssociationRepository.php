@@ -588,5 +588,24 @@ class AssociationRepository
 		}
 		return 200;
 	}
+	
+	public function deleteActivity($actid,$uid,$aid){
+		$associationMember = AssociationMember::where('aid',$aid)
+											->where('uid',$uid)
+											->whereNull('association_member.deleted_at')
+											->first();
+		if($associationMember == 0){
+			return 401;
+		}
+		$activity = Activity::select(DB::raw("actid"))
+							->where('actid',$actid)
+							->whereNull('deleted_at')
+							->first();
+		$activity->deleted_at = date("Y-m-d H:i:s");
+		if($activity->save()){
+			return 200;
+		}
+		return;
+	}
 
 }
