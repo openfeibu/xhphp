@@ -594,7 +594,7 @@ class AssociationRepository
 											->where('uid',$uid)
 											->whereNull('association_member.deleted_at')
 											->first();
-		if($associationMember == 0){
+		if($associationMember->level == 0){
 			return 401;
 		}
 		$activity = Activity::select(DB::raw("actid"))
