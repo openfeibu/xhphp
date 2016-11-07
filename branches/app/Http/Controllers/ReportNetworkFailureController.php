@@ -237,3 +237,4 @@ class ReportNetworkFailureController extends Controller
 		}
 	} */
 }
+
