@@ -466,11 +466,6 @@ class AssociationController extends Controller
 				'code' => 401,
 				'detail' => '无权限操作',
 			];
-		}elseif($updateMemberLevel == 402){
-			return [
-				'code' => 402,
-				'detail' => '最多可设置两位副会长',
-			];
 		}else{
 			return [
 				'code' => 403,
