@@ -416,14 +416,12 @@ class AssociationRepository
 											->where('uid',$uid)
 											->whereNull('association_member.deleted_at')
 											->first();
-		$memberManage = AssociationMember::where('aid',$aid)
+		/* $memberManage = AssociationMember::where('aid',$aid)
 											->where('level',2)
 											->orwhere('level',3)
 											->whereNull('association_member.deleted_at')
-											->get();
-		if(count($memberManage) == 2){
-			return 402;
-		}elseif($token_associationMember->level != 1 && $associationMember->level == 1){
+											->get(); */
+		if($token_associationMember->level != 1 && $associationMember->level == 1){
 			return 401;
 		}elseif($token_associationMember->level == 2 && $associationMember->level == 2){
 			return 401;
