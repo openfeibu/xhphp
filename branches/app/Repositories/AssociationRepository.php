@@ -266,6 +266,7 @@ class AssociationRepository
 	{
 		return DB::table('association')->count();
 	}
+	
 	/* 获得所有社团活动总数 */
 	public function getActivityNum()
 	{
@@ -423,6 +424,8 @@ class AssociationRepository
 		if(count($memberManage) == 2){
 			return 402;
 		}elseif($token_associationMember->level != 1 && $associationMember->level == 1){
+			return 401;
+		}elseif($token_associationMember->level == 2 && $associationMember->level == 2){
 			return 401;
 		}
 		$associationMember->level = $level;
