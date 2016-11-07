@@ -390,4 +390,9 @@ class AssociationService
 		}
 		return $checkMember;
 	}
+	
+	public function deleteActivity($actid,$aid){
+		$uid = $this->userRepository->getUser()->uid;
+		return $this->associationRepository->deleteActivity($actid,$uid,$aid);
+	}
 }
