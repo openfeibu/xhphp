@@ -203,7 +203,6 @@ class AssociationController extends Controller
 
         //频率限制
 
-
         //创建纸条
         $this->associationService->createMessage($request->content, '社团通知');
 
