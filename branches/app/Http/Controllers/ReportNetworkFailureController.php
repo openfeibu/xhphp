@@ -30,7 +30,7 @@ class ReportNetworkFailureController extends Controller
 		$this->cookie = $cookie;
         curl_setopt_array($curl, array(
             CURLOPT_URL => "http://211.66.88.6/xyw/logincheck.asp",
-            CURLOPT_USERAGENT => "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://211.66.88.6/xyw)"),
+            CURLOPT_USERAGENT => "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://211.66.88.6/xyw)",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
