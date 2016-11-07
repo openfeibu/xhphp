@@ -675,5 +675,32 @@ class AssociationController extends Controller
         ];
 
 	}
+	
+	public function deleteActivity(Request $request){
+		$rule = [
+			'token' => 'required',
+			'actid' => 'required',
+			'aid' => 'required',
+		];
+		$this->helpService->validateParameter($rule);
+		
+		$deleteActivity = $this->associationService->deleteActivity($request->actid,$request->aid);
+		if($deleteActivity == 200){
+			return [
+				'code' => 200,
+				'detail' => '请求成功',
+			];
+		}elseif($deleteActivity == 401){
+			return [
+				'code' => 401,
+				'detail' => '无权限操作',
+			];
+		}else{
+			return [
+				'code' => 403,
+				'detail' => '请求失败',
+			];
+		}
+	}
 
 }
