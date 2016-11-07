@@ -95,6 +95,7 @@ Route::get('association/quitAssociation', 'AssociationController@quitAssociation
 Route::get('association/checkMember', 'AssociationController@checkMember')->name('association_checkMember');
 Route::get('association/checkMemberList', 'AssociationController@checkMemberList')->name('association_checkMemberList');
 Route::get('association/checkNewNotice', 'AssociationController@checkNewNotice')->name('association_checkNewNotice');
+Route::get('association/deleteActivity', 'AssociationController@deleteActivity')->name('association_deleteActivity');
 
 Route::get('message/getMessageList', 'MessageController@getMessageList')->name('other_getMessageList');
 
