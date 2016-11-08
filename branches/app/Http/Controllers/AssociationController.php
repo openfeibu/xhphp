@@ -488,13 +488,18 @@ class AssociationController extends Controller
 			'causes' => 'required'
         ];
         $this->helpService->validateParameter($rule);
-
+		
         $joinAssociationMember = $this->associationReviewService->joinAssociationMember($request->association_id,$request->ar_username,$request->profession,$request->causes,$request->mobile_no);
 		if($joinAssociationMember == 401){
 			return [
 				'code' => 401,
 				'detail' => '已经是社团的成员',
 			];
+		}
+		$admins = $this->associationService->getAssociationAdmins($request->association_id);		
+		foreach( $admins as $key => $admin )
+		{
+			$this->messageService->SystemMessage2SingleOne($admin->uid, '新成员加入,快去审核吧', $push = false, $type = '社团信息', $name = '社团');
 		}
         return [
             'code' => 200,
