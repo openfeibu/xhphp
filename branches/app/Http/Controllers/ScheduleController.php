@@ -107,7 +107,7 @@ class ScheduleController extends Controller
 	        $this->walletService->store($walletData);
 	        $trade_no = 'wallet'.$this->helpService->buildOrderSn('XH');
 			$trade = array(
-	    		'uid' => $order->owner_id,
+	    		'uid' => $courier->uid,
 				'out_trade_no' => $order->order_sn,
 				'trade_no' => $trade_no,
 				'fee' => $fee,

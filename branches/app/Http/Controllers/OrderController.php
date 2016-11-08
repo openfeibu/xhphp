@@ -16,6 +16,7 @@ use App\Services\MessageService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
 use App\Services\PushService;
+use App\Services\GameService;
 use App\Events\Integral\Integrals;
 use App\Http\Controllers\Controller;
 
@@ -35,13 +36,16 @@ class OrderController extends Controller
 
     protected $pushService;
 
+	protected $gameService;
+	
     function __construct(OrderService $orderService,
                          UserService $userService,
                          HelpService $helpService,
                          MessageService $messageService,
                          WalletService $walletService,
                          TradeAccountService $tradeAccountService,
-                         PushService $pushService)
+                         PushService $pushService,
+                         GameService $gameService)
     {
 	    parent::__construct();
         $this->middleware('auth', ['except' => ['getOrderList', 'orderAgreement', 'getOrder','alipayAppReturn','alipayWapNotify','alipayAppNotify','getRecommendOrders']]);
@@ -53,6 +57,7 @@ class OrderController extends Controller
         $this->tradeAccountService = $tradeAccountService;
         $this->messageService = $messageService;
         $this->pushService = $pushService;
+        $this->gameService = $gameService;
         $this->user = $this->userService->getUser();
     }
 
@@ -533,7 +538,7 @@ class OrderController extends Controller
         $wallet = $courier->wallet + $order->fee - $order->service_fee;
         $fee = $order->fee - $order->service_fee;
 		$this->walletService->updateWallet($courier->uid,$wallet);
-
+		$this->gameService->freeOrder($this->user,$order);
 		$walletData = array(
 			'uid' => $courier->uid,
 			'out_trade_no' => $order->order_sn,
@@ -548,6 +553,7 @@ class OrderController extends Controller
         $this->walletService->store($walletData);
         $trade_no = 'wallet'.$this->helpService->buildOrderSn('XH');
 		$trade = array(
+    		
     		'uid' => $courier->uid,
 			'out_trade_no' => $order->order_sn,
 			'trade_no' => $trade_no,
@@ -601,9 +607,16 @@ class OrderController extends Controller
         // $mess->setType(2);
         // return $push->PushSingleDevice('f2b79a9f938d7a4c440e8048338e14905ed7e759', $mess);
 
-        $rs = $this->pushService->PushUserTokenDevice('测试', '推送测试', '80');
-
-        return $rs;
+        $rs = $this->pushService->PushUserTokenDevice('测试', '推送测试', '77');
+/*$data = [
+			'refresh' => 1,
+			'target' => 'message',
+			'data' => '推送测试' 
+		];
+		$this->pushService->PushUserTokenDevice('测试', json_encode($data), '97',2);*/
+        return [
+			'code' => 200
+        ];
     }
 /*
 	public function mobileAlipay (Request $request)
