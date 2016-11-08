@@ -310,10 +310,11 @@ class AssociationRepository
 	{
 		$associationMember = AssociationMember::select(DB::raw('association_member.aid,association_member.uid,association.aname, association.avatar_url,association.background_url,association.member_number, association.leader,association_member.level, association.introduction,count(activity.actid) as activity_count,label'))
 								->join('association', 'association_member.aid', '=', 'association.aid')
-								->leftJoin('activity','association_member.aid','=','activity.aid')
+								->leftJoin('activity', function($join) {
+							      $join->on('association_member.aid','=','activity.aid')->whereNull('activity.deleted_at');
+							    })
 							    ->where('association_member.uid', $user_id)
 								->whereNull('association_member.deleted_at')
-								->whereNull('activity.deleted_at')
 								->groupBy('association_member.aid')
 	                            ->get();
 		/*if(empty($associationMember[0]->aid)){
