@@ -15,6 +15,7 @@ return [
 		'1' => '支付宝支付', 
 		'2' => '微信支付',
 		'3' => '余额支付',
+		'4' => '系统返现',
 	],
 	'trade_type' => [
 		'ReleaseTask' => '发布任务',
@@ -24,6 +25,7 @@ return [
 		'CancelTask'  => '取消任务',
 		'Shopping'	  => '购物',	
 		'TelecomOrder' => '电信套餐',
+		'FreeOrder' => '首单返现',
 	],
 	// user   wallet 字段
 	'wallet_type' => [
