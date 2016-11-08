@@ -609,5 +609,8 @@ class AssociationRepository
 		}
 		return;
 	}
-
+	public function getAssociationAdmins ($aid)
+	{
+		return AssociationMember::where('aid',$aid)->where('level','>','0')->get();
+	}
 }

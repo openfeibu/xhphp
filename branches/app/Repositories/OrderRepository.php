@@ -419,4 +419,8 @@ class OrderRepository
                     ->take($number)
                     ->get();
 	}
+	public function getOrderCount ($where)
+	{
+		return Order::where($where)->count();
+	}
 }
