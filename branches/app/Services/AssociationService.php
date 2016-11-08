@@ -395,4 +395,8 @@ class AssociationService
 		$uid = $this->userRepository->getUser()->uid;
 		return $this->associationRepository->deleteActivity($actid,$uid,$aid);
 	}
+	public function getAssociationAdmins ($aid)
+	{
+		return $this->associationRepository->getAssociationAdmins($aid);
+	}
 }
