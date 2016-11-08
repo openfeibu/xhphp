@@ -375,10 +375,11 @@ class AssociationRepository
 	{
 		$associationMembers = AssociationMember::select(DB::raw('association_member.amid,association_member.aid,association_review.uid as uid,user.nickname,association_review.ar_username as realname,user.avatar_url,association_member.level,association_review.mobile_no,member_number,leader,MAX(association_review.id) as max_arid'))
 								->leftJoin('user', 'association_member.uid', '=', 'user.uid')
-								->leftJoin('association_review', 'association_member.uid', '=', 'association_review.uid')
+								->leftJoin('association_review', function($join) {
+							      $join->on('association_member.uid', '=', 'association_review.uid')->where('association_review.status','=','passed');
+							    })
 								->leftJoin('association', 'association_member.aid', '=', 'association.aid')
 								->where('association_member.aid',$aid)
-								->where('association_review.status','passed')
 								->whereNull('association_member.deleted_at')
 								->groupBy('association_review.uid')
 								->orderBy('association_member.level','desc')
