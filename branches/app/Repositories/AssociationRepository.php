@@ -282,12 +282,13 @@ class AssociationRepository
 						->first();
 
 		if(!empty($ar_uid->uid)){
-			return $associations = Association::select(DB::raw('association.aid,association.aname, association.avatar_url,if(background_url IS NOT NULL,background_url,"") as background_url, member_number, leader,count(activity.actid) as activity_count,introduction,association_member.uid,association_member.level,label,if(association_notice.anid IS NOT NULL,association_notice.anid,0) as anid,if(association_notice.notice IS NOT NULL,association_notice.notice,"") as notice,if(notice_user.nickname IS NOT NULL,notice_user.nickname,"") as sendNotice_nickname,if(association_notice.created_at IS NOT NULL,association_notice.created_at,"") as notice_created_at,if(association_notice.anid IS NOT NULL,MAX(association_notice.anid),0) as max_anid'))
-				->leftJoin('activity','association.aid','=','activity.aid')
+			return $associations = Association::select(DB::raw('association.aid,association.aname, association.avatar_url,if(background_url IS NOT NULL,background_url,"") as background_url, member_number, leader,count(activity.actid) as activity_count,introduction,association_member.uid,association_member.level,label,if(association_notice.anid IS NOT NULL,association_notice.anid,0) as anid,if(association_notice.notice IS NOT NULL,association_notice.notice,"") as notice,if(notice_user.nickname IS NOT NULL,notice_user.nickname,"") as sendNotice_nickname,if(association_notice.created_at IS NOT NULL,association_notice.created_at,"") as notice_created_at,if(association_notice.anid IS NOT NULL,MAX(association_notice.anid),0) as max_anid'))				
+				->leftJoin('activity', function($join) {
+				  $join->on('association.aid','=','activity.aid')->whereNull('activity.deleted_at');
+				})
 				->leftJoin('association_member','association.aid','=','association_member.aid')
 				->leftJoin('association_notice','association.aid','=','association_notice.aid')
 				->leftJoin('user as notice_user','association_notice.uid','=','notice_user.uid')
-				->whereNull('activity.deleted_at')
 				->where('association.aid',$aid)
 				->where('association_member.uid',$ar_uid->uid)
 				->groupBy('anid')
@@ -295,10 +296,11 @@ class AssociationRepository
 				->first();
 		}else{
 			return $associations = Association::select(DB::raw('association.aid,association.aname, association.avatar_url,if(background_url IS NOT NULL,background_url,"") as background_url, member_number, leader,count(activity.actid) as activity_count,introduction,label,if(association_notice.anid IS NOT NULL,association_notice.anid,0) as anid,if(association_notice.notice IS NOT NULL,association_notice.notice,"") as notice,if(user.nickname IS NOT NULL,user.nickname,"") as sendNotice_nickname,if(association_notice.created_at IS NOT NULL,association_notice.created_at,"") as notice_created_at,if(association_notice.anid IS NOT NULL,MAX(association_notice.anid),0) as max_anid'))
-				->leftJoin('activity','association.aid','=','activity.aid')
+				->leftJoin('activity', function($join) {
+				  $join->on('association.aid','=','activity.aid')->whereNull('activity.deleted_at');
+				})
 				->leftJoin('association_notice','association.aid','=','association_notice.aid')
 				->leftJoin('user','association_notice.uid','=','user.uid')
-				->whereNull('activity.deleted_at')
 				->where('association.aid',$aid)
 				->groupBy('anid')
 				->orderBy('association_notice.anid', 'desc')
