@@ -231,4 +231,8 @@ class OrderService
 		}
 		return $orders;
 	}
+	public function getOrderCount ($where)
+	{
+		return $this->orderRepository->getOrderCount($where);
+	}
 }
