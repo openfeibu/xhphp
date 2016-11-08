@@ -40,7 +40,9 @@ class ReportNetworkFailureController extends Controller
             CURLOPT_POSTFIELDS => "login_name=" . $account . "&login_password=" . $password,
             CURLOPT_COOKIEJAR => $this->cookie,
             CURLOPT_HTTPHEADER => array(
-              "content-type: application/x-www-form-urlencoded"
+              	"content-type: application/x-www-form-urlencoded",
+               'CLIENT-IP:208.165.188.175', 
+               'X-FORWARDED-FOR:208.165.188.175',
             ),
         ));
 
