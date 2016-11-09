@@ -30,7 +30,6 @@ class ReportNetworkFailureController extends Controller
 		$this->cookie = $cookie;
         curl_setopt_array($curl, array(
             CURLOPT_URL => "http://211.66.88.6/xyw/logincheck.asp",
-            CURLOPT_USERAGENT => "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://211.66.88.6/xyw)",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -44,6 +43,7 @@ class ReportNetworkFailureController extends Controller
                'CLIENT-IP:208.165.188.175', 
                'X-FORWARDED-FOR:208.165.188.175',
             ),
+            CURLOPT_USERAGENT => "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
         ));
 
         $response = curl_exec($curl);
@@ -59,6 +59,7 @@ class ReportNetworkFailureController extends Controller
         $help->validateParameter($rule);
 		
 		$result = $this->network_login($request->account,$request->password,$help);
+		return $result;
 		if ($result['http_code'] == 302 && !empty($result['redirect_url'])) {
 			$uid = $user->getUser()->uid;
 			$networkReport = NetworkReport::where('uid',$uid)
@@ -150,7 +151,7 @@ class ReportNetworkFailureController extends Controller
 				CURLOPT_TIMEOUT => 10,
 				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 				CURLOPT_CUSTOMREQUEST => "POST",
-				CURLOPT_POSTFIELDS => "miaoshu=" . $request->miaoshu . "&guzhang=1",
+				CURLOPT_POSTFIELDS => "miaoshu=" . mb_convert_encoding($request->miaoshu, "gb2312", "UTF-8"). "&guzhang=1",
 				CURLOPT_COOKIEFILE => $this->cookie,
 				CURLOPT_HTTPHEADER => array(
 				  "content-type: application/x-www-form-urlencoded"
@@ -239,4 +240,3 @@ class ReportNetworkFailureController extends Controller
 		}
 	} */
 }
-
