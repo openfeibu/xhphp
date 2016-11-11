@@ -387,6 +387,12 @@ class AssociationService
 									->first();
 			$content = "您加入的社团：".$association->aname."申请已经通过审核！";
 			$this->messageService->SystemMessage2SingleOne($uid, $content, $push = false, $type = '系统通知', $name = '系统');
+		}else if($checkMember == 403){
+			$association = Association::select(DB::raw('aname'))
+									->where('aid',$aid)
+									->first();
+			$content = "您加入的社团：".$association->aname."申请审核未通过，请重试！";
+			$this->messageService->SystemMessage2SingleOne($uid, $content, $push = false, $type = '系统通知', $name = '系统');
 		}
 		return $checkMember;
 	}
