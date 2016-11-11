@@ -252,13 +252,13 @@ class AssociationRepository
 	{
 		return  Association::select(DB::raw('association.aid,aname, avatar_url, member_number, leader,label,count(activity.aid) as activity_count,introduction,if(association_member.uid IS NOT NULL,association_member.uid,0) as uid'))
 						->leftJoin('association_member','association.aid','=','association_member.aid')
-						->leftJoin('activity', function($join) {
-					      $join->on('association.aid','=','activity.aid')->whereNull('activity.deleted_at');
-					    })
+						->leftJoin('activity','association.aid','=','activity.aid')
+						->whereNull('activity.deleted_at')
 						->groupBy('association.aid')
 						->skip(20 * $page - 20)
 						->take(20)
                         ->get();
+
 	}
 
 	/* 获得所有社团总数 */
@@ -266,7 +266,6 @@ class AssociationRepository
 	{
 		return DB::table('association')->count();
 	}
-	
 	/* 获得所有社团活动总数 */
 	public function getActivityNum()
 	{
@@ -282,13 +281,12 @@ class AssociationRepository
 						->first();
 
 		if(!empty($ar_uid->uid)){
-			return $associations = Association::select(DB::raw('association.aid,association.aname, association.avatar_url,if(background_url IS NOT NULL,background_url,"") as background_url, member_number, leader,count(activity.actid) as activity_count,introduction,association_member.uid,association_member.level,label,if(association_notice.anid IS NOT NULL,association_notice.anid,0) as anid,if(association_notice.notice IS NOT NULL,association_notice.notice,"") as notice,if(notice_user.nickname IS NOT NULL,notice_user.nickname,"") as sendNotice_nickname,if(association_notice.created_at IS NOT NULL,association_notice.created_at,"") as notice_created_at,if(association_notice.anid IS NOT NULL,MAX(association_notice.anid),0) as max_anid'))				
-				->leftJoin('activity', function($join) {
-				  $join->on('association.aid','=','activity.aid')->whereNull('activity.deleted_at');
-				})
+			return $associations = Association::select(DB::raw('association.aid,association.aname, association.avatar_url,if(background_url IS NOT NULL,background_url,"") as background_url, member_number, leader,count(activity.actid) as activity_count,introduction,association_member.uid,association_member.level,label,if(association_notice.anid IS NOT NULL,association_notice.anid,0) as anid,if(association_notice.notice IS NOT NULL,association_notice.notice,"") as notice,if(notice_user.nickname IS NOT NULL,notice_user.nickname,"") as sendNotice_nickname,if(association_notice.created_at IS NOT NULL,association_notice.created_at,"") as notice_created_at,if(association_notice.anid IS NOT NULL,MAX(association_notice.anid),0) as max_anid'))
+				->leftJoin('activity','association.aid','=','activity.aid')
 				->leftJoin('association_member','association.aid','=','association_member.aid')
 				->leftJoin('association_notice','association.aid','=','association_notice.aid')
 				->leftJoin('user as notice_user','association_notice.uid','=','notice_user.uid')
+				->whereNull('activity.deleted_at')
 				->where('association.aid',$aid)
 				->where('association_member.uid',$ar_uid->uid)
 				->groupBy('anid')
@@ -296,11 +294,10 @@ class AssociationRepository
 				->first();
 		}else{
 			return $associations = Association::select(DB::raw('association.aid,association.aname, association.avatar_url,if(background_url IS NOT NULL,background_url,"") as background_url, member_number, leader,count(activity.actid) as activity_count,introduction,label,if(association_notice.anid IS NOT NULL,association_notice.anid,0) as anid,if(association_notice.notice IS NOT NULL,association_notice.notice,"") as notice,if(user.nickname IS NOT NULL,user.nickname,"") as sendNotice_nickname,if(association_notice.created_at IS NOT NULL,association_notice.created_at,"") as notice_created_at,if(association_notice.anid IS NOT NULL,MAX(association_notice.anid),0) as max_anid'))
-				->leftJoin('activity', function($join) {
-				  $join->on('association.aid','=','activity.aid')->whereNull('activity.deleted_at');
-				})
+				->leftJoin('activity','association.aid','=','activity.aid')
 				->leftJoin('association_notice','association.aid','=','association_notice.aid')
 				->leftJoin('user','association_notice.uid','=','user.uid')
+				->whereNull('activity.deleted_at')
 				->where('association.aid',$aid)
 				->groupBy('anid')
 				->orderBy('association_notice.anid', 'desc')
@@ -312,11 +309,10 @@ class AssociationRepository
 	{
 		$associationMember = AssociationMember::select(DB::raw('association_member.aid,association_member.uid,association.aname, association.avatar_url,association.background_url,association.member_number, association.leader,association_member.level, association.introduction,count(activity.actid) as activity_count,label'))
 								->join('association', 'association_member.aid', '=', 'association.aid')
-								->leftJoin('activity', function($join) {
-							      $join->on('association_member.aid','=','activity.aid')->whereNull('activity.deleted_at');
-							    })
+								->leftJoin('activity','association_member.aid','=','activity.aid')
 							    ->where('association_member.uid', $user_id)
 								->whereNull('association_member.deleted_at')
+								->whereNull('activity.deleted_at')
 								->groupBy('association_member.aid')
 	                            ->get();
 		/*if(empty($associationMember[0]->aid)){
@@ -375,17 +371,18 @@ class AssociationRepository
 	{
 		$associationMembers = AssociationMember::select(DB::raw('association_member.amid,association_member.aid,association_review.uid as uid,user.nickname,association_review.ar_username as realname,user.avatar_url,association_member.level,association_review.mobile_no,member_number,leader,MAX(association_review.id) as max_arid'))
 								->leftJoin('user', 'association_member.uid', '=', 'user.uid')
-								->leftJoin('association_review', function($join) {
-							      $join->on('association_member.uid', '=', 'association_review.uid')->where('association_review.status','=','passed');
-							    })
+								->leftJoin('association_review', 'association_member.uid', '=', 'association_review.uid')
 								->leftJoin('association', 'association_member.aid', '=', 'association.aid')
 								->where('association_member.aid',$aid)
+								->where('association_review.status','passed')
 								->whereNull('association_member.deleted_at')
 								->groupBy('association_review.uid')
 								->orderBy('association_member.level','desc')
 	                            ->skip(20 * $page - 20) 
 								->take(20)
 								->get();
+		$temArr = [];
+		$Member = [];
 		foreach($associationMembers as $k=>$associationMember){
 			if($associationMember->level == 1){
 				$temArr[] = $associationMember;
@@ -397,19 +394,7 @@ class AssociationRepository
 		$resArr=array_merge($temArr,$Member); 
 		return $resArr;
 	}
-	public function getAssociationAllMemberUids($aid)
-	{
-		return AssociationMember::select(DB::raw('association_review.uid as uid'))
-								->leftJoin('user', 'association_member.uid', '=', 'user.uid')
-								->leftJoin('association_review', 'association_member.uid', '=', 'association_review.uid')
-								->leftJoin('association', 'association_member.aid', '=', 'association.aid')
-								->where('association_member.aid',$aid)
-								->where('association_review.status','passed')
-								->whereNull('association_member.deleted_at')
-								->groupBy('association_review.uid')
-								->orderBy('association_member.amid','asc')
-								->get();
-	}
+
 	public function updateMemberLevel($aid,$level,$uid,$token_uid)
 	{
 		$token_associationMember = AssociationMember::where('aid',$aid)
@@ -420,14 +405,14 @@ class AssociationRepository
 											->where('uid',$uid)
 											->whereNull('association_member.deleted_at')
 											->first();
-		/* $memberManage = AssociationMember::where('aid',$aid)
+		$memberManage = AssociationMember::where('aid',$aid)
 											->where('level',2)
 											->orwhere('level',3)
 											->whereNull('association_member.deleted_at')
-											->get(); */
-		if($token_associationMember->level != 1 && $associationMember->level == 1){
-			return 401;
-		}elseif($token_associationMember->level == 2 && $associationMember->level == 2){
+											->get();
+		if(count($memberManage) == 2){
+			return 402;
+		}elseif($token_associationMember->level != 1 && $associationMember->level == 1){
 			return 401;
 		}
 		$associationMember->level = $level;
@@ -469,9 +454,9 @@ class AssociationRepository
 		$associationNotice->notice = $notice;
 		
 		if($associationNotice->save()){
-			return true;
+			return 200;
 		}else{
-			throw new \App\Exceptions\Custom\OutputServerMessageException('请求失败');
+			return 403;
 		}
 	}
 
@@ -587,31 +572,8 @@ class AssociationRepository
 		}else if($status == 1){
 			$associationReview->status = 'failed';
 			$associationReview->save();
-			return 403;
 		}
 		return 200;
 	}
-	
-	public function deleteActivity($actid,$uid,$aid){
-		$associationMember = AssociationMember::where('aid',$aid)
-											->where('uid',$uid)
-											->whereNull('association_member.deleted_at')
-											->first();
-		if($associationMember->level == 0){
-			return 401;
-		}
-		$activity = Activity::select(DB::raw("actid"))
-							->where('actid',$actid)
-							->whereNull('deleted_at')
-							->first();
-		$activity->deleted_at = date("Y-m-d H:i:s");
-		if($activity->save()){
-			return 200;
-		}
-		return;
-	}
-	public function getAssociationAdmins ($aid)
-	{
-		return AssociationMember::where('aid',$aid)->where('level','>','0')->get();
-	}
+
 }
