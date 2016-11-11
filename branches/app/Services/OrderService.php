@@ -66,8 +66,8 @@ class OrderService
 	public function getOrderBySn ($order_sn)
 	{
 		$order = $this->orderRepository->getOrderBySn($order_sn);
-		$orders->order_status = trans('common.task_status.'.$order['status']);
-		return $orders;
+		$order->order_status = trans('common.task_status.'.$order['status']);
+		return $order;
 	}
 
 	/**
