@@ -62,7 +62,11 @@ class IntegralsListener
      */
     public function handle(Integrals $event)
     {
-        $user = $this->userService->getUser();
+	    if($event->user){
+		    $user = $event->user;
+	    }else{
+		    $user = $this->userService->getUser();
+	    }
         $action = $event->action;
         $integral_id = $this->action_type($action);
         if($user->today_integral < 10){
