@@ -72,7 +72,7 @@ class ScheduleController extends Controller
 	            'order_id' => $order->oid,
 	            'status' => 'completed',
 	        ];
-	        $this->orderService->updateOrderStatus($param);
+	        $this->orderService->schedluUpdateOrderStatus($param);
 
 	        //纸条通知接单人
 	        $this->messageService->SystemMessage2SingleOne($order->courier_id, '您好，发单人已结算你完成的任务，赶紧去看看吧。');
