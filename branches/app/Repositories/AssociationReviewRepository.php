@@ -53,6 +53,16 @@ class AssociationReviewRepository
 		if($associationMember){
 			return 401;
 		}
+		$associationReview = AssociationReview::select(DB::raw('id'))
+											->where('aid',$aid)
+											->where('uid',$uid)
+											->where('status',"checking")
+											->whereNull('deleted_at')
+											->first();
+		if($associationReview){
+			$associationReview->deleted_at = date("Y-m-d H:i:s");
+			$associationReview->save();
+		}
 		$review = new AssociationReview;
 		$review->setConnection('write');
 		$review->aid = $aid;
