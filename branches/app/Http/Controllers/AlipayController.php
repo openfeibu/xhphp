@@ -57,12 +57,18 @@ class AlipayController extends Controller
 				$out_trade_no = Input::get('out_trade_no');
 				$trade_no = Input::get('trade_no');
 				$trade_status = Input::get('trade_status');
+				Log::debug('Alipay notify get data verification success.', [
+					'out_trade_no' => Input::get('out_trade_no'),
+					'trade_no' => Input::get('trade_no')
+				]);
 	    		if(Input::get('trade_status') == 'TRADE_FINISHED') {
 
 	    		}
 	    		else if (Input::get('trade_status') == 'TRADE_SUCCESS') {				
 					$type = substr($out_trade_no,0,2);
 					if($type == 'RT'){
+						Log::debug("android支付宝支付回调 RT");
+						
 						$this->orderService->updateOrderStatusNew($out_trade_no);
 						$order = $this->orderService->getOrderBysn($out_trade_no);
 			    		$trade = array(
@@ -81,10 +87,7 @@ class AlipayController extends Controller
 		    		}
 					$this->tradeAccountService->addThradeAccount($trade);
 	    		}
-    		    Log::debug('Alipay notify get data verification success.', [
-                	'out_trade_no' => Input::get('out_trade_no'),
-                	'trade_no' => Input::get('trade_no')
-                ]);
+    		   
 				Log::debug("android支付宝支付回调 success");
 				echo "success";	
 			}
