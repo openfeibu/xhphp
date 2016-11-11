@@ -207,6 +207,16 @@ class OrderService
 		$this->orderRepository->logOrderstatusChg($uid, $param['order_id'], $param['status']);
 
     }
+    public function schedluUpdateOrderStatus ($param)
+    {
+    	$result = $this->orderRepository->updateOrderStatus($param);
+		if (!$result) {
+    		throw new \App\Exceptions\Custom\FoundNothingException();
+		}
+
+		//记录操作时间
+		$this->orderRepository->logOrderstatusChg($param['uid'], $param['order_id'], $param['status']);
+    }
     public function updateOrderStatusNew ($out_trade_no)
     {
     	$result = $this->orderRepository->updateOrderStatusNew($out_trade_no);
