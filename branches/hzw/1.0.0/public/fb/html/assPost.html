@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="bgf">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta content="telephone=no" name="format-detection" />
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- UC应用模式 --> 
+  <meta name="browsermode" content="application">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- UC禁止放大字体 -->
+  <meta name="wap-font-scale" content="no">
+  <title>校汇Plus | 校汇+ </title>
+  <meta name="Keywords" content="广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活," />
+  <meta name="Description" content="校汇+是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇+一直专注于大学生活、社团文化、校园资讯、学生互动" />
+  <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+  <link rel="shortcut icon" href="../icon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/index.css">
+  <link rel="stylesheet" type="text/css" href="../css/info.css">
+  <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/common.js"></script>
+  <script type="text/javascript" src="../js/director.js"></script>
+  <script type="text/javascript" src="../js/updata.js"></script>
+  <script src="../js/swiper.min.js"></script>
+</head>
+<body >
+   <div class="header_title">
+      <p>发布公告</p>
+      <div class="return" onclick="returnUp()">
+      </div>
+      <div class="postSubmit">发布</div>
+    </div>
+	<section class='main pt1' style="padding-bottom:0">
+      <div class='post_textarea'>
+          <textarea name=""  class="ass_textarea" placeholder="编辑公告"></textarea>
+      </div>
+	</section>
+</body>
+<script>
+    var postSubmit =$(".postSubmit"),
+    aid = GetString("aid"),
+    token = window.localStorage.token;
+    $('.ass_textarea').on('input propertychange', function() { 
+      var con = $(this).val();
+      var len =getByteLen(con); 
+      if(len >= 0 ){
+        if(!postSubmit.hasClass("on"))
+            postSubmit.addClass("on"); 
+      }else{
+          postSubmit.removeClass("on"); 
+      }
+    });
+    postSubmit.on("click",function(){
+      var con = $(".ass_textarea").val();
+      var len =getByteLen(con);
+      if(len == 0 ){
+        fb_alert(fb_error["ass_06"]);
+        return false;
+      }
+      is_alipay(true);
+      $.getJSON(locahost+'/association/releaseNotice/?association_id='+aid+"&token="+token+"&notice="+con,function(data, status, xhr){   
+          if(data.code == "200"){
+            is_alipay(false);
+           window.history.go(-1)
+          }else{
+            is_alipay(false);
+            fb_alert(data.detail);
+          }
+      })
+    })
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

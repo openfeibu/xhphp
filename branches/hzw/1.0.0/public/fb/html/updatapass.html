@@ -1,0 +1,46 @@
+
+<div id="nickname-bg">
+	<section id="change-nickname">
+		<div class="scrollView" id="scrolling">
+			<div class="header_title">
+				<p>更改密码</p>
+				<div class="return" onclick="returnUp()">
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<input type="password" class="oldpass change-input" placeholder="旧密码">
+			<input type="password" class="newpass change-input" placeholder="新密码">
+			<button class="change-submit button_active">更换</button>
+		</div>
+	</section>
+	<script>
+	$(".change-submit").on("click",changeupdata);
+	function changeupdata(){
+		var oldpass = $(".oldpass").val();
+		var newpass = $(".newpass").val();
+		var token = window.localStorage.token;
+		if(oldpass == newpass){
+			fb_alert(fb_error["1004"]);
+			return ;
+		}else if(newpass < 6){
+			fb_alert(fb_error["1009"]);
+			return ;
+		}
+		is_alipay(true)
+		$(".change-submit").off("click",changeupdata);
+	      $.post(locahost+'/user/changePassword/?token='+token+'&password='+$.md5(oldpass)+'&new_password='+$.md5(newpass),  function(data){
+				is_alipay(false)
+
+	      		if(data.code=="200"){
+	      			fb_alert(fb_error["7"]);
+	  				 window.history.back();
+	      		}else{
+	      			fb_alert(data.detail);
+	      			$(".change-submit").on("click",changeupdata);
+	      		}
+	      		
+	    	 })
+		}
+	</script>
+</div>
