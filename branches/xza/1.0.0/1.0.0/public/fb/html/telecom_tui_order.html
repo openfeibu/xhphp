@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+	<link rel="apple-touch-icon-precomposed" href="1.jpg" />
+	<meta content="telephone=no" name="format-detection" />
+	 <!-- uc强制竖屏 -->
+	<meta name="screen-orientation" content="portrait">
+	<!-- UC应用模式 --> 
+	<meta name="browsermode" content="application">
+	<!-- QQ强制竖屏 -->
+	<meta name="x5-orientation" content="portrait">
+	<!-- QQ应用模式 -->
+	<meta name="x5-page-mode" content="app">
+	    <!-- UC禁止放大字体 -->
+  	<meta name="wap-font-scale" content="no">
+	<title>校汇Plus | 校汇 </title>
+    <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活" />
+    <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+    <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+  	<link rel="shortcut icon" href="../icon.png" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/info.css">
+	<script src="../js/director.js"></script>
+	<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+</head>
+<style>
+	html{background:#e09d5b url("../images/wel.png") no-repeat top center;background-size: 100% auto;max-width: 750px;margin:0 auto;}
+	.write-container{margin-top: 4rem;padding:0.2rem;}
+	.te_order_box{}
+	.te_order_box dl{font-size: 0.3rem;line-height: 0.5rem;background: rgba(255,255,255,1);padding: 0.25rem;margin-bottom:0.3rem;position: relative;}
+	.te_order_box dt{font-size: 0.3rem;line-height: 0.5rem;border-bottom: 1px solid #ccc}
+	.te_order_box dt span{display: block;color: #333;}
+	.te_order_box dt span:nth-of-type(2){text-align: right;color: #ff5656}
+	.te_order_box dl:before{content: "";position: absolute;width:0.2rem;height: 0.2rem;background: #e09d5b;border-radius: 50%;top:0.1rem;left:50%;margin-left: -0.1rem;}
+	.te_order_box dd{border-bottom: 1px solid #f5f5f5;}
+	.te_order_box dd span{color: #666;line-height: 0.7rem;}
+	.te_order_box dd span:nth-of-type(1){width: 30%;float: left;text-align: right;font-size: 0.26rem;}
+	.te_order_box dd span:nth-of-type(2){color: #999;padding-left: 0.5rem}
+	.te_order_box dd span.money{text-align: right;color: #ff5656}
+	.go{height: 1rem;width: 90%;font-size: 0.3rem;background: #5ac8fa;line-height: 1rem;border-radius: 0.1rem;color: #fff;margin:0.3rem auto;text-align: center;}
+	.go a{color: #fff;letter-spacing: 5px;}
+	aside{text-align: center;font-size: 0.4rem;line-height: 2rem;color:#999;}
+	.order_tab{width: 100%;height: 1rem;line-height: 1rem;background: #fff;margin-bottom: 0.1rem;}
+	.order_tab span{float: left;width:33.33%;height: 1rem;font-size: 0.35rem;text-align: center;color: #5ac8fa;}
+	.order_tab span.on{background: #5ac8fa;color: #fff;}
+	.te_order_box{display: none;}
+	aside{color: #fff;}
+	.write-container ul{text-align: center;}
+	.write-container ul li{display: inline-block;*display: inline;*zoom:1;padding: 0.3rem;background: #fff;width: 38%;margin:1% 1%;font-size: 0.28rem;color: #666}
+	.write-container ul li span{display: block;font-size: 0.4rem;color: #5ac8fa;}
+	.transactor{color: #fff;line-height: 0.45rem;font-size: 0.28rem;}
+	.write-container ul:after{content: "";display: inline-block;*display: inline;*zoom:1;padding: 0.3rem;background: #fff;width: 38%;margin:1% 1%;font-size: 0.28rem;color: #666;opacity: 0}
+</style>
+<body>
+	<section class="write-list">
+		<div class="header_title">
+			<p>电信订单</p>
+			<div class="return" onclick="returnUp()">
+			</div>
+			
+		</div>
+		<div class="write-container">
+			<div class="transactor">
+				你的办理编号为：<span data-name="transactor">---</span>
+			</div>
+			<div class="order_tab clearfix">
+				<span class="on">未实名<i></i></span>
+				<span >实名中<i></i></span>
+				<span >已实名<i></i></span>
+			</div>
+			<div class="te_order_box" style="display:block">
+				
+			</div>
+			<div class="te_order_box">
+				
+			</div>
+			<div class="te_order_box">
+				
+			</div>
+
+		</div>
+	</section>
+	<script>
+	/*android S*/
+	var is_app=0;
+	var android_token = "";
+	var token;
+	if(GetString("device") == "android"){
+		is_app = 1;
+		android_token = JSON.parse(window.feibu.interactive('{"action":"getToken"}')).value;  //获取客户端token;
+		$(".header_title").hide();
+		//$(".write-container").css("marginTop","0");
+	}
+	/*android E*/
+	loading(true)
+	if(is_app){
+		if(android_token == ""){
+			token = JSON.parse(window.feibu.interactive('{"action":"getToken"}')).value;
+		}else{	
+			token = android_token;
+		}
+	}else{
+		token = window.localStorage.token;
+	}
+
+      $.getJSON(locahost+'/telecom/getTransactorTelecomOrders?token='+token,  function(data){
+			loading(false)
+           if(data.code == 2001){
+                fb_alert(fb_error["2001"])
+                window.location.href = "../login.html";
+                return;
+             }
+             if(data.code == "200"){ 
+             	if(data.super_transactor == true){
+             		$(".write-container").html('<ul><li>今日开单数<span>'+data.data.today_count+'</span></li><li>总单数<span>'+data.data.count+'</span></li><li>未实名单数<span>'+data.data.unreal_count+'</span></li><li>正在实名中<span>'+data.data.realing_count+'</span></li><li>已实名单数<span>'+data.data.real_count+'</span></li></ul>')
+             	}else{
+	             	if(data.data == ""){
+	             		$(".te_order_box").html("<aside>暂无订单</aside>")
+	                	return;
+	             	}
+	             	var htmlwei ='';
+	             	var htmlyi ='';
+	             	var htmling ='';
+	               $.each(data.data.telecomOrders,function(a,b){
+	               	if(b["telecom_real_name_status"] == 0){
+	               			htmlwei += '<dl>\
+								<dt><span>订单号：'+b.trade_no+'</span><span>'+b.created_at+'</span></dt>\
+								<dd><span>套餐名:</span><span>'+b.package_name+'</span></dd>\
+								<dd><span>受理电信号码:</span><span>'+b.telecom_phone+'</span></dd>\
+								<dd><span>姓名:</span><span>'+b.name+'</span></dd>\
+								<dd><span>宿舍号:</span><span>'+b.dormitory_no+'</span></dd>\
+								<dd><span>常用手机号码:</span><span>'+b.telecom_outOrderNumber+'</span></dd>\
+								<dd><span>价格(元):</span><span class="money">'+b.fee+'</span></dd>\
+							</dl>';
+	               	}else if(b["telecom_real_name_status"] == 1){
+	               			htmlyi += '<dl>\
+								<dt><span>订单号：'+b.trade_no+'</span><span>'+b.created_at+'</span></dt>\
+								<dd><span>套餐名:</span><span>'+b.package_name+'</span></dd>\
+								<dd><span>受理电信号码:</span><span>'+b.telecom_phone+'</span></dd>\
+								<dd><span>姓名:</span><span>'+b.name+'</span></dd>\
+								<dd><span>宿舍号:</span><span>'+b.dormitory_no+'</span></dd>\
+								<dd><span>常用手机号码:</span><span>'+b.telecom_outOrderNumber+'</span></dd>\
+								<dd><span>价格(元):</span><span class="money">'+b.fee+'</span></dd>\
+							</dl>';
+	               	}else if(b["telecom_real_name_status"] == 2){
+	               			htmling += '<dl>\
+								<dt><span>订单号：'+b.trade_no+'</span><span>'+b.created_at+'</span></dt>\
+								<dd><span>套餐名:</span><span>'+b.package_name+'</span></dd>\
+								<dd><span>受理电信号码:</span><span>'+b.telecom_phone+'</span></dd>\
+								<dd><span>姓名:</span><span>'+b.name+'</span></dd>\
+								<dd><span>宿舍号:</span><span>'+b.dormitory_no+'</span></dd>\
+								<dd><span>常用手机号码:</span><span>'+b.telecom_outOrderNumber+'</span></dd>\
+								<dd><span>价格(元):</span><span class="money">'+b.fee+'</span></dd>\
+							</dl>';
+	               	}
+	               
+
+	               })
+	               $("span[data-name='transactor']").html(data.transactor)
+	               $(".te_order_box").eq(0).html(htmlwei);
+	               $(".te_order_box").eq(1).html(htmling);
+	               $(".te_order_box").eq(2).html(htmlyi);
+	               $(".order_tab span").eq(0).find("i").html("("+data.data.unreal_count+")")
+	               $(".order_tab span").eq(1).find("i").html("("+data.data.realing_count+")")
+	               $(".order_tab span").eq(2).find("i").html("("+data.data.real_count+")")
+	           }
+             }else if(data.code == 110){
+             	 $(".write-container").html("<aside>你不是工作人员</aside>")
+                 fb_alert(data.detail);    
+             }else{
+                 fb_alert(data.detail);    
+              }
+      }).error(function(xhr,errorText,errorType){
+              alert('网络超时，请稍后再试')
+       });
+      $(".order_tab span").on("click",function(){
+      	var i = $(this).index(".order_tab span");
+      	$(this).addClass("on").siblings().removeClass("on");
+      	$(".te_order_box").eq(i).fadeIn(200).siblings(".te_order_box").hide()
+      })
+		
+	</script>
+</body>
+</html>

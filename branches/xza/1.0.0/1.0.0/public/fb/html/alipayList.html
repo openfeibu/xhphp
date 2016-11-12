@@ -1,0 +1,21 @@
+<div class="header_title">
+      <p>支付宝信息</p>
+      <div class="return" onclick="returnUp()">
+      </div>
+</div>
+<div class="alipayList pt1">
+    <div class="alipay_info box-shadow">
+      
+    </div>
+    <div class="button_active alipay_updata">
+      <a href="#alipay/updata">更改提现支付宝</a>
+    </div>
+</div>
+<script type="text/javascript">
+   var alipay_card = window.localStorage.alipayCard;
+   var alipay_name =window.localStorage.alipayName;
+   var html = '<div class="alipay_info_card"><span>支付宝账号：</span>'+alipay_card+'</div>\
+                <div class="alipay_info_name"><span>姓名：</span>'+alipay_name+'</div>\
+                <div class="alipay_info_label">支付宝</div>';
+  $(".alipay_info").html(html);
+</script>
