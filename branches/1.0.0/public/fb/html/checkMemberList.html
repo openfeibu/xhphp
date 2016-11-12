@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" class="bgf">
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta content="telephone=no" name="format-detection" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- UC禁止放大字体 -->
+    <meta name="wap-font-scale" content="no">
+    <title>校汇Plus | 校汇</title>
+    <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活" />
+    <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+    <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link href="../css/swiper.min.css" rel="stylesheet" type="text/css">
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script src="../js/director.js"></script>
+    <script type="text/javascript" src="../js/updata.js"></script>
+    <script src="../js/swiper.min.js"></script>
+  </head>
+  
+  <body>
+    <div id="ClassA" class="routes">
+      <section id="social-news">
+        <div class="header_title">
+          <p>成员审核</p>
+          <div class="return" onclick="returnUp()"></div>
+        </div>
+        <div class="Member_list pt1">
+          <ul>
+          </ul>
+        </div>
+
+      </section>
+    </div>
+   <div id="ClassAdd" class="routes">
+      <div class="header_title">
+          <p>成员详情</p>
+          <div class="return" onclick="returnUp()"></div>
+      </div>
+      <div class="addInfo pt1">
+          <ul>
+            <li class="add_name" ><input type="text" placeholder="请输入姓名" name="add_name"/></li>
+            <li class="add_profession"><input type="text" placeholder="请输入专业" name="add_profession"/></li>
+            <li class="add_phone"><input type="text" placeholder="请输入手机号码" name="add_phone"/></li>
+            <li class="add_causes"><textarea name="add_causes" placeholder="申请理由"></textarea></li>
+          </ul>
+          <div class="check_button">
+            <div class="no opa_active">不通过</div>
+            <div class="yes opa_active">通过</div>
+          </div>
+      </div>
+    </div>
+    <script>
+      loading(true);
+      var aid = GetString("aid"),
+      uid,
+      id,
+      token = window.localStorage.token;
+      var routes = {
+        '/Member': getMember,
+        '/memberAss/:id': memberAss,
+      };
+      var router = Router(routes);
+      router.init("/Member");
+      function getMember(a){
+          routDom($("#ClassA"));
+          tab = "Member";
+         //获取话题资讯 S
+          if(!getItemATime("cMember") && a != 1){
+            var loca = getItem("cMember");
+            var htmldom = loca[0]; 
+            $(".Member_list ul").html(htmldom);
+            loading(false); //移除动画
+          }else{
+            //没有缓存
+            getMemberData();
+          }
+      }
+      function getMemberData() {
+        $.getJSON(locahost + "/association/checkMemberList/?token=" + token +"&association_id="+aid,
+        function(data) {
+          if (data.code == 200) {
+              clearLoading();
+              loading(false);
+              var html = '';
+              $.each(data.data,function(a, b) {
+                  html += '<li class="opa_active" add_name="'+b.ar_username+'" add_profession="'+b.profession+'" add_phone="'+b.mobile_no+'" add_causes="'+b.causes+'" add_uid="'+b.uid+'">\
+                            <a href="#/memberAss/'+a+'">\
+                              <div class="img"><img src="'+b.avatar_url+'"/></div>\
+                              <div class="test">\
+                                '+b.ar_username+'<span>申请理由：'+b.causes+'</span>\
+                              </div>\
+                            </a>\
+                          </li>';
+              });
+              $(".Member_list ul").html(html);
+              if(data.data.length == 0){
+                $(".Member_list ul").text("没有成员申请，赶紧去招兵买马")
+              }else{
+                setItem("cMember",html);
+              }
+              
+          }
+        });
+      }
+      /*申请加入界面 S*/
+      function memberAss(id) {
+        tab = "";
+        loading(false);
+        $("#ClassAdd").css({
+          "minHeight": $(window).height() ,
+        });
+        routDom($("#ClassAdd"));
+        var b = $(".Member_list ul li").eq(id);
+        $("[name='add_name']").val(b.attr("add_name"));
+        $("[name='add_profession']").val(b.attr("add_profession"));
+        $("[name='add_phone']").val(b.attr("add_phone"));
+        $("[name='add_causes']").val(b.attr("add_causes"));
+        uid = b.attr("add_uid"); 
+        id=id;
+      }
+      /*申请加入界面 E*/
+      // 审核 S
+      $(".check_button > div").on("click",checkM);
+      function checkM(){
+        if(!uid||!aid){
+          return false;
+        }
+        var status = $(this).hasClass("yes") ? 0 : $(this).hasClass("no") ? 1 : '';
+        is_alipay(true);
+        $.getJSON(locahost + "/association/checkMember/?token=" + token +"&association_id="+aid+"&uid="+uid+"&status="+status,
+        function(data) {
+          if (data.code == 200) {
+            is_alipay(false);
+            fb_alert(fb_error["ass_04"]);
+            window.localStorage.cMembertime = '';
+             window.history.go(-1);
+          }
+        });
+      }
+      // 审核 E
+      refresh["Member"] = getMember;
+      </script>
+  </body>
+
+</html>

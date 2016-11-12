@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta content="telephone=no" name="format-detection" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- UC禁止放大字体 -->
+    <meta name="wap-font-scale" content="no">
+    <title>校汇Plus | 校汇</title>
+    <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活" />
+    <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+    <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/index.css">
+    <link href="../css/swiper.min.css" rel="stylesheet" type="text/css">
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script src="../js/director.js"></script>
+    <script type="text/javascript" src="../js/updata.js"></script>
+    <script src="../js/swiper.min.js"></script>
+  </head>
+  
+  <body>
+    <div id="ClassA" class="routes">
+      <section id="">
+        <div class="header_title">
+          <p>消息列表</p>
+          <div class="return" onclick="returnUp()"></div>
+        </div>
+        <div class="news_list pt1">
+            <div class="news-item">
+                <div class="news-up">
+                  <div class="img">
+                    <img src="images/tx.png" alt="" />
+                  </div>
+                  <div class="test">
+                    <div class="name">Mar</div>
+                    <div class="time">30分钟前</div>
+                  </div>
+                </div>
+                <div class="news-bottom">
+                  <div class="con">
+                    dasdasdsad
+                  </div>
+                  <div class="report">回复</div>
+                </div>
+                <div class="original">dsadd</div>
+            </div>
+        </div>
+        <div class="commen_input">
+            <input type="text" class="commen_input_text" placeholder="评论一下。。。">
+            <input type="button" value="发送" class="commen_input_submit">
+        </div>
+      </section>
+    </div>
+
+    <script>
+      loading(true);
+      var token = window.localStorage.token;
+      getNews();   
+      function getNews() {
+        $.getJSON(locahost + "/getNewTopicNotifications/?token=" + token,
+        function(data) {
+          loading(false);
+          if (data.code == 200) {
+              window.localStorage.hasTopic = 0;
+              var html = '';
+              $.each(data.data,function(a, b) {
+                  var time = afterTime(b.created_at)
+                  html += '<div class="news-item">\
+                            <div class="news-up">\
+                              <div class="img">\
+                                <img src="'+b.avatar_url+'" alt="" />\
+                              </div>\
+                              <div class="test">\
+                                <div class="name">'+b.nickname+'</div>\
+                                <div class="time">'+time+'</div>\
+                              </div>\
+                            </div>\
+                            <div class="news-bottom">\
+                              <div class="con">'+b.content+'</div>\
+                              <div class="report" tid="'+b.tid+'"  tcid="'+b.tcid+'">回复</div>\
+                            </div>\
+                            <div class="original">'+b.object_content+'</div>\
+                        </div>';
+              });
+              $(".news_list").html(html);         
+          }
+        });
+      }
+
+        /*唤起评论 S*/
+      var tid,tcid;
+      $(".news_list").on("click", ".report", 
+        function() {
+            tid = $(this).attr("tid");
+            tcid = $(this).attr("tcid");
+            commen_input_focus("");
+        })
+
+      /*唤起评论 E*/
+      /*评论框获取焦点 S*/
+      function commen_input_focus(text){
+          clearTimeout(comment_input_time);
+          $(".commen_input_text").val(text).focus();
+          $(".commen_input").addClass("on");
+      }
+      /*评论框获取焦点 E*/
+      /*评论框失去焦点 S*/
+      var comment_input_time;
+      $(".commen_input_text").on("blur", 
+        function() {
+            var val = $(this).val();
+            var tcid = $(this).attr("comment_id");
+            if (tcid == 0) {
+                $(this).attr("text", val);
+            }else {
+                $(".comment_b[tcid='" + tcid + "']").attr("text", val);
+            }
+          comment_input_time =  setTimeout(function(){$(".commen_input").removeClass("on");},100);
+        })
+      /*评论框失去焦点 E*/
+      /*评论框监听 S*/
+      $(".commen_input_text").on("input propertychange", 
+        function() {
+            if ($(this).val().length > 0)
+            $(".commen_input_submit").addClass("active");
+            else
+            $(".commen_input_submit").removeClass("active");
+        });
+
+      /*评论框监听 E*/
+        /*评论 S*/
+  $(".commen_input_submit").on("click", commen_submit);
+    function commen_submit() {
+        if (!$(this).hasClass("active")) {
+            return;
+        }
+        if (window.localStorage.getItem("token") == undefined) {
+            fb_alert(fb_error["2001"]);
+            window.location.href = "login.html";
+            return;
+        }
+        var val = $(".commen_input_text").val();
+        var comment_id = $(".commen_input_text").attr("comment_id");
+        var name = $(".commen_input_text").attr("name");
+        var token = window.localStorage.getItem("token");
+        if (val.length == 0) {
+            return;
+
+        } else {
+            is_alipay(true);
+            $.post(locahost + '/topic/comment/?token=' + token + '&topic_comment=' + val + '&topic_id=' + tid +  '&comment_id=' + tcid, 
+            function(data) {
+                is_alipay(false);
+                if (data.code == 2001) {
+                    fb_alert(fb_error["2001"])
+                    window.location.href = "login.html";
+                    return;
+
+                } else if (data.code == 110) {
+                    fb_alert(fb_error["13"])
+                    return;
+                }
+                if (data.code == "200") {
+                    fb_alert("评论成功")
+                    $(".commen_input_submit").on("click", commen_submit);
+                    
+                }
+
+
+            })
+
+        }
+        return false;
+
+    }
+/*评论 E*/
+      </script>
+  </body>
+
+</html>
