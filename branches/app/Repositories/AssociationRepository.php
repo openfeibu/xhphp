@@ -252,7 +252,7 @@ class AssociationRepository
 	{
 		return  Association::select(DB::raw('association.aid,aname, avatar_url, member_number, leader,label,count(activity.aid) as activity_count,introduction,if(association_member.uid IS NOT NULL,association_member.uid,0) as uid'))
 						->leftJoin('association_member','association.aid','=','association_member.aid')
-						->join('activity', function ($join) {
+						->leftjoin('activity', function ($join) {
 							$join->on('association.aid', '=', 'activity.aid')->whereNull('activity.deleted_at');
 						})
 						->groupBy('association.aid')
