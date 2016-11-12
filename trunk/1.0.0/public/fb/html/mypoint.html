@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#fff;">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+	<meta content="telephone=no" name="format-detection" />
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- UC应用模式 --> 
+  <meta name="browsermode" content="application">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- UC禁止放大字体 -->
+  <meta name="wap-font-scale" content="no">
+	<title>校汇Plus | 校汇</title>
+  <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活," />
+  <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+  <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+  <link rel="shortcut icon" href="../icon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/index.css">
+  <link rel="stylesheet" type="text/css" href="../css/info.css">
+  <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/common.js"></script>
+  <script type="text/javascript" src="../js/director.js"></script>
+</head>
+<body>
+	<!-- <div class="bigloading"></div> -->
+	<div class="routes" id="ClassA">
+		<section id="mypoint">
+			<div class="header_title">
+				<p>我的积分</p>
+				<div class="return" onclick="returnUp()">
+				</div>
+			</div>
+			<div class="mypoint-container">
+				<div class="container-top">
+					<div class="img-container ">
+						<div class="record-grade"><a href="#/mypointRecord">积分记录</a></div>
+						<!-- <img src="images/icon_levelfive.png" alt="" class=""> -->
+					</div>
+					<div class="grade">
+						
+					</div>
+					<div class="progress-container">
+						<div class="progress"></div>
+					</div>
+				</div>
+				<div class="container-bottom">
+					<div class="grade-rule">
+						<dt>一、积分等级</dt>
+						<div class="grade-container">
+							<div class="grade-item">
+								<div class="ig grade-container-left">等级</div>
+								<div class="ig grade-container-right">积分值</div>
+							</div>
+							
+						</div>
+					</div>
+
+					<div class="grade-get-way">
+						<dt>二、积分获取途径</dt>
+						<div class="way-container">
+							<div class="way-item">
+								<div class="wg way-container-left">等级</div>
+								<div class="wg way-container-right">积分值</div>
+							</div>
+							
+						</div>
+					</div>
+
+					<div class="payattention">
+						<dt>三、注意</dt>
+						<dd>1、每日总积分上限为10分,接、发单次数不限,超出部分不计分;</dd>
+						<dd>2、相同的发单者和接单者的发、接单的数量不能超过3次/天;</dd>
+						<dd>3、违反校园任务声明条例积分清零+封号(时间视违反的严重程度而定);</dd>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div class="routes" id="ClassB">
+		<div class="header_title">
+			<p>积分记录</p>
+			<div class="return" onclick="returnUp()"></div>
+		</div>
+		<ul class='mypointRecord pt1'>
+			<li>
+			
+			</li>
+		</ul>
+	</div>
+</body>
+<script type="text/javascript">
+	var token = window.localStorage.token;
+	var pageNum = 20;
+	var routes = {
+      '/mypoint': mypoint,
+      '/mypointRecord': mypointRecord,
+    };
+    var router = Router(routes);
+     router.init("/mypoint");
+    
+    function mypointRecord(){
+    	clearWindowScroll();
+    	routDom($("#ClassB"))
+    	loading(true);	
+    	pointC_get(1);
+    }
+    function mypoint(){
+    	clearWindowScroll();
+    	routDom($("#ClassA"))
+		loading(true);	
+		//获取积分
+		pointGet()
+
+	    if(!!getItem("grade_html") && !!getItem("wap_html")){
+	      var loca1 = getItem("grade_html");
+	      var loca2 = getItem("wap_html");
+	      var now = new Date().getTime();
+	      /*先展示旧内容 S*/
+	      var htmldom1 = loca1[0];
+	      var htmldom2 = loca2[0]; 
+	      $(".grade-container").append(htmldom1)
+		  $(".way-container").append(htmldom2)   
+	    }else{
+	      //没有缓存
+	      explainGet()
+	    }
+		
+	}
+	function pointGet(){
+			$.post(locahost+'/integral/integral_level/?token='+token,  function(data){
+					loading(false);
+		           if(data.code == 2001){
+		                fb_alert(fb_error["2001"])
+		                window.location.href = "../login.html";
+		                return;
+		             }
+		             if(data.code == "200"){    
+		               	var b = data.data;
+		               	switch(b.level){
+		               		case 0 : 
+		               			$(".img-container").addClass("level00");
+		               			break;
+		               		case 1 : 
+		               			$(".img-container").addClass("level01");
+		               			break;
+		               		case 2 : 
+		               			$(".img-container").addClass("level02");
+		               			break;
+		               		case 3 : 
+		               			$(".img-container").addClass("level03");
+		               			break;
+		               		case 4 : 
+		               			$(".img-container").addClass("level04");
+		               			break;
+		               		case 5 : 
+		               			$(".img-container").addClass("level05");
+		               			break;
+		               		case 6 : 
+		               			$(".img-container").addClass("level06");
+		               			break;
+		               		case 7 : 
+		               			$(".img-container").addClass("level07");
+		               			break;
+		               		case 8 : 
+		               			$(".img-container").addClass("level08");
+		               			break;
+		               		case 9 : 
+		               			$(".img-container").addClass("level09");
+		               			break;
+		               		case "Lv10" : 
+		               			$(".img-container").addClass("level10");
+		               			break;
+		               	}
+		               	if(b.upgrade != "top"){
+		               		$(".grade").html('<span>当前积分值 : '+b.integral+'</span><span>还差'+b.upgrade+'点升级</span>')
+		               		$(".progress").css("width",(b.integral/(b.integral+b.upgrade)*100)+"%")	
+		               }else{
+		               		$(".grade").html('<span>当前积分值 : '+b.integral+'</span><span>你已满积分</span>')
+		               		$(".progress").css("width","100%")	
+		               }
+		             }
+		      })
+		}
+	function explainGet(){
+			var grade_html = "",wap_html ="";
+			$.post(locahost+'/integral/integral_explain/?token='+token,  function(data){
+		           if(data.code == 2001){
+		                fb_alert(fb_error["2001"])
+		                window.location.href = "../login.html";
+		                return;
+		             }
+		             if(data.code == "200"){ 
+		             	$.each(data.data.level_explain,function(a,b){
+		             		grade_html += '<div class="specify grade-item">\
+												<div class="item-second ig grade-container-left">LV'+b.level+'</div>\
+												<div class="item-second ig grade-container-right">'+b.integral+'</div>\
+											</div>'
+		             	})
+		             	$.each(data.data.integral_explain,function(a,b){
+		             		wap_html += '<div class="way-specify way-item">\
+										<div class="way-item-second wg grade-container-left">'+b.obtain_type+'</div>\
+										<div class="way-item-second wg grade-container-right">'+b.score+'</div>\
+									</div>'
+				             	})
+		             	$(".grade-container").append(grade_html)
+		             	$(".way-container").append(wap_html)
+		             	setItem("grade_html",grade_html)
+		             	setItem("wap_html",wap_html)
+		              }
+		         })
+		}
+		//获取积分记录
+		var n = 1;
+		function pointC_get(page){
+			  $(window).off("scroll");
+			   if($("#loading").length == 0 && page!=1){
+		          $("#ClassB").append("<div id='loading'>正在玩命的加载中...</div>");
+		        }
+		      $.post(locahost+'/integral/integral_list/?token='+token+"&page="+page,  function(data){
+		           loading(false);	
+		           if(data.code == 2001){
+		                fb_alert(fb_error["2001"])
+		                window.location.href = "../login.html";
+		                return;
+		             }
+		             if(data.code == "200"){
+		             	 var order_html = '';
+		             	 $.each(data.data,function(a,b){
+		             	 	order_html += '<li>\
+											<div class="namedata">\
+												<div class="name">'+b.obtain_type+'</div>\
+												<div class="data">'+b.updated_at+'</div>\
+											</div>\
+											<div class="pointNum on">'+b.score+'</div>\
+										</li>'
+		             	 })
+		             	 if(data.data == '' ){
+			                  //没数据
+			                  $("#loading").remove()
+			                  if(page == 1){
+			                    $(".mypointRecord").append("<div id='loaded'>暂无数据</div>")
+
+			                  }else{
+			                    $(".mypointRecord").append("<div id='loaded'>我是有底线的</div>")
+			                  }
+			                }else{
+			                  //是否为第一页 是替换数据 否追加数据 S
+			                  if(page == 1){
+			                   $(".mypointRecord").html(order_html);
+			                   n=1;
+			                   $("#loading").remove();
+			                  }else{
+			                   $(".mypointRecord").append(order_html);
+			                  }
+			                  //是否为第一页 是替换数据 否追加数据 E
+			                  //是否为最后一页  否追加滑动事件 S
+			                  if(data.data.length < pageNum ){
+			                    //已经没数据
+			                    $("#loading").remove()
+			                    $(".mypointRecord").append("<div id='loaded'>我是有底线的</div>");
+			                    }else{
+			                     $(window).on("scroll",function(){   
+			                          if($(window).scrollTop()+10>=$(document).height()-$(window).height()){
+			                            //到底
+			                            n++;
+			                            pointC_get(n);
+			                          }
+			                       
+			                      })
+			                  }
+		             }
+		         }
+		      })
+
+		}
+</script>
+</html>

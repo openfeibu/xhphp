@@ -1,0 +1,214 @@
+	<script type="text/javascript" src="js/md5.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/webuploader.css">
+	<script type="text/javascript" src="js/webuploader.js"></script>
+	<div class="header_title">
+			<p>我的资料</p>
+			<div class="return" onclick="returnUp()">
+	</div>
+	</div>
+	<section class="myprofile_main pt1">
+	
+	</section>
+	<!--dom结构部分-->
+	<script>
+	var change_name 
+	$(function(){
+	 var info = window.localStorage.info;
+	  var  data = JSON.parse(info);
+      var avatar_url = data.avatar_url == "" ? "images/icon_myinfo.png" : data.avatar_url;
+      var gender = data.gender == 1 ? "男" : data.gender == 2 ? "女" : "保密";
+	  var html = '<div class="pic">\
+	  				<div id="uploader-demo">\
+					    <div id="filePicker">选择图片</div>\
+					</div>\
+					<span>头像</span>\
+					<div class="pic-right-container">\
+						<img src="'+avatar_url+'" class="user-pic" alt="">\
+					</div>\
+					<div class="pic-go"></div>\
+				</div>\
+				<div class="nickname" >\
+					<a href="#/mine/myprofile/nickname">\
+					<span>昵称</span>\
+					<span class="user-nickname">'+data.nickname+'</span>\
+					<div class="pic-go"></div>\
+					</a>\
+				</div>\
+				<div class="leyu">\
+					<a href="#/mine/myprofile/introduction">\
+						<span class="leyu-name">介绍</span>\
+						<span class="user-leyu">'+data.introduction+'</span>\
+						<div class="pic-go"></div>\
+					</a>\
+				</div>\
+				<div class="sex">\
+					<a >\
+						<span>性别</span>\
+						<span class="sex-name">'+gender+'</span>\
+					</a>\
+				</div>\
+				<div class="address">\
+					<a href="#/mine/myprofile/address">\
+						<span>常用地址</span>\
+						<span class="address-name">'+data.address+'</span>\
+						<div class="pic-go"></div>\
+					</a>\
+				</div>\
+				<div class="ggmm ">\
+					<a href="#/mine/myprofile/ggmm">\
+						<span>更改密码</span>\
+						<div class="pic-go"></div>\
+					</a>\
+				</div>';
+		$(".myprofile_main").html(html);
+
+		
+		//即时注册路由
+		
+		router.on("/mine/myprofile/:id",function(id){
+			change_name = id;
+			if(change_name == "nickname" || change_name =="introduction" || change_name =="address"){
+				
+				$.get("html/change.html",function(data){
+					routDom($("#ClassF"))
+					$("#ClassF").html(data);
+					if(change_name=="nickname"){
+						$("#change-nickname .header_title p").html("修改昵称");
+						$(".container input").val($('.user-nickname').text())
+					}else if(change_name=="introduction"){
+						$("#change-nickname .header_title p").html("修改介绍");
+						$(".container input").val($('.user-leyu').text())
+					}else if(change_name=="address"){
+						$("#change-nickname .header_title p").html("修改常用地址");
+						$(".container input").val($('.address-name').text())
+					}
+				})
+			}else if(change_name == "ggmm"){
+				$.get("html/updatapass.html",function(data){
+					routDom($("#ClassF"))
+					$("#ClassF").html(data);
+					
+				})
+			}
+
+		})
+		
+
+	})
+	//var touXiangPhoto = 1;   //判断头像是否继续1张1张上传
+	$(function() {
+		var token = window.localStorage.token;
+    	var $ = jQuery,
+        $list = $('#fileList'),
+        // 优化retina, 在retina下这个值是2
+        ratio = window.devicePixelRatio || 1,
+ 
+        // 缩略图大小
+        thumbnailWidth = 100 * ratio,
+        thumbnailHeight = 100 * ratio,
+ 
+        // Web Uploader实例
+        uploader;
+ 
+	    // 初始化Web Uploader
+	    uploader = WebUploader.create({
+ 
+        // 自动上传。
+        auto: true,
+ 		crop: true,
+        // swf文件路径
+        swf:  '/js/webuploader/js/Uploader.swf',
+ 
+        // 文件接收服务端。
+        server: locahost+'/user/uploadAvatarFile/?token='+token,
+         
+        // [默认值：'file']  设置文件上传域的name。
+        fileVal:'uploadfile',
+ 
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+ 		fileNumLimit : 1,
+        // 只允许选择文件，可选。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+ 
+    // 当有文件添加进来的时候
+    uploader.on( 'fileQueued', function( file ) {
+        var $li = $(
+                '<div id="' + file.id + '" class="file-item thumbnail">' +
+                    '<img>' +
+                    '<div class="info">' + file.name + '</div>' +
+                '</div>'
+                ),
+            $img = $li.find('img');
+ 
+        $list.append( $li );
+ 
+        // 创建缩略图
+        uploader.makeThumb( file, function( error, src ) {
+            if ( error ) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+ 
+            $img.attr( 'src', src );
+        }, thumbnailWidth, thumbnailHeight );
+    });
+ 
+    // 文件上传过程中创建进度条实时显示。
+    uploader.on( 'uploadProgress', function( file, percentage ) {
+        var $li = $( '#'+file.id ),
+            $percent = $li.find('.progress span');
+ 
+        // 避免重复创建
+        if ( !$percent.length ) {
+            $percent = $('<p class="progress"><span></span></p>')
+                    .appendTo( $li )
+                    .find('span');
+        }
+ 
+        $percent.css( 'width', percentage * 100 + '%' );
+    });
+ 
+    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+    uploader.on( 'uploadSuccess', function( data ) {
+ 			//photoarray 上传的图片数组
+    		//更新缓存
+    		var info = window.localStorage.info;
+     		var data = JSON.parse(info);
+     		console.log(photoarray)
+     		var img = photoarray.substr(0,photoarray.length-1)
+     		data["avatar_url"] = img;
+           	setItem("info",JSON.stringify(data))
+           	fb_alert(fb_error["1"]);
+           	$(".pic-right-container img").attr("src", img)
+           	uploader.reset();
+           	photoarray = '';
+    });
+ 
+    // 文件上传失败，现实上传出错。
+    uploader.on( 'uploadError', function( file ) {
+        var $li = $( '#'+file.id ),
+            $error = $li.find('div.error');
+ 
+        // 避免重复创建
+        if ( !$error.length ) {
+            $error = $('<div class="error"></div>').appendTo( $li );
+        }
+ 
+        $error.text('上传失败!!!');
+    });
+ 
+    // 完成上传完了，成功或者失败，先删除进度条。
+    uploader.on( 'uploadComplete', function( file ) {
+        $( '#'+file.id ).find('.progress').remove();
+    });
+}
+  
+);
+	</script>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" style="background:none;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta content="telephone=no" name="format-detection" />
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- UC应用模式 --> 
+  <meta name="browsermode" content="application">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- UC禁止放大字体 -->
+  <meta name="wap-font-scale" content="no">
+  <title>校汇Plus | 校汇 </title>
+  <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活" />
+  <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+  <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+  <link rel="shortcut icon" href="../icon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/index.css">
+  <link rel="stylesheet" type="text/css" href="../css/info.css">
+  <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/common.js"></script>
+  <script type="text/javascript" src="../js/director.js"></script>
+  <script type="text/javascript" src="../js/updata.js"></script>
+  <script src="../js/swiper.min.js"></script>
+</head>
+<body >
+       <div class="header_title">
+          <p>社团详情</p>
+          <div class="return" onclick="returnUp()">
+          </div>
+          <div class="spot"><span></span><span></span><span></span></div>
+        </div>
+    	 <section class='main pt1' style="padding-bottom:0">
+          <ul class="spot_fun">
+            <li class="exitAss">退出社团</li>
+            <li class="aboutAssButton">关于社团</li>
+          </ul>
+          <div class="ass_header" data-name="ass_bg">
+            <div class="ass_img_test">
+              <div class="img" data-name="ass_logo"><img src="../images/tx.png" alt=""></div>
+              <div class="test">
+                  <div data-name="ass_name">社团名称</div>
+                  <div><span data-name="ass_num">1</span>·<span data-name="active_num">2121</span>·<span data-name="ass_label">212</span></div>
+              </div>
+            </div>
+          </div>
+          <ul class="ass_power">
+            <li data-name="Notice">
+              <a >社团公告</a>
+            </li>
+            <li data-name="Active">
+              <a href="myAssActive.html">社团活动</a>
+            </li>
+            
+          </ul>
+          <dl class="ass_personnel">
+            <dt>社团成员<span>(右滑管理成员)</span></dt>
+            
+          </dl>
+          <div class="setZW">
+            <ul>
+              
+            </ul>
+          </div>
+    	</section>
+      <!-- 公告 -->
+      <div class="notice">
+          <div class="close"></div>
+          <div class="con">
+            <div class="n_title">
+                <p><span  data-name='notice_t'></span> 社团公告</p>
+            </div>
+            <div class="text" data-name='notice_text'>
+              dasdas
+            </div>
+            <div class="postNotice"><a >编辑</a></div>
+          </div>
+      </div>
+      <!-- 公告 -->
+      <!-- 关于社团 -->
+      <div class="aboutAss">
+          <div class="close"></div>
+          <div class="con" data-name='aboutAss'>
+              
+          </div>
+      </div>
+      <!-- 关于社团 -->
+      <div class="job">
+          <div class="job_title">请选择职位</div>
+          <ul>
+          </ul>
+          <div class="job_close">取消</div>
+      </div>
+</body>
+
+<script>
+  var token = window.localStorage.token;
+  var assId = GetString("assId"),
+  pageNum = 20,
+  boss,
+  ZW=[];
+  loading(true); //动画
+  assGet();
+  $(".postNotice a").click(function(){
+    window.location.href='assPost.html?aid='+assId;
+  })
+  // 获取数据S
+    function assGet(){
+        $.getJSON(locahost+'/association/getAssociationsDetails/?association_id='+assId+"&token="+token,function(data, status, xhr){
+          if(data.code == "200"){
+                loading(false);
+              var b = data.data;
+              b.notice = b.notice == '' ? "暂无公告" : b.notice; 
+              $("[data-name='ass_logo']").find("img").attr("src",b.avatar_url);
+              $("[data-name='ass_name']").text(b.aname);
+              $("[data-name='ass_num']").text(b.member_number+"人活跃");
+              $("[data-name='active_num']").text(b.activity_count+"个活动");
+              $("[data-name='ass_label']").text('#'+b.label+"#");
+              $("[data-name='Active']").find("a").attr("href","myAssActive.html?aid="+b.aid);
+              $("[data-name='ass_bg']").css({"background":"url("+b.background_url+") no-repeat center","backgroundSize":"cover"});
+              $("[data-name='notice_t']").text("2013年10月11日");
+              $("[data-name='notice_text']").text(b.notice);
+              $("[data-name='aboutAss']").text(b.introduction)
+              if(b.level == 1 ){
+                //admin
+                $(".ass_power").append('<li data-name="member"><a href="checkMemberList.html?aid='+b.aid+'">成员审核</a></li>');
+                boss = 1;
+                $(".job ul").append("<li val='2'>副会长</li><li val='0'>成员</li>")
+              }else if( b.level == 2 || b.level == 3){
+                $(".ass_power").append('<li data-name="member"><a href="checkMemberList.html?aid='+b.aid+'">成员审核</a></li>');
+                boss = 2;
+                $(".job ul").append("<li val='0'>成员</li>")
+                
+              }else{
+                boss = 0;
+                $(".notice .postNotice").hide();
+              }
+              //获取成员
+              getMember();
+            }
+      })
+    }
+  // 获取数据E
+  // 退出社团 S
+  $(".exitAss").click(function(){
+    alert_flag("是否退出该社团");
+    $(".flag_true").click(function(){
+      $(".flag_A").remove();
+       is_alipay(true);
+       $.getJSON(locahost+'/association/quitAssociation/?association_id='+assId+"&token="+token,function(data, status, xhr){
+            is_alipay(false);
+            if(data.code == "200"){
+                //退出成功
+                window.location.href="myass.html";
+            }else{
+                fb_alert(data.detail);
+
+            }
+        })
+    })
+   
+  })
+  // 退出社团 E
+  // 关于社团
+  $(".aboutAssButton").click(function(){
+    $(".aboutAss").fadeIn(100);
+  })
+  $(".aboutAss .close").on("click",function(){
+    $(this).parents(".aboutAss").fadeOut(100);
+  })
+   // 关于社团
+  //获取成员 S
+  function getMember(page){
+    $(window).off("scroll");
+    $(".ass_personnel").append("<div id='loading'>正在玩命的加载中...</div>");
+    page = page == undefined ? 1 : page;
+    $.getJSON(locahost+'/association/getAssociationMember/?association_id='+assId+"&token="+token+"&page="+page,function(data, status, xhr){
+          $(window).off("scroll");
+          if(data.code == "200"){
+            $("#loading").remove();
+            var html ='';
+             $.each(data.data,function(a,b){
+                if(boss){
+                  html += '<dd class="move">\
+                          <div class="img"><img src="'+b.avatar_url+'" alt=""/></div>\
+                          <div class="test">\
+                              <p>'+b.nickname+' · '+b.association_level+'（'+b.realname+'）</p>\
+                          </div>\
+                          <div class="dd_power" level='+b.level+' uid='+b.uid+'>\
+                            <div class="setZ">\
+                                设置<br/>职位\
+                            </div>\
+                            <div class="exitS" onclick="flag_dele(this)">\
+                                请出<br/>社团\
+                            </div>\
+                        </div>\
+                      </dd>';
+                }else{
+                   html += '<dd >\
+                              <div class="img"><img src="'+b.avatar_url+'" alt=""/></div>\
+                              <div class="test">\
+                                  <p>'+b.nickname+' · '+b.association_level+'（'+b.realname+'）</p>\
+                              </div>\
+                          </dd>';
+                }
+                
+             })
+             $(".ass_personnel").append(html);
+             if(boss == 1){
+              $("[level='1']").parents("dd").removeClass("move");
+             }else if(boss == 2){
+              $("[level='1'],[level='2']").parents("dd").removeClass("move");
+
+             }
+             if(data.data[0] == undefined || data.data.length < pageNum){
+                //没数据
+                 $(".ass_personnel").append("<div id='loaded'>我是有底线的</div>");
+                
+             }else{
+               $(window).on("scroll",function(){   
+                    if($(window).scrollTop()+50>=$(document).height()-$(window).height()){
+                      //到底
+                      getMember(++page);
+                    }
+                })
+             }
+          }
+        })
+  }
+  //获取成员 E
+  /*检查新公告和成员 S*/
+    (function checkNewNotice(){
+        $.getJSON(locahost+'/association/checkNewNotice/?association_id='+assId+"&token="+token,function(data, status, xhr){
+            if(data.code == "200"){
+                //有新公告和新待审核成员
+                $('[data-name="Notice"],[data-name="member"]').append("<span></span>")
+            }else if(data.code == "201"){
+              //有新公告
+                $('[data-name="Notice"]').append("<span></span>")
+
+            }else if(data.code == "202"){
+                //有新待审核成员"
+                $('[data-name="member"]').append("<span></span>")
+
+            }
+        })
+    })()
+  /*检查新公告和成员 E*/
+
+   // 右上角弹出 S
+  $(".spot").on("click",function(){
+    $(".spot_fun").fadeToggle(200);
+  })
+   // 右上角弹出 E
+   var uid; //当前设置人的id
+  // 唤起职位选择 S
+  $(".ass_personnel").on("click",".setZ",function(){
+      uid = $(this).parents(".dd_power").attr("uid");
+      $(".job").show();
+  })
+  // 唤起职位选择 E
+  // 取消职位选择 S
+  $(".job .job_close").on("click",function(){
+      $(".job").hide();
+  })
+  // 取消职位选择 E
+  // 设置职位 S
+  $(".job").on("click","li",function(){
+      var val = $(this).attr("val");
+        is_alipay(true);
+       $.getJSON(locahost+'/association/updateMemberLevel/?association_id='+assId+"&token="+token+"&uid="+uid+"&level="+val,function(data, status, xhr){   
+            if(data.code == "200"){
+              is_alipay(false);
+              $(".job").hide();
+              fb_alert(fb_error["ass_03"]);
+            }else{
+              is_alipay(false);
+              $(".job").hide();
+              fb_alert(data.detail);
+            }
+        })
+      
+  })
+  // 设置职位 E
+  // 关闭公告 S
+  $(".notice .close").on("click",function(){
+    $(this).parents(".notice").fadeOut(100);
+  })
+  // 关闭公告 E
+  // 打开公告 S
+  $('[data-name="Notice"]').on("click",function(){
+    $(".notice").fadeIn(100);
+    /*储存最后获取时间*/
+     $.getJSON(locahost+'/association/getAssociationNotice/?association_id='+assId+"&token="+token,function(data, status, xhr){   
+            if(data.code == "200"){
+
+            }
+        })
+  })
+  // 打开公告 E
+  // 踢人 S
+  function flag_dele(obj){
+    var that = $(obj),
+    uid = that.parents(".dd_power").attr("uid");
+    alert_flag('是否踢出该成员？');
+    $(".flag_true").on("click",function(){
+      deleteMember(uid);
+      $(".flag_A").remove();
+    })
+  }
+  function deleteMember(uid){
+     $.getJSON(locahost+'/association/deleteMember/?association_id='+assId+"&uid="+uid+"&token="+token,function(data, status, xhr){   
+            if(data.code == "200"){
+              //踢出成功
+              $("[uid='"+uid+"']").parents("dd").animate({"opacity":0},200,function(){$(this).hide()})
+            }
+        })
+  }
+  // 踢人 E
+  /*右移*/
+  $(document).on("touchstart",".move",function(e){touchSatrtFunc(e,$(this))})
+  $(document).on("touchmove",".move",touchMoveFunc)
+  $(document).on("touchend",".move",touchEndFunc)
+  var dd_power;
+  function touchSatrtFunc(e,that){
+      dd_power = that;
+      var x = e.originalEvent.targetTouches[0].clientX; //页面触点X坐标
+      sX = x;
+      nowX = x;
+      w = 0;
+      dd_power.siblings(".move").find(".dd_power").css({"transform":"translate(0,0)","-ms-transform":"translate0,0)","-moz-transform":"translate(0,0)","-webkit-transform":"translate(0,0)","-o-transform":"translate(0,0)",})
+  }
+  function touchMoveFunc(e){
+       var x = e.originalEvent.targetTouches[0].clientX; //页面触点X坐标
+        //到达顶部
+        x = x-nowX;
+        if(-(x/2) > $(".dd_power").width()){
+          x = -$(".dd_power").width()*2;
+        }
+        dd_power.find(".dd_power").css({"transition":"all 0s","-webkit-transition":"all 0s"})
+           dd_power.find(".dd_power").css({"transform":"translate("+x/2+"px,0)","-ms-transform":"translate("+x/2+"px,0)","-moz-transform":"translate("+x/2+"px,0)","-webkit-transform":"translate("+x/2+"px,0)","-o-transform":"translate("+x/2+"px,0)",});
+      
+
+  }
+  function touchEndFunc(e){
+    var x = e.originalEvent.changedTouches[0].pageX; //页面触点X坐标 
+        x = x-sX;
+        dd_power.find(".dd_power").css({"transition":"all 0.2s","-webkit-transition":"all 0.2s"})
+        if(-x > $(".dd_power").width()){
+          x = -$(".dd_power").width()*2;
+          dd_power.find(".dd_power").css({"transform":"translate("+x/2+"px,0)","-ms-transform":"translate("+x/2+"px,0)","-moz-transform":"translate("+x/2+"px,0)","-webkit-transform":"translate("+x/2+"px,0)","-o-transform":"translate("+x/2+"px,0)",})
+        }else{
+          x=0;
+          dd_power.find(".dd_power").css({"transform":"translate("+x/2+"px,0)","-ms-transform":"translate("+x/2+"px,0)","-moz-transform":"translate("+x/2+"px,0)","-webkit-transform":"translate("+x/2+"px,0)","-o-transform":"translate("+x/2+"px,0)",})
+        }
+  }
+
+$(".setZ").click(function(){
+  alert(1)
+})
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

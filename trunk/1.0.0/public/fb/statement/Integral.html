@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#fff;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta content="telephone=no" name="format-detection" />
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- UC应用模式 --> 
+  <meta name="browsermode" content="application">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- UC禁止放大字体 -->
+  <meta name="wap-font-scale" content="no">
+  <title>校汇Plus | 校汇 </title>
+  <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活" />
+  <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+  <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+  <link rel="shortcut icon" href="../icon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/index.css">
+  <link rel="stylesheet" type="text/css" href="../css/info.css">
+  <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/common.js"></script>
+  <script type="text/javascript" src="../js/director.js"></script>
+</head>
+<body class='bge8' >
+  <div class="header_title">
+      <p>积分说明</p>
+      <div class="return" onclick="returnUp()">
+  </div>
+  </div>
+	<section class='main pt1' >
+    <section id="mypoint">
+    <div class="mypoint-container">
+      
+        <div class="container-bottom">
+          <div class="grade-rule">
+            <dt>一、积分等级</dt>
+            <div class="grade-container">
+              <div class="grade-item">
+                <div class="ig grade-container-left">等级</div>
+                <div class="ig grade-container-right">积分值</div>
+              </div>
+              
+            </div>
+          </div>
+
+          <div class="grade-get-way">
+            <dt>二、积分获取途径</dt>
+            <div class="way-container">
+              <div class="way-item">
+                <div class="wg way-container-left">等级</div>
+                <div class="wg way-container-right">积分值</div>
+              </div>
+              
+            </div>
+          </div>
+
+          <div class="payattention">
+            <dt>三、注意</dt>
+            <dd>1、每日总积分上限为10分,接、发单次数不限,超出部分不计分;</dd>
+            <dd>2、相同的发单者和接单者的发、接单的数量不能超过3次/天;</dd>
+            <dd>3、违反校园任务声明条例积分清零+封号(时间视违反的严重程度而定);</dd>
+          </div>
+        </div>
+      </div>
+    </section>
+
+	</section>
+</body>
+<script>
+  var is_app=0;
+  var android_token = "";
+  if(GetString("device") == "android"){
+    is_app = 1;
+    android_token = JSON.parse(window.feibu.interactive('{"action":"getToken"}')).value;  //获取客户端token;
+    $(".header_title").hide();
+    $(".main").removeClass("pt1");
+    //$(".write-container").css("marginTop","0");
+  }
+
+  //验证实名
+  if(is_app){
+    var token = android_token;
+  }else{
+    var token = window.localStorage.token;
+  }
+    
+  loading(true);
+  explainGet()
+  function explainGet(){
+    loading(false);
+      var grade_html = "",wap_html ="";
+      $.post(locahost+'/integral/integral_explain/?token='+token,  function(data){
+               if(data.code == 2001){
+                    fb_alert(fb_error["2001"])
+                    window.location.href = "../login.html";
+                    return;
+                 }
+                 if(data.code == "200"){ 
+                  $.each(data.data.level_explain,function(a,b){
+                    grade_html += '<div class="specify grade-item">\
+                        <div class="item-second ig grade-container-left">LV'+b.level+'</div>\
+                        <div class="item-second ig grade-container-right">'+b.integral+'</div>\
+                      </div>'
+                  })
+                  $.each(data.data.integral_explain,function(a,b){
+                    wap_html += '<div class="way-specify way-item">\
+                    <div class="way-item-second wg grade-container-left">'+b.obtain_type+'</div>\
+                    <div class="way-item-second wg grade-container-right">'+b.score+'</div>\
+                  </div>'
+                      })
+                  $(".grade-container").append(grade_html)
+                  $(".way-container").append(wap_html)
+                  setItem("grade_html",grade_html)
+                  setItem("wap_html",wap_html)
+                  }
+             })
+    }
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
