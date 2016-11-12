@@ -1,0 +1,86 @@
+<div class="header_title">
+          <p>忘记支付密码</p>
+          <div class="return" onclick="returnUp()">
+            </div>
+</div>
+<div class="forgetWalletPass">
+   <div class="reg pt1">
+      <div class="outer-main">
+        <div class="main">
+          <form method="POST" class="forget_form">
+            <input type="password" id="reg_password" placeholder="设置新的六位纯数字钱包支付密码" autocomplete="off" maxlength="6">
+            <div class="code_box">
+              <input type="text" id="reg_code" placeholder="请输入验证码" autocomplete="off">
+              <div class="getcode">获取验证码</div>  
+            </div>
+            <input type="submit" value="下一步" id="reg">
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+<script type="text/javascript">
+  var token = window.localStorage.token;
+   //验证码获取 S
+   $('.getcode').on('click',getcode)
+   function getcode(){
+      $('.getcode').off('click',getcode)
+      $.get(locahost+'/user/sendResetPayPasswordSMS/?token='+token,  function(data){
+           if(data.code == 2001){
+              fb_alert(fb_error["2001"])
+              window.location.href = "../login.html";
+              return;
+           }
+           if(data.code == "200"){    
+              fb_alert("发送验证码成功")
+           }
+      })
+        var _this = $(this);
+        _this.html('120s后可重新发生');
+        var i = 120;
+        var time = setInterval(function(){
+            i--;
+            _this.html(i+'s后可重新发送');
+            if(i == 0){
+               _this.html('获取验证码');
+               clearInterval(time);
+               $('.getcode').on('click',getcode)
+            }
+        },1000)
+       }
+
+  $(".forget_form").on("submit",forget_submit)
+  function  forget_submit(){
+    var pay_password = $("#reg_password").val();
+    var sms_code = $("#reg_code").val();
+    if(isNaN(pay_password)){
+       fb_alert(fb_error["1005"]);
+       return false;
+    }else if(sms_code.length != 6){
+       fb_alert(fb_error["1006"]);
+        return false;
+    }
+    is_alipay(true)
+    $.post(locahost+'/user/resetPayPassword/?token='+token+'&pay_password='+$.md5(pay_password)+'&sms_code='+sms_code,  function(data){
+    is_alipay(false)
+
+         if(data.code == 2001){
+              fb_alert(fb_error["2001"])
+              window.location.href = "../login.html";
+              return false;
+           }else if(data.code == 2004){
+              //短信验证码错误，请重新输入或重新获取
+              fb_alert(fb_error["1008"])
+               return false;
+           }
+           if(data.code == "200"){    
+              fb_alert(fb_error["1007"]);
+               setTimeout(function(){
+                  window.history.go(-1);
+                 },1000)
+           }
+    })
+    return false;
+  } 
+
+</script>
