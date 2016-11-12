@@ -1,0 +1,60 @@
+<div class="header_title">
+      <p>绑定支付宝账号</p>
+      <div class="return" onclick="returnUp()">
+      </div>
+</div>
+<div class="setAlipay pt1">
+    <div class="setAlipay_title">请绑定提现支付宝账号</div>
+    <form id="setAlipay_form">
+      <div class="input_b">
+        <label for="">支付宝姓名</label>
+        <input type="text" placeholder="" class="alipay_name"/>
+      </div>
+      <div class="input_b">
+        <label for="">支付宝账号</label>
+        <input type="text" placeholder="" class="alipay_card"/>
+      </div>
+      <aside>注：目前只支持支付宝账号提现，不便之处敬请谅解</aside>
+    </form>
+    <div class="setAlipay_submit button_active">
+      绑定
+    </div>
+</div>
+<script type="text/javascript">
+    var token = window.localStorage.token;
+    $(".setAlipay_submit").on("click",setAlipay_submit)
+    function setAlipay_submit(){
+     var alipay_name = $(".alipay_name").val(); 
+     var alipay_card = $(".alipay_card").val(); 
+     $(".setAlipay_submit").off("click",setAlipay_submit)
+     if(alipay_name.length == 0 || alipay_card.length == 0){
+      fb_alert(fb_error["8"])
+     }else{
+        is_alipay(true);
+        $.post(locahost+'/user/bindAlipay/',{"token":token,"alipay_name":alipay_name,"alipay":alipay_card},  function(data){
+             if(data.code == 2001){
+                  fb_alert(fb_error["2001"])
+                  window.location.href = "../login.html";
+                  return;
+               }
+               if(data.code == "200"){    
+                 fb_alert(fb_error["9"]);
+                 is_alipay(false);
+                 window.localStorage.alipayName = alipay_name;
+                 window.localStorage.alipayCard = alipay_card;
+                 setTimeout(function(){
+                    history.go(-1);
+                 },1000)
+
+               }else{
+                 fb_alert(data.detail);
+                 is_alipay(false);
+                  $(".setAlipay_submit").on("click",setAlipay_submit)
+
+               }
+        }).error(function(xhr,errorText,errorType){
+                alert('网络超时，请稍后再试')
+            });
+       }
+    }
+</script>

@@ -1,0 +1,108 @@
+<div class="mine">
+    <div class="outer_header">
+      <a class="checkSchool" onclick="fb_alert()">切换学校</a>
+      <a href="tape.html" class="setting"></a>
+      <div class="myprofile">
+        <a href="#/mine/myprofile">
+          <div class="img fl" data-name="mp_img"></div>
+          <div class="nameschoolname fl">
+            <div class="name" data-name="name">Marin</div>
+            <div class="schoolName" data-name="schoolName">广东农工商</div>
+          </div>
+        </a>
+      </div>
+      <ul class="power">
+        <li><a href="html/mytopic.html">我的校汇圈</a></li>
+        <li data-name="myWork"><a href="html/order.html" >我的任务</a></li>
+        <li><a href="">我的订单</a></li>
+      </ul>
+    </div>
+    <div class="my-outer-container">
+      <ul class="my-con">
+        <li><a href="html/mywallet.html">我的钱包</a></li>
+        <li><a href="html/mypoint.html">我的积分(<span data-name="integral" class="integral_num"></span>)</a></li>
+        <li><a href="html/myass.html">我的社团</a></li>
+      </ul>
+      <ul class="power-con">
+        <li><a href="">店铺收藏</a></li>
+      </ul>
+      <ul class="system-con">
+        <li data-name="smrz"><a href="html/certification.html">实名认证</a></li>
+        <li><a href="">分享</a></li>
+        <li><a href="html/setting.html">设置</a></li>
+      </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    loading(true)
+    mine();
+    inspect();
+    if(window.localStorage.inspect){
+      $('[data-name="myWork"]').addClass("on");
+    }
+    function mine(){
+      var info = window.localStorage.info;
+      if(online() && info != "undefined"){
+        //有缓存
+        loading(false) 
+        var data = JSON.parse(info);
+        $('[data-name="mp_img"]').html('<img src="'+data.avatar_url+'" alt="" / >')
+        $('[data-name="name"]').text(data.nickname)
+        $('[data-name="schoolName"]').text(data.college)
+        $('[data-name="integral"]').text(data.integral)
+      }else{
+        //ajax 
+        var token = window.localStorage["token"];
+      $.getJSON(locahost+'/user/getMyInfo/?token='+token,function(data){
+             loading(false) 
+            if(data.code == "403"){
+              window.location.href ="login.html#/login";
+              return false;
+            }else if(data.code == "2001"){
+              fb_alert("登陆超时")
+              window.location.href ="login.html#/login";
+              return false;
+            }
+            var data = data.data;
+            $('[data-name="mp_img"]').html('<img src="'+data.avatar_url+'" alt="" / >')
+            $('[data-name="name"]').text(data.nickname)
+            $('[data-name="schoolName"]').text(data.college)
+            $('[data-name="integral"]').text(data.integral)
+
+             setItem("info",JSON.stringify(data))
+         })
+      }
+    }
+    // 检查任务
+    function inspect(){
+      var token = window.localStorage.token;
+      $.get(locahost+'/order/remindOrder/?token='+token,function(data){
+        if(data.code == "403"){
+          window.location.href ="login.html#/login";
+          return false;
+        }else if(data.code == "200"){
+          /*有待完成任务*/
+          $('[data-name="myWork"]').addClass("on");
+          window.localStorage.inspect = true;
+        }else if(data.code == "403"){
+          /*没有待完成任务*/
+          $('[data-name="myWork"]').removeClass("on");
+          window.localStorage.inspect = false;
+        }
+
+       })
+    }
+    //检查是否实名
+   (function(){
+      var info = JSON.parse(window.localStorage.info);
+        if(info.is_auth == 0){ 
+        }else if(info.is_auth==1){
+          $("[ data-name='smrz']").hide();
+          return false;
+        }else if(info.is_auth==2){
+          $("[ data-name='smrz']").hide();
+          return false;
+        }
+    
+   })()
+</script>
