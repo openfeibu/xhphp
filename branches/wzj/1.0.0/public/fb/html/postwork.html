@@ -110,8 +110,16 @@
        		 $(".postwork_submit").off("click",postwork_submit);
        		 var token = window.localStorage.token;
              is_alipay(true)
-			$.post(locahost+'/order/createOrder/?token='+token+'&phone='+number_input+'&destination='+map_input+'&description='+post_textarea+'&fee='+money_input+'&pay_id='+pay_id+'&wap=1',  function(data){
-
+             var alipay_info = {
+                    "token":token,
+                    "phone":number_input,
+                    "destination":map_input,
+                    "description":post_textarea,
+                    "fee":money_input,
+                    "pay_id":pay_id,
+                    "wap":1,
+                }
+			$.post(locahost+'/order/createOrder/',alipay_info, function(data){
                     if(data.code == 2001){
                         fb_alert(fb_error["2001"])
                         window.location.href = "login.html";
@@ -242,7 +250,17 @@
                 var money_input = $(".money_input").val();
                 var map_input = $(".map_input").val();
                 var number_input = $(".number_input").val();
-                $.post(locahost+'/order/createOrder/?token='+token+'&phone='+number_input+'&destination='+map_input+'&description='+post_textarea+'&fee='+money_input+'&pay_id=3&wap=1&pay_password='+$.md5(wallet_pass),  function(data){
+                var alipay_info = {
+                    "token":token,
+                    "phone":number_input,
+                    "destination":map_input,
+                    "description":post_textarea,
+                    "fee":money_input,
+                    "pay_id":3,
+                    "wap":1,
+                    "pay_password":$.md5(wallet_pass)
+                };
+                $.post(locahost+'/order/createOrder/',alipay_info,  function(data){
                     if(data.code == 2001){
                         fb_alert(fb_error["2001"])
                         window.location.href = "login.html";
@@ -257,12 +275,11 @@
                     }else{
                         fb_alert(data.detail)
                     }
-                    is_alipay(false)
-
+                    is_alipay(false);
                 })
             }else{
                 for(var j = 0,c=wallet_pass.length ; j <c;j++ ){
-                    $(".payPassVal span").eq(j).text("*")
+                    $(".payPassVal span").eq(j).text("*");
                 }
             }
           })
