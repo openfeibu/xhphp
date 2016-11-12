@@ -61,7 +61,7 @@
             
           </ul>
           <dl class="ass_personnel">
-            <dt>社团成员<span>(右滑管理成员)</span></dt>
+            <dt>社团成员<span>(点击管理成员)</span></dt>
             
           </dl>
           <div class="setZW">
@@ -95,17 +95,18 @@
       <div class="job">
           <div class="job_title">请选择职位</div>
           <ul>
+             
           </ul>
           <div class="job_close">取消</div>
       </div>
 </body>
 
 <script>
-  var token = window.localStorage.token;
-  var assId = GetString("assId"),
+  var token = window.localStorage.token,
+  assId = GetString("assId"),
   pageNum = 20,
-  boss,
-  ZW=[];
+  uid, //当前设置人的id
+  boss;
   loading(true); //动画
   assGet();
   $(".postNotice a").click(function(){
@@ -132,12 +133,9 @@
                 //admin
                 $(".ass_power").append('<li data-name="member"><a href="checkMemberList.html?aid='+b.aid+'">成员审核</a></li>');
                 boss = 1;
-                $(".job ul").append("<li val='2'>副会长</li><li val='0'>成员</li>")
               }else if( b.level == 2 || b.level == 3){
                 $(".ass_power").append('<li data-name="member"><a href="checkMemberList.html?aid='+b.aid+'">成员审核</a></li>');
-                boss = 2;
-                $(".job ul").append("<li val='0'>成员</li>")
-                
+                boss = 2;            
               }else{
                 boss = 0;
                 $(".notice .postNotice").hide();
@@ -177,6 +175,14 @@
   })
    // 关于社团
   //获取成员 S
+                      // <div class="dd_power" >\
+                      //       <div class="setZ">\
+                      //           设置<br/>职位\
+                      //       </div>\
+                      //       <div class="exitS" onclick="flag_dele(this)">\
+                      //           请出<br/>社团\
+                      //       </div>\
+                      //   </div>\
   function getMember(page){
     $(window).off("scroll");
     $(".ass_personnel").append("<div id='loading'>正在玩命的加载中...</div>");
@@ -188,22 +194,14 @@
             var html ='';
              $.each(data.data,function(a,b){
                 if(boss){
-                  html += '<dd class="move">\
+                  html += '<dd class="move" level='+b.level+' uid='+b.uid+' name="'+b.realname+'" tel="'+b.mobile_no+'" >\
                           <div class="img"><img src="'+b.avatar_url+'" alt=""/></div>\
                           <div class="test">\
-                              <p>'+b.nickname+' · '+b.association_level+'（'+b.realname+'）</p>\
+                              <p>'+b.nickname+' · <span data-name="level">'+b.association_level+'</span>（'+b.realname+'）</p>\
                           </div>\
-                          <div class="dd_power" level='+b.level+' uid='+b.uid+'>\
-                            <div class="setZ">\
-                                设置<br/>职位\
-                            </div>\
-                            <div class="exitS" onclick="flag_dele(this)">\
-                                请出<br/>社团\
-                            </div>\
-                        </div>\
                       </dd>';
                 }else{
-                   html += '<dd >\
+                   html += '<dd level='+b.level+' uid='+b.uid+'>\
                               <div class="img"><img src="'+b.avatar_url+'" alt=""/></div>\
                               <div class="test">\
                                   <p>'+b.nickname+' · '+b.association_level+'（'+b.realname+'）</p>\
@@ -259,12 +257,12 @@
     $(".spot_fun").fadeToggle(200);
   })
    // 右上角弹出 E
-   var uid; //当前设置人的id
+
   // 唤起职位选择 S
-  $(".ass_personnel").on("click",".setZ",function(){
-      uid = $(this).parents(".dd_power").attr("uid");
-      $(".job").show();
-  })
+  // $(".ass_personnel").on("click",".setZ",function(){
+  //     uid = $(this).parents(".dd_power").attr("uid");
+  //     $(".job").show();
+  // })
   // 唤起职位选择 E
   // 取消职位选择 S
   $(".job .job_close").on("click",function(){
@@ -272,14 +270,19 @@
   })
   // 取消职位选择 E
   // 设置职位 S
-  $(".job").on("click","li",function(){
-      var val = $(this).attr("val");
+  function setZ(level){
+      var level = level;
         is_alipay(true);
-       $.getJSON(locahost+'/association/updateMemberLevel/?association_id='+assId+"&token="+token+"&uid="+uid+"&level="+val,function(data, status, xhr){   
+       $.getJSON(locahost+'/association/updateMemberLevel/?association_id='+assId+"&token="+token+"&uid="+uid+"&level="+level,function(data, status, xhr){   
             if(data.code == "200"){
               is_alipay(false);
               $(".job").hide();
               fb_alert(fb_error["ass_03"]);
+              if(level == 0){
+                 $('[uid="'+uid+'"]').attr("level","0").find('[data-name="level"]').text("成员");
+               }else if(level == 2){
+                 $('[uid="'+uid+'"]').attr("level","2").find('[data-name="level"]').text("管理员")
+               }
             }else{
               is_alipay(false);
               $(".job").hide();
@@ -287,7 +290,7 @@
             }
         })
       
-  })
+  }
   // 设置职位 E
   // 关闭公告 S
   $(".notice .close").on("click",function(){
@@ -306,9 +309,7 @@
   })
   // 打开公告 E
   // 踢人 S
-  function flag_dele(obj){
-    var that = $(obj),
-    uid = that.parents(".dd_power").attr("uid");
+  function flag_dele(){
     alert_flag('是否踢出该成员？');
     $(".flag_true").on("click",function(){
       deleteMember(uid);
@@ -319,52 +320,75 @@
      $.getJSON(locahost+'/association/deleteMember/?association_id='+assId+"&uid="+uid+"&token="+token,function(data, status, xhr){   
             if(data.code == "200"){
               //踢出成功
-              $("[uid='"+uid+"']").parents("dd").animate({"opacity":0},200,function(){$(this).hide()})
+              $("[uid='"+uid+"']").animate({"opacity":0},200,function(){$(this).hide()});
             }
+            $(".job").hide();
         })
   }
+
+  $(".ass_personnel").on("click","dd",function(){  
+
+    uid = $(this).attr("uid");
+    var name = $(this).attr("name");
+    var level = $(this).attr("level");
+    var tel = $(this).attr("tel");
+    $(".job .job_title").text("管理"+name);
+
+    var powerCon1 = " <li class='tell' ><a  href='tel:"+tel+"'>联系电话</a></li><li onclick='setZ(2)'>设置为管理员</li><li onclick='flag_dele()'>请出社团</li>";
+    var powerCon2 = " <li class='tell'  ><a  href='tel:"+tel+"'>联系电话</a></li><li onclick='setZ(0)'>设置为成员</li><li onclick='flag_dele()'>请出社团</li>";
+    var powerCon3 = " <li class='tell'  ><a  href='tel:"+tel+"'>联系电话</a></li><li onclick='flag_dele()'>请出社团</li>";
+    var powerCon4 = " <li class='tell'  ><a  href='tel:"+tel+"'>联系电话</a></li>";
+    if(boss==1 && level == 0){
+      $(".job ul").html(powerCon1);
+    }else if(boss==1 && level == 2 || level == 3 ){
+      $(".job ul").html(powerCon2);
+    }else if(boss==2 && level == 0){
+      $(".job ul").html(powerCon3);
+    }else if(boss==0 ){
+      $(".job ul").html(powerCon4);
+    }
+    $(".job").show();
+  })
   // 踢人 E
   /*右移*/
-  $(document).on("touchstart",".move",function(e){touchSatrtFunc(e,$(this))})
-  $(document).on("touchmove",".move",touchMoveFunc)
-  $(document).on("touchend",".move",touchEndFunc)
-  var dd_power;
-  function touchSatrtFunc(e,that){
-      dd_power = that;
-      var x = e.originalEvent.targetTouches[0].clientX; //页面触点X坐标
-      sX = x;
-      nowX = x;
-      w = 0;
-      dd_power.siblings(".move").find(".dd_power").css({"transform":"translate(0,0)","-ms-transform":"translate0,0)","-moz-transform":"translate(0,0)","-webkit-transform":"translate(0,0)","-o-transform":"translate(0,0)",})
-  }
-  function touchMoveFunc(e){
-       var x = e.originalEvent.targetTouches[0].clientX; //页面触点X坐标
-        //到达顶部
-        x = x-nowX;
-        if(-(x/2) > $(".dd_power").width()){
-          x = -$(".dd_power").width()*2;
-        }
-        dd_power.find(".dd_power").css({"transition":"all 0s","-webkit-transition":"all 0s"})
-           dd_power.find(".dd_power").css({"transform":"translate("+x/2+"px,0)","-ms-transform":"translate("+x/2+"px,0)","-moz-transform":"translate("+x/2+"px,0)","-webkit-transform":"translate("+x/2+"px,0)","-o-transform":"translate("+x/2+"px,0)",});
+  // $(document).on("touchstart",".move",function(e){touchSatrtFunc(e,$(this))})
+  // $(document).on("touchmove",".move",touchMoveFunc)
+  // $(document).on("touchend",".move",touchEndFunc)
+  // var dd_power;
+  // function touchSatrtFunc(e,that){
+  //     dd_power = that;
+  //     var x = e.originalEvent.targetTouches[0].clientX; //页面触点X坐标
+  //     sX = x;
+  //     nowX = x;
+  //     w = 0;
+  //     dd_power.siblings(".move").find(".dd_power").css({"transform":"translate(0,0)","-ms-transform":"translate0,0)","-moz-transform":"translate(0,0)","-webkit-transform":"translate(0,0)","-o-transform":"translate(0,0)",})
+  // }
+  // function touchMoveFunc(e){
+  //      var x = e.originalEvent.targetTouches[0].clientX; //页面触点X坐标
+  //       //到达顶部
+  //       x = x-nowX;
+  //       if(-(x/2) > $(".dd_power").width()){
+  //         x = -$(".dd_power").width()*2;
+  //       }
+  //       dd_power.find(".dd_power").css({"transition":"all 0s","-webkit-transition":"all 0s"})
+  //          dd_power.find(".dd_power").css({"transform":"translate("+x/2+"px,0)","-ms-transform":"translate("+x/2+"px,0)","-moz-transform":"translate("+x/2+"px,0)","-webkit-transform":"translate("+x/2+"px,0)","-o-transform":"translate("+x/2+"px,0)",});
       
 
-  }
-  function touchEndFunc(e){
-    var x = e.originalEvent.changedTouches[0].pageX; //页面触点X坐标 
-        x = x-sX;
-        dd_power.find(".dd_power").css({"transition":"all 0.2s","-webkit-transition":"all 0.2s"})
-        if(-x > $(".dd_power").width()){
-          x = -$(".dd_power").width()*2;
-          dd_power.find(".dd_power").css({"transform":"translate("+x/2+"px,0)","-ms-transform":"translate("+x/2+"px,0)","-moz-transform":"translate("+x/2+"px,0)","-webkit-transform":"translate("+x/2+"px,0)","-o-transform":"translate("+x/2+"px,0)",})
-        }else{
-          x=0;
-          dd_power.find(".dd_power").css({"transform":"translate("+x/2+"px,0)","-ms-transform":"translate("+x/2+"px,0)","-moz-transform":"translate("+x/2+"px,0)","-webkit-transform":"translate("+x/2+"px,0)","-o-transform":"translate("+x/2+"px,0)",})
-        }
-  }
+  // }
+  // function touchEndFunc(e){
+  //   var x = e.originalEvent.changedTouches[0].pageX; //页面触点X坐标 
+  //       x = x-sX;
+  //       dd_power.find(".dd_power").css({"transition":"all 0.2s","-webkit-transition":"all 0.2s"})
+  //       if(-x > $(".dd_power").width()){
+  //         x = -$(".dd_power").width()*2;
+  //         dd_power.find(".dd_power").css({"transform":"translate("+x/2+"px,0)","-ms-transform":"translate("+x/2+"px,0)","-moz-transform":"translate("+x/2+"px,0)","-webkit-transform":"translate("+x/2+"px,0)","-o-transform":"translate("+x/2+"px,0)",})
+  //       }else{
+  //         x=0;
+  //         dd_power.find(".dd_power").css({"transform":"translate("+x/2+"px,0)","-ms-transform":"translate("+x/2+"px,0)","-moz-transform":"translate("+x/2+"px,0)","-webkit-transform":"translate("+x/2+"px,0)","-o-transform":"translate("+x/2+"px,0)",})
+  //       }
+  // }
 
-$(".setZ").click(function(){
-  alert(1)
-})
+
 
 </script>
 </html>
