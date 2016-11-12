@@ -1,0 +1,46 @@
+        <div class="header_title">
+          <p>支付密码管理</p>
+          <div class="return" onclick="returnUp()">
+            </div>
+        </div>
+        <div class="mywallet pt1">      
+          <ul>
+           <li><a href="#/passWord/updataWalletPass"><label for="">修改支付密码</label></a></li> 
+           <li><a href="#/passWord/forgetWalletPass"><label for="">忘记支付密码</label></a></li>
+          </ul>
+        </div>
+    <script type="text/javascript">
+            router.on("/passWord/updataWalletPass",updataWalletPass)
+            router.on("/passWord/forgetWalletPass",forgetWalletPass)
+            function updataWalletPass(){
+               $(".walletInline").html("");
+                routDom($(".walletInline"))  
+                $.get('updataWalletPass.html',function(data){
+                  $(".walletInline").html(data)
+                })
+            }
+            function forgetWalletPass(){
+               $(".walletInline").html("");
+                routDom($(".walletInline"))  
+                $.get('forgetWalletPass.html',function(data){
+                  $(".walletInline").html(data)
+                })
+            }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
