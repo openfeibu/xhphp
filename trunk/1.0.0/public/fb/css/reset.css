@@ -1,0 +1,87 @@
+html { font-family:"Microsoft Yahei", Helvetica, STHeiTi, Arial, sans-serif; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; font-size:40px; }
+body { margin: 0; overflow-x: hidden; -webkit-overflow-scrolling: touch;font-size: 0.26rem;max-width: 750px;margin:0 auto; position: relative;}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
+a { background: transparent; text-decoration: none; color: #333;display:block; }
+a:active { outline: 0;vertical-align:  }
+b, strong { font-weight: bold; }
+dfn { font-style:normal;}
+img { border: 0; vertical-align: middle; }
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent; /* For some Androids */
+        outline: none;
+}
+input,textarea,button,p{ border: 0; margin: 0; padding: 0; }
+input {-webkit-appearance:none; /*去除input默认样式*/border-radius: 0;}
+textarea { resize: none;}
+table { border-collapse: collapse; border-spacing: 0; }
+td, th { padding: 0; }
+h1, h2, h3, h4, h5, h6, figure, form, blockquote { margin: 0; font-weight: normal;font-size: .3rem;}
+ul, ol, li, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+input::-moz-placeholder, textarea::-moz-placeholder { color: #ccc; }
+input:-ms-input-placeholder, textarea:-ms-input-placeholder { color: #ccc; }
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #ccc; }
+#ClassB,#ClassC{display: none}
+.clearfix:after { content:" "; display:block; height:0; clear:both; visibility:hidden;}
+.fl{float: left;}
+.fr{float: right;}
+.pt1{padding-top: 1rem !important}
+.pt2{padding-top: 1.8rem !important}
+.pt0{padding-top: 0rem !important}
+.overflow{overflow: hidden;}
+.bgf{background: #fff;}
+header{position: fixed;height: 0.88rem;background: #7dd7a4;width: 100%;top:0;max-width: 750px;z-index: 1000}
+header p{text-align: center;line-height: 0.88rem;font-size: 0.36rem;color: #fff;}
+header .school{position: absolute;top:0;left:0.2rem;line-height: 0.88rem;color: #fff;font-size: 0.28rem;}
+header .search{position: absolute;top:0;right:0.2rem;line-height: 0.88rem;color: #fff;font-size: 0.28rem;}
+.hidefooter{position: fixed;height:1rem;background: #fff;width: 100%;bottom:0;max-width: 750px;z-index: 1001;border-top: 1px solid #fff;}
+footer{position: fixed;height:1rem;background: #fff;width: 100%;bottom:0;max-width: 750px;z-index: 1000;border-top: 1px solid #f5f5f5}
+footer ul{text-align: center;}
+footer li{display: inline-block;width: 18.5%;text-align: center;position: relative;}
+footer li.redSpot:after{width: 0.2rem;height: 0.2rem;content: "";border-radius: 50%;background: #ef7272;position: absolute;top:10%;right:20%;}
+footer li:nth-of-type(1){background: url("../images/footer01.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+footer li:nth-of-type(2){background: url("../images/footer03.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+footer li:nth-of-type(3){background: url("../images/footer02.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+footer li:nth-of-type(4){background: url("../images/footer04.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+footer li:nth-of-type(5){background: url("../images/footer05.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+footer li a{color: #aaaaaa;font-size: 0.25rem;padding-top: 0.65rem}
+footer li.on a{color: #5ac8fa}
+footer li:nth-of-type(1).on{background: url("../images/footer01h.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+footer li:nth-of-type(2).on{background: url("../images/footer03h.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+footer li:nth-of-type(3).on{background: url("../images/footer02h.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+footer li:nth-of-type(4).on{background: url("../images/footer04h.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+footer li:nth-of-type(5).on{background: url("../images/footer05h.png") no-repeat center 0.06rem ;background-size: auto 0.6rem}
+.bottom_aside{position: fixed;width: 50%;z-index: 9999;bottom: 0.5rem;left:25%;right: 0;background: rgba(0,0,0,0.8);border-radius: 0.2rem;min-height: 0.8rem;line-height: 0.8rem;color: #fff;text-align: center;font-size: 0.2rem}
+
+::-webkit-scrollbar {
+    width:0px;
+}
+
+.bigloading{width: 100%;height: 100%;position: fixed;z-index:998;background:#fff url("../images/loading.gif") no-repeat center;top:0;left:0;background-size:1rem auto;}
+.main{position: relative;width: 100%;}
+
+.box-shadow{  
+  -webkit-box-shadow: 1px 5px 10px #ccc;  
+  -moz-box-shadow: 1px 5px 10px #ccc;  
+  box-shadow: 1px 5px 10px #ccc;  
+}  
+
+.my-outer-container li:active{opacity: 0.6;}
+.myprofile_main > *:active{opacity: 0.6;}
+.club_info_con li:active{background: #f9f9f9;}
+.club_play_con li:active{background: #f9f9f9;}
+.work_content:active,.myOrderCon:active,.mywallet ul li:active,#setting .setting-container div:active,.about-item-container div:active,.comment_b:active,#social-news  .assList .ass_list .ass_box:active{background: #f9f9f9 !important}
+.schoolwork_de .postwork_footer .work_submit:active,.schoolwork_de .postwork_footer .postwork_button input:active,.ass_buttom:active,.add_button:active{opacity: 0.8}
+#setting .bottom .exit:active{background: #000}
+.header_title .return:active{background: rgba(255,255,255,0.2) url("../images/return.png") no-repeat center;background-size:0.24rem 0.43rem;}
+.button_active:active{background: #49b1e0;-webkit-box-shadow: 5px 10px 20px #666;  -moz-box-shadow: 5px 10px 20px #666;  box-shadow: 5px 10px 20px #666; }
+.opa_active:active{opacity: 0.8 }
+
+.flag_A{position: fixed;width: 100%;height: 100%;background: rgba(0,0,0,0.3);top:0;left:0;z-index: 998;margin:0 auto;}
+.flag_B{width: 80%;height: 3rem;background: #fff;border-radius: 0.1rem;position: relative;margin: 0 auto;top:50%;margin-top: -1.5rem;overflow: hidden;}
+.flag_B  .flag_box_con{height: 2rem;line-height: 2rem;text-align: center;font-size: 0.35rem;color:#5ac8fa;}
+.flag_B  .flag_close{width: 50%;float: left;height: 1rem;background: #f5f5f5;text-align: center;line-height: 1rem;font-style: 0.28rem;color: #333;}
+.flag_B  .flag_true{width: 50%;float: left;height: 1rem;background: #5ac8fa;text-align: center;line-height: 1rem;font-style: 0.28rem;color: #fff;}
+
+.alipay_alert{width: 100%;height: 100%;position: fixed;top:0;left:0;background: url("../images/alipay.gif") no-repeat center;background-size: 2.5rem auto;z-index: 1000}

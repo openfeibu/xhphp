@@ -1,0 +1,132 @@
+<div class="header_title">
+          <p>钱包明细</p>
+          <div class="return" onclick="returnUp()">
+            </div>
+</div>
+<div class="walletDetail_list pt1">
+   
+</div>
+<script type="text/javascript">
+  var token = window.localStorage.token;
+  loading(true);
+  var page = 1,pageNum=20;
+  $.getJSON(locahost+'/user/walletAccount/?token='+token+'&page='+page,function(data){
+      if(data.code == "2001"){
+            fb_alert("登陆超时")
+            window.location.href ="login.html#/login";
+            return false;
+        }else if(data.code == 110){
+          //第一页没数据
+          $("#loading").remove();
+          $("body").append('<div id="loaded">暂无数据</div>');
+
+        }
+      loading(false)
+      var walletHtml = '';
+      $.each(data.data,function(a,b){
+          if(b.wallet_type == '1'){
+            var money = '<div class="money on">'+b.fee+'</div>';
+          }else if(b.wallet_type == '-1'){
+            var money = '<div class="money ">'+b.fee+'</div>';
+
+          }
+          walletHtml += ' <div class="walletDetail_box">\
+                            <div class="name">\
+                              <p>'+b.trade_type+'</p>'+money+'</div>\
+                            <div class="detail_info">\
+                              <ul>\
+                                <li>\
+                                  <label for="">订单号</label>\
+                                  <span>'+b.out_trade_no+'</span>\
+                                </li>\
+                                <li>\
+                                  <label for="">服务费(元)</label>\
+                                  <span>'+b.service_fee+'</span>\
+                                </li>\
+                                <li>\
+                                  <label for="">钱包余额(元)</label>\
+                                  <span>'+b.wallet+'</span>\
+                                </li>\
+                                <li>\
+                                  <label for="">日期</label>\
+                                  <span>'+b.time+'</span>\
+                                </li>\
+                              </ul>\
+                            </div>\
+                        </div>';
+      })
+      $(".walletDetail_list").html(walletHtml);
+  })
+
+    $(window).on("scroll",function(){  
+      if($(window).scrollTop()+50>=$(document).height()-$(window).height()){
+        //到底
+        page++;
+        getwallet(page);
+      }          
+     })
+  function getwallet(page){
+    $(window).off("scroll")
+    $("body").append('<div id="loading">正在玩命加载中...</div>')
+    $.getJSON(locahost+'/user/walletAccount/?token='+token+'&page='+page,function(data){
+      if(data.code == "2001"){
+            fb_alert("登陆超时")
+            window.location.href ="login.html#/login";
+            return false;
+      }else if(data.code == 110){
+        //没数据
+        $("#loading").remove();
+        $("body").append('<div id="loaded">我是有底线的</div>');
+        return;
+      }
+      var walletHtml = '';
+      $.each(data.data,function(a,b){
+          if(b.wallet_type == '1'){
+            var money = '<div class="money on">'+b.fee+'</div>';
+          }else if(b.wallet_type == '-1'){
+            var money = '<div class="money ">'+b.fee+'</div>';
+
+          }
+          walletHtml += ' <div class="walletDetail_box">\
+                            <div class="name">\
+                              <p>'+b.trade_type+'</p>'+money+'</div>\
+                            <div class="detail_info">\
+                              <ul>\
+                                <li>\
+                                  <label for="">订单号</label>\
+                                  <span>'+b.out_trade_no+'</span>\
+                                </li>\
+                                <li>\
+                                  <label for="">服务费(元)</label>\
+                                  <span>'+b.service_fee+'</span>\
+                                </li>\
+                                <li>\
+                                  <label for="">钱包余额(元)</label>\
+                                  <span>'+b.wallet+'</span>\
+                                </li>\
+                                <li>\
+                                  <label for="">日期</label>\
+                                  <span>'+b.time+'</span>\
+                                </li>\
+                              </ul>\
+                            </div>\
+                        </div>';
+      })
+      $(".walletDetail_list").append(walletHtml);
+      if(data.data.length < pageNum){
+        //没数据
+        $("#loading").remove();
+        $("body").append('<div id="loaded">我是有底线的</div>');
+        return;
+      }
+       $(window).on("scroll",function(){  
+          if($(window).scrollTop()+50>=$(document).height()-$(window).height()){
+            //到底
+            page++;
+            getwallet(page);
+          }          
+         })
+  })
+  }
+
+</script>
