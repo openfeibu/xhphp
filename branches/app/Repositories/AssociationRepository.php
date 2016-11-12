@@ -255,6 +255,7 @@ class AssociationRepository
 						->leftJoin('activity','association.aid','=','activity.aid')
 						->whereNull('activity.deleted_at')
 						->groupBy('association.aid')
+						->orderBy('sort','desc')
 						->skip(20 * $page - 20)
 						->take(20)
                         ->get();
