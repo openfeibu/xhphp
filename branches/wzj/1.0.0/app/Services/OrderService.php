@@ -28,9 +28,9 @@ class OrderService
 	/**
 	 * 获取任务列表
 	 */
-	public function getOrderList($page)
+	public function getOrderList($page,$type)
 	{
-		$orders = $this->orderRepository->getOrderList($page);
+		$orders = $this->orderRepository->getOrderList($page,$type);
 		foreach( $orders as $key => $order )
 		{
 			$order->share_url = config('app.order_share_url').'?oid='.$order->oid;
@@ -204,7 +204,12 @@ class OrderService
 		}
 
 		//记录操作时间
-		$this->orderRepository->logOrderstatusChg($uid, $param['order_id'], $param['status']);
+		if(isset($param['courier_cancel'])&&$param['courier_cancel']){		
+			$this->orderRepository->logOrderstatusChg($uid, $param['order_id'], 'courier_cancel');
+		}else{
+			$this->orderRepository->logOrderstatusChg($uid, $param['order_id'], $param['status']);
+		}
+		
 
     }
     public function schedluUpdateOrderStatus ($param)
