@@ -135,7 +135,7 @@ class OrderController extends Controller
     public function createOrder(Request $request)
     {
 	    //检验是否已实名
-        $this->userService->isRealnameAuth();
+        /*$this->userService->isRealnameAuth();*/
 
         //检验请求参数
         $rule = [
