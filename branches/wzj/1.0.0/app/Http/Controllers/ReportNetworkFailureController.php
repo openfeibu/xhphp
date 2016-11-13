@@ -59,7 +59,6 @@ class ReportNetworkFailureController extends Controller
         $help->validateParameter($rule);
 		
 		$result = $this->network_login($request->account,$request->password,$help);
-		
 		if ($result['http_code'] == 302 && !empty($result['redirect_url'])) {
 			$uid = $user->getUser()->uid;
 			$networkReport = NetworkReport::where('uid',$uid)
