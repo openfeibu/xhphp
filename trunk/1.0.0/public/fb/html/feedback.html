@@ -1,0 +1,49 @@
+<section id="feedback">
+	<div class="header_title">
+		<p>意见反馈</p>
+		<div class="return"  onclick="returnUp()">
+		</div>
+	</div>
+	<div class="feedback-container">
+		<textarea class="feedback-input" rows="5" placeholder="让我们听到你的心声...(大于15个字符)"></textarea>
+		<div class="contact">
+			<p>请留下联系方式，以便我们和您取得联系</p>
+			<input type="text" placeholder="QQ/邮箱/手机号码" class="contact-type"/>
+		</div>
+		<div class="sub">
+			<button class="verify">确定</button>
+		</div>
+	</div>
+</section>
+<script type="text/javascript">
+	var token = window.localStorage.token;
+	$(".verify").on("click",postFeed)
+	function postFeed(){
+		var content = $(".feedback-input").val();
+		var contact_way = $(".contact-type").val();
+		if(content.length < 15 || contact_way.length <= 0){
+			fb_alert(fb_error["1100"]);
+			return;
+		}
+		$(".verify").off("click",postFeed)
+
+		 $.post(locahost+'/feedback/?token='+token+"&content="+content+"&contact_way="+contact_way,  function(data){
+
+	       if(data.code == 2001){
+	            fb_alert(fb_error["2001"])
+	            window.location.href = "../login.html";
+	            return;
+	         }
+	         if(data.code == "200"){    
+	           fb_alert(fb_error["1101"]);
+	           setTimeout(function(){
+	           	history.go(-1)
+	           },500)
+	           
+	         }
+      }).error(function(xhr,errorText,errorType){
+              alert('网络超时，请稍后再试')
+      });
+	}
+    
+</script>
