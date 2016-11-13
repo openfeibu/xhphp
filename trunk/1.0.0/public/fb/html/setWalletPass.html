@@ -1,0 +1,142 @@
+
+<div class="header_title">
+          <p>支付密码管理</p>
+          <div class="return" onclick="returnUp()">
+            </div>
+</div>
+<div class="setWalletPass pt1">
+    <div class="walletPass">
+        <div class="payPassVal">  
+            <div class="payPassVal_title">请设置钱包支付密码</div>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="payNum">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li></li>
+            <li>0</li>
+            <li>删除</li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+  var token = window.localStorage.token;
+  var wallet_pass01='';
+  var wallet_pass='';
+  var wallet_pass_flag=false;
+     $('.walletPass').on("click",".payNum li",function(){
+                var i = $(this).index(".payNum li");
+                var key;
+                switch (i) {
+                    case 0 : 
+                        key = 1;
+                        break;
+                    case 1 : 
+                        key = 2;
+                        break;
+                    case 2 : 
+                        key = 3;
+                        break;
+                    case 3 : 
+                        key = 4;
+                        break;
+                    case 4 : 
+                        key = 5;
+                        break;
+                    case 5 : 
+                        key = 6;
+                        break;
+                    case 6 : 
+                        key = 7;
+                        break;
+                    case 7 : 
+                        key = 8;
+                        break;
+                    case 8 : 
+                        key = 9;
+                        break;
+                    case 9 : 
+                        return;
+                    case 10 : 
+                        key = 0;
+                        break;
+                    case 11 : 
+                        key = 11;
+                        break;
+                }
+            if(key == 11){
+                //删除键
+                wallet_pass = wallet_pass.substr(0,wallet_pass.length-1);
+                $(".payPassVal span").text("")
+                for(var j = 0,c=wallet_pass.length ; j <c;j++ ){
+                    $(".payPassVal span").eq(j).text("*")
+                }
+                return;
+            }
+            wallet_pass += key;
+            if(wallet_pass.length == 6 ){
+                //满6位 执行支付
+                $(".payPassVal span").text("*");
+                if(!wallet_pass_flag){
+                  wallet_pass01 = wallet_pass;
+                  wallet_pass=''
+                  wallet_pass_flag=true;
+                  $(".payPassVal_title").text("请再输入支付密码");
+                  $(".payPassVal span").text("");
+                }else{
+                  is_alipay(true)
+                  if(wallet_pass01 == wallet_pass){
+                    
+                    $.post(locahost+"/user/setPayPassword/?token="+token+'&pay_password='+$.md5(wallet_pass),function(data){
+                      is_alipay(false)
+
+                      if(data.code == 2001){
+                        fb_alert(fb_error["2001"])
+                        window.location.href = "../login.html";
+                        return;
+                      }
+                      if(data.code == 200){
+                         fb_alert(fb_error["1001"]);
+                         window.localStorage.is_paypassword = 1;
+                        setTimeout(function(){
+                          window.history.go(-1);
+                         },1000)
+                      }else if(data.code == 110){
+                         fb_alert(fb_error["1002"])
+                         setTimeout(function(){
+                          window.history.go(-1);
+                         },1000)
+                      }
+                    })
+                  }else{
+                    is_alipay(false)
+                    fb_alert(fb_error["1000"])
+                    setTimeout(function(){
+                        window.history.go(-1);
+                    },1000)
+                  }
+                }
+                return;
+
+            }else{
+                for(var j = 0,c=wallet_pass.length ; j <c;j++ ){
+                    $(".payPassVal span").eq(j).text("*")
+                }
+            }
+
+          })
+
+
+</script>
