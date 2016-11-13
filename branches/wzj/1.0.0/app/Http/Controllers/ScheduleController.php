@@ -74,6 +74,11 @@ class ScheduleController extends Controller
 	        ];
 	        $this->orderService->schedluUpdateOrderStatus($param);
 
+	        $courier = $this->userService->getUserByUserID($order->courier_id);
+	        $owner = $this->userService->getUserByUserID($order->owner_id);
+	        
+			$this->gameService->freeOrder($owner,$order);
+			
 	        //纸条通知接单人
 	        $this->messageService->SystemMessage2SingleOne($order->courier_id, '您好，发单人已结算你完成的任务，赶紧去看看吧。');
 
@@ -81,8 +86,7 @@ class ScheduleController extends Controller
 
 			$this->pushService->PushUserTokenDevice('任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id);
 			
-	        $courier = $this->userService->getUserByUserID($order->courier_id);
-	        $owner = $this->userService->getUserByUserID($order->owner_id);
+	      
 			Log::debug('courier:'.$courier);
 			Log::debug('owner:'.$owner);
 	        //积分更新(给发单人加分)
