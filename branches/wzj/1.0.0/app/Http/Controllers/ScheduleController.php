@@ -14,6 +14,7 @@ use App\Http\Requests;
 use App\Services\HelpService;
 use App\Services\UserService;
 use App\Services\OrderService;
+use App\Services\GameService;
 use App\Services\MessageService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
@@ -36,6 +37,8 @@ class ScheduleController extends Controller
 
     protected $tradeAccountService;
 
+    protected $gameService;
+
     function __construct(OrderService $orderService,
                          UserService $userService,
                          HelpService $helpService,
@@ -43,7 +46,8 @@ class ScheduleController extends Controller
                          WalletService $walletService,
                          TelecomService $telecomService,
                          TradeAccountService $tradeAccountService,
-                         PushService $pushService)
+                         PushService $pushService,
+                         GameService $gameService)
     {
         $this->orderService = $orderService;
         $this->userService = $userService;
@@ -53,6 +57,7 @@ class ScheduleController extends Controller
         $this->telecomService = $telecomService;
         $this->messageService = $messageService;
         $this->pushService = $pushService;
+        $this->gameService = $gameService;
     }
     public function  autoFinishWork()
     {
