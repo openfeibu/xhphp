@@ -382,19 +382,19 @@
                var state = '<ul class="schedule clearfix">\
                               <li class="on">\
                                 <label>发单</label>\
-                                <p>'+b.time['new_time']+'</p>\
+                                <p>'+b.time['new_time'].substr(5,11)+'</p>\
                               </li>\
                               <li class="on">\
                                 <label>接单</label>\
-                                <p>'+b.time['accepted_time']+'</p>\
+                                <p>'+b.time['accepted_time'].substr(5,11)+'</p>\
                               </li>\
                               <li class="on">\
                                 <label>完成</label>\
-                                <p>'+b.time['finish_time']+'</p>\
+                                <p>'+b.time['finish_time'].substr(5,11)+'</p>\
                               </li>\
                               <li class="on">\
                                 <label>结算</label>\
-                                <p>'+b.time['completed_time']+'</p>\
+                                <p>'+b.time['completed_time'].substr(5,11)+'</p>\
                               </li>\
                           </ul>';
             }else if(b.time['finish_time']){
@@ -402,15 +402,15 @@
                var state = '<ul class="schedule clearfix">\
                               <li class="on">\
                                 <label>发单</label>\
-                                <p>'+b.time['new_time']+'</p>\
+                                <p>'+b.time['new_time'].substr(5,11)+'</p>\
                               </li>\
                               <li class="on">\
                                 <label>接单</label>\
-                                <p>'+b.time['accepted_time']+'</p>\
+                                <p>'+b.time['accepted_time'].substr(5,11)+'</p>\
                               </li>\
                               <li class="on">\
                                 <label>完成</label>\
-                                <p>'+b.time['finish_time']+'</p>\
+                                <p>'+b.time['finish_time'].substr(5,11)+'</p>\
                               </li>\
                               <li >\
                                 <label>结算</label>\
@@ -421,11 +421,11 @@
                var state = '<ul class="schedule clearfix">\
                               <li class="on">\
                                 <label>发单</label>\
-                                <p>'+b.time['new_time']+'</p>\
+                                <p>'+b.time['new_time'].substr(5,11)+'</p>\
                               </li>\
                               <li class="on">\
                                 <label>接单</label>\
-                                <p>'+b.time['accepted_time']+'</p>\
+                                <p>'+b.time['accepted_time'].substr(5,11)+'</p>\
                               </li>\
                               <li >\
                                 <label>完成</label>\
@@ -439,7 +439,7 @@
                var state = '<ul class="schedule clearfix">\
                               <li class="on">\
                                 <label>发单</label>\
-                                <p>'+b.time['new_time']+'</p>\
+                                <p>'+b.time['new_time'].substr(5,11)+'</p>\
                               </li>\
                               <li>\
                                 <label>接单</label>\

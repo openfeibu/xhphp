@@ -3,13 +3,13 @@
 </div>
 <div class='index_nav'>
   <div class="index_nav_title">
-    <p>发现</p>
+  	<p>发现</p>
   </div>
   <ul>
-    <li>
-      <a href="association.html">校园社团</a>  
-    </li>
-    <li>
+  	<li>
+  		<a href="association.html">校园社团</a>  
+  	</li>
+  	<li>
       <a href="html/soulSoother.html">秘制鸡汤</a>  
     </li>
     <li>
@@ -153,40 +153,40 @@
         $.getJSON(locahost+'/home/getADList/', function(data, status, xhr){
             if(data.code == "200"){
               clearLoading()//移除顶部动画
-            var dom='' ,htmldom='';
-            $.each(data.data,function(a,b){
+		        var dom='' ,htmldom='';
+		        $.each(data.data,function(a,b){
               if(b["ad_url"] != ""){
                 b["ad_url"] = 'href="'+b["ad_url"]+'"';
               }
-              dom += '<div class="swiper-slide"><a '+b["ad_url"]+'><img src="'+b["ad_image_url"]+'" alt="'+b["description"]+'"></a></div>'
-            })
-            htmldom='<div class="banner">'+
-                              '<div class="swiper-container swiper-container1"><div class="swiper-wrapper">'+dom+
-                                '</div><div class="swiper-pagination swiper-pagination1"></div>'+
-                              '</div>'+
-                        '</div>';
-            $(".index_main").html(htmldom);
-            setItem("banner",htmldom)//增加缓存
-              var mySwiper = new Swiper ('.swiper-container1', {
-                  loop: true,
-                  autoplay:3000,
+		          dom += '<div class="swiper-slide"><a '+b["ad_url"]+'><img src="'+b["ad_image_url"]+'" alt="'+b["description"]+'"></a></div>'
+		        })
+		        htmldom='<div class="banner">'+
+		                          '<div class="swiper-container swiper-container1"><div class="swiper-wrapper">'+dom+
+		                            '</div><div class="swiper-pagination swiper-pagination1"></div>'+
+		                          '</div>'+
+		                    '</div>';
+		        $(".index_main").html(htmldom);
+		        setItem("banner",htmldom)//增加缓存
+		          var mySwiper = new Swiper ('.swiper-container1', {
+		              loop: true,
+		              autoplay:3000,
                   autoHeight:true,
                    autoplayDisableOnInteraction : false,
-                  // 如果需要分页器
-                  pagination: '.swiper-pagination1',
-               }) 
-              loading(false); //移除动画
-          }
-        })
+		              // 如果需要分页器
+		              pagination: '.swiper-pagination1',
+		           }) 
+		          loading(false); //移除动画
+		      }
+		    })
 
   }
 
   function club_playGet(){
         $.getJSON(locahost+'/association/getHotActivities/',function(data, status, xhr){
-          if(data.code == "200"){
-            var dom='' ,htmldom='',img_url="";
-              $.each(data.data,function(a,value){
-                now = new Date().getTime();
+        	if(data.code == "200"){
+		        var dom='' ,htmldom='',img_url="";
+		          $.each(data.data,function(a,value){
+		            now = new Date().getTime();
               if (now > toUnix(value["start_time"])) {
                 var datadom = '<div class="ing"></div>';
                 var classT='startTime on';
@@ -213,28 +213,28 @@
                               <span class='user-num'>浏览 " + value.view_num + "</span>\
                               <span class='social-name'>" + value.aname + "</span>\
                             </div></div></a></div>";
-              })
-            htmldom='<div class="club_play_title"><i></i><p>社团活动</p></div>'+
-                    '<ul class="club_play_con">'+
-                        dom+
-                    '</div>';
-            $(".index_club_play").html(htmldom);
-             setItem("club_play",htmldom)//增加缓存
+		          })
+		        htmldom='<div class="club_play_title"><i></i><p>社团活动</p></div>'+
+		                '<ul class="club_play_con">'+
+		                    dom+
+		                '</div>';
+		        $(".index_club_play").html(htmldom);
+		         setItem("club_play",htmldom)//增加缓存
          }
         })
   
   }
  function noGet(){
         $.getJSON(locahost+'/home/getExtra/',function(data, status, xhr){
-        if(data.code == "200"){
-           var dom='' ,htmldom='';
-            $.each(data.data,function(a,b){
-              dom += '<li><p>'+b.extra+'</p></li>';
-            })
-          htmldom='<ul>'+dom+'</ul>';
-          $(".index_no").html(htmldom);
-           setItem("indexNo",htmldom)//增加缓存
-           }
+	    	if(data.code == "200"){
+	       	 var dom='' ,htmldom='';
+	          $.each(data.data,function(a,b){
+	            dom += '<li><p>'+b.extra+'</p></li>';
+	          })
+	        htmldom='<ul>'+dom+'</ul>';
+	        $(".index_no").html(htmldom);
+	         setItem("indexNo",htmldom)//增加缓存
+	         }
         })
   
   }
@@ -276,15 +276,15 @@
         //活动详情
    function associationActive(id){
         tab = "";
-        loading(true)
-        clearWindowScroll();
-        routDom($("#ClassC"));
+      	loading(true)
+      	clearWindowScroll();
+      	routDom($("#ClassC"));
         $("#ClassC").html('<div id="consult"><div class="header_title"><p>活动内容</p><div class="return" onclick="returnUp()"></div></div><div class="container "></div></div>').css({"background":"#fff","minHeight":$(window).height()-$(".header_title").height()})
-        $.getJSON(locahost+"/association/getActivity/?activity_id="+id,function(data){
-          if(data.code == 200){
-            loading(false)
-            var b = data.data;
-            var time=afterTime(b.created_at);
+      	$.getJSON(locahost+"/association/getActivity/?activity_id="+id,function(data){
+      		if(data.code == 200){
+      			loading(false)
+      			var b = data.data;
+      			var time=afterTime(b.created_at);
             var now = new Date().getTime();
               if (now > toUnix(b["start_time"])) {
                 var datadom = '<div class="ing"></div>';
@@ -293,11 +293,11 @@
                 var datadom = '<div class="will"></div>';
                 var classT='startTime';
               }
-            var html =datadom+'<div class="title">\
-                        <p>'+b.title+'</p>\
-                      </div>\
-                      <div class="content">'+b.content+'</div>\
-                      <div class="img-container"><img src="'+b["img_url"].split(",")[0]+'" /></div>\
+		      	var html =datadom+'<div class="title">\
+      									<p>'+b.title+'</p>\
+      								</div>\
+      								<div class="content">'+b.content+'</div>\
+      								<div class="img-container"><img src="'+b["img_url"].split(",")[0]+'" /></div>\
                       <div class="ass_bottom">\
                           <div class="map">活动地点：'+b.place+'</div>\
                           <div class="time">\
@@ -309,13 +309,13 @@
                             <span class="social-name">'+b.aname+'</span>\
                           </div>\
                       </div>'
-              
-            ;
-          $("#ClassC .container").html(html).css({"paddingBottom":$(".ass_bottom").height()})
-        }else{
-          fb_alert(data.detail)
-        }
-  })
+							
+						;
+					$("#ClassC .container").html(html).css({"paddingBottom":$(".ass_bottom").height()})
+				}else{
+					fb_alert(data.detail)
+				}
+	})
   }
   router.on("associationActive/:id",associationActive)
   refresh["home"]= home;

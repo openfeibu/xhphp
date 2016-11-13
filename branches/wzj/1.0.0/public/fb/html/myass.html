@@ -74,7 +74,6 @@
               loading(false);
               var htmldom='';
               $.each(data.data,function(a,b){
-                console.log(b.aid)
                 htmldom += '<div class="ass_box">\
                               <a href="assDe.html?assId='+b.aid+'">\
                               <div class="img"><img src="'+b.avatar_url+'" /></div>\
@@ -88,9 +87,7 @@
               })
                if(page != 1){
                   $('.ass_list').append(htmldom);
-
                 }else{
-
                   if(data.data.length == 0){
                     $(".noAss").show();
                     $(".assList").hide();

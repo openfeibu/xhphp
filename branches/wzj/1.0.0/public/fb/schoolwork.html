@@ -36,14 +36,6 @@
 		        work_get();
 		      }  
        };
-       
-     $(".postTopic").on("click",function(){
-     	if(!is_auth()){
-     		fb_alert(fb_error["12"]);
-     		return false;
-     	}
-     	
-     })
 
   	function work_get(page){
    		page = page == undefined ? 1 : page;

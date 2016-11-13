@@ -90,7 +90,7 @@ html{background: #f5f5f5;}
 .recommendOrders .order-item .order-up .test .name{float: left;font-size: 0.29rem;color: #555;}
 .recommendOrders .order-item .order-up .test .money{float: right;font-size: 0.29rem;color: #ffad99;}
 .recommendOrders .order-item .order-dowm{width: 80%;}
-.recommendOrders .order-item .order-dowm .con{color: #555555;font-size: 0.29rem;line-height: 0.4rem;height: 0.8rem;}
+.recommendOrders .order-item .order-dowm .con{color: #555555;font-size: 0.29rem;line-height: 0.4rem;height: 0.8rem;overflow: hidden;}
 .recommendOrders .order-item .order-dowm .map{color: #aaaaaa;font-size: 0.29rem;line-height: 0.3rem;text-align: right;}
 .recommendOrders .order-item .order-button{position: absolute;right:0.2rem;top:0.5rem;width: 1.2rem;height: 1.2rem;background: #ffad99;border-radius: 50%;line-height: 1.2rem;text-align: center;color: #fff;font-size: 0.63rem;}
 .orderList aside{height: 1rem;line-height: 1rem;color: #aaa;font-size: 0.28rem;text-align: center;}
@@ -162,9 +162,9 @@ html{background: #f5f5f5;}
 .topic_de .commen_list .name  b{color: #5ac8fa;font-weight: normal;}
 .topic_de .commen_list .commen_box{padding: 0.15rem 0;border-bottom: 1px solid #f5f5f5}
 .topic_de .commen_list .commen_box:nth-of-type(1){border-top: 1px solid #f5f5f5}
-.commen_input{background: #fff;height: 1.18rem;position: fixed;width: 100%;max-width: 750px;bottom: 0;z-index: -1;opacity: 0;border-top: 1px solid #ddd;}
+.commen_input{background: #fff;height: 1.18rem;position: absolute;width: 100%;max-width: 750px;top: 0;z-index: -1;opacity:0;border-top: 1px solid #ddd;}
 .commen_input .commen_input_text{width: 5.2rem;height: 0.82rem;float: left;margin:0.15rem 0.33rem;font-size: 0.33rem;color: #aaaaaa;text-indent: 0.1rem;border-radius: 5px;border:1px solid #ccc;line-height: 0.82rem;}
-.commen_input.on{z-index: 99999;opacity: 1}
+.commen_input.on{z-index: 99999;opacity: 1;}
 .commen_input .commen_input_submit{width: 1.25rem;height: 0.84rem;float: left;margin:0.15rem 0;font-size: 0.33rem;border-radius: 5px;text-align: center;color: #999;background: #f5f5f5;border:1px solid #f5f5f5;}
 .commen_input .commen_input_submit.active{color: #fff;background: #5ac8fa;border:1px solid #f5f5f5;}
 .postTopic{background: url("../images/postTopic.png") no-repeat right center;width: 1rem;height: 1rem;position: absolute;bottom: 0;right: 0.2rem;z-index:99;background-size: 50% 50%}
@@ -500,6 +500,7 @@ html{background: #f5f5f5;}
 .job{display: none;position: fixed;bottom: 0;left:0;right:0;margin:0 auto;max-width: 750px;width: 100%;background: #fff;border-top: 1px solid #ddd;}
 .job ul{padding:0 0.25rem;font-size: 0.3rem;}
 .job ul li{height: 0.8rem;background: #f5f5f5;margin:0.2rem;line-height: 0.8rem;text-align: center;color: #5ac8fa;}
+.job ul li a{color: #5ac8fa;}
 .job .job_title{height: 0.8rem;line-height: 0.8rem;text-align: center;font-size: 0.3rem;color: #333;}
 .job .job_close{height: 0.8rem;line-height: 0.8rem;text-align: center;font-size: 0.3rem;color: #fff;background: #ee7272;margin:0.2rem 0.45rem;}
 /*社团详情 E*/
