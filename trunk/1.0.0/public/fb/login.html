@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%;">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+	<meta content="telephone=no" name="format-detection" />
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- UC应用模式 --> 
+  <meta name="browsermode" content="application">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- UC禁止放大字体 -->
+  <meta name="wap-font-scale" content="no">
+	<title>校汇Plus | 校汇 </title>
+  <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活" />
+  <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+  <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+  <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script src="js/director.js"></script>
+  <script type="text/javascript" src="js/updata.js"></script>
+  <script type="text/javascript" src="js/md5.js"></script>
+</head>
+<body class='bgf' style="height:100%;">
+	<section class='main' style="height:100%;padding:0">
+		<!--登陆 S-->
+		<div class="login routes " style="height:100%;">
+			<h1 class="logo" ><img src="images/logo.png" alt="校汇"></h1>
+			<div class="outer-main">
+				<div class="">
+				<form method="POST" class="login_form">
+					<input type="text" id="account" placeholder="+86 请输入手机号" autocomplete="off"><br>
+					<input type="password" id="password" placeholder="请输入密码" autocomplete="off">
+					<div class="login_code">
+						<input type="text" id = "login_code_input" />
+						<div class="login_code_img"></div>
+					</div>
+					<input type="submit" value="进入校汇" id="login">
+				</form>
+					<div class="login_inner-container">
+						<a href="#/reg" class="regist"><span>注册新账号</span></a>
+						<a href="#/forget" class="forgetPaw"><span>忘记密码?</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--登陆 E-->
+		<!--注册 s-->
+		<div class="reg routes"  style="display:none;">
+			<div class="header_title">
+					<p>注册</p>
+					<div class="return" onclick="returnUp()">
+					</div>
+			</div>
+			<div class="outer-main pt1">
+				<div class="main">
+					<form method="POST" class="reg_form">
+						<input type="text" id="reg_account" placeholder="+86 请输入手机号" autocomplete="off"><br>
+						<input type="password" id="reg_password" placeholder="设置登录密码，不少于6位" autocomplete="off">
+						<div class="code_box">
+							<input type="text" id="reg_code" placeholder="请输入验证码" autocomplete="off">
+							<div class="getcode">获取验证码</div>	
+						</div>
+						<input type="submit" value="下一步" id="reg">
+					</form>
+						<div class="login_inner-container">
+							<a  href="statement/appAgreement.html" class="forgetPaw"><span>用户注册协议</span></a>
+						</div>
+				</div>
+			</div>
+		</div>
+		<!--注册 E-->
+		<!-- 补全资料 S-->
+		<section  class="routes regist">
+			<div class="header_title">
+					<p>注册信息</p>
+					<div class="return" onclick="returnUp()">
+					</div>
+			</div>
+			<div id="regist" class="regist-content pt1">
+				<form action="" method="post" id="form">
+					<input type="text" id="regist-content-name" name="regist-user-number" placeholder="请输入您的昵称">
+					<div class="input_b">
+						<select name="sex" id="" >
+							<option value="">请选择</option>
+							<option value="男">男</option>
+							<option value="女">女</option>
+						</select>
+						<input type="text" id="regist-content-sex" name="regist-user-password" placeholder="请输入您的性别">
+					</div>
+					
+					
+					<div class="input_b">
+						<select name="sex" id="">
+							<option value="">请选择</option>
+							<option value="2010">2010</option>
+							<option value="2011">2011</option>
+							<option value="2012">2012</option>
+							<option value="2013">2013</option>
+							<option value="2014">2014</option>
+							<option value="2015">2015</option>
+							<option value="2016">2016</option>
+							<option value="2017">2017</option>
+						</select>
+						<input type="text" id="regist-content-date" name="regist-user-password" placeholder="请输入您的入学年份">
+					</div>
+					
+					<input type="button" class="regist-submit" id="submit" value="确认">
+				</form>
+			</div>
+		</section>
+		<!-- 补全资料 E-->
+		<!-- 忘记密码 S-->
+		<section  class="routes forget">
+			<div class="header_title">
+				<p>忘记密码</p>
+				<div class="return" onclick="returnUp()"></div>
+			</div>
+			<div class="regist-content pt1 " >
+				<form action="" method="post" id="form" class="outer-main">
+					<input type="text" id="regist-content-number" name="regist-user-number" placeholder="+86 请输入手机号码">
+					<input type="text" id="regist-content-password" name="regist-user-password" placeholder="设置新的密码,不少于6位">
+					<div class="regist-inner-container">
+						<input type="number" id="regist-content-verify" name="verifycode" placeholder="请输入验证码">
+						<a  class="for_getcode">获取验证码</a>
+					</div>
+					<input type="button" class="forget-submit" id="submit" value="确认">
+				</form>
+			</div>
+		</section>
+		<!-- 忘记密码 E-->
+		<!--用户协议 S-->
+		<section class="router appAgree">
+			
+		</section>
+		<!--用户协议 E-->
+	</section>
+	 
+</body>
+<script>
+
+      var routes = {
+        '/reg': {
+        	before:function(){
+        	},on:function(){
+        		routDom($(".reg"));
+        	}
+        },
+        '/login': {
+        	before:function(){
+        		
+        	},on:function(){
+        		routDom($(".login"));
+        	}
+        },
+        '/forget':{
+        	before:function(){
+
+        	},on:function(){
+        		routDom($(".forget"));
+        	}
+        },
+        '/reg/regist': {
+        	before:function(){
+        	},on:function(){
+        		routDom($(".regist"));
+        	}
+        },
+
+      };
+      var router = Router(routes);
+      router.init("/login");
+	 $('.login_form').on('submit',function(){
+			if(!checkMobile($("#account").val())){
+				fb_alert("手机格式不正确");
+			}else if($("#password").val().length<6){
+				fb_alert("密码不可小于6位数")
+			}else{
+				if($("#login_code_input").val() != 0){
+					var login_code = "&verify_code="+$("#login_code_input").val();
+				}else{
+					var login_code = "";
+				}
+				 $.post(locahost+'/user/login/?mobile_no='+$("#account").val()+'&password='+$.md5($("#password").val())+"&platform=web"+login_code,  function(data){
+				 	if(data.code == "2005"){
+				    	$(".login_code").show();
+				    	fb_alert(data.detail);
+				    	getLoginCode()
+				    	return;
+				    }
+				    if(data.code == "200"){
+				    	window.localStorage.clear();
+				      	setItem("token",data.token) //保存token
+				      	$(".logo").css({"top":"30%",});
+				      	$(".outer-main").hide();
+				      	 $.getJSON(locahost+'/user/getMyInfo/?token='+data.token,function(data){
+				             var data = data.data;
+				             setItem("info",JSON.stringify(data))
+				             window.localStorage.is_paypassword = data.is_paypassword;
+				             window.localStorage.is_alipay =data.is_alipay;
+				             window.localStorage.alipayName =data.alipay_name;
+				             window.localStorage.alipayCard =data.alipay;
+				             window.localStorage.uid = data.uid;
+				             window.localStorage.phone =$("#account").val();
+				             
+				         })
+				      	setTimeout(function(){
+				      		window.location.href="index.html";
+				      	},1000)
+       					
+				    }else{
+				    	fb_alert(data.detail)
+				    }
+
+				  })
+				
+				
+			}
+			return false;
+		});
+
+	//获取登录验证码 S
+	function getLoginCode(){
+		$.getJSON(locahost+"/user/getVerifyImageURL/",function(data){
+			 if(data.code == "200"){
+			 	$(".login_code_img").html('<img src="'+data.url+'"/>');
+			 }
+		})
+	}
+	//获取登录验证码 E
+
+	 //验证手机号是否存在 S
+	 var isMobileExist = false;
+	 $("#reg_account").blur(function(){
+	 	if(!checkMobile($("#reg_account").val())){
+			fb_alert("手机格式不正确");
+		}else{
+		$.post(locahost+'/user/isMobileExist/?mobile_no='+$("#reg_account").val(),  function(data){
+			    if(data.code == "110"){	
+			    //手机号已存在
+			    	isMobileExist = false;	
+	      			fb_alert(data.detail)
+	      			return;
+			    }else{
+			    	isMobileExist = true;
+			    }
+			    
+			  })
+		}
+	 })
+	 //验证手机号是否存在 E
+	 //验证码获取 S
+	 $('.getcode').on('click',regGetcode)
+	function regGetcode(){
+	 if(!isMobileExist){
+	 	fb_alert("手机号码已被注册");
+	 	return false;
+	 }else if($("#reg_password").val() == 0){
+		fb_alert("请输入登录密码");
+	 	return false;
+	}
+	  $('.getcode').off('click',regGetcode)
+	  $.post(locahost+'/user/sendRegisterSMS/?mobile_no='+$("#reg_account").val(),  function(data){
+		     if(data.code == "200"){		
+      			fb_alert("发送验证码成功")
+		    }else{
+		    	fb_alert(data.detail)
+		    }
+		})
+        var _this = $(this);
+        _this.html('120s后可重新发生');
+        var i = 120;
+        var time = setInterval(function(){
+            i--;
+            _this.html(i+'s后可重新发送');
+            if(i == 0){
+               _this.html('获取验证码');
+               clearInterval(time);
+               $('.getcode').on('click',regGetcode)
+            }
+        },1000)
+       }
+       //验证码获取 E
+      //注册提交
+	 $('.reg_form').on('submit',function(){
+			if(!checkMobile($("#reg_account").val())){
+				fb_alert("手机格式不正确");
+			}else if($("#reg_password").val().length<6){
+				fb_alert("密码不可小于6位数")
+			}else if($("#reg_code").val().length==0){
+				fb_alert("验证码不可为空")
+			}else{
+				 window.location.href="#/reg/regist"
+			}
+			return false;
+		});
+	   //注册信息提交
+	 $('.regist-submit').on('click',regist_submit);
+	 function regist_submit(){
+			if(!checkMobile($("#reg_account").val())){
+				fb_alert("手机格式不正确");
+				window.location.href="#/reg";
+				return;
+			}else if($("#reg_password").val().length<6){
+				fb_alert("密码不可小于6位数")
+				window.location.href="#/reg";
+				return;
+			}else if($("#reg_code").val().length==0){
+				fb_alert("验证码不可为空")
+				window.location.href="#/reg";
+				return;
+			}else if($("#regist-content-name").val().length==0){
+				fb_alert("昵称不可为空")
+				return;
+			}else if($("#regist-content-sex").val().length==0){
+				fb_alert("请选择性别")
+				return;
+			}else if($("#regist-content-date").val().length==0){
+				fb_alert("请输入您的入学年份")
+				return;
+			}else{
+				 $('.regist-submit').off('click',regist_submit);
+				 switch ($("#regist-content-sex").val()) {
+				 	case "保密" :
+				 		var sex = 0;
+				 		break;
+				 	case "男" :
+				 		var sex = 1;
+				 		break;
+				 	case "女" :
+				 		var sex = 2;
+				 		break;
+				 	default :
+					 	var sex = 0;
+					 		break;
+				 }
+				 $.post(locahost+'/user/register/?mobile_no='+$("#reg_account").val()+'&password='+$.md5($("#reg_password").val())+'&sms_code='+$("#reg_code").val()+'&nickname='+$("#regist-content-name").val()+'&gender='+sex+'&enrollment_year='+$("#regist-content-date").val(),  function(data){
+				   		if(data.code == "200"){		
+		      			 	window.location.href="#/login"
+				    	}else{
+				    		$('.regist-submit').on('click',regist_submit);
+				    		fb_alert(data.detail)
+				    	}
+				  })
+				
+			}
+			return false;
+		}
+
+	 //下拉框效果
+	 $("#regist .input_b select").on("change",function(){
+
+	 	var val = $(this).val();
+	 	$(this).parents(".input_b").find("input").val(val)
+	 })
+
+
+	 //找回密码验证码获取 S
+	 $('.for_getcode').on('click',getcode)
+	 function getcode(){
+	 if(!checkMobile($("#regist-content-number").val())){
+	 	fb_alert("手机号码格式错误");
+	 	return false;
+	 }
+	  $('.for_getcode').off('click',getcode)
+	  $.post(locahost+'/user/sendResetPasswordSMS/?mobile_no='+$("#regist-content-number").val(),  function(data){
+		    if(data.code == "200"){		
+      			fb_alert("发送验证码成功")
+		    }
+		})
+        var _this = $(this);
+        _this.html('120s后可重新发生');
+        var i = 120;
+        var time = setInterval(function(){
+            i--;
+            _this.html(i+'s后可重新发送');
+            if(i == 0){
+               _this.html('获取验证码');
+               clearInterval(time);
+               $('.for_getcode').on('click',getcode)
+            }
+        },1000)
+       }
+       //找回密码验证码获取 E
+       //找回密码 提交 S
+     $('.forget-submit').on('click',forget_submit);
+	 function forget_submit(){
+			if(!checkMobile($("#regist-content-number").val())){
+				fb_alert("手机格式不正确");
+				return;
+			}else if($("#regist-content-password").val().length<6){
+				fb_alert("密码不可小于6位数")
+				return;
+			}else if($("#regist-content-verify").val().length==0){
+				fb_alert("验证码不可为空")
+				return;
+			}else{
+				 $('.forget-submit').off('click',forget_submit);
+				 
+				 $.post(locahost+'/user/resetPassword/?mobile_no='+$("#regist-content-number").val()+'&password='+$.md5($("#regist-content-password").val())+'&sms_code='+$("#regist-content-verify").val(),  function(data){
+				   		if(data.code == "200"){	
+				   			fb_alert("重置成功")
+		      			 	window.location.href="#/login";	
+				    	}else{
+				    		$('.forget-submit').on('click',forget_submit);
+				    		fb_alert(data.detail)
+				    	}
+				  })
+				
+			}
+			return false;
+		}
+       //找回密码 提交 E
+       $(".forgetPaw span").on("click",function(){
+
+       })
+ </script>
+</html>
+
