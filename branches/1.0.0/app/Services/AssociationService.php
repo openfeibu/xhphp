@@ -258,7 +258,14 @@ class AssociationService
 	/*获取社团列表*/
 	public function getAssociations($page)
 	{
-		return $this->associationRepository->getAssociations($page);
+		$associations = $this->associationRepository->getAssociations($page);
+		$user = $this->userRepository->getUser();
+		$uid = isset($user->uid) ? $user->uid : 0;
+		foreach( $associations as $key => $association )
+		{
+			$association->mylevel = $this->getAssociationMemberLevel($association->aid,$uid);
+		}
+		return $associations;
 	}
 	
 	/* 获得所有社团总数 */
@@ -404,5 +411,13 @@ class AssociationService
 	public function getAssociationAdmins ($aid)
 	{
 		return $this->associationRepository->getAssociationAdmins($aid);
+	}
+	public function getAssociationMemberLevel($aid,$uid)
+	{
+		$data = $this->associationRepository->getAssociationMemberLevel($aid,$uid);
+		if($data){
+			return $data->level;
+		}
+		return '';
 	}
 }
