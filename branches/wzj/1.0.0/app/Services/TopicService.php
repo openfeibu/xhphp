@@ -146,7 +146,13 @@ class TopicService
 	{
 		return $this->topicRepository->getTopicCommentsList($param);
 	}
-
+	/**
+	 * 获取话题评论列表
+	 */
+	public function getTopicAllCommentsList(array $param)
+	{
+		return $this->topicRepository->getTopicAllCommentsList($param);
+	}	
 	/**
 	 * 检验评论是否存在
 	 */
