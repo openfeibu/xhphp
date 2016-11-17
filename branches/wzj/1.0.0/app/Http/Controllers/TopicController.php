@@ -337,10 +337,8 @@ class TopicController extends Controller
         return [
             'code' => 200,
             'detail' => '请求成功',
-            'data' => [
-				'comment_id' => $id,
-				'comments' => $comments
-            ],
+            'comment_id' => $id,
+            'data' => $comments,
         ];
     }
 
