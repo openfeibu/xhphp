@@ -8,6 +8,7 @@ use Log;
 use Input;
 use Event;
 use Session;
+use App\User;
 use App\Http\Requests;
 use App\Services\SMSService;
 use App\Services\UserService;
@@ -52,7 +53,7 @@ class UserController extends Controller
                          TradeAccountService $tradeAccountService)
     {
 	    parent::__construct();
-        $this->middleware('auth', ['except' => ['register', 'isMobileExist', 'login', 'resetPassword', 'getOthersInfo', 'sendRegisterSMS', 'sendResetPasswordSMS','getVerifyImageURL']]);
+        $this->middleware('auth', ['except' => ['register', 'isMobileExist', 'login', 'resetPassword', 'getOthersInfo', 'sendRegisterSMS', 'sendResetPasswordSMS','getVerifyImageURL','pushToUsers']]);
         $this->smsService = $smsService;
         $this->userService = $userService;
         $this->verifyCodeService = $verifyCodeService;
@@ -653,5 +654,14 @@ class UserController extends Controller
 			'code' => 200,
 			'data' => $user->mobile_no,
     	];
+	}
+	public function pushToUsers ()
+	{
+		$users = User::get();
+		foreach( $users as $key => $user )
+		{
+			$this->messageService->SystemMessage2SingleOne($user->uid, "偷偷告诉你们哦，现在只要更新校汇至1.1.1版本(我的->设置->关于校汇->检查更新)，发布任务不再需要实名认证呢！更多精彩等着你。",true,'系统公告','系统公告');
+			sleep(0.5);
+		}
 	}
 }
