@@ -610,5 +610,12 @@ class AssociationRepository
 		}
 		return;
 	}
-
+	public function getAssociationAdmins($aid)
+	{
+		return AssociationMember::where('aid',$aid)->where('level','>',0)->get();
+	}
+	public function getAssociationMemberLevel($aid,$uid)
+	{
+		return AssociationMember::where('aid',$aid)->where('uid',$uid)->first(['level']);
+	}
 }
