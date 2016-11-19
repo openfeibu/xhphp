@@ -52,11 +52,54 @@ class ReportNetworkFailureController extends Controller
         ];
         $help->validateParameter($rule);
 		
+<<<<<<< .working
+		$result = $this->network_login($request->account,$request->password,$help);
+		if ($result['http_code'] == 302 && !empty($result['redirect_url'])) {
+			$uid = $user->getUser()->uid;
+			$networkReport = NetworkReport::where('uid',$uid)
+											->orderBy('id','desc')
+											->first();
+			if($networkReport){
+				$networkReport->account = $request->account;
+				$networkReport->password = \Crypt::encrypt($request->password);
+				$networkReport->ip = $request->ip();
+				$networkReport->save();
+			}else{
+				$nr = new NetworkReport;
+				$nr->uid = $uid;
+				$nr->account = $request->account;
+				$nr->password = \Crypt::encrypt($request->password);
+				$nr->ip = $request->ip();
+				$nr->save();
+			}
+||||||| .merge-left.r108
+		$result = $this->network_login($request->account,$request->password,$help);
+		return $result;
+		if ($result['http_code'] == 302 && !empty($result['redirect_url'])) {
+			$uid = $user->getUser()->uid;
+			$networkReport = NetworkReport::where('uid',$uid)
+											->orderBy('id','desc')
+											->first();
+			if($networkReport){
+				$networkReport->account = $request->account;
+				$networkReport->password = \Crypt::encrypt($request->password);
+				$networkReport->ip = $request->ip();
+				$networkReport->save();
+			}else{
+				$nr = new NetworkReport;
+				$nr->uid = $uid;
+				$nr->account = $request->account;
+				$nr->password = \Crypt::encrypt($request->password);
+				$nr->ip = $request->ip();
+				$nr->save();
+			}
+=======
 		$url = "http://211.66.88.153/network/checkPassword.php";
 		$postDate = "account=" . $request->account . "&password=" . $request->password. "&token=" . $request->token;
 		$response = $this->common($url,$postDate);
 		
 		if($response == 404){
+>>>>>>> .merge-right.r173
 			return [
 				'code' => 404,
 	            'detail' => '学号不存在',
@@ -126,7 +169,7 @@ class ReportNetworkFailureController extends Controller
 		}
 	}
 	
-	public function reportByToken(Request $request,HelpService $help,UserService $user){
+	public function reportByToken(Request $request,HelpService $help){
 		$rule = [
             'miaoshu' => 'required',
             'token' => 'required',
@@ -170,31 +213,51 @@ class ReportNetworkFailureController extends Controller
 		}	
 	}
 
-	public function reportList(Request $request,HelpService $help){
+	public function reportList(Request $request,HelpService $help,UserService $user){
 		$rule = [
-            'miaoshu' => 'required',
             'token' => 'required',
         ];
         $help->validateParameter($rule);
+
+        $uid = $user->getUser()->uid;
+		$networkReport = NetworkReport::where('uid',$uid)
+											->first();
+		if(empty($networkReport) || empty($networkReport->account)){
+			return [
+				'code' => 403,
+	            'detail' => '还未绑定学号',
+			];
+		}
 		
 		$url = "http://211.66.88.153/network/reportList.php";
-		$postDate = "miaoshu=" . $request->miaoshu . "&token=" . $request->token;
+		$postDate = "student_id=" . $networkReport->account;
 		$response = $this->common($url,$postDate);
-		$response = mb_convert_encoding($response, "UTF-8", "GBK");
-		$rs = explode("Array",$response);
-		$need=$this->_cut( '(' , ')' , $rs[2]);
-		$rs = explode("=>",$need);
-		// $need=$this->_cut( '(' , ')' , $rs);
-		// $rs = explode("Array",$response);
-		// $rs = explode("=>",$rs[1]);
-		// print_r($need);
-		print_r($rs);
+		
+		$rs = unserialize($response);
+		foreach ($rs as $key => $value) {
+			$list[$key]['report_time'] = $value[$this->changeCodeToGBK("登记时间")];
+			$list[$key]['miaoshu'] = $this->changeCodeToUTF8($value[$this->changeCodeToGBK("故障描述")]);
+			if($value[$this->changeCodeToGBK("维修情况")] == 0){
+				$list[$key]['status'] = "未维修";
+			}elseif($value[$this->changeCodeToGBK("维修情况")] == 1){
+				$list[$key]['status'] = "已维修";
+			}elseif($value[$this->changeCodeToGBK("维修情况")] == 2){
+				$list[$key]['status'] = "已撤销";
+			}
+			$list[$key]['restore_time'] = $value[$this->changeCodeToGBK("维修时间")];
+		}
+		return[
+			"code" => 200,
+			'detail' => '请求成功',
+			"data" => $list
+		];
 	}
-	public  function _cut($begin,$end,$str){
-            $b = mb_strpos($str,$begin) + mb_strlen($begin);
-            $e = mb_strpos($str,$end) - $b;
 
-            return mb_substr($str,$b,$e);
-    }
+	public function changeCodeToGBK($str){
+		return mb_convert_encoding($str ,"GBK", "UTF-8");
+	}
 
+	public function changeCodeToUTF8($str){
+		return mb_convert_encoding($str , "UTF-8","GBK");
+	}
 }
