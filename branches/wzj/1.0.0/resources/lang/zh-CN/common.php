@@ -54,6 +54,10 @@ return [
 		'cashed' => '已提现',
 		'cashfail' => '提现失败',
 	],
+	'task_type' => [
+		'personal' => '个人',
+		'business' => '商家',
+	],
 	//任务状态
 	'task_status' => [
 		'waitpay' => '待支付',
