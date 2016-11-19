@@ -126,7 +126,7 @@ class ReportNetworkFailureController extends Controller
 		}
 	}
 	
-	public function reportByToken(Request $request,HelpService $help,UserService $user){
+	public function reportByToken(Request $request,HelpService $help){
 		$rule = [
             'miaoshu' => 'required',
             'token' => 'required',
@@ -168,5 +168,53 @@ class ReportNetworkFailureController extends Controller
 	            'detail' => '未知错误',
 			];
 		}	
+	}
+
+	public function reportList(Request $request,HelpService $help,UserService $user){
+		$rule = [
+            'token' => 'required',
+        ];
+        $help->validateParameter($rule);
+
+        $uid = $user->getUser()->uid;
+		$networkReport = NetworkReport::where('uid',$uid)
+											->first();
+		if(empty($networkReport) || empty($networkReport->account)){
+			return [
+				'code' => 403,
+	            'detail' => '还未绑定学号',
+			];
+		}
+		
+		$url = "http://211.66.88.153/network/reportList.php";
+		$postDate = "student_id=" . $networkReport->account;
+		$response = $this->common($url,$postDate);
+		
+		$rs = unserialize($response);
+		foreach ($rs as $key => $value) {
+			$list[$key]['report_time'] = $value[$this->changeCodeToGBK("登记时间")];
+			$list[$key]['miaoshu'] = $this->changeCodeToUTF8($value[$this->changeCodeToGBK("故障描述")]);
+			if($value[$this->changeCodeToGBK("维修情况")] == 0){
+				$list[$key]['status'] = "未维修";
+			}elseif($value[$this->changeCodeToGBK("维修情况")] == 1){
+				$list[$key]['status'] = "已维修";
+			}elseif($value[$this->changeCodeToGBK("维修情况")] == 2){
+				$list[$key]['status'] = "已撤销";
+			}
+			$list[$key]['restore_time'] = $value[$this->changeCodeToGBK("维修时间")];
+		}
+		return[
+			"code" => 200,
+			'detail' => '请求成功',
+			"data" => $list
+		];
+	}
+
+	public function changeCodeToGBK($str){
+		return mb_convert_encoding($str ,"GBK", "UTF-8");
+	}
+
+	public function changeCodeToUTF8($str){
+		return mb_convert_encoding($str , "UTF-8","GBK");
 	}
 }
