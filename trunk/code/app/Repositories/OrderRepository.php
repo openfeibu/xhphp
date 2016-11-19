@@ -352,7 +352,7 @@ class OrderRepository
     public function updateOrderStatus(array $param)
     {
         config(['database.default' => 'write']);
-    	return Order::where('oid', $param['order_id'])
+    	$update = Order::where('oid', $param['order_id'])
 				    ->where(function ($query) use ($param) {
 				    		switch ($param['status']) {
 				    			case 'finish':
@@ -362,7 +362,7 @@ class OrderRepository
 				    			case 'completed':
 				    				$query->where('owner_id', $param['uid']);
 				    				break;
-
+								
 				    			default:
 				    				return false;
 				    				break;
@@ -374,8 +374,17 @@ class OrderRepository
 				    		} else {
 				    			return 1;
 				    		}
-				    	})
-				    ->update(['status' => $param['status']]);
+				    	});
+
+		switch ($param['status']) {
+			case 'new':
+				return $update->update(['status' => $param['status'],'courier_id' => 0]);
+				break;
+			default:
+				return $update->update(['status' => $param['status']]);
+				break;
+		}
+
 
     }
 
