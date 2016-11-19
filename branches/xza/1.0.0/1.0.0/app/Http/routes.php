@@ -177,6 +177,7 @@ Route::get('getWebUrl','GetWebUrlController@index');
 Route::post('network/checkPassword', 'ReportNetworkFailureController@checkPassword');
 Route::get('network/checkByToken', 'ReportNetworkFailureController@checkByToken');
 Route::post('network/reportByToken', 'ReportNetworkFailureController@reportByToken');
+Route::get('network/reportList', 'ReportNetworkFailureController@reportList');
 
 Route::get('getNewTopicNotifications','NotificationController@getNewTopicNotifications');
 Route::get('hasNewTopicNotification','NotificationController@hasNewTopicNotification');
