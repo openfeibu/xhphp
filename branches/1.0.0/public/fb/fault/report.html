@@ -36,12 +36,24 @@
           <p>报故障</p>
           <div class="return" onclick="returnUp()">
           </div>
+          <!-- <div class=""><a href="">故障记录</a></div> -->
       </div>
       	<div class="report">
       		<div class="card">你的学号：<span data-name="card"></span></div>
-      		<div class="post_textarea">
-      			<textarea name="miaoshu" id="" placeholder="请输入故障问题"></textarea>
-      		</div>
+  			<select name="miaoshu" id="">
+  				<option value="锐捷认证失败" selected>锐捷认证失败</option>
+  				<option value="锐捷密码错误" >锐捷密码错误</option>
+  				<option value="锐捷账号不存在" >锐捷账号不存在</option>
+  				<option value="达到在线用户上限" >达到在线用户上限</option>
+  				<option value="IP地址绑定错误" >IP地址绑定错误</option>
+  				<option value="MAC地址绑定错误" >MAC地址绑定错误</option>
+  				<option value="无法弹出电信页面" >无法弹出电信页面</option>
+  				<option value="电信账号不存在" >电信账号不存在</option>
+  				<option value="本地连接一个交叉" >本地连接一个交叉</option>
+  				<option value="IP冲突" >IP冲突</option>
+  				<option value="记账处理未结束" >记账处理未结束</option>
+  				<option value="上不了网" >上不了网</option>
+  			</select>
       		<div class="reportSubmit">提交</div>
       	</div>
       	<div class="copyright">@ 校汇 </div>
@@ -62,6 +74,7 @@
 				fb_alert(fb_error["f_002"]);
 				return;
 			}
+		    is_alipay(true);
 			$.post(locahost+'/network/reportByToken/?token='+token+'&miaoshu='+miaoshu,function(data, status, xhr){   
 		          if(data.code == "200"){
 		            is_alipay(false);
