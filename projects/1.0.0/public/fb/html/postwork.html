@@ -90,7 +90,7 @@
         $(".alipay").on("click",{pay_id:"1"},postwork_submit)
         function postwork_submit(event){
         	var pay_id = event.data.pay_id
-        	var post_textarea = $(".post_textarea").val();
+        	var post_textarea = removeBr($(".post_textarea").val());
         	var money_input = $(".money_input").val();
         	var map_input = $(".map_input").val();
         	var number_input = $(".number_input").val();
@@ -144,7 +144,7 @@
             }
             $(".payPassVal span").text("");
             wallet_pass='';
-            var post_textarea = $(".post_textarea").val();
+            var post_textarea = removeBr($(".post_textarea").val());
             var money_input = $(".money_input").val();
             var map_input = $(".map_input").val();
             var number_input = $(".number_input").val();

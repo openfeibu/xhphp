@@ -21,10 +21,11 @@
   doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);
 
-  var locahost ="http://xhplus.feibu.info";
- //var locahost ="http://xh.feibu.info";
- // var locahost ="http://192.168.0.9:8084";
+ var locahost ="http://xhplus.feibu.info";
+ // var locahost ="http://xh.feibu.info";
+ // var locahost ="http://192.168.0.103:8084";
  // var locahost ="http://192.168.0.99:8080/xh/server.php";
+
 var tab =window.location.hash.replace(/#\//,"");
 var locaTime = 600000; //十分钟  全局缓存
 $.ajaxSetup({
@@ -353,6 +354,10 @@ function getByteLen(val) {
   }
 
   return Math.round(len);
+}
+//去除换行
+function removeBr(obj){
+  return obj.replace(/(\n)+|(\r\n)+/g, "");
 }
 //错误提示
 var fb_error ={
