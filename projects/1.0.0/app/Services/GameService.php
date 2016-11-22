@@ -10,6 +10,7 @@ use App\Repositories\UserRepository;
 use App\Repositories\GameRepository;
 use App\Repositories\MessageRepository;
 use App\Services\MessageService;
+use App\Services\PushService;
 use DB;
 
 class GameService
@@ -24,6 +25,8 @@ class GameService
 
 	protected $gameRepository;
 
+	protected $pushService;
+
 	function __construct(MessageRepository $messageRepository,
 						 UserRepository $userRepository,
 						 GameRepository $gameRepository,
@@ -31,7 +34,8 @@ class GameService
                          TradeAccountService $tradeAccountService,
                          HelpService $helpService,
                          OrderService $orderService,
-						 MessageService $messageService)
+						 MessageService $messageService,
+						 PushService $pushService)
 	{
 		$this->orderService = $orderService;
         $this->messageRepository = $messageRepository;
@@ -40,6 +44,7 @@ class GameService
 		$this->messageService = $messageService;
 		$this->helpService = $helpService;
 		$this->walletService = $walletService;
+		$this->pushService = $pushService;
         $this->tradeAccountService = $tradeAccountService;
 	}
 	public function freeOrder ($user,$order)
