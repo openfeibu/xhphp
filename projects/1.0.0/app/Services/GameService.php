@@ -76,6 +76,8 @@ class GameService
 				'description' => '首单返现' ,
 			);
 			$this->tradeAccountService->addThradeAccount($trade);
+			$this->messageService->SystemMessage2SingleOne($user->uid, '您好，首单返现的2元金额已经返回您的钱包，请注意查收');
+			$this->pushService->PushUserTokenDevice('首单返现', '您好，首单返现的2元金额已经返回您的钱包，请注意查收', $user->uid);
 			Game::where('id',$game->id)->increment('count');
 		}
 	}
