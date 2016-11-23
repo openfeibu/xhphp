@@ -145,7 +145,7 @@ class HelpService
 	        		$image_wp=imagecreatetruecolor($new_width, $new_height); 
 	        		$image = imagecreatefromgif($imgsrc); 	        		
 	        		imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height); 
-	        		imagejpeg($image_wp, $imgdst,75); 
+	        		imagegif($image_wp, $imgdst,75); 
 	        		imagedestroy($image_wp); 
 	      		} 
 	      		break; 
@@ -178,7 +178,7 @@ class HelpService
 	  $fp = fopen($image_file,'rb'); 
 	  $image_head = fread($fp,1024); 
 	  fclose($fp); 
-	  return preg_match("/".chr(0x21).chr(0xff).chr(0x0b).'NETSCAPE2.0'."/",$image_head)?false:true; 
+	  return true; 
 	} 
 
 	public function telecomCheckReal ($fields)
