@@ -52,10 +52,7 @@ class ShopController extends Controller
     	$user = $this->userService->getUser();  	
         $shop = Shop::where('uid', $user->uid)->first();
         if($shop->shop_id){
-	        return [
-	        	'code' => 8001,
-	        	'detail' => '已拥有店铺 -- '.$shop->shop_name,
-	        ];
+	        throw new \App\Exceptions\Custom\OutputServerMessageException('已拥有店铺 -- '.$shop->shop_name);
         }
         $rules = [
         	'token' 	  => 'required',
@@ -72,11 +69,10 @@ class ShopController extends Controller
 	    if($exitShop){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('已存在同名店铺');
 	    }
+	    
         $this->shopService->addShop($user);
-        return [
-            'code' => 200,
-            'detail' => '提交成功，等待审核'
-        ]; 
+        
+        throw new \App\Exceptions\Custom\RequestSuccessException('提交成功，等待审核');
     }
 
     public function getShopList (Request $request)

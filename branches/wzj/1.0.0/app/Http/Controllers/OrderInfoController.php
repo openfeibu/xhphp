@@ -112,9 +112,8 @@ class OrderInfoController extends Controller
     {
         $rules = [
         	'token' 	=> 'required',
-        	'cart_ids'  => 'required|string',
+        	'cart_ids'  => 'required|array',
         	'pay_id' 	=> "required|integer|between:1,3",
-            'pay_password' => 'sometimes|required|string|digits:6',
     	];
     	$this->helpService->validateParameter($rules);
     	

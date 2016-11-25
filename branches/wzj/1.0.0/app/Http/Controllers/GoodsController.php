@@ -77,15 +77,13 @@ class GoodsController extends Controller
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已存在该商品');
     	}
 		$this->goodsService->addGoods($user,$shop);		
-		return [
-            'code' => 200,
-            'detail' => '添加成功'
-        ];		
+	
+        throw new \App\Exceptions\Custom\RequestSuccessException('添加成功');
     }
     public function getShopGoodses (Request $request)
     {
     	$rules = [
-			//'page' => 'required|integer',
+			'page' => 'required|integer',
 			'shop_id' => 'required|string|digits:1',
 	    ];
 	    $this->helpService->validateParameter($rules);	       
@@ -93,26 +91,15 @@ class GoodsController extends Controller
 	    if(!$shop){
             throw new \App\Exceptions\Custom\OutputServerMessageException('店铺不存在');
 	    }
-	    switch ($shop->shop_status)
-    	{
-    		case 0:
-		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺在审核中');
-    			break;	
-    		case 2:
-		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺审核不通过');
-    			break;		
-    		case 3:
-		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已关闭');
-    			break;
-		}
-	    // $shopGoodesList = $this->goodsService->getShopGoodsesList();	
-	    $shopGoodes = Shop::find($request->shop_id)->goodses;
+	    if($shop->shop_status != 1){
+		    throw new \App\Exceptions\Custom\OutputServerMessageException('店铺'.trans('common.shop_status'.$shop->shop_status));
+    		break;	
+	    }
+	    $shopGoodses = $this->goodsService->getShopGoodses();	
         return [
 			'code' => 200 ,
-			'data' => [
-				'shop' => $shop,
-				'shopGoodes' =>$shopGoodes,
-			],
+			'shop' => $shop,
+			'shopGoodes' =>$shopGoodses,
         ];
       	
     }
