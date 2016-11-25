@@ -84,7 +84,7 @@ class GoodsController extends Controller
     {
     	$rules = [
 			'page' => 'required|integer',
-			'shop_id' => 'required|string|digits:1',
+			'shop_id' => 'required|integer',
 	    ];
 	    $this->helpService->validateParameter($rules);	       
 	    $shop = $this->shopService->getShop($request->shop_id);
