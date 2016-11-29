@@ -418,6 +418,6 @@ class AssociationService
 		if($data){
 			return $data->level;
 		}
-		return '';
+		return -1;
 	}
 }
