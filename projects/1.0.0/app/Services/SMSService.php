@@ -69,7 +69,7 @@ class SMSService
 				break;
 		}
 
-		$random = rand(100000, 999999);
+		$random = rand(1000, 9999);
 		//发送短信
         $result = $this->sendSMS($mobile_no, $random, config('sms.'.$usage));
 
