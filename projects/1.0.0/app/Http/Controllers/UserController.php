@@ -53,7 +53,7 @@ class UserController extends Controller
                          TradeAccountService $tradeAccountService)
     {
 	    parent::__construct();
-        $this->middleware('auth', ['except' => ['register', 'isMobileExist', 'login', 'resetPassword', 'getOthersInfo', 'sendRegisterSMS', 'sendResetPasswordSMS','getVerifyImageURL','pushToUsers']]);
+        $this->middleware('auth', ['except' => ['register', 'isMobileExist', 'login', 'resetPassword', 'getOthersInfo', 'sendRegisterSMS', 'sendResetPasswordSMS','getVerifyImageURL','pushToUsers','uploadImage']]);
         $this->smsService = $smsService;
         $this->userService = $userService;
         $this->verifyCodeService = $verifyCodeService;
@@ -75,6 +75,7 @@ class UserController extends Controller
             'nickname' => 'required|alpha_dash|unique:user,nickname',
             'gender' => 'required|in:0,1,2',
             'enrollment_year' => 'required|after:2000|before:' . (date('Y')+1),
+            'avatar_url' => 'sometimes|required|string',
         ];
         $this->helpService->validateParameter($rule);
 
@@ -82,7 +83,7 @@ class UserController extends Controller
         $this->userService->checkNickname($request->nickname);
 
         //检验短信验证码
-        $this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg');
+       /* $this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg');*/
 
         //创建用户
         $user = [
@@ -91,12 +92,25 @@ class UserController extends Controller
             'nickname' => $request->nickname,
             'gender' => $request->gender,
             'enrollment_year' => $request->enrollment_year,
+            'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : config('app.url').'/uploads/system/avatar.png' ,
         ];
         $this->userService->createUser($user);
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
+	/**
+     * 上传话题图片
+     */
+    public function uploadImage(Request $request)
+    {
+        $images_url = $this->imageService->uploadImages(Input::all(), 'avatar');
 
+        return [
+            'code' => 200,
+            'detail' => '请求成功',
+            'url' => $images_url,
+        ];
+    }
     public function isMobileExist(Request $request)
     {
         //检验请求参数
