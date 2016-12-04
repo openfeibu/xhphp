@@ -109,7 +109,8 @@ class UserService
                                           $user['password'],
                                           $user['nickname'],
                                           $user['gender'],
-                                          $user['enrollment_year']);
+                                          $user['enrollment_year'],
+                                          $user['avatar_url']);
         return true;
     }
 
@@ -304,5 +305,10 @@ class UserService
     public function unbindDeviceToken()
     {
         return $this->userRepository->unbindDeviceToken();
+    }
+
+    public function getRealUids()
+    {
+    	return $this->userRepository->getRealUids();
     }
 }
