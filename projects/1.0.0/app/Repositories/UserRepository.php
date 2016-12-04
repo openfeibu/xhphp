@@ -100,7 +100,7 @@ class UserRepository
 	/**
 	 * 创建用户
 	 */
-	public function createUser($mobile_no, $password, $nickname, $gender, $enrollment_year)
+	public function createUser($mobile_no, $password, $nickname, $gender, $enrollment_year,$avatar_url)
 	{
 		DB::beginTransaction();
 		try {
@@ -110,7 +110,7 @@ class UserRepository
 	        $u->mobile_no = $mobile_no;
 	        $u->password = $password;
 	        $u->nickname = $nickname;
-	        $u->avatar_url = config('app.url').'/uploads/system/avatar.png';
+	        $u->avatar_url = $avatar_url;
 	        $u->created_ip = $this->request->ip();
 	        $u->save();
 
@@ -272,5 +272,10 @@ class UserRepository
 	{
 		$dt = $this->getUser()->deviceToken();
 		return $dt->delete();
+	}
+
+	public function getRealUids()
+	{
+		return UserInfo::where('realname','<>','')->lists('uid')->toArray(); 
 	}
 }
