@@ -176,12 +176,12 @@ class ImageService
         if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
-
+		
 		//保存图片文件到服务器
 		$i = 0;
 		foreach ($files['uploadfile'] as $file) {
 		    $extension = $file->getClientOriginalExtension();
-		    $imageName = md5($user->token.time().rand()) . '.' . $extension;
+		    $imageName = isset($user->token) ? md5($user->token.time().rand()) . '.' . $extension : md5(time().rand()) . '.' . $extension ;
 		    $img_url = '/uploads/'.$usage.'/'.$imageName;
 
 		    #todo 图片压缩：分别上传图片缩略图及其原图
@@ -197,7 +197,7 @@ class ImageService
 		}
 		if ($i === 0) {
 			$extension = $files['uploadfile']->getClientOriginalExtension();
-			$imageName = md5($user->token.time().rand()) . '.' . $extension;
+			$imageName = isset($user->token) ? md5($user->token.time().rand()) . '.' . $extension : md5(time().rand()) . '.' . $extension ;
 			$img_url = '/uploads/'.$usage.'/'.$imageName;
 
 		    Storage::put($img_url, file_get_contents($files['uploadfile']->getRealPath()));
