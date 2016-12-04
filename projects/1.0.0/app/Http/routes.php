@@ -42,6 +42,7 @@ Route::get('user/getVerifyImageURL','UserController@getVerifyImageURL')->name('u
 Route::post('user/realNameAuthUploadImg','UserController@realNameAuthUploadImg');
 Route::post('user/h5RealNameAuth','UserController@h5RealNameAuth');
 Route::get('user/getMobileBytoken','UserController@getMobileBytoken');
+Route::post('user/uploadImage','UserController@uploadImage');
 
 Route::get('order/getOrderList', 'OrderController@getOrderList')->name('order_getOrderList');
 Route::get('order/getOrder', 'OrderController@getOrder')->name('order_getOrder');
@@ -137,8 +138,9 @@ Route::get('goods/goodses','GoodsController@getGoodses')->name('shop_getGoodses'
 
 Route::post('cart/store','CartController@store')->name('shop_storeCart');
 Route::get('cart/carts','CartController@getCarts')->name('shop_getCarts');
+Route::get('cart/shopCarts','CartController@getShopCarts')->name('shop_getShopCarts');
 Route::post('cart/updateCartGoodsNumber','CartController@updateCartGoodsNumber')->name('shop_updateCartGoodsNumber');
-Route::post('cart/destroyAll','CartController@destroyAll')->name('shop_destroyAllCart');
+Route::post('cart/destroy','CartController@destroy')->name('shop_destroyAllCart');
 Route::get('cart/getTotal','CartController@getTotal')->name('shop_getTotalCart');
 
 Route::get('orderInfo/index','OrderInfoController@index')->name('shop_indexOrderInfoController');
