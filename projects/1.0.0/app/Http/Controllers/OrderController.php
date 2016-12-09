@@ -184,9 +184,6 @@ class OrderController extends Controller
 		        ];
 	        }
         }
-
-
-
         //创建新任务
         $order = $this->orderService->createOrder(['destination' => $request->destination,
                                              'description' => $request->description,
@@ -283,9 +280,6 @@ class OrderController extends Controller
 				'description' => '发布任务',
     		);
 			$this->tradeAccountService->addThradeAccount($trade);
-
-
-
 			$this->orderService->updateOrderStatusNew($order_sn);
 			return [
 	            'code' => 200,
@@ -625,14 +619,15 @@ class OrderController extends Controller
         // $mess->setCustom($custom);
         // $mess->setType(2);
         // return $push->PushSingleDevice('f2b79a9f938d7a4c440e8048338e14905ed7e759', $mess);
-
-        $rs = $this->pushService->PushUserTokenDevice('测试', '推送测试', '77');
-/*$data = [
+		/*$data = [
 			'refresh' => 1,
 			'target' => 'message',
-			'data' => '推送测试' 
+			'data' => $content 
 		];
-		$this->pushService->PushUserTokenDevice('测试', json_encode($data), '97',2);*/
+		$this->pushService->PushUserTokenDevice($type, json_encode($data), $user_id,2);
+		return true;*/
+       // $rs = $this->pushService->PushUserTokenDevice('哈哈', '哈哈', '89');
+		$this->messageService->SystemMessage2SingleOne('77', '哈哈。');
         return [
 			'code' => 200
         ];
@@ -709,7 +704,7 @@ class OrderController extends Controller
 	public function getRecommendOrders (Request $request)
 	{
 		$rule = [
-            'number' => 'sometimes|required|numeric',
+            'number' => 'sometimes|numeric',
         ];
         
         $this->helpService->validateParameter($rule);
