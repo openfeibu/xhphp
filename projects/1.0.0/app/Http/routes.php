@@ -140,13 +140,22 @@ Route::post('cart/store','CartController@store')->name('shop_storeCart');
 Route::get('cart/carts','CartController@getCarts')->name('shop_getCarts');
 Route::get('cart/shopCarts','CartController@getShopCarts')->name('shop_getShopCarts');
 Route::post('cart/updateCartGoodsNumber','CartController@updateCartGoodsNumber')->name('shop_updateCartGoodsNumber');
-Route::post('cart/destroy','CartController@destroy')->name('shop_destroyAllCart');
+Route::post('cart/destroy','CartController@destroy');
+Route::post('cart/destroyAll','CartController@destroyAll');
 Route::get('cart/getTotal','CartController@getTotal')->name('shop_getTotalCart');
 
 Route::get('orderInfo/index','OrderInfoController@index')->name('shop_indexOrderInfoController');
+Route::get('orderInfo/create','OrderInfoController@create');
+Route::get('orderInfo/show','OrderInfoController@show');
 Route::post('orderInfo/store', 'OrderInfoController@store')->name('shop_storeOrderInfo');
 Route::get('orderInfo/orders','OrderInfoController@orders')->name('shop_OrderInfoa');
 
+Route::get('userAddress/index','UserAddressController@index');
+Route::get('userAddress/show','UserAddressController@show');
+Route::get('userAddress/getDefault','UserAddressController@getDefault');
+Route::post('userAddress/store','UserAddressController@store');
+Route::post('userAddress/update','UserAddressController@update');
+Route::post('userAddress/destroy','UserAddressController@destroy');
 //Route::get('/alipay', 'AlipayController@index')->name('login');
 //Route::post('/alipay/mobilePay', 'AlipayController@mobilePay')->name('login');
 //Route::post('/alipay/alipayNotify', 'AlipayController@alipayNotify')->name('login');
@@ -171,6 +180,8 @@ Route::get('telecom/getTelecomOrdersCount','TelecomController@getTelecomOrdersCo
 Route::get('telecom/autoCheckRealName', 'ScheduleController@autoCheckRealName');
 
 Route::get('version','VersionController@index')->name('other_version');
+Route::get('api','ApiController@getApi');
+Route::get('getCommonData','ApiController@getCommonData');
 
 Route::get('paper','PaperController@index');
 
