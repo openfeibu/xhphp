@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use DB;
 use Log;
+use Route;
 use Session;
 use App\User;
 use App\UserInfo;
@@ -21,8 +22,9 @@ class UserRepository
 	function __construct(Request $request)
 	{
 		$this->request = $request;
-
-		if (!self::$user and !empty($request->token)) {
+		$route_name = Route::currentRouteName();
+		$round_arr = round_route();
+		if (!self::$user and !empty($request->token) && !in_array($route_name,$round_arr)) {
 			//token检验
 			self::$user = $this->tokenAuth($request->token);
 			if (!self::$user) {
@@ -65,7 +67,13 @@ class UserRepository
 	{
 	  	return User::find($user_id);
 	}
-
+	/**
+	 * 根据用户ID获取该用户信息
+	 */
+	public function getUserByToken($token)
+	{
+	  	return User::where('token', $token)->first();
+	}
 	/**
 	 * 获取指定用户的device_token
 	 */
