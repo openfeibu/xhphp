@@ -15,3 +15,11 @@ if (!function_exists('escape_content')) {
 		return $content;
 	}
 }
+if (!function_exists('round_route')) {
+	function round_route()
+	{
+		return [
+			'topic_getTopicList',
+		];
+	}
+}
