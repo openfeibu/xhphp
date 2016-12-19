@@ -204,6 +204,7 @@ return [
         'service_fee' 	=> '手续费',
         'goods_fee' 	=> '物费',
         'phone'			=> '手机号码',
+        'mobile'		=> '手机号码',
         'iccid'			=> 'iccid',
         'outOrderNumber'=> '常用号码',
         'telecom_phone' => '电信手机号码',
@@ -216,6 +217,8 @@ return [
 		'dormitory_no' => '宿舍号',
 		'student_id' => '学号',	
 		'transactor' => '办理人',
+		'consignee' => "收货人姓名",
+        'address' => "收货地址",
     ],
 
 ];

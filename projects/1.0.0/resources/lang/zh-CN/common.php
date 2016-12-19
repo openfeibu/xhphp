@@ -40,9 +40,38 @@ return [
 	],
 	// order_info   telecom_order  pay_status 订单支付状态
 	'pay_status' => [
-		'0' => '未支付',
+		'0' => '待付款',
 		'1' => '已支付',
-		'2' => '已退款',
+	],
+	'shipping_status' => [
+		'0' => '待发货',
+		'1' => '发货中',
+		'2' => '已收货',
+/*		'3' => '备货中',*/
+	],
+	'order_status' => [
+		'0' => '未确认',
+		'1' => '已确认',
+		'2' => '退款中',
+		'3' => '已退款',
+		/*'buyer' => [
+			'waitpay' => '待付款',
+			'paysucc' => '待发货',
+			'cancelling' => '退款中',
+			'cancelled' => '已退款',
+			'shipping' => '发货中',
+			'succ' => '已完成',
+		],
+		'seller' => [
+			'waitpay' => '未付款',
+			'paysucc' => '待发货',
+			'cancelling' => '待退款',
+			'cancelled' => '已退款',
+			'shipping' => '发货中',
+			'succ' => '已收款',
+		],*/
+		
+		
 	],
     // trade_account 交易状态
 	'trade_status' => [
