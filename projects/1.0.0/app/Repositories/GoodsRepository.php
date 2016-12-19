@@ -43,16 +43,13 @@ class GoodsRepository
 		return $existGoods;
 
 	}
-	public function getShopGoodses ()
+	public function getShopGoodses ($where)
 	{
 		$ShopGoodsesList = Goods::select(DB::raw('goods_id,shop_id,uid,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,created_at,is_on_sale'))
 								->where('is_on_sale', 1)
-								->where('shop_id',$this->request->shop_id)
-								->orderBy('goods_sale_count', 'desc')
+								->where($where)
 								->orderBy('goods_click_count', 'desc')
 								->orderBy('goods_id', 'desc')
-								->skip(20 * $this->request->page - 20)
-                           		->take(20)
                            		->get();
         return $ShopGoodsesList;
 	}

@@ -6,6 +6,7 @@ use Log;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Repositories\ShopRepository;
+use App\Repositories\CartRepository;
 
 class ShopService
 {
@@ -15,22 +16,37 @@ class ShopService
 
     protected $userRepository;
 
+    protected $cartRepository;
+
 	function __construct(Request $request,
+						 CartRepository $cartRepository,
 						 ShopRepository $shopRepository)
 	{
 		$this->request = $request;
+		$this->cartRepository = $cartRepository;
         $this->shopRepository = $shopRepository;
 	}
 	public function addShop ($user)
 	{
 		$this->shopRepository->addShop($user);
 	}
-	public function getShops()
+	public function getShops($uid = 0)
 	{
-		return $this->shopRepository->getShops();
+		$shops = $this->shopRepository->getShops();
+		if($uid){
+			foreach( $shops as $key => $shop )
+			{
+				$shop->cart_count = $this->cartRepository->getCount(['uid' => $uid,'shop_id' => $shop->shop_id ]);
+			}
+		}
+		return $shops;
 	}
-	public function getShop ($shop_id)
+	public function getShop ($shop_id,$columns = ['*'])
 	{
-		return $this->shopRepository->getShop($shop_id);
+		$shop = $this->shopRepository->getShop($shop_id,$columns);
+		if(!$shop){
+            throw new \App\Exceptions\Custom\OutputServerMessageException('µÍ∆Ã≤ª¥Ê‘⁄');
+	    }
+	    return $shop;
 	}
 }

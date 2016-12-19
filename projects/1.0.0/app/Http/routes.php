@@ -43,6 +43,7 @@ Route::post('user/realNameAuthUploadImg','UserController@realNameAuthUploadImg')
 Route::post('user/h5RealNameAuth','UserController@h5RealNameAuth');
 Route::get('user/getMobileBytoken','UserController@getMobileBytoken');
 Route::post('user/uploadImage','UserController@uploadImage');
+Route::get('pay','UserController@pay');
 
 Route::get('order/getOrderList', 'OrderController@getOrderList')->name('order_getOrderList');
 Route::get('order/getOrder', 'OrderController@getOrder')->name('order_getOrder');

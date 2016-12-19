@@ -6,6 +6,8 @@ use Log;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Repositories\CartRepository;
+use App\Services\ShopService;
+use App\Services\GoodsService;
 
 class CartService
 {
@@ -17,12 +19,15 @@ class CartService
 
 	function __construct(Request $request,
 						 CartRepository $cartRepository,
-						 UserRepository $userRepository)
+						 UserRepository $userRepository,
+						 ShopService $shopService,
+						 GoodsService $goodsService)
 	{
 		$this->request = $request;
         $this->cartRepository = $cartRepository;
         $this->userRepository = $userRepository;
-
+        $this->shopService = $shopService;
+        $this->goodsService = $goodsService;
 	}
 	public function addToCart($goods,$uid)
 	{
@@ -40,29 +45,41 @@ class CartService
 	{
 		return $this->cartRepository->updateGoodsNumber($goods_id,$goods_number,$uid);
 	}
-	public function getCarts($uid)
-	{
-		return  $this->cartRepository->getCarts($uid);
-	}
 	public function getShopCarts($shop_id,$uid)
 	{
-		return $this->cartRepository->getShopCarts($shop_id,$uid);
+		$carts = $this->cartRepository->getShopCarts($shop_id,$uid);
+		$shop_total = 0;
+		foreach( $carts as $k => $cart )
+		{
+			$goods = $this->goodsService->existGoods($cart->goods_id);
+			$goods_total = $cart->goods_price * $cart->goods_number;
+			$cart->goods_total = $goods_total;
+			$shop_total += $goods_total;
+		}
+		return [
+			'carts' => $carts,
+			'shop_total' => $shop_total,
+		];
 	}
 	public function getShop ($uid)
 	{
 		return $this->cartRepository->getShop($uid);
 	}
-	public function getCount ($uid)
+	public function getCount ($where)
 	{
-		return $this->cartRepository->getCount($uid);
+		return $this->cartRepository->getCount($where);
 	}
-	public function existCart ($cart_id,$uid)
+	public function existCart ($where)
 	{
-		return $this->cartRepository->existCart($cart_id,$uid);
+		return $this->cartRepository->existCart($where);
 	}
 	public function removeCartGoods ($ids,$uid)
 	{
 		return $this->cartRepository->removeCartGoods($ids,$uid);
+	}
+	public function removeCarts ($where)
+	{
+		return $this->cartRepository->removeCarts($where);
 	}
 	public function getCartGoodsByIds ($ids,$uid)
 	{
@@ -77,5 +94,45 @@ class CartService
 	public function getShopCartsByCartIds ($shop_id,$cart_ids,$uid)
 	{
 		return $this->cartRepository->getShopCartsByCartIds($shop_id,$cart_ids,$uid);
+	}
+	public function getCarts ($uid)
+	{
+		$cartShops = $this->getShop($uid);
+		$total = 0;
+		$arrCarts = array();
+		foreach( $cartShops as $key => $cartShop )
+		{
+			$carts = $this->getShopCarts($cartShop->shop_id,$uid);
+			$shopDetail = $this->shopService->getShop($cartShop->shop_id);
+			$arrCarts[$cartShop->shop_id] = array(
+				'shop_name' 	=> $shopDetail->shop_name,
+				'shop_id'		=> $shopDetail->shop_id,
+				'shop_status'	=> $shopDetail->shop_status,
+				'shop_status_description' => trans("common.shop_status.$shopDetail->shop_status"),
+			);
+			$shop_total = 0; 
+			foreach( $carts['carts'] as $k => $cart )
+			{
+				$goodsDetail = $this->goodsService->existGoods($cart->goods_id);
+				$goods_total = $cart->goods_price * $cart->goods_number;
+				$arrCarts[$cartShop->shop_id]['carts'][$cart->cart_id] = array(
+					'goods_desc' 	=> $goodsDetail->goods_desc ,
+					'goods_img'  	=> $goodsDetail->goods_img,
+					'goods_name' 	=> $cart->goods_name,
+					'goods_id'	 	=> $cart->goods_id,				
+					'goods_price'	=> $cart->goods_price,
+					'goods_number'	=> $cart->goods_number,
+					'cart_id'		=> $cart->cart_id,
+					'goods_total'	=> $goods_total,
+				);
+				
+			}
+			$arrCarts[$cartShop->shop_id]['shop_total'] =  $carts['shop_total'];
+			$total += $shop_total;
+		}
+		return [
+			'carts' => $arrCarts,
+			'total' => $total,
+		];
 	}
 }

@@ -12,6 +12,7 @@ use App\Services\UserService;
 use App\Services\GoodsService;
 use App\Services\ShopService;
 use App\Services\HelpService;
+use App\Services\CartService;
 use App\Services\FileUploadService;
 
 class ShopController extends Controller
@@ -25,11 +26,14 @@ class ShopController extends Controller
 	protected $fileUploadService;
 
 	protected $userService;
+
+	protected $cartService;
 	
 	public function __construct (UserService $userService,
 								ShopService $shopService,
 								GoodsService $goodsService,
 								HelpService $helpService ,
+								CartService $cartService,
 								FileUploadService $fileUploadService)
 	{
 		parent::__construct();
@@ -38,6 +42,7 @@ class ShopController extends Controller
 		$this->shopService = $shopService ;
 		$this->goodsService = $goodsService ;
 		$this->helpService = $helpService; 
+		$this->cartService = $cartService;
 		$this->fileUploadService = $fileUploadService;
 	}
 
@@ -52,10 +57,7 @@ class ShopController extends Controller
     	$user = $this->userService->getUser();  	
         $shop = Shop::where('uid', $user->uid)->first();
         if($shop->shop_id){
-	        return [
-	        	'code' => 8001,
-	        	'detail' => '已拥有店铺 -- '.$shop->shop_name,
-	        ];
+	        throw new \App\Exceptions\Custom\OutputServerMessageException('已拥有店铺 -- '.$shop->shop_name);
         }
         $rules = [
         	'token' 	  => 'required',
@@ -72,23 +74,30 @@ class ShopController extends Controller
 	    if($exitShop){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('已存在同名店铺');
 	    }
+	    
         $this->shopService->addShop($user);
-        return [
-            'code' => 200,
-            'detail' => '提交成功，等待审核'
-        ]; 
+        
+        throw new \App\Exceptions\Custom\RequestSuccessException('提交成功，等待审核');
     }
 
     public function getShopList (Request $request)
     {
 	    $rules = [
 			'page' => 'required|string|digits:1',
+			'token' => 'sometimes|required|string',
 	    ];	    
 	    $this->helpService->validateParameter($rules);    		
-		$shops = $this->shopService->getShops();
+		$user = $this->userService->getUser(); 
+		$uid = isset($user->uid) ? $user->uid : 0;
+		$shops = $this->shopService->getShops($uid);
+		if($user){
+			$cart_count = $this->cartService->getCount(['uid' => $user->uid]);
+		}
         return [
 			'code' => 200 ,
-			'data' => $shops
+			'cart_count' => isset($cart_count) ? $cart_count : 0,
+			'shops' => $shops,
+			
         ];
     }
     

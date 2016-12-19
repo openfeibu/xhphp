@@ -34,10 +34,11 @@ class ShopRepository
 	
 	public function getShops()
 	{
-		$shopList = Shop::select(DB::raw('shop.shop_id,shop.uid,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite,shop.shop_click_count,shop.created_at'))
+		$shopList = Shop::select(DB::raw('shop.shop_id,shop.uid,college.cid,college.name as college_name,shop.address,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite_count,shop.shop_click_count,shop.created_at'))
+						->leftJoin('college', 'college.cid', '=', 'shop.college_id')
 						->where('shop_status', 1)
 						->skip(20 * $this->request->page - 20)
-						->orderBy('shop_favorite','desc')
+						->orderBy('shop_favorite_count','desc')
 						->orderBy('shop_click_count','desc')
 						->orderBy('shop_id', 'desc')
                         ->take(20)
@@ -53,12 +54,11 @@ class ShopRepository
 			return false;
 		}
 	}
-	public function getShop ($shop_id)
+	public function getShop ($shop_id,$columns)
 	{
-		$shop = Shop::select(DB::raw('shop.shop_id,shop.uid,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite,shop.shop_click_count,shop.created_at,shop.shop_status'))
-					->where('shop_status', 1)
+		$shop = Shop::where('shop_status', 1)
 					->where('shop_id',$shop_id)									
-					->first();
+					->first($columns);
 		return 	$shop;			
 	}
 

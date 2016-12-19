@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use DB;
 use Session;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
@@ -80,7 +81,7 @@ class TopicService
 	 */
 	public function getTopicList(array $param)
 	{
-		$user = $this->userRepository->getUser();
+		$user = DB::table('user')->where('token', $this->request->token)->first();
 		if ($user) {
 			$param['user_id'] = $user->uid;
 		}

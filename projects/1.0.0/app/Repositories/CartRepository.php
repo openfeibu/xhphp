@@ -63,17 +63,21 @@ class CartRepository
 	{
 		return Cart::select(DB::raw('shop_id,cart_id'))->where('uid',$uid)->orderBy('cart_id','desc')->groupBy('shop_id')->get();
 	}
-	public function getCount ($uid)
+	public function getCount ($where)
 	{
-		return Cart::where('uid',$uid)->count();
+		return Cart::where($where)->count();
 	}
-	public function existCart ($cart_id,$uid)
+	public function existCart ($where)
 	{
-		return Cart::where('cart_id',$cart_id)->where('uid',$uid)->first();
+		return Cart::where($where)->first();
 	}
 	public function removeCartGoods ($ids,$uid)
 	{
 		return Cart::whereIn('cart_id', $ids)->where('uid',$uid)->delete();
+	}
+	public function removeCarts ($where)
+	{
+		return Cart::where($where)->delete();
 	}
 	public function getCartGoodsByIds ($ids,$uid)
 	{
@@ -86,5 +90,9 @@ class CartRepository
 	public function getShopCartsByCartIds ($shop_id,$cart_ids,$uid)
 	{
 		return Cart::where('shop_id',$shop_id)->where('uid',$uid)->whereIn('cart_id',$cart_ids)->orderBy('cart_id','desc')->get();
+	}
+	public function getCartGoodsNumber ($goods_id,$uid)
+	{
+		return Cart::where('goods_id',$goods_id)->where('uid',$uid)->pluck('goods_number');
 	}
 }
