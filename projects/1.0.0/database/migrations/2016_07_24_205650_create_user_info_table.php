@@ -16,7 +16,7 @@ class CreateUserInfoTable extends Migration
             $table->increments('id');
             $table->integer('uid')->comment('用户ID');
             $table->tinyInteger('gender')->default(0)->comment('性别:0保密,1男,2女');
-            $table->tinyInteger('college_id')->default(0)->comment('所在学校ID');
+            $table->integer('college_id')->default(0)->comment('所在学校ID');
             $table->string('student_id')->default('')->comment('学号');
             $table->integer('enrollment_year')->comment('入学年份');
             $table->integer('birth_year')->comment('生日（年）');

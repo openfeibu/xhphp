@@ -17,7 +17,7 @@ class CreateOrderTable extends Migration
             $table->string('order_sn',50);
             $table->integer('owner_id')->comment('发单人ID');
             $table->integer('courier_id')->comment('接单人ID');
-            $table->decimal('fee',10,2)->comment('小费');
+            $table->decimal('fee',10,0)->comment('小费');
             $table->string('alt_phone')->comment('联系方式');
             $table->string('description')->comment('订单描述');
             $table->string('destination')->comment('送达地点');

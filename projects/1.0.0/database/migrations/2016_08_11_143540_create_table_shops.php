@@ -17,22 +17,25 @@ class CreateTableShops extends Migration
 			$table->integer('uid')->unsigned() ;
             $table->string('shop_name',120)->unique()->comment('店名');
 			$table->string('shop_img');
-            $table->string('description');
+            $table->text('description');
+            $table->string('address');
+            $table->integer('college_id')->default(0)->comment('所在学校ID');
             $table->tinyInteger('shop_type')->default(1)->comment('1.学生.2.商家');
             $table->tinyInteger('shop_status')->default(0)->comment('0.待审核;1.正常;2.审核不通过;3.关闭');
             $table->integer('shop_favorite')->default(0)->comment('收藏数');
             $table->integer('shop_click_count')->default(0)->comment('浏览数');
             $table->tinyInteger('top')->default(0)->comment('是否置顶');
-            //$table->decimal('carriage',10,2)->comment('运费');
-            //$table->decimal('feecarriage',10,2)->comment('满多少免运费');
+            $table->decimal('shipping_fee',10,2)->comment('运费');
+            $table->decimal('min_goods_amount',10,2)->comment('满多少免运费');
             $table->timestamps();
 			$table->foreign('uid')->references('id')->on('user')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->index(['uid','shop_name']);
+            $table->index(['uid','shop_name','college_id']);
 		});
 		Schema::create('goods',function(Blueprint $table){
 			$table->increments('goods_id');
 			$table->integer('shop_id')->unsigned();
+			$table->integer('cat_id')->unsigned();
 			$table->integer('uid')->unsigned();
 			$table->string('goods_name',120);
 			$table->string('goods_sn',60);
@@ -70,8 +73,10 @@ class CreateTableShops extends Migration
 			$table->increments('order_id');
 			$table->string('order_sn',50)->unique();
 			$table->integer('uid')->unsigned();
+			$table->integer('shop_id')->unsigned();
 			$table->tinyInteger('order_status')->unsigned()->comment('作何操作.0，未确认；1，已确认；2，已取消；3，无效；4，退货；');
 			$table->tinyInteger('pay_status')->unsigned()->comment('支付状态.0,未付款;1,已付款;2,已退款;');
+			$table->tinyInteger('shipping_status')->unsigned()->comment('发货状态; 0未发货; 1已发货  2已取消  3备货中');
 			$table->string('consignee',60)->comment('收货姓名');
 			$table->string('address')->comment('收货地址');
 			$table->string('mobile',60)->comment('联系电话');
@@ -81,11 +86,12 @@ class CreateTableShops extends Migration
 			$table->string('pay_name',60)->comment('支付名称');
 			$table->timestamp('pay_time')->comment('支付时间');
 			$table->decimal('goods_amount',10,2)->comment('商品总金额');
-			$table->decimal('shipping_fee',10,2)->comment('任务费用');
+			$table->decimal('shipping_fee',10,2)->comment('配送费用');
 			$table->decimal('insure_fee',10,2)->comment('保价费用');
 			$table->string('to_buyer')->comment('商家给买家留言');
 			$table->timestamps();		
 			$table->index('uid');
+			$table->index('shop_id');
 			$table->index('order_status');
 			$table->index('pay_status');
 			$table->index('pay_id');
@@ -97,7 +103,6 @@ class CreateTableShops extends Migration
 			$table->integer('goods_id')->unsigned();
 			$table->string('goods_sn',60);
 			$table->string('goods_name',60);
-			$table->string('goods_desc');
 			$table->integer('goods_number')->unsigned();		
 			$table->decimal('goods_price',10,2);
 			$table->foreign('order_id')->references('order_id')->on('order_info')
