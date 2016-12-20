@@ -166,6 +166,7 @@ class OrderService
 		{
 			$orders[$key]['order_status'] =  trans('common.task_status.'.$order['status']);
 			$order[$key]['share_url'] = config('app.order_share_url').'?oid='.$order['oid'];
+			$orders[$key]['type'] = 'task';
 		}
 		return $orders;
 	}
@@ -182,6 +183,7 @@ class OrderService
 		foreach( $orders as $key => $order )
 		{
 			$orders[$key]['order_status'] =  trans('common.task_status.'.$order['status']);
+			$orders[$key]['type'] = 'work';
 		}
 		return $orders;
 	}
