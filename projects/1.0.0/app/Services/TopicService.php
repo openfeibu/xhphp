@@ -66,6 +66,21 @@ class TopicService
 		}
 		return $topics;
 	}
+	/**
+	 * 获取当前用户的话题（不含评论）
+	 */
+	public function getMyTopics(array $param)
+	{
+		$user = $this->userRepository->getUser();
+		$param['user_id'] = $this->userRepository->getUser()->uid;
+		$topics =  $this->topicRepository->getUserTopic($param);
+		foreach($topics as $k=>$topic){
+			$topic['content'] = escape_content($topic['content']);
+			$topics[$k]['nickname'] = $user->nickname;
+			$topics[$k]['avatar_url'] = $user->avatar_url;
+		}
+		return $topics;
+	}
 
 	/**
 	 * 获取当前用户的评论
@@ -156,7 +171,11 @@ class TopicService
 	 */
 	public function getTopicCommentsList(array $param)
 	{
-		return $this->topicRepository->getTopicCommentsList($param);
+		$topicComments =  $this->topicRepository->getTopicCommentsList($param);
+		foreach($topicComments as $key=>$topicComment){
+			$topicComment['content'] = escape_content($topicComment['content']);
+		}
+		return $topicComments;
 	}
 	/**
 	 * 获取话题评论列表
