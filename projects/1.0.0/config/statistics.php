@@ -63,6 +63,7 @@ return [
 			'getMyTopic' => '浏览我的话题',
 			'getMyComment' => '浏览我的评论',
 			'getTopicList' => '浏览话题',
+			'topic_getTopics' => '浏览话题',
 			'createTopic' => '发话题',
 			'deleteTopic' => '删除话题',
 			'deleteComment' => '删除对话题的评论或对他人的回复',
