@@ -111,6 +111,7 @@ Route::get('topic/getTopic', 'TopicController@getTopic')->name('topic_getTopic')
 Route::get('topic/getMyTopic', 'TopicController@getMyTopic')->name('topic_getMyTopic');
 Route::get('topic/getMyComment', 'TopicController@getMyComment')->name('topic_getMyComment');
 Route::get('topic/getTopicList', 'TopicController@getTopicList')->name('topic_getTopicList');
+Route::get('topic/getTopics', 'TopicController@getTopics')->name('topic_getTopics');
 Route::post('topic/createTopic', 'TopicController@createTopic')->name('topic_createTopic');
 Route::post('topic/deleteTopic', 'TopicController@deleteTopic')->name('topic_deleteTopic');
 Route::get('topic/getTopicCommentsList', 'TopicController@getTopicCommentsList')->name('topic_getTopicCommentsList');
@@ -132,6 +133,7 @@ Route::post('topic/search', 'TopicController@search')->name('topic_search');
 
 Route::post('shop/store', 'ShopController@store')->name('shop_storeShop');
 Route::get('shop/shops','ShopController@getShopList')->name('shop_getShopList');
+Route::post('shop/collect','ShopController@collect');
 
 Route::post('goods/store','GoodsController@store')->name('shop_storeGoods');
 Route::get('goods/shopGoodses','GoodsController@getShopGoodses')->name('shop_getShopGoodses');

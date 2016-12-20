@@ -6,6 +6,7 @@ use DB;
 use Session;
 use App\Shop;
 use App\Goods;
+use App\CollectShop;
 use Illuminate\Http\Request;
 
 class ShopRepository
@@ -61,5 +62,23 @@ class ShopRepository
 					->first($columns);
 		return 	$shop;			
 	}
-
+	public function collect ($shop_id,$uid)
+	{
+		CollectShop::create([
+			'uid' => $uid,
+			'shop_id' => $shop_id,
+		]);
+		Shop::where('shop_id',$shop_id)->increment('shop_favorite_count');
+		return true;
+	}
+	public function unCollect ($shop_id,$uid)
+	{
+		CollectShop::where('shop_id',$shop_id)->where('uid',$uid)->delete();
+		Shop::where('shop_id',$shop_id)->decrement('shop_favorite_count');
+		return true;
+	}
+	public function isCollect ($shop_id,$uid)
+	{
+		return CollectShop::where('shop_id',$shop_id)->where('uid',$uid)->first(['id']);
+	}
 }

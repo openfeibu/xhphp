@@ -96,7 +96,18 @@ class TopicService
 		}
 		return $topics;
 	}
-
+	public function getTopics (array $param)
+	{
+		$user = DB::table('user')->where('token', $this->request->token)->first();
+		if ($user) {
+			$param['user_id'] = $user->uid;
+		}
+		$topics = $this->topicRepository->getTopicList($param);
+		foreach($topics as $k=>$topic){	
+			$topic['content'] = escape_content($topic['content']);	 
+		}
+		return $topics;
+	}
 	/**
 	 * 增加话题浏览量
 	 */

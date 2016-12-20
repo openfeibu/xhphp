@@ -106,4 +106,18 @@ class ShopController extends Controller
     {
     	
     }
+    public function collect (Request $request)
+    {
+    	$rules = [
+			'token' => 'required|string',
+			'shop_id' => 'required|exists:shop,shop_id',
+	    ];	
+	    $this->helpService->validateParameter($rules);   
+	    $user = $this->userService->getUser();
+	    $is_collect =  $this->shopService->collect($request->shop_id,$user->uid);
+	    return [
+			'code' => 200,
+			'is_collect' => $is_collect,
+		];
+    }
 }

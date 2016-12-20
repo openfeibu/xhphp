@@ -43,7 +43,7 @@ class TopicController extends Controller
                          PushService $pushService)
     {
 	    parent::__construct();
-        $this->middleware('auth', ['except' => ['getTopic', 'getTopicList', 'getTopicCommentsList', 'search']]);
+        $this->middleware('auth', ['except' => ['getTopic', 'getTopicList', 'getTopics','getTopicCommentsList', 'search']]);
         $this->helpService = $helpService;
         $this->userService = $userService;
         $this->topicService = $topicService;
@@ -147,7 +147,44 @@ class TopicController extends Controller
             'data' => $topics
         ];
     }
+	/**
+     * 获取话题列表
+     */
+    public function getTopics(Request $request)
+    {
+        //检验请求参数
+        $rule = [
+            'page' => 'required|integer',
+        ];
+        $this->helpService->validateParameter($rule);
 
+        //获得话题列表
+        $topics = $this->topicService->getTopics(['page' => $request->page]);
+
+        //增加话题浏览量
+        //$this->topicService->incrementViewCount($topics->lists('tid')->toArray());
+
+        return [
+            'code' => 200,
+            'detail' => '请求成功',
+            'topics' => $topics
+        ];
+    }
+    public function getTopicComments ()
+    {
+    	//检验请求参数
+        $rule = [
+            'topic_id' => 'required|exists:topic,tid',
+        ];
+        $this->helpService->validateParameter($rule);
+        
+        $comments = $this->topicRepository->getTopicAllCommentsList(['topic_id'=> $topic->tid]);
+        return [
+            'code' => 200,
+            'detail' => '请求成功',
+            'comments' => $comments
+        ];
+    }
     /**
      * 发布话题
      */

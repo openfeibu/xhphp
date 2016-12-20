@@ -224,9 +224,7 @@ class OrderInfoController extends Controller
         											'total_fee' => $total_fee,
         											'shipping_fee' => $shipping_fee
         										]);	        																	
-        $where = ['shop_id' => $request->shop_id,'uid' => $this->user->uid ];
-        $goodses = 	Cart::select(DB::raw("$order_info->order_id as order_id ,goods_name,goods_price,goods_sn,goods_id,goods_number"))->where($where)->get()->toArray();
-        DB::table('order_goods')->insert($goodses);
+        
     	//$this->cartService->removeCarts($where);									
         $pay_platform = isset($request->platform) ? $request->platform : 'web';	
         $data = [
@@ -291,7 +289,7 @@ class OrderInfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
     }

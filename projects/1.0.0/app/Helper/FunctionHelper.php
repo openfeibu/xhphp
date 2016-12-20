@@ -20,6 +20,8 @@ if (!function_exists('round_route')) {
 	{
 		return [
 			'topic_getTopicList',
+			'topic_getTopics',
+			'topic_getTopicCommentsList',
 		];
 	}
 }

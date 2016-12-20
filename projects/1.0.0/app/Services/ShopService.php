@@ -49,4 +49,21 @@ class ShopService
 	    }
 	    return $shop;
 	}
+	public function collect ($shop_id,$uid)
+	{
+		//检验是否已收藏
+		$is_collect = $this->isCollect($shop_id,$uid);
+		if ($is_collect) {
+			$this->shopRepository->unCollect($shop_id,$uid);
+			return -1;
+		}else{
+			$this->shopRepository->collect($shop_id,$uid);
+			return 1;
+		}
+		
+	}
+	public function isCollect ($shop_id,$uid)
+	{
+		return $this->shopRepository->isCollect($shop_id,$uid);
+	}
 }

@@ -173,6 +173,7 @@ class AlipayController extends Controller
 							'description' => '电信套餐',
 			    	);					
 	    		}
+	    		else if($type == 'TP')
 		    	$this->tradeAccountService->addThradeAccount($trade);
 
 					
