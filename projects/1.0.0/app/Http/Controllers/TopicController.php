@@ -167,22 +167,7 @@ class TopicController extends Controller
         return [
             'code' => 200,
             'detail' => '请求成功',
-            'topics' => $topics
-        ];
-    }
-    public function getTopicComments ()
-    {
-    	//检验请求参数
-        $rule = [
-            'topic_id' => 'required|exists:topic,tid',
-        ];
-        $this->helpService->validateParameter($rule);
-        
-        $comments = $this->topicRepository->getTopicAllCommentsList(['topic_id'=> $topic->tid]);
-        return [
-            'code' => 200,
-            'detail' => '请求成功',
-            'comments' => $comments
+            'data' => $topics
         ];
     }
     /**
