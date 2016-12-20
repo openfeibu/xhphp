@@ -182,7 +182,11 @@ class TopicService
 	 */
 	public function getTopicAllCommentsList(array $param)
 	{
-		return $this->topicRepository->getTopicAllCommentsList($param);
+		$topicComments =  $this->topicRepository->getTopicAllCommentsList($param);
+		foreach($topicComments as $key=>$topicComment){
+			$topicComment['content'] = escape_content($topicComment['content']);
+		}
+		return $topicComments;
 	}	
 	/**
 	 * 检验评论是否存在
