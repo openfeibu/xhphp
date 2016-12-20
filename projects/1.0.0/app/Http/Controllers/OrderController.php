@@ -342,6 +342,7 @@ class OrderController extends Controller
 
         return [
             'code' => 200,
+            'type' => 'order',
             'detail' => '请求成功',
             'data' => $myOrder
         ];
@@ -364,6 +365,7 @@ class OrderController extends Controller
 
         return [
             'code' => 200,
+            'type' => 'work',
             'detail' => '请求成功',
             'data' => $myOrder
         ];
