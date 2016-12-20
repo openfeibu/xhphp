@@ -402,6 +402,8 @@ class AssociationController extends Controller
         ];
         $this->helpService->validateParameter($rule);
 	    $associationsDetails = $this->associationService->getAssociationsDetails($request->association_id,$request->token);
+	    $checkNewMember = $this->associationService->checkNewMember($request->association_id);
+	   $associationsDetails->newMember = $checkNewMember == 200 ? true : false;
 	     return [
             'code' => 200,
             'detail' => '请求成功',
