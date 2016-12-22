@@ -109,6 +109,7 @@ Route::get('home/getExtra', 'HomeController@getExtra');
 
 Route::get('topic/getTopic', 'TopicController@getTopic')->name('topic_getTopic');
 Route::get('topic/getMyTopic', 'TopicController@getMyTopic')->name('topic_getMyTopic');
+Route::get('topic/getMyTopics', 'TopicController@getMyTopics');
 Route::get('topic/getMyComment', 'TopicController@getMyComment')->name('topic_getMyComment');
 Route::get('topic/getTopicList', 'TopicController@getTopicList')->name('topic_getTopicList');
 Route::get('topic/getTopics', 'TopicController@getTopics')->name('topic_getTopics');
@@ -133,11 +134,16 @@ Route::post('topic/search', 'TopicController@search')->name('topic_search');
 
 Route::post('shop/store', 'ShopController@store')->name('shop_storeShop');
 Route::get('shop/shops','ShopController@getShopList')->name('shop_getShopList');
+Route::get('shop/myShop','ShopController@myShop');
 Route::post('shop/collect','ShopController@collect');
+Route::get('shop/userCollects','ShopController@userCollects');
 
 Route::post('goods/store','GoodsController@store')->name('shop_storeGoods');
+Route::post('goods/update','GoodsController@update');
 Route::get('goods/shopGoodses','GoodsController@getShopGoodses')->name('shop_getShopGoodses');
 Route::get('goods/goodses','GoodsController@getGoodses')->name('shop_getGoodses');
+Route::post('goods/uploadGoodsImage','GoodsController@uploadGoodsImage');
+
 
 Route::post('cart/store','CartController@store')->name('shop_storeCart');
 Route::get('cart/carts','CartController@getCarts')->name('shop_getCarts');
@@ -151,7 +157,11 @@ Route::get('orderInfo/index','OrderInfoController@index')->name('shop_indexOrder
 Route::get('orderInfo/create','OrderInfoController@create');
 Route::get('orderInfo/show','OrderInfoController@show');
 Route::post('orderInfo/store', 'OrderInfoController@store')->name('shop_storeOrderInfo');
-Route::get('orderInfo/orders','OrderInfoController@orders')->name('shop_OrderInfoa');
+Route::post('orderInfo/destroy','OrderInfoController@destroy');
+Route::post('orderInfo/refund','OrderInfoController@refund');
+Route::post('orderInfo/confirm','OrderInfoController@confirm');
+Route::post('orderInfo/agreeCancel','OrderInfoController@agreeCancel');
+Route::get('orderInfo/orders','OrderInfoController@orders')->name('shop_OrderInfos');
 
 Route::get('userAddress/index','UserAddressController@index');
 Route::get('userAddress/show','UserAddressController@show');
