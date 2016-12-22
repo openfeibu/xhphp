@@ -101,14 +101,14 @@ class PayService
 					'description' => $data['body'],
 		        );
 		        $this->walletService->store($walletData);
-				$trade_no = 'wallet'.$data['order_sn'];
+				$trade_no = 'walletbuyer'.$data['order_sn'];
 		        $trade = array(
 		        	'uid' => $this->user->uid,
 					'out_trade_no' => $data['order_sn'],
 					'trade_no' => $trade_no,
 					'trade_status' => 'success',
 					'wallet_type' => -1,
-					'from' => 'order',
+					'from' => $pay_form,
 					'trade_type' => $data['trade_type'],
 					'fee' => $data['total_fee'],
 					'service_fee' => 0,
@@ -119,7 +119,7 @@ class PayService
 				switch($pay_form)
 				{
 					case 'shop':
-						$this->orderInfoService->updateOrderInfo($data['order_sn'],['pay_status' => 1]);
+						$this->orderInfoService->updateOrderInfo($data['order_sn'],['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
 						break;		
 					default:
 						break;

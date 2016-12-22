@@ -103,7 +103,7 @@ class CartService
 		foreach( $cartShops as $key => $cartShop )
 		{
 			$carts = $this->getShopCarts($cartShop->shop_id,$uid);
-			$shopDetail = $this->shopService->getShop($cartShop->shop_id);
+			$shopDetail = $this->shopService->getShop(['shop_id' => $cartShop->shop_id]);
 			$arrCarts[$cartShop->shop_id] = array(
 				'shop_name' 	=> $shopDetail->shop_name,
 				'shop_id'		=> $shopDetail->shop_id,

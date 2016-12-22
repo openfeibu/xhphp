@@ -99,7 +99,29 @@ class TopicController extends Controller
             'data' => $topics
         ];
     }
+	/**
+     * 获取我的话题(不含评论)
+     */
+    public function getMyTopics(Request $request)
+    {
+        //检验请求参数
+        $rule = [
+            'page' => 'required|integer',
+        ];
+        $this->helpService->validateParameter($rule);
 
+        $param = [
+            'page' => $request->page,
+        ];
+        //获取我的话题
+        $topics = $this->topicService->getMyTopics($param);
+
+        return [
+            'code' => 200,
+            'detail' => '请求成功',
+            'data' => $topics
+        ];
+    }
     /**
      * 获取我的评论
      */
@@ -217,7 +239,7 @@ class TopicController extends Controller
 
 
         //上传资讯图片文件
-        $images_url = $this->imageService->uploadTopicImages(Input::all(), 'topic');
+        $images_url = $this->imageService->uploadThumbImages(Input::all(), 'topic');
 
         return [
             'code' => 200,

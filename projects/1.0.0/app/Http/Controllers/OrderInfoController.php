@@ -16,6 +16,8 @@ use App\Services\CartService;
 use App\Services\HelpService;
 use App\Services\OrderInfoService;
 use App\Services\UserAddressService;
+use App\Services\TradeAccountService;
+use App\Services\WalletService;
 
 class OrderInfoController extends Controller
 {
@@ -42,6 +44,8 @@ class OrderInfoController extends Controller
 								HelpService $helpService,
 								OrderInfoService $orderInfoService,
 								UserAddressService $userAddressService,
+								WalletService $walletService,
+                         		TradeAccountService $tradeAccountService,
 								PayService $payService)
 	{
 		parent::__construct();
@@ -54,6 +58,8 @@ class OrderInfoController extends Controller
 	 	$this->helpService = $helpService;
 	 	$this->orderInfoService = $orderInfoService;
 	 	$this->userAddressService = $userAddressService;
+	 	$this->walletService = $walletService;
+        $this->tradeAccountService = $tradeAccountService;
 	 	$this->user = $this->userService->getUser(); 
 	}
 
@@ -120,7 +126,7 @@ class OrderInfoController extends Controller
         ];
         $this->helpService->validateParameter($rule);
 		
-        $order_infos = $this->orderInfoService->getOrderInfos($request->page,$this->user->uid,$request->type);
+        $order_infos = $this->orderInfoService->getOrderInfos($this->user->uid,$request->type);
         return [
 			'code' => 200,
 			'order_infos' => $order_infos
@@ -135,7 +141,7 @@ class OrderInfoController extends Controller
     	$user_address = $this->userAddressService->getUserAddress(['uid' => $this->user->uid]);
 		$pay = config('pay');
 		$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
-    	$shop = $this->shopService->getShop($request->shop_id,['min_goods_amount','shipping_fee','shop_name','shop_img']);
+    	$shop = $this->shopService->getShop(['shop_id' => $request->shop_id],['min_goods_amount','shipping_fee','shop_name','shop_img']);
 		$total_fee = $goods_amount = $carts['shop_total'];
 		$shipping_fee = 0;
 		if($goods_amount < $shop->min_goods_amount){
@@ -191,7 +197,7 @@ class OrderInfoController extends Controller
 		}
 		$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
 		$total_fee = $goods_amount = $carts['shop_total'];
-		$shop = $this->shopService->getShop($request->shop_id);
+		$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);
 		$shipping_fee = 0;
 		if($goods_amount < $shop->min_goods_amount){
 			$total_fee = $goods_amount + $shop->shipping_fee;
@@ -223,9 +229,7 @@ class OrderInfoController extends Controller
         											'goods_amount' => $goods_amount,
         											'total_fee' => $total_fee,
         											'shipping_fee' => $shipping_fee
-        										]);	        																	
-        
-    	//$this->cartService->removeCarts($where);									
+        										]);	        																								
         $pay_platform = isset($request->platform) ? $request->platform : 'web';	
         $data = [
         	'return_url' => config('common.order_info_return_url'),
@@ -251,9 +255,10 @@ class OrderInfoController extends Controller
     public function show(Request $request)
     {
         $rules = [
-        	'order_id' => 'required|integer',
+        	'order_id' => 'required|integer|exists:order_info,order_id',
         ];
-        $order_info = $this->orderInfoService->getOrderInfo($request->order_id);
+        $is_exists = $this->orderInfoService->isExistsOrderInfo(['order_id' => $request->order_id,'uid' => $this->user->uid],$columns = ['order_id']);
+        $order_info = $this->orderInfoService->getOrderInfo($request->order_id,$this->user->uid);
         return [
         	'code' => 200,
 			'order_info' => $order_info,
@@ -291,6 +296,127 @@ class OrderInfoController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
+        $rules = [
+        	'token' 	=> 'required',
+			'order_id'  => 'required|exists:order_info,order_id',
+    	];
+    	$this->helpService->validateParameter($rules);
+
+		$this->orderInfoService->checkCancel($request->order_id,$this->user->uid);
+
+    	$this->orderInfoService->destroy(['order_id' => $request->order_id ,'uid' => $this->user->uid]);
+
+    	throw new \App\Exceptions\Custom\RequestSuccessException('成功取消订单');
+    }
+    public function refund(Request $request)
+    {
+    	$rules = [
+        	'token' 	=> 'required',
+			'order_id'  => 'required|exists:order_info,order_id',
+    	];
+    	$this->helpService->validateParameter($rules);
+    	
+    	$order_info = $this->orderInfoService->checkRefund($request->order_id,$this->user->uid);
+
+    	$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 3,'cancelling_time' => dtime()]);
+
+    	throw new \App\Exceptions\Custom\RequestSuccessException('请等待商家退款，退款金额将返回钱包');
+    }
+    public function agreeCancel(Request $request)
+    {
+    	$rules = [
+        	'token' 	=> 'required',
+			'order_id'  => 'required|exists:order_info,order_id',
+    	];
+    	$this->helpService->validateParameter($rules);    	
+
+		$shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
+
+		$order_info = $this->orderInfoService->sellerCheck($request->order_id,$shop->shop_id);
+
+		$user = $this->userService->getUserByUserID($order_info->uid);
+		
+		$fee = 	$user->wallet + $user->total_fee;
+		
+        $this->walletService->updateWallet($user->uid,$fee);
+
+       	$walletData = array(
+			'uid' => $user->uid,
+			'wallet' => $fee,
+			'fee'	=> $order_info->total_fee,
+			'service_fee' => 0,
+			'out_trade_no' => $order_info->order_sn,
+			'pay_id' => 3,
+			'wallet_type' => 1,
+			'trade_type' => 'CancelOrder',
+			'description' => '取消订单',
+        );
+        $this->walletService->store($walletData);
+        $tradeData = array(
+			'wallet_type' => 1,
+			'trade_type' => 'CancelOrder',
+			'description' => '取消订单',
+			'trade_status' => 'income',
+		);
+		
+		$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
+
+		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
+		
+    	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
+    }
+    public function confirm (Request $request)
+    {
+    	$rules = [
+        	'token' 	=> 'required',
+			'order_id'  => 'required|exists:order_info,order_id',
+    	];
+    	$this->helpService->validateParameter($rules);   
+
+    	$order_info = $this->orderInfoService->checkConfirm($request->order_id,$this->user->uid);
+
+		$shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);	
+
+		$user = $this->userService->getUserByUserID($shop->uid);
+
+		$total_fee = $order_info->total_fee;
+
+		$service_fee = 0;
+		
+		$fee = 	$user->wallet + $total_fee;
+        
+       	$walletData = array(
+			'uid' => $user->uid,
+			'wallet' => $fee,
+			'fee'	=> $total_fee,
+			'service_fee' => $service_fee,
+			'out_trade_no' => $order_info->order_sn,
+			'pay_id' => 5,
+			'wallet_type' => 1,
+			'trade_type' => 'shop',
+			'description' => '商店收入',
+        );
+       	$this->walletService->store($walletData);
+		$trade_no = 'walletseller'. $order_info->order_sn;
+        $trade = array(
+        	'uid' => $user->uid,
+			'out_trade_no' =>  $order_info->order_sn,
+			'trade_no' => $trade_no,
+			'trade_status' => 'success',
+			'wallet_type' => 1,
+			'from' => 'shop',
+			'trade_type' => 'Shop',
+			'fee' => $total_fee,
+			'service_fee' => $service_fee,
+			'pay_id' => 5,
+			'description' => '商店收入',
+		);
+		$this->tradeAccountService->addThradeAccount($trade);
+		
+		$this->orderInfoService->confirm($order_info->order_id);
+
+		$this->walletService->updateWallet($user->uid,$fee);
+				
+    	throw new \App\Exceptions\Custom\RequestSuccessException('确认成功');
     }
 }

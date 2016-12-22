@@ -82,7 +82,7 @@ class ImageService
 	 *
 	 * @return array        图片链接
 	 */
-	public function uploadTopicImages($files, $usage)
+	public function uploadThumbImages($files, $usage)
 	{
 		//获取用户信息
 		$user = $this->userRepository->getUser();

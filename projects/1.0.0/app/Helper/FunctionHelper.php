@@ -22,6 +22,40 @@ if (!function_exists('round_route')) {
 			'topic_getTopicList',
 			'topic_getTopics',
 			'topic_getTopicCommentsList',
+			'shop_getShopGoodses',
 		];
+	}
+}
+if (!function_exists('check_refund_order_info')) {
+	function check_refund_order_info($pay_status,$shipping_status,$order_status)
+	{
+		if($pay_status !=1 || $shipping_status !=0 || $order_status >=2 ){
+			return false;
+		}
+		return true;
+	}
+}
+if (!function_exists('dtime')) {
+	function dtime()
+	{
+		return date('Y-m-d H:i:s');
+	}
+}
+if (!function_exists('seller_check_refund_order_info')) {
+	function seller_check_refund_order_info($pay_status,$shipping_status,$order_status)
+	{
+		if($pay_status !=1 || $shipping_status !=0 || $order_status !=3 ){
+			return false;
+		}
+		return true;
+	}
+}
+if (!function_exists('check_confirm_order_info')) {
+	function check_confirm_order_info ($pay_status,$shipping_status,$order_status)
+	{
+		if($pay_status !=1 || $shipping_status !=1 || $order_status >=2 ){
+			return false;
+		}
+		return true;
 	}
 }

@@ -48,7 +48,7 @@ class CartController extends Controller
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('不存在该商品');
         }
 		if(!$exitGoods->is_on_sale){
-	        throw new \App\Exceptions\Custom\OutputServerMessageException('操作失败，该商品已禁止销售');
+	        throw new \App\Exceptions\Custom\OutputServerMessageException('操作失败，该商品已停止销售');
 		}
 		if($exitGoods->goods_number < 1){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('操作失败，库存不足');

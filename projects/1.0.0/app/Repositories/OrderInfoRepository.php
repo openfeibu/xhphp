@@ -25,7 +25,7 @@ class OrderInfoRepository
 			$order_info = OrderInfo::create($order_info);
 			$goodses = 	Cart::select(DB::raw("$order_info->order_id as order_id ,goods_name,goods_price,goods_sn,goods_id,goods_number"))->where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->get()->toArray();
         	OrderGoods::insert($goodses);
-        	Cart::where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->delete();
+        	/*Cart::where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->delete();*/
         	return $order_info;
         } catch (Exception $e) {
         	throw new \App\Exceptions\Custom\RequestFailedException('无法创建订单');
@@ -35,10 +35,14 @@ class OrderInfoRepository
 	{
 		return OrderInfo::where('order_sn',$order_sn)->update($update);
 	}
-	public function getOrderInfos($page,$where,$type)
+	public function updateOrderInfoById($order_id,$update)
+	{
+		return OrderInfo::where('order_id',$order_id)->update($update);
+	}
+	public function getOrderInfos($where,$type)
 	{
 		
-		$order_infos = OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.created_at,order_info.order_id,order_info.pay_status,order_info.order_status,order_info.shipping_status,order_info.total_fee'))
+		$order_infos = OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.created_at,order_info.pay_time,order_info.order_id,order_info.pay_status,order_info.order_status,order_info.shipping_status,order_info.total_fee'))
 							->leftJoin('shop', 'shop.shop_id', '=', 'order_info.shop_id')
 							->where($where);
 							
@@ -49,13 +53,13 @@ class OrderInfoRepository
 			switch ($type)
 			{
 				case 'beship':
-					$order_infos = $order_infos->where('order_info.shipping_status',0);
+					$order_infos = $order_infos->where('order_info.shipping_status',0)->where('order_info.order_status',1);
 					break;	
 				case 'shipping':
-					$order_infos = $order_infos->where('order_info.shipping_status',1);
+					$order_infos = $order_infos->where('order_info.shipping_status',1)->where('order_info.order_status',1);
 					break;	
 				case 'succ':
-					$order_infos = $order_infos->where('order_info.shipping_status',2);
+					$order_infos = $order_infos->where('order_info.shipping_status',2)->where('order_info.order_status',2);
 					break;		
 				default:
 					$order_infos = $order_infos->whereIn('order_info.order_status',['3','4']);
@@ -63,19 +67,36 @@ class OrderInfoRepository
 			}
 		}
 		return $order_infos->orderBy('order_info.order_id', 'desc')
-                          	->skip(20 * $page - 20)
+                          	->skip(20 * $this->request->page - 20)
 	                   	  	->take(20)
                           	->get();
 	}
-	public function getOrderInfo($order_id)
+	public function getOrderInfo($order_id,$uid)
 	{
 		return OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.order_id,order_info.order_sn,order_info.pay_status,order_info.order_status,order_info.shipping_status,order_info.goods_amount,order_info.shipping_fee,order_info.total_fee,order_info.consignee,order_info.address,order_info.mobile,order_info.postscript,order_info.pay_time,order_info.created_at'))
 							->leftJoin('shop', 'shop.shop_id', '=', 'order_info.shop_id')
 							->where('order_info.order_id',$order_id)
+							->where('order_info.uid',$uid)
                           	->first();
 	}
-	public function getOrderGoodses($order_id)
+	public function getOrderGoodses($order_id,$columns)
 	{
-		return OrderGoods::where('order_id',$order_id)->get();
+		return OrderGoods::where('order_id',$order_id)->get($columns);
+	}
+	public function getShopOrderInfo ($order_id,$shop_id)
+	{
+		return OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.order_id,order_info.order_sn,order_info.pay_status,order_info.order_status,order_info.shipping_status,order_info.goods_amount,order_info.shipping_fee,order_info.total_fee,order_info.consignee,order_info.address,order_info.mobile,order_info.postscript,order_info.pay_time,order_info.created_at'))
+							->leftJoin('shop', 'shop.shop_id', '=', 'order_info.shop_id')
+							->where('order_info.order_id',$order_id)
+							->where('order_info.shop_id',$shop_id)
+                          	->first();
+	}
+	public function isExistsOrderInfo ($where ,$columns)
+	{
+		return OrderInfo::where($where)->first($columns);
+	}
+	public function destroy ($where)
+	{
+		return OrderInfo::where($where)->delete();
 	}
 }

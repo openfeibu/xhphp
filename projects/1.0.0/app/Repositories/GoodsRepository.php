@@ -6,6 +6,7 @@ use DB;
 use Session;
 use App\Shop;
 use App\Goods;
+use App\GoodsCategory;
 use Illuminate\Http\Request;
 
 class GoodsRepository
@@ -21,7 +22,8 @@ class GoodsRepository
 		$goods = new Goods;
 		$goods->setConnection('write');
 		$goods->uid = $user->uid;
-		$goods->shop_id = $shop->shop_id;		
+		$goods->shop_id = $shop->shop_id;
+		$goods->cat_id = $this->request->cat_id;				
 		$goods->goods_name = trim($this->request->goods_name);                
 		$goods->goods_img = $this->request->goods_img;
 		$goods->goods_desc = trim($this->request->goods_desc);
@@ -30,9 +32,13 @@ class GoodsRepository
 		$goods->created_at = date('Y-m-d H:i:s');
 		$goods->save();
 	}
-	public function existShopGoods ($shop_id)
+	public function update ($where,$update)
 	{
-		$existShopGoods = Goods::where('shop_id', $shop_id)->where('goods_name',trim($this->request->goods_name))->first();		
+		return Goods::where($where)->update($update);		
+	}
+	public function existShopGoods ($shop_id,$goods_name)
+	{
+		$existShopGoods = Goods::where('shop_id', $shop_id)->where('goods_name',$goods_name)->first();		
 
 		return $existShopGoods;
 		
@@ -53,9 +59,9 @@ class GoodsRepository
                            		->get();
         return $ShopGoodsesList;
 	}
-	public function getGoods ($goods_id)
+	public function getGoods ($where,$columns)
 	{
-		$goods = Goods::where('goods_id',$goods_id)->first();
+		$goods = Goods::where($where)->first($columns);
 		return 	$goods;			
 	}
 	public function getGoodses ()
@@ -70,5 +76,14 @@ class GoodsRepository
                    		->take(20)
                    		->get();
         return $goodses;
+	}
+	public function deGoodsNumber ($where = [],$number = 1)
+	{
+		return Goods::where($where)->decrement('goods_number',$number);
+	}
+	public function isExistsCat ($where,$columns)
+	{
+		$cat = GoodsCategory::where($where)->first($columns);
+		return 	$cat;		
 	}
 }

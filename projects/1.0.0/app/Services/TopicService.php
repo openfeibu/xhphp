@@ -58,10 +58,7 @@ class TopicService
 			$topic['content'] = escape_content($topic['content']);
 			$topics[$k]['nickname'] = $user->nickname;
 			$topics[$k]['avatar_url'] = $user->avatar_url;
-			$topicComments = $this->topicRepository->getTopicAllCommentsList(['topic_id'=> $topic->tid]  );
-			foreach($topicComments as $key=>$topicComment){
-				$topicComment['content'] = escape_content($topicComment['content']);
-			}
+			$topicComments = $this->getTopicAllCommentsList(['topic_id'=> $topic->tid]  );
 			$topics[$k]['comment'] = $topicComments;
 		}
 		return $topics;
@@ -103,10 +100,7 @@ class TopicService
 		$topics = $this->topicRepository->getTopicList($param);
 		foreach($topics as $k=>$topic){	
 			$topic['content'] = escape_content($topic['content']);	  
-			$topicComments = $this->topicRepository->getTopicAllCommentsList(['topic_id'=> $topic->tid]  );
-			foreach($topicComments as $key=>$topicComment){
-				$topicComment['content'] = escape_content($topicComment['content']);
-			}
+			$topicComments = $this->getTopicAllCommentsList(['topic_id'=> $topic->tid]  );
 			$topics[$k]['comment'] = $topicComments;
 		}
 		return $topics;

@@ -30,10 +30,10 @@ class GoodsService
 	{
 		$this->goodsRepository->addGoods($user,$shop);
 	}
-	public function existShopGoods ($shop_id)
+	public function existShopGoods ($shop_id,$goods_name)
 	{
 		$shop_id = intval($shop_id);
-		return $this->goodsRepository->existShopGoods($shop_id);		
+		return $this->goodsRepository->existShopGoods($shop_id,trim($goods_name));		
 	}
 	public function existGoods ($goods_id)
 	{	
@@ -54,14 +54,33 @@ class GoodsService
 		}
 		return $goodses;
 	}
+	public function isExistsGoods ($where,$columns = ['*'])
+	{
+		$goods = $this->goodsRepository->getGoods($where,$columns);	
+		if(!$goods){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('请先添加店铺');
+		}
+		return $goods;
+	}
 	public function getGoods ($goods_id)
 	{
 		$goods_id = intval($goods_id);
-		return 	$this->goodsRepository->getGoods($goods_id);			
+		return 	$this->goodsRepository->getGoods(['goods_id' => $goods_id]);			
 	}
 	public function getGoodses ($page)
 	{
 		return $this->goodsRepository->getGoodses($page);
 	}
-	
+	public function update ($where = [],$update = [])
+	{
+		return $this->goodsRepository->update($where,$update);
+	}
+	public function isExistsCat ($where,$columns = ['*'])
+	{
+		$cat = $this->goodsRepository->isExistsCat($where,$columns);
+		if(!$cat){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('分类不存在');
+		}
+		return $cat;
+	}
 }

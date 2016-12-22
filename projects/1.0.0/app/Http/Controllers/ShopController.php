@@ -37,7 +37,7 @@ class ShopController extends Controller
 								FileUploadService $fileUploadService)
 	{
 		parent::__construct();
-		$this->middleware('auth', ['only' => ['store']]);
+		$this->middleware('auth', ['only' => ['store','myShop']]);
 		$this->userService = $userService;
 		$this->shopService = $shopService ;
 		$this->goodsService = $goodsService ;
@@ -100,7 +100,15 @@ class ShopController extends Controller
 			
         ];
     }
-    
+    public function myShop ()
+    {
+    	$user = $this->userService->getUser();  
+	    $shop = $this->shopService->getShop(['uid' => $user->uid]);  
+	    return [
+			'code' => 200,
+			'shop' => $shop
+	    ];
+    }
 
     public function uploadShopImg (Request $request)
     {
@@ -114,10 +122,23 @@ class ShopController extends Controller
 	    ];	
 	    $this->helpService->validateParameter($rules);   
 	    $user = $this->userService->getUser();
-	    $is_collect =  $this->shopService->collect($request->shop_id,$user->uid);
+	    $is_collect = $this->shopService->collect($request->shop_id,$user->uid);
 	    return [
 			'code' => 200,
 			'is_collect' => $is_collect,
 		];
     }
+    public function userCollects (Request $request)
+	{	
+		$rules = [
+			'page' => 'required|integer|min:1',
+		];	
+		$this->helpService->validateParameter($rules);  
+		$user = $this->userService->getUser();
+		$shops = $this->shopService->userCollects($user->uid);
+		 return [
+			'code' => 200,
+			'shops' => $shops,
+		];
+	}
 }

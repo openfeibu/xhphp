@@ -20,11 +20,13 @@ class ShopService
 
 	function __construct(Request $request,
 						 CartRepository $cartRepository,
-						 ShopRepository $shopRepository)
+						 ShopRepository $shopRepository,
+						 UserRepository $userRepository)
 	{
 		$this->request = $request;
 		$this->cartRepository = $cartRepository;
         $this->shopRepository = $shopRepository;
+        $this->userRepository = $userRepository;
 	}
 	public function addShop ($user)
 	{
@@ -41,17 +43,31 @@ class ShopService
 		}
 		return $shops;
 	}
-	public function getShop ($shop_id,$columns = ['*'])
+	public function isExistsShop ($where,$columns = ['*'])
 	{
-		$shop = $this->shopRepository->getShop($shop_id,$columns);
+		$shop = $this->shopRepository->getShop($where,$columns);
 		if(!$shop){
-            throw new \App\Exceptions\Custom\OutputServerMessageException('µêÆÌ²»´æÔÚ');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('åº—é“ºä¸å­˜åœ¨');
+		}
+		return $shop;
+	}
+	public function getShop ($where,$columns = ['*'])
+	{
+		$shop = $this->shopRepository->getShop($where,$columns);
+
+	    if(isset($where['shop_id']))
+	    {
+		    $user = $this->userRepository->getUserByToken($this->request->token);
+			$shop->is_collect = 0;
+			if ($user) {
+				$shop->is_collect =  $this->isCollect($where['shop_id'],$user->uid);
+			}
 	    }
 	    return $shop;
 	}
 	public function collect ($shop_id,$uid)
 	{
-		//¼ìÑéÊÇ·ñÒÑÊÕ²Ø
+		//æ£€éªŒæ˜¯å¦å·²æ”¶è—
 		$is_collect = $this->isCollect($shop_id,$uid);
 		if ($is_collect) {
 			$this->shopRepository->unCollect($shop_id,$uid);
@@ -64,6 +80,16 @@ class ShopService
 	}
 	public function isCollect ($shop_id,$uid)
 	{
-		return $this->shopRepository->isCollect($shop_id,$uid);
+		$is_collect = $this->shopRepository->isCollect($shop_id,$uid);
+		if($is_collect){
+			return 1;
+		}
+		else{
+			return 0;
+		}
+	}
+	public function userCollects ($uid)
+	{
+		return $this->shopRepository->userCollects($uid);
 	}
 }

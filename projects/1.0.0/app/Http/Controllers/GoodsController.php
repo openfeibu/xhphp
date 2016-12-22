@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use Input;
 use App\User;
 use App\Shop;
 use App\Http\Requests;
@@ -13,6 +14,7 @@ use App\Services\GoodsService;
 use App\Services\GoodsCategoryService;
 use App\Services\ShopService;
 use App\Services\HelpService;
+use App\Services\ImageService;
 use App\Services\FileUploadService;
 
 class GoodsController extends Controller
@@ -34,32 +36,32 @@ class GoodsController extends Controller
 								GoodsService $goodsService,
 								HelpService $helpService ,
 								FileUploadService $fileUploadService,
+								ImageService $imageService,
 								GoodsCategoryService $goodsCategoryService)
 	{
 		parent::__construct();
-		$this->middleware('auth',['only' => ['store']]);
+		$this->middleware('auth',['only' => ['store','update','uploadGoodsImage']]);
 		$this->userService = $userService;
 		$this->shopService = $shopService ;
 		$this->goodsService = $goodsService ;
 		$this->goodsCategoryService = $goodsCategoryService ;
-		$this->helpService = $helpService; 
+		$this->helpService = $helpService;
+		$this->imageService = $imageService; 
 		$this->fileUploadService = $fileUploadService;
 	}
 	
 	public function store (Request $request)
     {	    
     	$user = $this->userService->getUser();  
-        $shop = Shop::where('uid', $user->uid)->first(); 	
-    	if(!$shop->shop_id){
-	        throw new \App\Exceptions\Custom\OutputServerMessageException('请先添加店铺');
-    	}	   
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
     	$rules = [
         	'token' 	  	=> 'required',
-	        'goods_name'   	=> 'required|string|between:4,30',
+        	'cat_id'		=> 'required|integer',
+	        'goods_name'   	=> 'required|string|between:2,30',
 	        'goods_img'    	=> 'required|string',
 	        'goods_price' 	=> 'required|numeric|min:0.01',
 	        'goods_desc' 	=> 'required|string|max:255',
-	        'goods_number' 	=> 'required|string|digits:0',
+	        'goods_number' 	=> 'required|integer|min:0',
 	    ];	    
     	$this->helpService->validateParameter($rules);  
 
@@ -77,13 +79,67 @@ class GoodsController extends Controller
 		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺 '.$shop->shop_name.' 已关闭不能添加商品');
     			break;
 		}
-    	$existShopGoods = $this->goodsService->existShopGoods($shop->shop_id);
+    	$existShopGoods = $this->goodsService->existShopGoods($shop->shop_id,$request->goods_name);
     	if($existShopGoods){
-	        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已存在该商品');
+	        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已存在同名商品');
     	}
+    	
+    	$isExistsCat = $this->goodsService->isExistsCat(['shop_id' => $shop->shop_id,'cat_id' => $request->cat_id]);
+    	
 		$this->goodsService->addGoods($user,$shop);		
 	
         throw new \App\Exceptions\Custom\RequestSuccessException('添加成功');
+    }
+    public function update (Request $request)
+    {
+    	$user = $this->userService->getUser();  
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
+    	if(!$shop){
+	        throw new \App\Exceptions\Custom\OutputServerMessageException('请先添加店铺');
+    	}	  
+    	
+    	$rules = [
+        	'token' 	  	=> 'required',
+        	'cat_id'		=> 'required|integer',
+        	'goods_id'		=> 'required|integer',
+	        'goods_name'   	=> 'sometimes|required|string|between:2,30',
+	        'goods_img'    	=> 'sometimes|required|string',
+	        'goods_price' 	=> 'sometimes|required|numeric|min:0.01',
+	        'goods_desc' 	=> 'sometimes|required|string|max:255',
+	        'goods_number' 	=> 'sometimes|required|integer|min:0',
+	        'is_on_sale'    => 'sometimes|required|integer|in:0,1',
+	    ];	 
+	    $this->helpService->validateParameter($rules);
+
+	    $goods =  $this->goodsService->isExistsGoods(['goods_id' => intval($request->goods_id),'shop_id' => $shop->shop_id]);
+
+		if(isset($request->goods_name)){
+			$this->helpService->validateData(trim($request->goods_name),"商品名称"); 	
+		}
+	    $update = [
+			'goods_name' 	=> isset($request->goods_name) ? $request->goods_name : $goods->goods_name,
+			'goods_img'    	=> isset($request->goods_img) ? $request->goods_img : $goods->goods_img,
+	        'goods_price' 	=> isset($request->goods_price) ? $request->goods_price : $goods->goods_price,
+	        'goods_desc' 	=> isset($request->goods_desc) ? $request->goods_desc : $goods->goods_desc,
+	        'goods_number' 	=> isset($request->goods_number) ? $request->goods_number : $goods->goods_number,
+	        'is_on_sale'	=> isset($request->is_on_sale) ? $request->is_on_sale : $goods->is_on_sale,
+	    ];
+
+		$this->goodsService->update(['goods_id' => intval($request->goods_id),'shop_id' => $shop->shop_id],$update);
+		
+	    throw new \App\Exceptions\Custom\RequestSuccessException('更新成功');
+    }
+    public function uploadGoodsImage(Request $request)
+    {
+         //上传头像文件
+        $images_url = $this->imageService->uploadThumbImages(Input::all(), 'goods');
+        
+        return [
+            'code' => 200,
+            'detail' => '请求成功',
+            'image_url' => $images_url['image_url'],
+            'thumb_url' => $images_url['thumb_img_url'],
+        ];
     }
     public function getShopGoodses (Request $request)
     {
@@ -92,7 +148,7 @@ class GoodsController extends Controller
 			'cat_id' => 'sometimes|required|integer',
 	    ];
 	    $this->helpService->validateParameter($rules);	       
-	    $shop = $this->shopService->getShop($request->shop_id);  
+	    $shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);  
 	    
 	    if($shop->shop_status != 1){
 		    throw new \App\Exceptions\Custom\OutputServerMessageException('店铺'.trans('common.shop_status'.$shop->shop_status));
