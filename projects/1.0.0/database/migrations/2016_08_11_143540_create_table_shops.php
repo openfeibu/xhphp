@@ -22,7 +22,7 @@ class CreateTableShops extends Migration
             $table->integer('college_id')->default(0)->comment('所在学校ID');
             $table->tinyInteger('shop_type')->default(1)->comment('1.学生.2.商家');
             $table->tinyInteger('shop_status')->default(0)->comment('0.待审核;1.正常;2.审核不通过;3.关闭');
-            $table->integer('shop_favorite')->default(0)->comment('收藏数');
+            $table->integer('shop_favorite_count')->default(0)->comment('收藏数');
             $table->integer('shop_click_count')->default(0)->comment('浏览数');
             $table->tinyInteger('top')->default(0)->comment('是否置顶');
             $table->decimal('shipping_fee',10,2)->comment('运费');
@@ -45,6 +45,7 @@ class CreateTableShops extends Migration
 			$table->smallInteger('goods_number')->unsigned()->comment('库存');
 			$table->text('goods_desc')->comment('商品描述');
 			$table->string('goods_img')->comment('商品图片');
+			$table->string('goods_thumb')->comment('商品图片');
 			$table->tinyInteger('is_on_sale')->default('1')->unsigned()->comment('在售');
 			$table->tinyInteger('top')->default(0)->comment('是否置顶');
 			$table->foreign('shop_id')->references('shop_id')->on('shop')
