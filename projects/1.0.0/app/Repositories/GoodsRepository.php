@@ -26,6 +26,7 @@ class GoodsRepository
 		$goods->cat_id = $this->request->cat_id;				
 		$goods->goods_name = trim($this->request->goods_name);                
 		$goods->goods_img = $this->request->goods_img;
+		$goods->goods_thumb = $this->request->goods_thumb;
 		$goods->goods_desc = trim($this->request->goods_desc);
 		$goods->goods_number = $this->request->goods_number;
 		$goods->goods_price = $this->request->goods_price;
@@ -81,9 +82,13 @@ class GoodsRepository
 	{
 		return Goods::where($where)->decrement('goods_number',$number);
 	}
-	public function isExistsCat ($where,$columns)
+	public function inGoodsSale ($where = [],$number = 1)
 	{
-		$cat = GoodsCategory::where($where)->first($columns);
-		return 	$cat;		
+		return Goods::where($where)->increment('goods_number',$number);
 	}
+	public function getCount ($where)
+	{
+		return Goods::where($where)->count();
+	}
+	
 }

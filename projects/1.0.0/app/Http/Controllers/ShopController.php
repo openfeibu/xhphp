@@ -37,7 +37,7 @@ class ShopController extends Controller
 								FileUploadService $fileUploadService)
 	{
 		parent::__construct();
-		$this->middleware('auth', ['only' => ['store','myShop']]);
+		$this->middleware('auth', ['only' => ['store','myShop','update']]);
 		$this->userService = $userService;
 		$this->shopService = $shopService ;
 		$this->goodsService = $goodsService ;
@@ -79,7 +79,34 @@ class ShopController extends Controller
         
         throw new \App\Exceptions\Custom\RequestSuccessException('提交成功，等待审核');
     }
-
+	public function update (Request $request)
+	{
+		$rules = [
+        	'token' 	  => 'required',
+	        'shop_img'    => 'sometimes|required|string',
+	        'description' => 'sometimes|required|string|max:255',
+	       /* 'address' 	  => 'sometimes|required|string',*/
+	        'min_goods_amount' 	  =>   'sometimes|numeric|min:0',
+	        'shipping_fee' 	  => 'sometimes|numeric|min:0',
+	        'shop_status' 	  => 'sometimes|numeric|in:1,3',
+	    ];	    
+	    $this->helpService->validateParameter($rules);
+	    $user = $this->userService->getUser();  
+	    $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
+		sellerHandle($shop);	
+		$where = ['shop_id' => $shop->shop_id];
+		$update = [
+		/*	'shop_img' => isset($request->shop_img) ? $request->shop_img : $shop->shop_img,*/
+			'description' => isset($request->description) ? $request->description : $shop->description,
+		/*	'address' => isset($request->address) ? $request->address : $shop->address,*/
+			'min_goods_amount' => isset($request->min_goods_amount) ? $request->min_goods_amount : $shop->min_goods_amount,
+			'shipping_fee' => isset($request->shipping_fee) ? $request->shipping_fee : $shop->shipping_fee,
+			'shop_status' => isset($request->shop_status) ? $request->shop_status : $shop->shop_status,
+		];
+		
+	    $this->shopService->update($where,$update);
+	    throw new \App\Exceptions\Custom\RequestSuccessException('更新成功');
+	}
     public function getShopList (Request $request)
     {
 	    $rules = [

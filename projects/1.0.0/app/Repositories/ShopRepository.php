@@ -32,7 +32,11 @@ class ShopRepository
 		$shop->created_at = date('Y-m-d H:i:s');
 		$shop->save();		
 	}
-	
+	public function update ($where,$data)
+	{
+		config(['database.default' => 'write']);
+		return Shop::where($where)->update($data);
+	}
 	public function getShops()
 	{
 		$shopList = Shop::select(DB::raw('shop.shop_id,shop.uid,college.cid,college.name as college_name,shop.address,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite_count,shop.shop_click_count,shop.created_at'))
@@ -62,6 +66,7 @@ class ShopRepository
 	}
 	public function collect ($shop_id,$uid)
 	{
+		config(['database.default' => 'write']);
 		CollectShop::create([
 			'uid' => $uid,
 			'shop_id' => $shop_id,
@@ -91,4 +96,13 @@ class ShopRepository
 	                ->take(20)
                     ->get();
 	}
+	public function inSale ($where = [],$number)
+	{
+		return Shop::where($where)->increment('sale_count',$number);
+	}
+	public function inIncome ($where = [],$number)
+	{
+		return Shop::where($where)->increment('income',$number);
+	}
+	
 }

@@ -22,7 +22,7 @@ if (!function_exists('round_route')) {
 			'topic_getTopicList',
 			'topic_getTopics',
 			'topic_getTopicCommentsList',
-			'shop_getShopGoodses',
+			/*'shop_getShopGoodses',*/
 		];
 	}
 }
@@ -57,5 +57,31 @@ if (!function_exists('check_confirm_order_info')) {
 			return false;
 		}
 		return true;
+	}
+}
+if (!function_exists('sellerHandle')) {
+	function sellerHandle($shop){
+		if($shop->shop_status == 4){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已经被管理员关闭，禁止所有操作');
+		}else if($shop->shop_status == 0){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺审核中，禁止所有操作');
+		}
+		else if($shop->shop_status == 2){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺未通过审核，禁止所有操作');
+		}
+	}
+}
+if (!function_exists('buyerHandle')) {
+	function buyerHandle($shop){
+		if($shop->shop_status == 4){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已经被管理员关闭，禁止所有操作');
+		}else if($shop->shop_status == 0){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺审核中，禁止所有操作');
+		}
+		else if($shop->shop_status == 2){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺未通过审核，禁止所有操作');
+		}else if($shop->shop_status == 3){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺暂停营业');
+		}
 	}
 }

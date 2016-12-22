@@ -5,6 +5,7 @@ namespace App\Services;
 use Log;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
+use App\Repositories\ShopRepository;
 use App\Repositories\GoodsRepository;
 use App\Repositories\OrderInfoRepository;
 
@@ -18,6 +19,7 @@ class OrderInfoService
 
 	function __construct(Request $request,
 						 GoodsRepository $goodsRepository,
+						 ShopRepository $shopRepository,
 						 OrderInfoRepository $orderInfoRepository,
 						 UserRepository $userRepository)
 	{
@@ -25,6 +27,7 @@ class OrderInfoService
         $this->orderInfoRepository = $orderInfoRepository;
         $this->userRepository = $userRepository;
         $this->goodsRepository = $goodsRepository;
+        $this->shopRepository = $shopRepository;
 	}
 	public function create($order_info)
 	{
@@ -78,6 +81,9 @@ class OrderInfoService
 		foreach( $order_goodses as $key => $order_goods )
 		{
 			$order_goods->total_fee = $order_goods->goods_price * $order_goods->goods_number;
+			$goods = $this->goodsRepository->getGoods(['goods_id' => $order_goods->goods_id],['goods_img','goods_thumb']);
+			$order_goods->goods_img = $goods->goods_img;
+			$order_goods->goods_thumb = $goods->goods_thumb;
 		}
 		$order_info->order_goodses = $order_goodses;
 		return $order_info;
@@ -129,13 +135,15 @@ class OrderInfoService
 		}
 		return $order_info;
 	}
-	public function confirm ($order_id)
+	public function confirm ($order_id,$shop_id)
 	{
 		$this->updateOrderInfoById($order_id,['order_status' => 2,'shipping_status' => 2,'succ_time' => dtime()]);
 		$goodses = $this->getOrderGoodses($order_id,['goods_id','goods_number']);
 		foreach( $goodses as $key => $goods )
 		{
 			$this->goodsRepository->deGoodsNumber(['goods_id' => $goods->goods_id],$goods->goods_number);
+			$this->goodsRepository->inGoodsSale(['goods_id' => $goods->goods_id],$goods->goods_number);
+			$this->shopRepository->inSale(['shop_id' => $shop_id],$goods->goods_number);	
 		}
 		return true;
 	}

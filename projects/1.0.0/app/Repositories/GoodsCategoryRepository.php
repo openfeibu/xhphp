@@ -30,4 +30,19 @@ class GoodsCategoryRepository
 								->orderBy('cat_id', 'asc')
                            		->first();
 	}
+	public function isExistsCat ($where,$columns)
+	{
+		$cat = GoodsCategory::where($where)->first($columns);
+		return 	$cat;		
+	}
+	public function addCat ($data)
+	{
+		config(['database.default' => 'write']);
+		return GoodsCategory::create($data);
+	}
+	public function updateCat ($where,$update)
+	{
+		config(['database.default' => 'write']);
+		return GoodsCategory::where($where)->update($update);
+	}
 }

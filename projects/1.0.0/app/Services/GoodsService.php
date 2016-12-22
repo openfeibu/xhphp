@@ -58,7 +58,7 @@ class GoodsService
 	{
 		$goods = $this->goodsRepository->getGoods($where,$columns);	
 		if(!$goods){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('ÇëÏÈÌí¼ÓµêÆÌ');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('å•†å“ä¸å­˜åœ¨');
 		}
 		return $goods;
 	}
@@ -74,13 +74,10 @@ class GoodsService
 	public function update ($where = [],$update = [])
 	{
 		return $this->goodsRepository->update($where,$update);
-	}
-	public function isExistsCat ($where,$columns = ['*'])
+	}	
+	public function getCount ($where)
 	{
-		$cat = $this->goodsRepository->isExistsCat($where,$columns);
-		if(!$cat){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('·ÖÀà²»´æÔÚ');
-		}
-		return $cat;
+		return $this->goodsRepository->getCount($where);
 	}
+	
 }

@@ -133,6 +133,7 @@ Route::post('topic/search', 'TopicController@search')->name('topic_search');
 
 
 Route::post('shop/store', 'ShopController@store')->name('shop_storeShop');
+Route::post('shop/update', 'ShopController@update');
 Route::get('shop/shops','ShopController@getShopList')->name('shop_getShopList');
 Route::get('shop/myShop','ShopController@myShop');
 Route::post('shop/collect','ShopController@collect');
@@ -143,6 +144,8 @@ Route::post('goods/update','GoodsController@update');
 Route::get('goods/shopGoodses','GoodsController@getShopGoodses')->name('shop_getShopGoodses');
 Route::get('goods/goodses','GoodsController@getGoodses')->name('shop_getGoodses');
 Route::post('goods/uploadGoodsImage','GoodsController@uploadGoodsImage');
+Route::post('goods/addCat','GoodsController@addCat');
+Route::post('goods/updateCat','GoodsController@updateCat');
 
 
 Route::post('cart/store','CartController@store')->name('shop_storeCart');

@@ -19,6 +19,7 @@ class UserAddressRepository
 	public function store($userAddress)
 	{
 		try {
+			config(['database.default' => 'write']);
 			return UserAddress::create($userAddress);
         } catch (Exception $e) {
         	throw new \App\Exceptions\Custom\RequestFailedException('无法创建收货地址');

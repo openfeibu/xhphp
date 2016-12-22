@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Repositories\ShopRepository;
 use App\Repositories\CartRepository;
+use App\Repositories\GoodsRepository;
 
 class ShopService
 {
@@ -19,6 +20,7 @@ class ShopService
     protected $cartRepository;
 
 	function __construct(Request $request,
+						 GoodsRepository $goodsRepository,
 						 CartRepository $cartRepository,
 						 ShopRepository $shopRepository,
 						 UserRepository $userRepository)
@@ -27,10 +29,15 @@ class ShopService
 		$this->cartRepository = $cartRepository;
         $this->shopRepository = $shopRepository;
         $this->userRepository = $userRepository;
+        $this->goodsRepository = $goodsRepository;
 	}
 	public function addShop ($user)
 	{
 		$this->shopRepository->addShop($user);
+	}
+	public function update ($where = [],$update = [])
+	{
+		$this->shopRepository->update($where,$update);
 	}
 	public function getShops($uid = 0)
 	{
@@ -63,6 +70,9 @@ class ShopService
 				$shop->is_collect =  $this->isCollect($where['shop_id'],$user->uid);
 			}
 	    }
+	    if($shop){
+		    $shop->goods_count = $this->goodsRepository->getCount(['shop_id' =>$shop->shop_id,'is_on_sale' => 1]);
+	    }
 	    return $shop;
 	}
 	public function collect ($shop_id,$uid)
@@ -91,5 +101,9 @@ class ShopService
 	public function userCollects ($uid)
 	{
 		return $this->shopRepository->userCollects($uid);
+	}
+	public function inIncome ($where = [],$number)
+	{
+		return $this->shopRepository->inIncome($where,$number);
 	}
 }

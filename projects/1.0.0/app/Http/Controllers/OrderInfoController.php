@@ -413,10 +413,12 @@ class OrderInfoController extends Controller
 		);
 		$this->tradeAccountService->addThradeAccount($trade);
 		
-		$this->orderInfoService->confirm($order_info->order_id);
+		$this->orderInfoService->confirm($order_info->order_id,$shop->shop_id);
 
 		$this->walletService->updateWallet($user->uid,$fee);
-				
+		
+		$this->shopService->inIncome(['shop_id' => $shop->shop_id],$total_fee);		
+		
     	throw new \App\Exceptions\Custom\RequestSuccessException('确认成功');
     }
 }
