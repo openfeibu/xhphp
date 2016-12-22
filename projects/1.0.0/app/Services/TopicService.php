@@ -75,6 +75,7 @@ class TopicService
 			$topic['content'] = escape_content($topic['content']);
 			$topics[$k]['nickname'] = $user->nickname;
 			$topics[$k]['avatar_url'] = $user->avatar_url;
+			$topics[$k]['openid'] = $user->openid;
 		}
 		return $topics;
 	}
