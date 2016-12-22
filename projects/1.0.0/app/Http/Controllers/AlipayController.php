@@ -15,6 +15,7 @@ use App\Services\MessageService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
 use App\Services\TelecomService;
+use App\Services\OrderInfoService;
 
 class AlipayController extends Controller
 {
@@ -36,6 +37,7 @@ class AlipayController extends Controller
                          		HelpService $helpService,
                          		WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
+                         		OrderInfoService $orderInfoService,
                          		TelecomService $telecomService){
 	    parent::__construct();	    
 		$this->orderService = $orderService;
@@ -44,6 +46,7 @@ class AlipayController extends Controller
         $this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
         $this->telecomService = $telecomService;
+        $this->orderInfoService = $orderInfoService;
 	}
 	 public function alipayAppNotify ()
     {
@@ -172,11 +175,24 @@ class AlipayController extends Controller
 							'pay_id' => 1,
 							'description' => '电信套餐',
 			    	);					
+	    		}else if($type == 'SP'){
+		    		$this->orderInfoService->updateOrderInfo($out_trade_no,['pay_status' => 1,'order_status' => 1,'cancelled_time' => dtime()]);
+		    		$order_info = $this->orderInfoService->isExistsOrderInfo(['order_sn' => $out_trade_no]);
+			    	$trade = array(
+			        	'uid' => $order_info->uid,
+						'out_trade_no' => $out_trade_no,
+						'trade_no' => $trade_no,
+						'trade_status' => 'success',
+						'wallet_type' => -1,
+						'from' => 'shop',
+						'trade_type' => 'Shop',
+						'fee' => $order_info->total_fee,
+						'service_fee' => 0,
+						'pay_id' => 1,
+						'description' => '校汇商店订单',
+		    		);
 	    		}
-	    		else if($type == 'TP')
-		    	$this->tradeAccountService->addThradeAccount($trade);
-
-					
+		    	$this->tradeAccountService->addThradeAccount($trade);	
     		}
 		    Log::debug('Alipay notify get data verification success.', [
             	'out_trade_no' => Input::get('out_trade_no'),
