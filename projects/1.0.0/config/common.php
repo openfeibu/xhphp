@@ -10,4 +10,5 @@ return [
 	'img_type' => [
 		"jpg","gif","bmp","jpeg","png"
 	],
+	'shop_fee' => 0,
 ];
