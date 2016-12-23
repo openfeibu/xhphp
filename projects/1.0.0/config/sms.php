@@ -22,4 +22,6 @@ return [
 	'changeAli' => 'SMS_13575032',
 
 	'resetPayPassword' => 'SMS_13525034',
+
+	'order' => 'SMS_35445001',
 ];
