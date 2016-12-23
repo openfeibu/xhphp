@@ -39,7 +39,7 @@ class ShopRepository
 	}
 	public function getShops()
 	{
-		$shopList = Shop::select(DB::raw('shop.shop_id,shop.uid,college.cid,college.name as college_name,shop.address,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite_count,shop.shop_click_count,shop.created_at'))
+		$shopList = Shop::select(DB::raw('shop.shop_id,shop.uid,college.cid,college.name as college_name,shop.address,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite_count,shop.shop_click_count,shop.shipping_fee,shop.created_at'))
 						->leftJoin('college', 'college.cid', '=', 'shop.college_id')
 						->where('shop_status', 1)
 						->skip(20 * $this->request->page - 20)
@@ -86,7 +86,7 @@ class ShopRepository
 	}
 	public function userCollects ($uid)
 	{
-		return  CollectShop::select(DB::raw('shop.shop_id,shop.college_id,shop.uid,college.cid,college.name as college_name,shop.address,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite_count,shop.shop_click_count,shop.created_at'))
+		return  CollectShop::select(DB::raw('shop.shop_id,shop.college_id,shop.uid,shop.shipping_fee,college.cid,college.name as college_name,shop.address,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite_count,shop.shop_click_count,shop.created_at'))
 		 			->leftjoin('shop', function ($join) {
 			            $join->on('shop.shop_id', '=', 'collect_shops.shop_id')->where('shop.shop_status','=',1);
 			        })
