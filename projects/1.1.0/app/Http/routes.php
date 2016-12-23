@@ -162,6 +162,7 @@ Route::get('orderInfo/create','OrderInfoController@create');
 Route::get('orderInfo/show','OrderInfoController@show');
 Route::post('orderInfo/store', 'OrderInfoController@store')->name('shop_storeOrderInfo');
 Route::post('orderInfo/destroy','OrderInfoController@destroy');
+Route::post('orderInfo/pay','OrderInfoController@pay');
 Route::post('orderInfo/refund','OrderInfoController@refund');
 Route::post('orderInfo/confirm','OrderInfoController@confirm');
 Route::post('orderInfo/agreeCancel','OrderInfoController@agreeCancel');

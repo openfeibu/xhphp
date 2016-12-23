@@ -120,6 +120,14 @@ class OrderInfoService
 		}
 		return $order_info;
 	}
+	public function checkPay ($order_id,$uid)
+	{
+		$order_info = $this->isExistsOrderInfo(['order_id' => $order_id,'uid' => $uid]);
+		if($order_info->pay_status !=0){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('不能重复支付');
+		}
+		return $order_info;
+	}
 	public function checkCancel ($order_id,$uid)
 	{
 		$order_info = $this->isExistsOrderInfo(['order_id' => $order_id,'uid' => $uid]);

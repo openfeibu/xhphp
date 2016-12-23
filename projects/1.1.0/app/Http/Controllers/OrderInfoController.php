@@ -324,6 +324,36 @@ class OrderInfoController extends Controller
 
     	throw new \App\Exceptions\Custom\RequestSuccessException('成功取消订单');
     }
+    public function pay (Request $request)
+    {
+    	$rules = [
+        	'token' 	=> 'required',
+			'order_id'  => 'required|exists:order_info,order_id',
+    	];
+    	
+    	$pay_platform = isset($request->platform) ? $request->platform : 'web';	
+    	
+    	$this->helpService->validateParameter($rules);
+    	
+    	$order_info = $this->orderInfoService->checkPay($request->order_id,$this->user->uid);
+    	
+    	$data = [
+        	'return_url' => config('common.order_info_return_url'),
+        	'order_sn' => $order_info->order_sn,
+        	'subject' => '校汇商店订单',
+        	'body' => '校汇商店订单', 
+        	'total_fee' => $order_info->total_fee,
+        	'trade_type' => 'Shopping',
+        	'mobile_no' => $this->user->mobile_no
+        ];			
+        $data = $this->payService->payHandle(1,$pay_platform,'shop',$data);	
+
+        return [
+			'code' => 200,
+			'data' => $data
+        ];
+        
+    }
     public function refund(Request $request)
     {
     	$rules = [
