@@ -253,6 +253,7 @@ class OrderInfoController extends Controller
         	'body' => '校汇商店订单', 
         	'total_fee' => $total_fee,
         	'trade_type' => 'Shopping',
+        	'mobile' => $this->user->mobile
         ];								
         $data = $this->payService->payHandle($request->pay_id,$pay_platform,'shop',$data);		
         return [
