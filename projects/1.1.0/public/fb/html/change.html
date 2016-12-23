@@ -1,0 +1,35 @@
+<div id="nickname-bg">
+	<section id="change-nickname">
+		<div class="scrollView" id="scrolling">
+			<div class="header_title">
+				<p></p>
+				<div class="return" onclick="returnUp()">
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<input type="text" class="change-input" placeholder="">
+			<button class="change-submit button_active">更换</button>
+		</div>
+	</section>
+	<script>
+	$(".change-submit").on("click",changeinfo);
+	function changeinfo(){
+	$(this).addClass("on")
+	$(".change-submit").off("click",changeinfo);
+		var val = $(".change-input").val();
+		var token = window.localStorage.token;
+      $.post(locahost+'/user/changeUserInfo/?token='+token+'&'+change_name+"="+val,  function(data){
+      		if(data.code=="200"){
+      			fb_alert("修改成功");
+  				window.history.back();
+      		}
+      		var info = window.localStorage.info;
+     		var data = JSON.parse(info);
+     		data[change_name] = val;
+           	setItem("info",JSON.stringify(data))
+			$(".change-submit").on("click",changeinfo);
+    	 })
+	}
+	</script>
+</div>

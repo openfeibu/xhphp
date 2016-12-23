@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta content="telephone=no" name="format-detection" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- UC禁止放大字体 -->
+    <meta name="wap-font-scale" content="no">
+    <title>校汇Plus | 校汇</title>
+    <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活" />
+    <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+    <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link href="css/swiper.min.css" rel="stylesheet" type="text/css">
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script src="js/director.js"></script>
+    <script type="text/javascript" src="js/updata.js"></script>
+    <script src="js/swiper.min.js"></script>
+  </head>
+  
+  <body>
+    <div id="ClassA" class="routes">
+      <section id="social-news">
+        <div class="header_title">
+          <p>校园社团</p>
+          <div class="return" onclick="returnUp()"></div>
+        </div>
+        <div class="content-select">
+            <div class="left select">
+              <span>社团列表</span></div>
+            <div class="right">
+              <span>社团活动</span></div>
+          </div>
+        <div class="assList container">
+            <div class="asslist_header">
+              <span data-name="ass_num"></span>人活跃丨 <span data-name="active_num"></span>个社团
+            </div>
+          <div class="ass_list">
+           
+          </div>
+          <div class="ass_footer">更多有趣好玩的社团期待你们的加入！</div>
+        </div>
+        <div class="active container">
+          <div class="active_list"></div>
+        </div>
+      </section>
+    </div>
+    <div id="ClassB" class="routes">
+        <div class="header_title">
+          <p>校园社团详情</p>
+          <div class="return" onclick="returnUp()"></div>
+        </div>
+      <div class="ass_de">
+           <div class="ass_header" data-name="ass_bg">
+            <div class="ass_img_test">
+              <div class="img" data-name="ass_logo"></div>
+              <div class="test">
+                  <div data-name="ass_name"></div>
+                  <div><span data-name="ass_num"></span>·<span data-name="ass_active"></span>·<span data-name="ass_label"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="ass_introduction" data-name="ass_introduction">
+
+          </div>
+          
+          <div class="ass_button" alt="" data-name="ass_aid"><a href="">点我申请加入社团</a></div>
+      </div>
+    </div>
+    <div id="ClassC" class="routes"></div>
+    <div id="ClassAdd" class="routes">
+      <div class="header_title">
+          <p>加入社团</p>
+          <div class="return" onclick="returnUp()"></div>
+      </div>
+      <div class="addInfo pt1">
+          <ul>
+            <li class="add_name"><input type="text" placeholder="请输入姓名" name="add_name"/></li>
+            <li class="add_profession"><input type="text" placeholder="请输入专业" name="add_profession"/></li>
+            <li class="add_phone"><input type="text" placeholder="请输入手机号码" name="add_phone"/></li>
+            <li class="add_causes"><textarea name="add_causes" placeholder="申请理由"></textarea></li>
+          </ul>
+          <div class="add_button">点击申请</div>
+      </div>
+    </div>
+    <script>
+      var mySwiper;
+      tab = "assList";
+      $(".content-select > div").click(function() {
+        if ($(this).hasClass("select")) {
+          return false;
+        }
+        var i = $(this).index(".content-select > div");
+        $(this).addClass("select").siblings().removeClass("select");
+        $(".container").eq(i).show().siblings(".container").hide();
+        clearWindowScroll();
+        loading(true) ;
+        if (i == 0) {
+          getList();
+          tab = "assList";
+        } else if (i == 1) {
+          getActives();
+           tab = "asActives";
+
+        }
+      })
+      var routes = {
+        '/association': assoi,
+        '/associationActive/:id': associationActive,
+        '/associationDe/:id': associationDe,
+        '/addAss/:id': addAss,
+      };
+      var router = Router(routes);
+      router.init("/association");
+        function assoi() {
+          clearWindowScroll();
+          routDom($("#ClassA"));
+          loading(true);
+          getList() ;
+          var i = $(".content-select .select").index(".content-select div");
+          if (i == 1) {
+            $(window).on("scroll",
+            function() {
+              if ($(window).scrollTop() + 10 >= $(document).height() - $(window).height()) {
+                getActiveData(2);
+              }
+            })
+          }
+        }
+      
+      function getList(a) {
+        if (!getItemATime("assList") && a != 1) {
+            var loca = getItem("assList");
+            var htmldom = loca[0];
+            $(".assList").html(htmldom);
+            loading(false); 
+             $(window).on("scroll",function(){
+              if($(window).scrollTop()+50>=$(document).height()-$(window).height()){
+                //到底
+                getListData(2);
+              }
+             })
+          }else{
+            getListData()
+          };
+      }
+      
+      function getListData(page) {
+        page = page == undefined ? 1 : page;
+        $(window).off('scroll');
+        $.getJSON(locahost + "/association/getAssociations/?page=" +page,
+        function(data) {
+          if (data.code == 200) {
+              clearLoading();
+              loading(false);
+              var dom='' ,htmldom='',img_url="";
+              $('span[data-name="ass_num"]').html(data.data.association_sum)
+              $('span[data-name="active_num"]').html(data.data.activity_sum)
+              $.each(data.data.associations,function(a,b){
+                htmldom += '<div class="ass_box">\
+                              <a href="#/associationDe/'+b.aid+'">\
+                              <div class="img"><img src="'+b.avatar_url+'" /></div>\
+                              <div class="test">\
+                                  <div class="aName">'+b.aname+'<span>·'+b.leader+'</span></div>\
+                                  <div class="aIntroduce">'+b.introduction+'</div>\
+                                  <div class="label"><span>'+b.member_number+'人活跃</span>·<span>'+b.activity_count+'个活动</span>·<span>#'+b.label+'#</span></div>\
+                              </div>\
+                              </a>\
+                            </div>';
+              })
+               if(page != 1){
+                  $('#social-news .ass_list').append(htmldom);
+                }else{
+                  $('#social-news .ass_list').html(htmldom);
+                  setItem("assList",$(".assList").html());
+                }
+              
+              if (data.data.associations == '' || data.data.length < 10) {
+                $("#loading").remove();
+                $(".news").append('<div id="loaded" >我是有底线的</div>')
+              } else {
+                 $(window).on("scroll",function(){
+                  if($(window).scrollTop()+50>=$(document).height()-$(window).height()){
+                    //到底
+                    page++;
+                    getListData(page);
+                  }
+                 })
+              }
+            }        
+        });
+      }
+      function getActives(a) {
+        if (!getItemATime("asActives") && a != 1) {
+              var loca = getItem("asActives");
+              var htmldom = loca[0];
+              $(".active_list").html(htmldom);
+              loading(false); 
+              $(window).on("scroll",
+              function() {
+                if ($(window).scrollTop() + 50 >= $(document).height() - $(window).height()) {
+                  getActiveData(2);
+                }
+              })
+        } else {
+            getActiveData();
+        }
+      }
+      
+      function getActiveData(page) {
+        page = page == undefined ? 1 : page;
+        $(window).off('scroll');
+        $.getJSON(locahost + "/association/getActivityList/?page=" + page + "&num=10",
+        function(data) {
+          clearLoading();
+          if (data.code == 200) {
+            loading(false);
+            var html = '';
+            $.each(data.data,
+            function(key, value) {
+              now = new Date().getTime();
+              if (now > toUnix(value["start_time"])) {
+                var datadom = '<div class="ing"></div>';
+                var classT='startTime on';
+              } else {
+                var datadom = '<div class="will"></div>';
+                var classT='startTime';
+              }
+              html += "<div class='item'>" + datadom + "<a href='#/associationActive/" + value.actid + "'>\
+                        <div class='item_img' style='background:url("+value.img_url.split(",")[0]+") no-repeat center;background-size:cover;'>\
+                          <div class='item_text_bg'>\
+                            <div class='title'>" + value.title + "</div>\
+                            <div class='content'>\
+                              <p>" + value.content +"</p>\
+                            </div>\
+                          </div>\
+                        </div>\
+                          <div class='ass_info'>\
+                            <div class='place'>地点："+value.place+"</div>\
+                            <div class='time'>\
+                              <div class='"+classT+"'>开始时间："+value.start_time+"</div>\
+                              <div class='endTime'>结束时间："+value.end_time+"</div>\
+                            </div>\
+                            <div class='content-bottom'>\
+                              <span class='user-num'>浏览 " + value.view_num + "</span>\
+                              <span class='social-name'>" + value.aname + "</span>\
+                            </div></div></a></div>";
+            });
+            if(page != 1){
+              $('#social-news .active_list').append(html);
+            }else{
+              $('#social-news .active_list').html(html);
+              setItem("asActives",html);
+            }
+           
+
+            if (data.data == "" || data.data.length < 10) {
+              $("#loading").remove();
+              $(".active").append('<div id="loaded" >我是有底线的</div>')
+            } else {
+              $(window).on("scroll",
+              function() {
+                if ($(window).scrollTop() + 10 >= $(document).height() - $(window).height()) {
+                  page++;
+                  getActiveData(page);
+                }
+
+              })
+            }
+          }
+
+        });
+      }
+       /*活动详情 S*/
+      function associationActive(id){
+        tab = "";
+        loading(true)
+        clearWindowScroll();
+        routDom($("#ClassC"));
+        $("#ClassC").html('<div id="consult"><div class="header_title"><p>活动内容</p><div class="return" onclick="returnUp()"></div></div><div class="container "></div></div>').css({"background":"#fff","minHeight":$(window).height()-$(".header_title").height()})
+        $.getJSON(locahost+"/association/getActivity/?activity_id="+id,function(data){
+          if(data.code == 200){
+            loading(false)
+            var b = data.data;
+            var time=afterTime(b.created_at);
+            var now = new Date().getTime();
+              if (now > toUnix(b["start_time"])) {
+                var datadom = '<div class="ing"></div>';
+                var classT='startTime on';
+              } else {
+                var datadom = '<div class="will"></div>';
+                var classT='startTime';
+              }
+            var html =datadom+'<div class="title">\
+                        <p>'+b.title+'</p>\
+                      </div>\
+                      <div class="content">'+b.content+'</div>\
+                      <div class="img-container"><img src="'+b["img_url"].split(",")[0]+'" /></div>\
+                      <div class="ass_bottom">\
+                          <div class="map">活动地点：'+b.place+'</div>\
+                          <div class="time">\
+                            <div class='+classT+' ">开始时间：'+b.start_time+'</div>\
+                            <div class="endTime ">结束时间：'+b.end_time+'</div>\
+                          </div>\
+                          <div class="content-bottom">\
+                            <span class="user-num">浏览 '+b.view_num+'</span>\
+                            <span class="social-name">'+b.aname+'</span>\
+                          </div>\
+                      </div>'
+              
+            ;
+          $("#ClassC .container").html(html).css({"paddingBottom":$(".ass_bottom").height()})
+        }else{
+          fb_alert(data.detail)
+        }
+      })
+      }
+      /*活动详情 E*/
+
+      /*社团详情 S*/
+      function associationDe(id) {
+        var token = window.localStorage.token;
+        tab = "";
+        loading(true);
+        clearWindowScroll();
+        routDom($("#ClassB"));
+        $("#ClassB").css({
+          "background": "#fff",
+          "minHeight": $(window).height() ,
+        });
+        $.getJSON(locahost + "/association/getAssociationsDetails/?association_id=" + id+"&token="+token,
+        function(data) {
+          if(data.code == 2001){
+                fb_alert(fb_error["2001"])
+                window.location.href = "login.html";
+                return;
+             }
+          if (data.code == 200) {
+              loading(false);
+              var b = data.data;
+              $("[data-name='ass_logo']").html("<img src='"+b.avatar_url+"' alt='社团头像'/>");
+              $("[data-name='ass_name']").text(b.aname);
+              $("[data-name='ass_introduction']").text(b.introduction);
+              $("[data-name='ass_num']").text(b.member_number+"人活跃");
+              $("[data-name='ass_active']").text(b.activity_count+"个活动");
+              $("[data-name='ass_label']").text("#"+b.label+"#");
+              $("[data-name='ass_aid']").find("a").attr("href","#/addAss/"+b.aid);
+              $("[data-name='ass_bg']").css({"background":"url("+b.background_url+") no-repeat center","backgroundSize":"cover"});
+              if(b.uid != 0 ){
+                $('[data-name="ass_aid"]').hide();
+              }
+           // $("#ClassC .container").html(html)
+          }else{
+            fb_alert(data.detail)
+          }
+        })
+      }
+      /*社团详情 S*/
+
+      /*申请加入界面 S*/
+      function addAss(id) {
+        var token = window.localStorage.token;
+        tab = "";
+        //loading(true);
+        routDom($("#ClassAdd"));
+         $("#ClassAdd").css({
+          "background": "#fff",
+          "minHeight": $(window).height() ,
+        });
+        $(".add_button").attr("aid",id);
+      }
+      /*申请加入界面 E*/
+      /*申请加入 S*/
+      $(".add_button").on("click",add_validate)
+      function add_validate(){
+         var ar_username = $("input[name='add_name']").val(),
+              mobile_no = $("input[name='add_phone']").val(),
+              profession = $("input[name='add_profession']").val(),
+              causes = $("[name='add_causes']").val();
+
+          if(ar_username.length == 0 || profession.length == 0 || causes.length == 0){
+            fb_alert(fb_error["ass_01"]);
+          }else if(!checkMobile(mobile_no)){
+            fb_alert(fb_error["ass_02"]);
+          }else{
+            $(".add_button").off("click",add_validate)
+            applyAss();
+          }
+      }
+      function applyAss(){
+        is_alipay(true)
+        var token = window.localStorage.token,
+            ar_username = $("input[name='add_name']").val(),
+            mobile_no = $("input[name='add_phone']").val(),
+            profession = $("input[name='add_profession']").val(),
+            causes = $("[name='add_causes']").val(),
+            id=$(".add_button").attr("aid");
+            postData = {
+              "token" : token,
+              "association_id":id,
+              "ar_username":ar_username,
+              "profession":profession,
+              "causes":causes,
+              "mobile_no":mobile_no,
+            };
+
+         $.post(locahost+"/association/joinAssociationMember/",postData,function(data){
+             if(data.code == 2001){
+                fb_alert(fb_error["2001"])
+                window.location.href = "login.html";
+                return;
+             }
+            if(data.code == 200){
+              is_alipay(false);
+              fb_alert(fb_error["ass_05"]);
+              window.history.go(-1);
+            }else{
+              is_alipay(false);
+              fb_alert(data.detail);
+            }
+            $(".add_button").on("click",add_validate);
+          },"json").error(function() { 
+            is_alipay(false);
+            fb_alert(fb_error["404"])
+           })
+      }
+      /*申请加入 E*/
+     
+
+      refresh["assList"] = getList;
+      refresh["asActives"] = getActives;   
+      </script>
+  </body>
+
+</html>

@@ -1,0 +1,1549 @@
+[2016-12-23 17:33:40] local.ERROR: before------------:POST /orderInfo/store?token=18c23da7-c8ef-11e6-83ae-000c292668cf&shop_id=1&pay_id=3&pay_password=96e79218965eb72c92a549dd5a330112&address_id=1 HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8
+Cache-Control:   no-cache
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6InNLaFRURmYrRWEwZHpaSWZ1T3FzYmc9PSIsInZhbHVlIjoiUDFPUVd4VFZWcVcrS3p2N0RQRlMxbWFUXC9oYkE4N0NtTFRcL1VkcGpxZ0ZPNFQ3ZEJKY094bFd0RXA2MnJEU1d4VkhIQXRPUW43V3pXRDFUMlRBVllKZz09IiwibWFjIjoiMTg3MzAwZmExZGVkZDYyZWI5NWZhYTI4NTNlNmI1NjMxNWVhN2IwZTRiODQwNjRlMDIyMzg3ZDJhMmQ1ODc5ZSJ9
+Host:            localhost:8085
+Origin:          chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop
+Postman-Token:   a2236ede-83ff-9012-f80c-04ca8f0a339d
+User-Agent:      Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+
+  
+[2016-12-23 17:33:41] local.ERROR: after------------:a:2:{s:4:"code";i:200;s:6:"detail";s:12:"支付成功";}  
+[2016-12-23 17:35:30] local.ERROR: before------------:GET /pay HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Host:            192.168.0.146:8085
+Origin:          null
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:35:30] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:35:30 GMT
+
+{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}}  
+[2016-12-23 17:35:30] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:35:30 GMT
+
+{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}}  
+[2016-12-23 17:37:22] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip,deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 4.4.2; H60-L01 Build/HDH60-L01) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+X-Wap-Profile:    http://wap1.huawei.com/uaprof/HUAWEI_H60_L01_UAProfile.xml
+
+  
+[2016-12-23 17:37:29] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip,deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 4.4.2; H60-L01 Build/HDH60-L01) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+X-Wap-Profile:    http://wap1.huawei.com/uaprof/HUAWEI_H60_L01_UAProfile.xml
+
+  
+[2016-12-23 17:39:32] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip,deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 4.4.2; H60-L01 Build/HDH60-L01) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+X-Wap-Profile:    http://wap1.huawei.com/uaprof/HUAWEI_H60_L01_UAProfile.xml
+
+  
+[2016-12-23 17:49:09] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip, deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 5.1; MX5 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.124 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+
+  
+[2016-12-23 17:49:17] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip, deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 5.1; MX5 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.124 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+
+  
+[2016-12-23 17:50:49] local.ERROR: before------------:GET /order/remindOrder/?token=undefined HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:49] local.ERROR: before------------:GET /user/getMyInfo/?token=undefined HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:50] local.ERROR: after------------:a:2:{s:4:"code";i:2001;s:6:"detail";s:40:"无token或token无效，请重新登陆";}  
+[2016-12-23 17:50:50] local.ERROR: after------------:a:2:{s:4:"code";i:2001;s:6:"detail";s:40:"无token或token无效，请重新登陆";}  
+[2016-12-23 17:50:52] local.ERROR: before------------:GET /user/getMyInfo/?token=undefined HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:52] local.ERROR: before------------:GET /association/getHotActivities/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:52] local.ERROR: before------------:GET /home/getADList/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:53] local.ERROR: before------------:GET /home/getExtra/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:53] local.ERROR: before------------:GET /order/getRecommendOrders/?number=2 HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:53] local.ERROR: after------------:a:2:{s:4:"code";i:2001;s:6:"detail";s:40:"无token或token无效，请重新登陆";}  
+[2016-12-23 17:50:54] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:54 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"adid":1,"ad_url":"https:\/\/jinshuju.net\/f\/uNBIGQ","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/shetuan.jpg","title":"\u793e\u56e2\u5165\u9a7b","description":"\u793e\u56e2\u5165\u9a7b","rank":1,"created_at":"-0001-11-30 00:00:00"},{"adid":5,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=100000021&idx=1&sn=332e789bd5db3ea3dbf50399c31465aa&chksm=1797db1d20e0520b31e1069e761cbb0da6c6829144d7e9d3b6830d2f094d28bcf09ca9b40831&scene=18#wechat_redirect","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuaidi.jpg","title":"\u53cc\u5341\u4e00\u6d3b\u52a8","description":"\u53cc\u5341\u4e00\u6d3b\u52a8","rank":2,"created_at":"-0001-11-30 00:00:00"},{"adid":3,"ad_url":"http:\/\/xhplus.feibu.info\/fb\/html\/telecom_welcome.html","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuandai0912.jpg","title":"\u5bbd\u5e26\u529e\u7406","description":"\u5bbd\u5e26\u529e\u7406","rank":3,"created_at":"2016-09-06 21:51:28"},{"adid":6,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=2247483916&idx=1&sn=042cd2558c06e65c69f3685294f9f64b&chksm=9797d804a0e05112a203b962d349efb3a44ba094ed002a2c9694202dc46e57710de0767cecf4#rd","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/7273146617075082.jpg","title":"\u9996\u5355\u8fd4\u73b0","description":"\u9996\u5355\u8fd4\u73b0","rank":99,"created_at":"2016-11-20 20:18:40"}]}  
+[2016-12-23 17:50:54] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:54 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"adid":1,"ad_url":"https:\/\/jinshuju.net\/f\/uNBIGQ","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/shetuan.jpg","title":"\u793e\u56e2\u5165\u9a7b","description":"\u793e\u56e2\u5165\u9a7b","rank":1,"created_at":"-0001-11-30 00:00:00"},{"adid":5,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=100000021&idx=1&sn=332e789bd5db3ea3dbf50399c31465aa&chksm=1797db1d20e0520b31e1069e761cbb0da6c6829144d7e9d3b6830d2f094d28bcf09ca9b40831&scene=18#wechat_redirect","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuaidi.jpg","title":"\u53cc\u5341\u4e00\u6d3b\u52a8","description":"\u53cc\u5341\u4e00\u6d3b\u52a8","rank":2,"created_at":"-0001-11-30 00:00:00"},{"adid":3,"ad_url":"http:\/\/xhplus.feibu.info\/fb\/html\/telecom_welcome.html","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuandai0912.jpg","title":"\u5bbd\u5e26\u529e\u7406","description":"\u5bbd\u5e26\u529e\u7406","rank":3,"created_at":"2016-09-06 21:51:28"},{"adid":6,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=2247483916&idx=1&sn=042cd2558c06e65c69f3685294f9f64b&chksm=9797d804a0e05112a203b962d349efb3a44ba094ed002a2c9694202dc46e57710de0767cecf4#rd","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/7273146617075082.jpg","title":"\u9996\u5355\u8fd4\u73b0","description":"\u9996\u5355\u8fd4\u73b0","rank":99,"created_at":"2016-11-20 20:18:40"}]}  
+[2016-12-23 17:50:54] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:54 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"actid":20,"aid":44,"aname":"Allen","avatar_url":"http:\/\/xhplusadmin.feibu.info\/uploads\/admin-img\/9b6002b5a2ac84c64b52c9213d597ce25.jpg","title":"\u300e\u6821\u6c47\u300f\u65b0\u7248\u672c\u5373\u5c06\u4e0a\u7ebf","content":"\u4e3a\u4e86\u53cd\u9988\u8001\u7528\u6237\uff0c\u8fce\u63a5\u65b0\u7528\u6237\uff0c\u6821\u6c47\u65b0\u7248\u4e0a\u7ebf\u540e\u5c06\u63a8\u51fa\u4e00\u7cfb\u5217\u3010\u514d\u5355\u4efb\u52a1\u3011\uff0c\u53ea\u9700\u53d1\u5e03\u4efb\u52a1\u5e76\u5206\u4eab\u670b\u53cb\u5708\uff0c\u4efb\u52a1\u5b8c\u6210\u540e\u5373\u53ef\u8fd4\u8fd8\u8d4f\u91d1\u3002\u65b0\u7248\u672c\u5bf9\u529f\u80fd\u548c\u6574\u4f53\u754c\u9762\u8fdb\u884c\u4f18\u5316\uff0c\u53e6\u65b0\u589e\u4e86\u7f51\u7edc\u62a5\u6545\u969c\u65b0\u529f\u80fd\u3002\u6821\u6c47\u65b0\u7248\u672c\u66f4\u6d41\u7545\u66f4\u597d\u7528!\u671f\u5f85\u6821\u6c47\u65b0\u7248\u672c\u7684\u53d1\u5e03\u3002","start_time":"2016-10-27 00:00:00","end_time":"2016-11-30 00:00:00","place":"\u519c\u5de5\u5546","view_num":7500,"created_at":"2016-10-26 00:04:41","img_url":"http:\/\/xh.feibu.info\/uploads\/activity\/f95398275d71dc3d7ae9047fb3094120.png"}]}  
+[2016-12-23 17:50:54] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:54 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"actid":20,"aid":44,"aname":"Allen","avatar_url":"http:\/\/xhplusadmin.feibu.info\/uploads\/admin-img\/9b6002b5a2ac84c64b52c9213d597ce25.jpg","title":"\u300e\u6821\u6c47\u300f\u65b0\u7248\u672c\u5373\u5c06\u4e0a\u7ebf","content":"\u4e3a\u4e86\u53cd\u9988\u8001\u7528\u6237\uff0c\u8fce\u63a5\u65b0\u7528\u6237\uff0c\u6821\u6c47\u65b0\u7248\u4e0a\u7ebf\u540e\u5c06\u63a8\u51fa\u4e00\u7cfb\u5217\u3010\u514d\u5355\u4efb\u52a1\u3011\uff0c\u53ea\u9700\u53d1\u5e03\u4efb\u52a1\u5e76\u5206\u4eab\u670b\u53cb\u5708\uff0c\u4efb\u52a1\u5b8c\u6210\u540e\u5373\u53ef\u8fd4\u8fd8\u8d4f\u91d1\u3002\u65b0\u7248\u672c\u5bf9\u529f\u80fd\u548c\u6574\u4f53\u754c\u9762\u8fdb\u884c\u4f18\u5316\uff0c\u53e6\u65b0\u589e\u4e86\u7f51\u7edc\u62a5\u6545\u969c\u65b0\u529f\u80fd\u3002\u6821\u6c47\u65b0\u7248\u672c\u66f4\u6d41\u7545\u66f4\u597d\u7528!\u671f\u5f85\u6821\u6c47\u65b0\u7248\u672c\u7684\u53d1\u5e03\u3002","start_time":"2016-10-27 00:00:00","end_time":"2016-11-30 00:00:00","place":"\u519c\u5de5\u5546","view_num":7500,"created_at":"2016-10-26 00:04:41","img_url":"http:\/\/xh.feibu.info\/uploads\/activity\/f95398275d71dc3d7ae9047fb3094120.png"}]}  
+[2016-12-23 17:50:54] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:54 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"extra":"ny\u53d1\u5e03\u4e86\u4e00\u4e2a\u65b0\u4efb\u52a1"},{"extra":"Www\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f60\u597d\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"}]}  
+[2016-12-23 17:50:54] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:54 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"extra":"ny\u53d1\u5e03\u4e86\u4e00\u4e2a\u65b0\u4efb\u52a1"},{"extra":"Www\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f60\u597d\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"}]}  
+[2016-12-23 17:50:54] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:54 GMT
+
+{"code":200,"data":[{"oid":901,"openid":"14a347f35beaa2f2a1b364a07b6c7b84","nickname":"ny","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/avatar.png","destination":"24#","description":"\u627e\u4eba\u4ee3\u8bfe \u4e8c\u5341\u8d77\u6b65 \u4fe1\u606f\u8054\u7cfb\u3002\u3002","fee":"20.00","created_at":"2016-12-22 21:52:24","status":"new","is_recommend":0,"share_url":"http:\/\/xhplus.feibu.info\/fb\/schoolwork_de.html?oid=901"}]}  
+[2016-12-23 17:50:54] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:54 GMT
+
+{"code":200,"data":[{"oid":901,"openid":"14a347f35beaa2f2a1b364a07b6c7b84","nickname":"ny","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/avatar.png","destination":"24#","description":"\u627e\u4eba\u4ee3\u8bfe \u4e8c\u5341\u8d77\u6b65 \u4fe1\u606f\u8054\u7cfb\u3002\u3002","fee":"20.00","created_at":"2016-12-22 21:52:24","status":"new","is_recommend":0,"share_url":"http:\/\/xhplus.feibu.info\/fb\/schoolwork_de.html?oid=901"}]}  
+[2016-12-23 17:50:55] local.ERROR: before------------:GET /user/getMyInfo/?token=undefined HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:56] local.ERROR: before------------:GET /home/getADList/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:57] local.ERROR: after------------:a:2:{s:4:"code";i:2001;s:6:"detail";s:40:"无token或token无效，请重新登陆";}  
+[2016-12-23 17:50:57] local.ERROR: before------------:GET /home/getExtra/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:57] local.ERROR: before------------:GET /order/getRecommendOrders/?number=2 HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:57] local.ERROR: before------------:GET /association/getHotActivities/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:50:58] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:58 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"extra":"ny\u53d1\u5e03\u4e86\u4e00\u4e2a\u65b0\u4efb\u52a1"},{"extra":"Www\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f60\u597d\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"}]}  
+[2016-12-23 17:50:58] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:58 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"extra":"ny\u53d1\u5e03\u4e86\u4e00\u4e2a\u65b0\u4efb\u52a1"},{"extra":"Www\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f60\u597d\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"}]}  
+[2016-12-23 17:50:58] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:58 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"adid":1,"ad_url":"https:\/\/jinshuju.net\/f\/uNBIGQ","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/shetuan.jpg","title":"\u793e\u56e2\u5165\u9a7b","description":"\u793e\u56e2\u5165\u9a7b","rank":1,"created_at":"-0001-11-30 00:00:00"},{"adid":5,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=100000021&idx=1&sn=332e789bd5db3ea3dbf50399c31465aa&chksm=1797db1d20e0520b31e1069e761cbb0da6c6829144d7e9d3b6830d2f094d28bcf09ca9b40831&scene=18#wechat_redirect","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuaidi.jpg","title":"\u53cc\u5341\u4e00\u6d3b\u52a8","description":"\u53cc\u5341\u4e00\u6d3b\u52a8","rank":2,"created_at":"-0001-11-30 00:00:00"},{"adid":3,"ad_url":"http:\/\/xhplus.feibu.info\/fb\/html\/telecom_welcome.html","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuandai0912.jpg","title":"\u5bbd\u5e26\u529e\u7406","description":"\u5bbd\u5e26\u529e\u7406","rank":3,"created_at":"2016-09-06 21:51:28"},{"adid":6,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=2247483916&idx=1&sn=042cd2558c06e65c69f3685294f9f64b&chksm=9797d804a0e05112a203b962d349efb3a44ba094ed002a2c9694202dc46e57710de0767cecf4#rd","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/7273146617075082.jpg","title":"\u9996\u5355\u8fd4\u73b0","description":"\u9996\u5355\u8fd4\u73b0","rank":99,"created_at":"2016-11-20 20:18:40"}]}  
+[2016-12-23 17:50:58] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:58 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"adid":1,"ad_url":"https:\/\/jinshuju.net\/f\/uNBIGQ","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/shetuan.jpg","title":"\u793e\u56e2\u5165\u9a7b","description":"\u793e\u56e2\u5165\u9a7b","rank":1,"created_at":"-0001-11-30 00:00:00"},{"adid":5,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=100000021&idx=1&sn=332e789bd5db3ea3dbf50399c31465aa&chksm=1797db1d20e0520b31e1069e761cbb0da6c6829144d7e9d3b6830d2f094d28bcf09ca9b40831&scene=18#wechat_redirect","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuaidi.jpg","title":"\u53cc\u5341\u4e00\u6d3b\u52a8","description":"\u53cc\u5341\u4e00\u6d3b\u52a8","rank":2,"created_at":"-0001-11-30 00:00:00"},{"adid":3,"ad_url":"http:\/\/xhplus.feibu.info\/fb\/html\/telecom_welcome.html","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuandai0912.jpg","title":"\u5bbd\u5e26\u529e\u7406","description":"\u5bbd\u5e26\u529e\u7406","rank":3,"created_at":"2016-09-06 21:51:28"},{"adid":6,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=2247483916&idx=1&sn=042cd2558c06e65c69f3685294f9f64b&chksm=9797d804a0e05112a203b962d349efb3a44ba094ed002a2c9694202dc46e57710de0767cecf4#rd","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/7273146617075082.jpg","title":"\u9996\u5355\u8fd4\u73b0","description":"\u9996\u5355\u8fd4\u73b0","rank":99,"created_at":"2016-11-20 20:18:40"}]}  
+[2016-12-23 17:50:58] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:58 GMT
+
+{"code":200,"data":[{"oid":901,"openid":"14a347f35beaa2f2a1b364a07b6c7b84","nickname":"ny","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/avatar.png","destination":"24#","description":"\u627e\u4eba\u4ee3\u8bfe \u4e8c\u5341\u8d77\u6b65 \u4fe1\u606f\u8054\u7cfb\u3002\u3002","fee":"20.00","created_at":"2016-12-22 21:52:24","status":"new","is_recommend":0,"share_url":"http:\/\/xhplus.feibu.info\/fb\/schoolwork_de.html?oid=901"}]}  
+[2016-12-23 17:50:58] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:58 GMT
+
+{"code":200,"data":[{"oid":901,"openid":"14a347f35beaa2f2a1b364a07b6c7b84","nickname":"ny","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/avatar.png","destination":"24#","description":"\u627e\u4eba\u4ee3\u8bfe \u4e8c\u5341\u8d77\u6b65 \u4fe1\u606f\u8054\u7cfb\u3002\u3002","fee":"20.00","created_at":"2016-12-22 21:52:24","status":"new","is_recommend":0,"share_url":"http:\/\/xhplus.feibu.info\/fb\/schoolwork_de.html?oid=901"}]}  
+[2016-12-23 17:50:58] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:58 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"actid":20,"aid":44,"aname":"Allen","avatar_url":"http:\/\/xhplusadmin.feibu.info\/uploads\/admin-img\/9b6002b5a2ac84c64b52c9213d597ce25.jpg","title":"\u300e\u6821\u6c47\u300f\u65b0\u7248\u672c\u5373\u5c06\u4e0a\u7ebf","content":"\u4e3a\u4e86\u53cd\u9988\u8001\u7528\u6237\uff0c\u8fce\u63a5\u65b0\u7528\u6237\uff0c\u6821\u6c47\u65b0\u7248\u4e0a\u7ebf\u540e\u5c06\u63a8\u51fa\u4e00\u7cfb\u5217\u3010\u514d\u5355\u4efb\u52a1\u3011\uff0c\u53ea\u9700\u53d1\u5e03\u4efb\u52a1\u5e76\u5206\u4eab\u670b\u53cb\u5708\uff0c\u4efb\u52a1\u5b8c\u6210\u540e\u5373\u53ef\u8fd4\u8fd8\u8d4f\u91d1\u3002\u65b0\u7248\u672c\u5bf9\u529f\u80fd\u548c\u6574\u4f53\u754c\u9762\u8fdb\u884c\u4f18\u5316\uff0c\u53e6\u65b0\u589e\u4e86\u7f51\u7edc\u62a5\u6545\u969c\u65b0\u529f\u80fd\u3002\u6821\u6c47\u65b0\u7248\u672c\u66f4\u6d41\u7545\u66f4\u597d\u7528!\u671f\u5f85\u6821\u6c47\u65b0\u7248\u672c\u7684\u53d1\u5e03\u3002","start_time":"2016-10-27 00:00:00","end_time":"2016-11-30 00:00:00","place":"\u519c\u5de5\u5546","view_num":7501,"created_at":"2016-10-26 00:04:41","img_url":"http:\/\/xh.feibu.info\/uploads\/activity\/f95398275d71dc3d7ae9047fb3094120.png"}]}  
+[2016-12-23 17:50:58] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:50:58 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"actid":20,"aid":44,"aname":"Allen","avatar_url":"http:\/\/xhplusadmin.feibu.info\/uploads\/admin-img\/9b6002b5a2ac84c64b52c9213d597ce25.jpg","title":"\u300e\u6821\u6c47\u300f\u65b0\u7248\u672c\u5373\u5c06\u4e0a\u7ebf","content":"\u4e3a\u4e86\u53cd\u9988\u8001\u7528\u6237\uff0c\u8fce\u63a5\u65b0\u7528\u6237\uff0c\u6821\u6c47\u65b0\u7248\u4e0a\u7ebf\u540e\u5c06\u63a8\u51fa\u4e00\u7cfb\u5217\u3010\u514d\u5355\u4efb\u52a1\u3011\uff0c\u53ea\u9700\u53d1\u5e03\u4efb\u52a1\u5e76\u5206\u4eab\u670b\u53cb\u5708\uff0c\u4efb\u52a1\u5b8c\u6210\u540e\u5373\u53ef\u8fd4\u8fd8\u8d4f\u91d1\u3002\u65b0\u7248\u672c\u5bf9\u529f\u80fd\u548c\u6574\u4f53\u754c\u9762\u8fdb\u884c\u4f18\u5316\uff0c\u53e6\u65b0\u589e\u4e86\u7f51\u7edc\u62a5\u6545\u969c\u65b0\u529f\u80fd\u3002\u6821\u6c47\u65b0\u7248\u672c\u66f4\u6d41\u7545\u66f4\u597d\u7528!\u671f\u5f85\u6821\u6c47\u65b0\u7248\u672c\u7684\u53d1\u5e03\u3002","start_time":"2016-10-27 00:00:00","end_time":"2016-11-30 00:00:00","place":"\u519c\u5de5\u5546","view_num":7501,"created_at":"2016-10-26 00:04:41","img_url":"http:\/\/xh.feibu.info\/uploads\/activity\/f95398275d71dc3d7ae9047fb3094120.png"}]}  
+[2016-12-23 17:56:02] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip, deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/myShop.html?device=android
+User-Agent:       Mozilla/5.0 (Linux; Android 5.1; MX5 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.124 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+
+  
+[2016-12-23 17:56:05] local.ERROR: before------------:POST /alipay/alipayWapNotify?trade_status=TRADE_SUCCESS&trade_no=123123123123123123123123213&out_trade_no=SPXH2016120999575148 HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8
+Cache-Control:   no-cache
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6InNLaFRURmYrRWEwZHpaSWZ1T3FzYmc9PSIsInZhbHVlIjoiUDFPUVd4VFZWcVcrS3p2N0RQRlMxbWFUXC9oYkE4N0NtTFRcL1VkcGpxZ0ZPNFQ3ZEJKY094bFd0RXA2MnJEU1d4VkhIQXRPUW43V3pXRDFUMlRBVllKZz09IiwibWFjIjoiMTg3MzAwZmExZGVkZDYyZWI5NWZhYTI4NTNlNmI1NjMxNWVhN2IwZTRiODQwNjRlMDIyMzg3ZDJhMmQ1ODc5ZSJ9
+Host:            localhost:8085
+Origin:          chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop
+Postman-Token:   bff85e2f-8702-a8c5-87ca-c33ae447b637
+User-Agent:      Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+
+  
+[2016-12-23 17:56:27] local.ERROR: before------------:POST /alipay/alipayWapNotify?trade_status=TRADE_SUCCESS&trade_no=123123123123123123123123213&out_trade_no=SPXH2016120999575148 HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8
+Cache-Control:   no-cache
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6InNLaFRURmYrRWEwZHpaSWZ1T3FzYmc9PSIsInZhbHVlIjoiUDFPUVd4VFZWcVcrS3p2N0RQRlMxbWFUXC9oYkE4N0NtTFRcL1VkcGpxZ0ZPNFQ3ZEJKY094bFd0RXA2MnJEU1d4VkhIQXRPUW43V3pXRDFUMlRBVllKZz09IiwibWFjIjoiMTg3MzAwZmExZGVkZDYyZWI5NWZhYTI4NTNlNmI1NjMxNWVhN2IwZTRiODQwNjRlMDIyMzg3ZDJhMmQ1ODc5ZSJ9
+Host:            localhost:8085
+Origin:          chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop
+Postman-Token:   2318dc2d-f2fd-d348-bbc9-e07e1dcd19d9
+User-Agent:      Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+
+  
+[2016-12-23 17:57:26] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip, deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 5.1; MX5 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.124 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+
+  
+[2016-12-23 17:58:17] local.ERROR: before------------:GET /user/getMyInfo/?token=123456 HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          null
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:58:17] local.ERROR: before------------:GET /hasNewTopicNotification/?token=123456 HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          null
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:58:18] local.ERROR: after------------:a:2:{s:4:"code";i:2001;s:6:"detail";s:40:"无token或token无效，请重新登陆";}  
+[2016-12-23 17:58:18] local.ERROR: after------------:a:2:{s:4:"code";i:2001;s:6:"detail";s:40:"无token或token无效，请重新登陆";}  
+[2016-12-23 17:58:31] local.ERROR: before------------:POST /alipay/alipayWapNotify?trade_status=TRADE_SUCCESS&trade_no=123123123123123123123123213&out_trade_no=SPXH2016122354485257 HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8
+Cache-Control:   no-cache
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6InNLaFRURmYrRWEwZHpaSWZ1T3FzYmc9PSIsInZhbHVlIjoiUDFPUVd4VFZWcVcrS3p2N0RQRlMxbWFUXC9oYkE4N0NtTFRcL1VkcGpxZ0ZPNFQ3ZEJKY094bFd0RXA2MnJEU1d4VkhIQXRPUW43V3pXRDFUMlRBVllKZz09IiwibWFjIjoiMTg3MzAwZmExZGVkZDYyZWI5NWZhYTI4NTNlNmI1NjMxNWVhN2IwZTRiODQwNjRlMDIyMzg3ZDJhMmQ1ODc5ZSJ9
+Host:            localhost:8085
+Origin:          chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop
+Postman-Token:   145ff2f2-9596-8d4a-1af3-2d4972c80e65
+User-Agent:      Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+
+  
+[2016-12-23 17:58:31] local.DEBUG: 手机网站支付宝回调开始  
+[2016-12-23 17:58:32] local.DEBUG: Alipay notify get data verification success. {"out_trade_no":"SPXH2016122354485257","trade_no":"123123123123123123123123213"} 
+[2016-12-23 17:58:32] local.DEBUG: 手机网站支付宝回调 success  
+[2016-12-23 17:58:32] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     text/html; charset=UTF-8
+Date:                             Fri, 23 Dec 2016 09:58:32 GMT
+
+  
+[2016-12-23 17:58:32] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     text/html; charset=UTF-8
+Date:                             Fri, 23 Dec 2016 09:58:32 GMT
+
+  
+[2016-12-23 17:59:25] local.ERROR: before------------:GET /association/getHotActivities/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:25] local.ERROR: before------------:GET /home/getADList/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:25] local.ERROR: before------------:GET /user/getMyInfo/?token=undefined HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:25] local.ERROR: before------------:GET /home/getExtra/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:25] local.ERROR: before------------:GET /order/getRecommendOrders/?number=2 HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:26] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:26 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"adid":1,"ad_url":"https:\/\/jinshuju.net\/f\/uNBIGQ","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/shetuan.jpg","title":"\u793e\u56e2\u5165\u9a7b","description":"\u793e\u56e2\u5165\u9a7b","rank":1,"created_at":"-0001-11-30 00:00:00"},{"adid":5,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=100000021&idx=1&sn=332e789bd5db3ea3dbf50399c31465aa&chksm=1797db1d20e0520b31e1069e761cbb0da6c6829144d7e9d3b6830d2f094d28bcf09ca9b40831&scene=18#wechat_redirect","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuaidi.jpg","title":"\u53cc\u5341\u4e00\u6d3b\u52a8","description":"\u53cc\u5341\u4e00\u6d3b\u52a8","rank":2,"created_at":"-0001-11-30 00:00:00"},{"adid":3,"ad_url":"http:\/\/xhplus.feibu.info\/fb\/html\/telecom_welcome.html","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuandai0912.jpg","title":"\u5bbd\u5e26\u529e\u7406","description":"\u5bbd\u5e26\u529e\u7406","rank":3,"created_at":"2016-09-06 21:51:28"},{"adid":6,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=2247483916&idx=1&sn=042cd2558c06e65c69f3685294f9f64b&chksm=9797d804a0e05112a203b962d349efb3a44ba094ed002a2c9694202dc46e57710de0767cecf4#rd","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/7273146617075082.jpg","title":"\u9996\u5355\u8fd4\u73b0","description":"\u9996\u5355\u8fd4\u73b0","rank":99,"created_at":"2016-11-20 20:18:40"}]}  
+[2016-12-23 17:59:26] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:26 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"adid":1,"ad_url":"https:\/\/jinshuju.net\/f\/uNBIGQ","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/shetuan.jpg","title":"\u793e\u56e2\u5165\u9a7b","description":"\u793e\u56e2\u5165\u9a7b","rank":1,"created_at":"-0001-11-30 00:00:00"},{"adid":5,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=100000021&idx=1&sn=332e789bd5db3ea3dbf50399c31465aa&chksm=1797db1d20e0520b31e1069e761cbb0da6c6829144d7e9d3b6830d2f094d28bcf09ca9b40831&scene=18#wechat_redirect","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuaidi.jpg","title":"\u53cc\u5341\u4e00\u6d3b\u52a8","description":"\u53cc\u5341\u4e00\u6d3b\u52a8","rank":2,"created_at":"-0001-11-30 00:00:00"},{"adid":3,"ad_url":"http:\/\/xhplus.feibu.info\/fb\/html\/telecom_welcome.html","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuandai0912.jpg","title":"\u5bbd\u5e26\u529e\u7406","description":"\u5bbd\u5e26\u529e\u7406","rank":3,"created_at":"2016-09-06 21:51:28"},{"adid":6,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=2247483916&idx=1&sn=042cd2558c06e65c69f3685294f9f64b&chksm=9797d804a0e05112a203b962d349efb3a44ba094ed002a2c9694202dc46e57710de0767cecf4#rd","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/7273146617075082.jpg","title":"\u9996\u5355\u8fd4\u73b0","description":"\u9996\u5355\u8fd4\u73b0","rank":99,"created_at":"2016-11-20 20:18:40"}]}  
+[2016-12-23 17:59:26] local.ERROR: after------------:a:2:{s:4:"code";i:2001;s:6:"detail";s:40:"无token或token无效，请重新登陆";}  
+[2016-12-23 17:59:26] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:26 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"actid":20,"aid":44,"aname":"Allen","avatar_url":"http:\/\/xhplusadmin.feibu.info\/uploads\/admin-img\/9b6002b5a2ac84c64b52c9213d597ce25.jpg","title":"\u300e\u6821\u6c47\u300f\u65b0\u7248\u672c\u5373\u5c06\u4e0a\u7ebf","content":"\u4e3a\u4e86\u53cd\u9988\u8001\u7528\u6237\uff0c\u8fce\u63a5\u65b0\u7528\u6237\uff0c\u6821\u6c47\u65b0\u7248\u4e0a\u7ebf\u540e\u5c06\u63a8\u51fa\u4e00\u7cfb\u5217\u3010\u514d\u5355\u4efb\u52a1\u3011\uff0c\u53ea\u9700\u53d1\u5e03\u4efb\u52a1\u5e76\u5206\u4eab\u670b\u53cb\u5708\uff0c\u4efb\u52a1\u5b8c\u6210\u540e\u5373\u53ef\u8fd4\u8fd8\u8d4f\u91d1\u3002\u65b0\u7248\u672c\u5bf9\u529f\u80fd\u548c\u6574\u4f53\u754c\u9762\u8fdb\u884c\u4f18\u5316\uff0c\u53e6\u65b0\u589e\u4e86\u7f51\u7edc\u62a5\u6545\u969c\u65b0\u529f\u80fd\u3002\u6821\u6c47\u65b0\u7248\u672c\u66f4\u6d41\u7545\u66f4\u597d\u7528!\u671f\u5f85\u6821\u6c47\u65b0\u7248\u672c\u7684\u53d1\u5e03\u3002","start_time":"2016-10-27 00:00:00","end_time":"2016-11-30 00:00:00","place":"\u519c\u5de5\u5546","view_num":7502,"created_at":"2016-10-26 00:04:41","img_url":"http:\/\/xh.feibu.info\/uploads\/activity\/f95398275d71dc3d7ae9047fb3094120.png"}]}  
+[2016-12-23 17:59:26] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:26 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"actid":20,"aid":44,"aname":"Allen","avatar_url":"http:\/\/xhplusadmin.feibu.info\/uploads\/admin-img\/9b6002b5a2ac84c64b52c9213d597ce25.jpg","title":"\u300e\u6821\u6c47\u300f\u65b0\u7248\u672c\u5373\u5c06\u4e0a\u7ebf","content":"\u4e3a\u4e86\u53cd\u9988\u8001\u7528\u6237\uff0c\u8fce\u63a5\u65b0\u7528\u6237\uff0c\u6821\u6c47\u65b0\u7248\u4e0a\u7ebf\u540e\u5c06\u63a8\u51fa\u4e00\u7cfb\u5217\u3010\u514d\u5355\u4efb\u52a1\u3011\uff0c\u53ea\u9700\u53d1\u5e03\u4efb\u52a1\u5e76\u5206\u4eab\u670b\u53cb\u5708\uff0c\u4efb\u52a1\u5b8c\u6210\u540e\u5373\u53ef\u8fd4\u8fd8\u8d4f\u91d1\u3002\u65b0\u7248\u672c\u5bf9\u529f\u80fd\u548c\u6574\u4f53\u754c\u9762\u8fdb\u884c\u4f18\u5316\uff0c\u53e6\u65b0\u589e\u4e86\u7f51\u7edc\u62a5\u6545\u969c\u65b0\u529f\u80fd\u3002\u6821\u6c47\u65b0\u7248\u672c\u66f4\u6d41\u7545\u66f4\u597d\u7528!\u671f\u5f85\u6821\u6c47\u65b0\u7248\u672c\u7684\u53d1\u5e03\u3002","start_time":"2016-10-27 00:00:00","end_time":"2016-11-30 00:00:00","place":"\u519c\u5de5\u5546","view_num":7502,"created_at":"2016-10-26 00:04:41","img_url":"http:\/\/xh.feibu.info\/uploads\/activity\/f95398275d71dc3d7ae9047fb3094120.png"}]}  
+[2016-12-23 17:59:26] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:26 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"extra":"ny\u53d1\u5e03\u4e86\u4e00\u4e2a\u65b0\u4efb\u52a1"},{"extra":"Www\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f60\u597d\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"}]}  
+[2016-12-23 17:59:26] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:26 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"extra":"ny\u53d1\u5e03\u4e86\u4e00\u4e2a\u65b0\u4efb\u52a1"},{"extra":"Www\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f60\u597d\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"}]}  
+[2016-12-23 17:59:27] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:27 GMT
+
+{"code":200,"data":[{"oid":901,"openid":"14a347f35beaa2f2a1b364a07b6c7b84","nickname":"ny","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/avatar.png","destination":"24#","description":"\u627e\u4eba\u4ee3\u8bfe \u4e8c\u5341\u8d77\u6b65 \u4fe1\u606f\u8054\u7cfb\u3002\u3002","fee":"20.00","created_at":"2016-12-22 21:52:24","status":"new","is_recommend":0,"share_url":"http:\/\/xhplus.feibu.info\/fb\/schoolwork_de.html?oid=901"}]}  
+[2016-12-23 17:59:27] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:27 GMT
+
+{"code":200,"data":[{"oid":901,"openid":"14a347f35beaa2f2a1b364a07b6c7b84","nickname":"ny","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/avatar.png","destination":"24#","description":"\u627e\u4eba\u4ee3\u8bfe \u4e8c\u5341\u8d77\u6b65 \u4fe1\u606f\u8054\u7cfb\u3002\u3002","fee":"20.00","created_at":"2016-12-22 21:52:24","status":"new","is_recommend":0,"share_url":"http:\/\/xhplus.feibu.info\/fb\/schoolwork_de.html?oid=901"}]}  
+[2016-12-23 17:59:27] local.ERROR: before------------:GET /order/remindOrder/?token=undefined HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:27] local.ERROR: after------------:a:2:{s:4:"code";i:2001;s:6:"detail";s:40:"无token或token无效，请重新登陆";}  
+[2016-12-23 17:59:27] local.ERROR: before------------:POST /user/login/?mobile_no=15920541739&password=4297f44b13955235245b2497399d7a93&platform=web HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjlvcDZDZWRzeG1seTFLTVh2T2s2dlE9PSIsInZhbHVlIjoiYzBzb2lhQmdwamlad2J1WWtrK3pvemszYUVzMnJGRkpDdDhNOGtnbkdCdkdna2VhQWtzNGlPeU83OVBEeUc4NXNhYTRoNmNoYjZvcjY4KzI0TzBYRHc9PSIsIm1hYyI6IjMwMjU0YWM5NGZiNDJiMmUyZWVhMDIyZTdjMGRmOTI4MTBiY2RiM2I2ZWE0MjU4ODNjNzZlMGE5Yjk1NTg2MDAifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/login.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:28] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:28 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","token":"b5733d99-c8f6-11e6-83ae-000c292668cf"}  
+[2016-12-23 17:59:28] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:28 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","token":"b5733d99-c8f6-11e6-83ae-000c292668cf"}  
+[2016-12-23 17:59:28] local.ERROR: before------------:GET /user/getMyInfo/?token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6InV6bm9PYTR1SzhwU3JMTThObVNDcGc9PSIsInZhbHVlIjoibUhrYjk4MXk4M01RQVUrMm1CYXVzb0ZMeDN6TTJjSUVTa1VJMEJOUVFwb0xLYVZGTHB2ZFcrNE9PcEF1ZTJhYkhmXC91N0FYcHFwZk1kSnlsY2RmQStnPT0iLCJtYWMiOiIzN2MwNWE5Mzg1NDRlN2IyMzVkMzYxYjBkODgxOGExY2U4NDY2MjFiZDExMGUwNzExZDI1MDJmMzFjZDNjZjcxIn0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/login.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:29] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:29 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":{"uid":83,"openid":"633f6cc801014cbc2b269465eb7c96f4","mobile_no":"15920541739","nickname":"Allen","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/avatar\/e7d51be0e28b4a3702249f4d5be0118b.jpg","integral":115,"wallet":"5.45","gender":1,"college_id":1,"college":"\u5e7f\u4e1c\u519c\u5de5\u5546\u804c\u4e1a\u6280\u672f\u5b66\u9662","enrollment_year":2016,"birth_year":0,"birth_month":0,"birth_day":0,"favourites_count":0,"introduction":"ABCDEFG","realname":"\u6768\u5609\u57ce","address":"","alipay":"15920541739","alipay_name":"\u6768\u5609\u57ce","is_alipay":1,"is_paypassword":1,"is_cheif":1,"association_id":44,"is_merchant":1,"is_auth":1,"today_integral":1,"level":6,"upgrade":30}}  
+[2016-12-23 17:59:29] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:29 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":{"uid":83,"openid":"633f6cc801014cbc2b269465eb7c96f4","mobile_no":"15920541739","nickname":"Allen","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/avatar\/e7d51be0e28b4a3702249f4d5be0118b.jpg","integral":115,"wallet":"5.45","gender":1,"college_id":1,"college":"\u5e7f\u4e1c\u519c\u5de5\u5546\u804c\u4e1a\u6280\u672f\u5b66\u9662","enrollment_year":2016,"birth_year":0,"birth_month":0,"birth_day":0,"favourites_count":0,"introduction":"ABCDEFG","realname":"\u6768\u5609\u57ce","address":"","alipay":"15920541739","alipay_name":"\u6768\u5609\u57ce","is_alipay":1,"is_paypassword":1,"is_cheif":1,"association_id":44,"is_merchant":1,"is_auth":1,"today_integral":1,"level":6,"upgrade":30}}  
+[2016-12-23 17:59:30] local.ERROR: before------------:GET /hasNewTopicNotification/?token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6Ikt3XC9HUXJJejJ3bUFRRHlWS0RENEx3PT0iLCJ2YWx1ZSI6IlUydFhuTEpWU2c5VEdqN1NmWDlsR3RlMzdUXC9naEJnOXBWRTA0Q24rbUpyTWhWa04ydHZlYUEyOGVpRnFGeEh3NGpWcDRHTWRMV1cycEZQb1wvcDZUaXc9PSIsIm1hYyI6IjAzNzM5YjkzZjI2MzExYjkyNzllNDcxMmQ4YzkxNDQ5NzFkNmM3MWMyMDM5MTkyNzljNGU0YjcxNjU1ZTk5MmYifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:30] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:30 GMT
+
+{"code":200,"data":0}  
+[2016-12-23 17:59:30] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:30 GMT
+
+{"code":200,"data":0}  
+[2016-12-23 17:59:32] local.ERROR: before------------:GET /order/remindOrder/?token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6ImRjbXlKNGM4MUg4a1EzN200cm9wUlE9PSIsInZhbHVlIjoia2VIUjZNKzliZWNWR1BGWmxUekppc2JNOUxKRUtFRVAxZjRSMUkxVnM5aFwvblFRNGdVSVpQRExCYTU5REtJSlJJdnZWa29QU1lSNmpHNkFnOGpHZkhnPT0iLCJtYWMiOiJmNWI0YmE4NmQ0OWVhOTQwNjEyZmE5NTllNDYwZTQ1ZDE2MzAyNTc2ZjljNjBmYWM4ZWFhMjRhZmZmODQ1MjFiIn0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:33] local.ERROR: before------------:GET /home/getADList/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6Ikt3XC9HUXJJejJ3bUFRRHlWS0RENEx3PT0iLCJ2YWx1ZSI6IlUydFhuTEpWU2c5VEdqN1NmWDlsR3RlMzdUXC9naEJnOXBWRTA0Q24rbUpyTWhWa04ydHZlYUEyOGVpRnFGeEh3NGpWcDRHTWRMV1cycEZQb1wvcDZUaXc9PSIsIm1hYyI6IjAzNzM5YjkzZjI2MzExYjkyNzllNDcxMmQ4YzkxNDQ5NzFkNmM3MWMyMDM5MTkyNzljNGU0YjcxNjU1ZTk5MmYifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:33] local.ERROR: before------------:GET /home/getExtra/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6Ikt3XC9HUXJJejJ3bUFRRHlWS0RENEx3PT0iLCJ2YWx1ZSI6IlUydFhuTEpWU2c5VEdqN1NmWDlsR3RlMzdUXC9naEJnOXBWRTA0Q24rbUpyTWhWa04ydHZlYUEyOGVpRnFGeEh3NGpWcDRHTWRMV1cycEZQb1wvcDZUaXc9PSIsIm1hYyI6IjAzNzM5YjkzZjI2MzExYjkyNzllNDcxMmQ4YzkxNDQ5NzFkNmM3MWMyMDM5MTkyNzljNGU0YjcxNjU1ZTk5MmYifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:34] local.ERROR: before------------:GET /order/getRecommendOrders/?number=2 HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6Ikt3XC9HUXJJejJ3bUFRRHlWS0RENEx3PT0iLCJ2YWx1ZSI6IlUydFhuTEpWU2c5VEdqN1NmWDlsR3RlMzdUXC9naEJnOXBWRTA0Q24rbUpyTWhWa04ydHZlYUEyOGVpRnFGeEh3NGpWcDRHTWRMV1cycEZQb1wvcDZUaXc9PSIsIm1hYyI6IjAzNzM5YjkzZjI2MzExYjkyNzllNDcxMmQ4YzkxNDQ5NzFkNmM3MWMyMDM5MTkyNzljNGU0YjcxNjU1ZTk5MmYifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:34] local.ERROR: before------------:GET /association/getHotActivities/ HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6Ikt3XC9HUXJJejJ3bUFRRHlWS0RENEx3PT0iLCJ2YWx1ZSI6IlUydFhuTEpWU2c5VEdqN1NmWDlsR3RlMzdUXC9naEJnOXBWRTA0Q24rbUpyTWhWa04ydHZlYUEyOGVpRnFGeEh3NGpWcDRHTWRMV1cycEZQb1wvcDZUaXc9PSIsIm1hYyI6IjAzNzM5YjkzZjI2MzExYjkyNzllNDcxMmQ4YzkxNDQ5NzFkNmM3MWMyMDM5MTkyNzljNGU0YjcxNjU1ZTk5MmYifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:34] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:34 GMT
+
+{"code":304,"detail":"\u65e0\u66f4\u65b0\u6570\u636e"}  
+[2016-12-23 17:59:34] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:34 GMT
+
+{"code":304,"detail":"\u65e0\u66f4\u65b0\u6570\u636e"}  
+[2016-12-23 17:59:34] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:34 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"adid":1,"ad_url":"https:\/\/jinshuju.net\/f\/uNBIGQ","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/shetuan.jpg","title":"\u793e\u56e2\u5165\u9a7b","description":"\u793e\u56e2\u5165\u9a7b","rank":1,"created_at":"-0001-11-30 00:00:00"},{"adid":5,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=100000021&idx=1&sn=332e789bd5db3ea3dbf50399c31465aa&chksm=1797db1d20e0520b31e1069e761cbb0da6c6829144d7e9d3b6830d2f094d28bcf09ca9b40831&scene=18#wechat_redirect","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuaidi.jpg","title":"\u53cc\u5341\u4e00\u6d3b\u52a8","description":"\u53cc\u5341\u4e00\u6d3b\u52a8","rank":2,"created_at":"-0001-11-30 00:00:00"},{"adid":3,"ad_url":"http:\/\/xhplus.feibu.info\/fb\/html\/telecom_welcome.html","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuandai0912.jpg","title":"\u5bbd\u5e26\u529e\u7406","description":"\u5bbd\u5e26\u529e\u7406","rank":3,"created_at":"2016-09-06 21:51:28"},{"adid":6,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=2247483916&idx=1&sn=042cd2558c06e65c69f3685294f9f64b&chksm=9797d804a0e05112a203b962d349efb3a44ba094ed002a2c9694202dc46e57710de0767cecf4#rd","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/7273146617075082.jpg","title":"\u9996\u5355\u8fd4\u73b0","description":"\u9996\u5355\u8fd4\u73b0","rank":99,"created_at":"2016-11-20 20:18:40"}]}  
+[2016-12-23 17:59:34] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:34 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"adid":1,"ad_url":"https:\/\/jinshuju.net\/f\/uNBIGQ","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/shetuan.jpg","title":"\u793e\u56e2\u5165\u9a7b","description":"\u793e\u56e2\u5165\u9a7b","rank":1,"created_at":"-0001-11-30 00:00:00"},{"adid":5,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=100000021&idx=1&sn=332e789bd5db3ea3dbf50399c31465aa&chksm=1797db1d20e0520b31e1069e761cbb0da6c6829144d7e9d3b6830d2f094d28bcf09ca9b40831&scene=18#wechat_redirect","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuaidi.jpg","title":"\u53cc\u5341\u4e00\u6d3b\u52a8","description":"\u53cc\u5341\u4e00\u6d3b\u52a8","rank":2,"created_at":"-0001-11-30 00:00:00"},{"adid":3,"ad_url":"http:\/\/xhplus.feibu.info\/fb\/html\/telecom_welcome.html","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/kuandai0912.jpg","title":"\u5bbd\u5e26\u529e\u7406","description":"\u5bbd\u5e26\u529e\u7406","rank":3,"created_at":"2016-09-06 21:51:28"},{"adid":6,"ad_url":"http:\/\/mp.weixin.qq.com\/s?__biz=MzIxNTU1MTg0Nw==&mid=2247483916&idx=1&sn=042cd2558c06e65c69f3685294f9f64b&chksm=9797d804a0e05112a203b962d349efb3a44ba094ed002a2c9694202dc46e57710de0767cecf4#rd","ad_image_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/ad\/7273146617075082.jpg","title":"\u9996\u5355\u8fd4\u73b0","description":"\u9996\u5355\u8fd4\u73b0","rank":99,"created_at":"2016-11-20 20:18:40"}]}  
+[2016-12-23 17:59:34] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:34 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"extra":"ny\u53d1\u5e03\u4e86\u4e00\u4e2a\u65b0\u4efb\u52a1"},{"extra":"Www\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f60\u597d\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"}]}  
+[2016-12-23 17:59:34] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:34 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"extra":"ny\u53d1\u5e03\u4e86\u4e00\u4e2a\u65b0\u4efb\u52a1"},{"extra":"Www\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f60\u597d\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9ece\u5e7f\u5927\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u4f55\u4f1f\u952e\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"},{"extra":"\u9165\u8fbe\u5b8c\u6210\u4e86\u4efb\u52a1"}]}  
+[2016-12-23 17:59:35] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:35 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"actid":20,"aid":44,"aname":"Allen","avatar_url":"http:\/\/xhplusadmin.feibu.info\/uploads\/admin-img\/9b6002b5a2ac84c64b52c9213d597ce25.jpg","title":"\u300e\u6821\u6c47\u300f\u65b0\u7248\u672c\u5373\u5c06\u4e0a\u7ebf","content":"\u4e3a\u4e86\u53cd\u9988\u8001\u7528\u6237\uff0c\u8fce\u63a5\u65b0\u7528\u6237\uff0c\u6821\u6c47\u65b0\u7248\u4e0a\u7ebf\u540e\u5c06\u63a8\u51fa\u4e00\u7cfb\u5217\u3010\u514d\u5355\u4efb\u52a1\u3011\uff0c\u53ea\u9700\u53d1\u5e03\u4efb\u52a1\u5e76\u5206\u4eab\u670b\u53cb\u5708\uff0c\u4efb\u52a1\u5b8c\u6210\u540e\u5373\u53ef\u8fd4\u8fd8\u8d4f\u91d1\u3002\u65b0\u7248\u672c\u5bf9\u529f\u80fd\u548c\u6574\u4f53\u754c\u9762\u8fdb\u884c\u4f18\u5316\uff0c\u53e6\u65b0\u589e\u4e86\u7f51\u7edc\u62a5\u6545\u969c\u65b0\u529f\u80fd\u3002\u6821\u6c47\u65b0\u7248\u672c\u66f4\u6d41\u7545\u66f4\u597d\u7528!\u671f\u5f85\u6821\u6c47\u65b0\u7248\u672c\u7684\u53d1\u5e03\u3002","start_time":"2016-10-27 00:00:00","end_time":"2016-11-30 00:00:00","place":"\u519c\u5de5\u5546","view_num":7502,"created_at":"2016-10-26 00:04:41","img_url":"http:\/\/xh.feibu.info\/uploads\/activity\/f95398275d71dc3d7ae9047fb3094120.png"}]}  
+[2016-12-23 17:59:35] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:35 GMT
+
+{"code":200,"detail":"\u8bf7\u6c42\u6210\u529f","data":[{"actid":20,"aid":44,"aname":"Allen","avatar_url":"http:\/\/xhplusadmin.feibu.info\/uploads\/admin-img\/9b6002b5a2ac84c64b52c9213d597ce25.jpg","title":"\u300e\u6821\u6c47\u300f\u65b0\u7248\u672c\u5373\u5c06\u4e0a\u7ebf","content":"\u4e3a\u4e86\u53cd\u9988\u8001\u7528\u6237\uff0c\u8fce\u63a5\u65b0\u7528\u6237\uff0c\u6821\u6c47\u65b0\u7248\u4e0a\u7ebf\u540e\u5c06\u63a8\u51fa\u4e00\u7cfb\u5217\u3010\u514d\u5355\u4efb\u52a1\u3011\uff0c\u53ea\u9700\u53d1\u5e03\u4efb\u52a1\u5e76\u5206\u4eab\u670b\u53cb\u5708\uff0c\u4efb\u52a1\u5b8c\u6210\u540e\u5373\u53ef\u8fd4\u8fd8\u8d4f\u91d1\u3002\u65b0\u7248\u672c\u5bf9\u529f\u80fd\u548c\u6574\u4f53\u754c\u9762\u8fdb\u884c\u4f18\u5316\uff0c\u53e6\u65b0\u589e\u4e86\u7f51\u7edc\u62a5\u6545\u969c\u65b0\u529f\u80fd\u3002\u6821\u6c47\u65b0\u7248\u672c\u66f4\u6d41\u7545\u66f4\u597d\u7528!\u671f\u5f85\u6821\u6c47\u65b0\u7248\u672c\u7684\u53d1\u5e03\u3002","start_time":"2016-10-27 00:00:00","end_time":"2016-11-30 00:00:00","place":"\u519c\u5de5\u5546","view_num":7502,"created_at":"2016-10-26 00:04:41","img_url":"http:\/\/xh.feibu.info\/uploads\/activity\/f95398275d71dc3d7ae9047fb3094120.png"}]}  
+[2016-12-23 17:59:35] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:35 GMT
+
+{"code":200,"data":[{"oid":901,"openid":"14a347f35beaa2f2a1b364a07b6c7b84","nickname":"ny","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/avatar.png","destination":"24#","description":"\u627e\u4eba\u4ee3\u8bfe \u4e8c\u5341\u8d77\u6b65 \u4fe1\u606f\u8054\u7cfb\u3002\u3002","fee":"20.00","created_at":"2016-12-22 21:52:24","status":"new","is_recommend":0,"share_url":"http:\/\/xhplus.feibu.info\/fb\/schoolwork_de.html?oid=901"}]}  
+[2016-12-23 17:59:35] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:35 GMT
+
+{"code":200,"data":[{"oid":901,"openid":"14a347f35beaa2f2a1b364a07b6c7b84","nickname":"ny","avatar_url":"http:\/\/xhplus.feibu.info\/uploads\/system\/avatar.png","destination":"24#","description":"\u627e\u4eba\u4ee3\u8bfe \u4e8c\u5341\u8d77\u6b65 \u4fe1\u606f\u8054\u7cfb\u3002\u3002","fee":"20.00","created_at":"2016-12-22 21:52:24","status":"new","is_recommend":0,"share_url":"http:\/\/xhplus.feibu.info\/fb\/schoolwork_de.html?oid=901"}]}  
+[2016-12-23 17:59:36] local.ERROR: before------------:GET /orderInfo/index/?token=b5733d99-c8f6-11e6-83ae-000c292668cf&page=1&type=waitpay HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6ImRjbXlKNGM4MUg4a1EzN200cm9wUlE9PSIsInZhbHVlIjoia2VIUjZNKzliZWNWR1BGWmxUekppc2JNOUxKRUtFRVAxZjRSMUkxVnM5aFwvblFRNGdVSVpQRExCYTU5REtJSlJJdnZWa29QU1lSNmpHNkFnOGpHZkhnPT0iLCJtYWMiOiJmNWI0YmE4NmQ0OWVhOTQwNjEyZmE5NTllNDYwZTQ1ZDE2MzAyNTc2ZjljNjBmYWM4ZWFhMjRhZmZmODQ1MjFiIn0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-order.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:36] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:36 GMT
+
+{"code":200,"order_infos":[{"order_id":45,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 17:15:32","pay_time":null,"pay_status":0,"order_status":0,"shipping_status":0,"total_fee":"0.09","status_desc":"\u5f85\u4ed8\u6b3e","can_cancel":0},{"order_id":42,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 16:16:58","pay_time":null,"pay_status":0,"order_status":0,"shipping_status":0,"total_fee":"0.07","status_desc":"\u5f85\u4ed8\u6b3e","can_cancel":0},{"order_id":22,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-18 14:19:10","pay_time":null,"pay_status":0,"order_status":0,"shipping_status":0,"total_fee":"0.09","status_desc":"\u5f85\u4ed8\u6b3e","can_cancel":0},{"order_id":21,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-17 14:36:21","pay_time":null,"pay_status":0,"order_status":0,"shipping_status":0,"total_fee":"0.02","status_desc":"\u5f85\u4ed8\u6b3e","can_cancel":0}]}  
+[2016-12-23 17:59:36] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:36 GMT
+
+{"code":200,"order_infos":[{"order_id":45,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 17:15:32","pay_time":null,"pay_status":0,"order_status":0,"shipping_status":0,"total_fee":"0.09","status_desc":"\u5f85\u4ed8\u6b3e","can_cancel":0},{"order_id":42,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 16:16:58","pay_time":null,"pay_status":0,"order_status":0,"shipping_status":0,"total_fee":"0.07","status_desc":"\u5f85\u4ed8\u6b3e","can_cancel":0},{"order_id":22,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-18 14:19:10","pay_time":null,"pay_status":0,"order_status":0,"shipping_status":0,"total_fee":"0.09","status_desc":"\u5f85\u4ed8\u6b3e","can_cancel":0},{"order_id":21,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-17 14:36:21","pay_time":null,"pay_status":0,"order_status":0,"shipping_status":0,"total_fee":"0.02","status_desc":"\u5f85\u4ed8\u6b3e","can_cancel":0}]}  
+[2016-12-23 17:59:37] local.ERROR: before------------:GET /orderInfo/show?order_id=45&token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IkZzaHkzdWlORGd1ZGt6bkpMYTZlWGc9PSIsInZhbHVlIjoiejYwcktXQ01WUm1FSHBIemZzanByZnhsMVNnZTU0ZkpBTEkxbEg1OWtFeWo4bFdvU2JzTW14TjBzUWh5Y0xLeTBTWEdNQmZucTFwTER5aXdWVFZqZGc9PSIsIm1hYyI6Ijg2YmRmNWYzOTA2Y2NiM2Y5ZDk3N2ZmNzAyYWQ4MzdiZDQwMTZiNDg3NjNlOTU5ODRkZDA4ZDdiNDUxYzIzYjEifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-orderDetail.html?order_id=45
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:38] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:38 GMT
+
+{"code":200,"order_info":{"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","order_id":45,"order_sn":"SPXH2016122352489710","pay_status":0,"order_status":0,"shipping_status":0,"goods_amount":"0.09","shipping_fee":"0.00","total_fee":"0.09","consignee":"212","address":"212","mobile":"15920541739","postscript":"","pay_time":null,"created_at":"2016-12-23 17:15:32","status_desc":"\u5f85\u4ed8\u6b3e","order_goodses":[{"id":57,"order_id":45,"goods_id":11,"goods_sn":"","goods_name":"\u82f9\u679c","goods_number":5,"goods_price":"0.01","total_fee":0.05,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":58,"order_id":45,"goods_id":9,"goods_sn":"","goods_name":"\u67da\u5b50","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":59,"order_id":45,"goods_id":8,"goods_sn":"","goods_name":"\u51e4\u68a8","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":60,"order_id":45,"goods_id":5,"goods_sn":"","goods_name":"\u68a8","goods_number":2,"goods_price":"0.01","total_fee":0.02,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"}]}}  
+[2016-12-23 17:59:38] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:38 GMT
+
+{"code":200,"order_info":{"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","order_id":45,"order_sn":"SPXH2016122352489710","pay_status":0,"order_status":0,"shipping_status":0,"goods_amount":"0.09","shipping_fee":"0.00","total_fee":"0.09","consignee":"212","address":"212","mobile":"15920541739","postscript":"","pay_time":null,"created_at":"2016-12-23 17:15:32","status_desc":"\u5f85\u4ed8\u6b3e","order_goodses":[{"id":57,"order_id":45,"goods_id":11,"goods_sn":"","goods_name":"\u82f9\u679c","goods_number":5,"goods_price":"0.01","total_fee":0.05,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":58,"order_id":45,"goods_id":9,"goods_sn":"","goods_name":"\u67da\u5b50","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":59,"order_id":45,"goods_id":8,"goods_sn":"","goods_name":"\u51e4\u68a8","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":60,"order_id":45,"goods_id":5,"goods_sn":"","goods_name":"\u68a8","goods_number":2,"goods_price":"0.01","total_fee":0.02,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"}]}}  
+[2016-12-23 17:59:55] local.ERROR: before------------:GET /orderInfo/show?order_id=45&token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Cache-Control:   max-age=0
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IkxQQmRDM0Joakx0VTY2T0ZIdlJMNlE9PSIsInZhbHVlIjoiQUdCUlVuOFU2dm5oZTltYW1iemJYT3VEeUY2cWtka21mT3dURlNiUDhGM0MxSUI3SWxGUTFPSVBSdXRsZ2cwRnF4Q2dEVXIxMXZPQ2NpRTliYU9XUWc9PSIsIm1hYyI6Ijc5NDM5OTZjMjNiOGNhNWQwOTE1NDRmMTkzZWQ4NmEzMTkyYzBiMTdkYTMxZWVkYTY1MGVkNTY2MmQ5MjAzY2IifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-orderDetail.html?order_id=45
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 17:59:56] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:56 GMT
+
+{"code":200,"order_info":{"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","order_id":45,"order_sn":"SPXH2016122352489710","pay_status":0,"order_status":0,"shipping_status":0,"goods_amount":"0.09","shipping_fee":"0.00","total_fee":"0.09","consignee":"212","address":"212","mobile":"15920541739","postscript":"","pay_time":null,"created_at":"2016-12-23 17:15:32","status_desc":"\u5f85\u4ed8\u6b3e","order_goodses":[{"id":57,"order_id":45,"goods_id":11,"goods_sn":"","goods_name":"\u82f9\u679c","goods_number":5,"goods_price":"0.01","total_fee":0.05,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":58,"order_id":45,"goods_id":9,"goods_sn":"","goods_name":"\u67da\u5b50","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":59,"order_id":45,"goods_id":8,"goods_sn":"","goods_name":"\u51e4\u68a8","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":60,"order_id":45,"goods_id":5,"goods_sn":"","goods_name":"\u68a8","goods_number":2,"goods_price":"0.01","total_fee":0.02,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"}]}}  
+[2016-12-23 17:59:56] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 09:59:56 GMT
+
+{"code":200,"order_info":{"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","order_id":45,"order_sn":"SPXH2016122352489710","pay_status":0,"order_status":0,"shipping_status":0,"goods_amount":"0.09","shipping_fee":"0.00","total_fee":"0.09","consignee":"212","address":"212","mobile":"15920541739","postscript":"","pay_time":null,"created_at":"2016-12-23 17:15:32","status_desc":"\u5f85\u4ed8\u6b3e","order_goodses":[{"id":57,"order_id":45,"goods_id":11,"goods_sn":"","goods_name":"\u82f9\u679c","goods_number":5,"goods_price":"0.01","total_fee":0.05,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":58,"order_id":45,"goods_id":9,"goods_sn":"","goods_name":"\u67da\u5b50","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":59,"order_id":45,"goods_id":8,"goods_sn":"","goods_name":"\u51e4\u68a8","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":60,"order_id":45,"goods_id":5,"goods_sn":"","goods_name":"\u68a8","goods_number":2,"goods_price":"0.01","total_fee":0.02,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"}]}}  
+[2016-12-23 18:01:51] local.ERROR: before------------:GET /orderInfo/show?order_id=45&token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Cache-Control:   max-age=0
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6Im5uZ21cL0UwM1FvOStyM24wZ0d5K2tBPT0iLCJ2YWx1ZSI6IjZ2WmFCVWlEVk80Zjl6RTdsN0tENFhJUHlqVWNBcW5zOXF2S3FHRzZnK1hLQUpaUlYrWHd1TWtncEk0VUNqTGhXd1dJUGtqVUlpQzRPZVFEYlhKOFBBPT0iLCJtYWMiOiIwZWM1Yzg2MDZhMzU5ZTVkOGVkODc1OTAwZmE3ODA4MmQzMDg5N2NjZWE1YzQ0ODZkNDgzZTc4YzQwZjVlYWI2In0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-orderDetail.html?order_id=45
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:01:52] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:01:52 GMT
+
+{"code":200,"order_info":{"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","order_id":45,"order_sn":"SPXH2016122352489710","pay_status":0,"order_status":0,"shipping_status":0,"goods_amount":"0.09","shipping_fee":"0.00","total_fee":"0.09","consignee":"212","address":"212","mobile":"15920541739","postscript":"","pay_time":null,"created_at":"2016-12-23 17:15:32","status_desc":"\u5f85\u4ed8\u6b3e","order_goodses":[{"id":57,"order_id":45,"goods_id":11,"goods_sn":"","goods_name":"\u82f9\u679c","goods_number":5,"goods_price":"0.01","total_fee":0.05,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":58,"order_id":45,"goods_id":9,"goods_sn":"","goods_name":"\u67da\u5b50","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":59,"order_id":45,"goods_id":8,"goods_sn":"","goods_name":"\u51e4\u68a8","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":60,"order_id":45,"goods_id":5,"goods_sn":"","goods_name":"\u68a8","goods_number":2,"goods_price":"0.01","total_fee":0.02,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"}]}}  
+[2016-12-23 18:01:52] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:01:52 GMT
+
+{"code":200,"order_info":{"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","order_id":45,"order_sn":"SPXH2016122352489710","pay_status":0,"order_status":0,"shipping_status":0,"goods_amount":"0.09","shipping_fee":"0.00","total_fee":"0.09","consignee":"212","address":"212","mobile":"15920541739","postscript":"","pay_time":null,"created_at":"2016-12-23 17:15:32","status_desc":"\u5f85\u4ed8\u6b3e","order_goodses":[{"id":57,"order_id":45,"goods_id":11,"goods_sn":"","goods_name":"\u82f9\u679c","goods_number":5,"goods_price":"0.01","total_fee":0.05,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":58,"order_id":45,"goods_id":9,"goods_sn":"","goods_name":"\u67da\u5b50","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":59,"order_id":45,"goods_id":8,"goods_sn":"","goods_name":"\u51e4\u68a8","goods_number":1,"goods_price":"0.01","total_fee":0.01,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"},{"id":60,"order_id":45,"goods_id":5,"goods_sn":"","goods_name":"\u68a8","goods_number":2,"goods_price":"0.01","total_fee":0.02,"goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg"}]}}  
+[2016-12-23 18:01:56] local.ERROR: before------------:GET /orderInfo/index/?token=b5733d99-c8f6-11e6-83ae-000c292668cf&page=1&type=beship HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6Imo0SWlnRUhHWGhIOUI0OUQ2QmVkbFE9PSIsInZhbHVlIjoiaFFZR1dcL1pPbEt1Mm1sR2poMG1ic253b3kyQ1FsdjR0dUo0UFY1a1dUK24rTWNsRHNOSmU3em41aE5yWWkzXC9rcEdcL3BPT0gzWVlNd2F0VCtOOWFaamc9PSIsIm1hYyI6IjA4MmZkZTRkMGE4ZDk3ZjNhZmZhNGQ3ODBlMWZiMjAxYzA5MmQzMTQ4MmZhYTUwNzdkMGY2MmY1MGYzZDRkZmYifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-order.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:01:57] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:01:57 GMT
+
+{"code":200,"order_infos":[{"order_id":43,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 16:17:30","pay_time":"2016-12-23 16:17:30","pay_status":1,"order_status":1,"shipping_status":0,"total_fee":"0.07","status_desc":"\u5f85\u53d1\u8d27","can_cancel":1},{"order_id":41,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 13:46:37","pay_time":"2016-12-23 13:46:37","pay_status":1,"order_status":1,"shipping_status":0,"total_fee":"0.03","status_desc":"\u5f85\u53d1\u8d27","can_cancel":1},{"order_id":40,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 11:57:25","pay_time":"2016-12-23 11:57:25","pay_status":1,"order_status":1,"shipping_status":0,"total_fee":"0.01","status_desc":"\u5f85\u53d1\u8d27","can_cancel":1}]}  
+[2016-12-23 18:01:57] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:01:57 GMT
+
+{"code":200,"order_infos":[{"order_id":43,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 16:17:30","pay_time":"2016-12-23 16:17:30","pay_status":1,"order_status":1,"shipping_status":0,"total_fee":"0.07","status_desc":"\u5f85\u53d1\u8d27","can_cancel":1},{"order_id":41,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 13:46:37","pay_time":"2016-12-23 13:46:37","pay_status":1,"order_status":1,"shipping_status":0,"total_fee":"0.03","status_desc":"\u5f85\u53d1\u8d27","can_cancel":1},{"order_id":40,"shop_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-12-23 11:57:25","pay_time":"2016-12-23 11:57:25","pay_status":1,"order_status":1,"shipping_status":0,"total_fee":"0.01","status_desc":"\u5f85\u53d1\u8d27","can_cancel":1}]}  
+[2016-12-23 18:01:58] local.ERROR: before------------:GET /order/remindOrder/?token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6InBpSVE3ZlJDY1B1UU9RSW01VWVRNWc9PSIsInZhbHVlIjoiV3dBc0s2TXBBaDF4VFd6RDl4WFp4U0VyWnJGa2hROUFPYmtaTjRtWmF4MzNEOXFIVFwvenR6ZXFyTFE3Qml5c1JySnlJQWUrOGhjQUN4bWF1enJZQzdRPT0iLCJtYWMiOiJjODczYzQ2YWQ2N2E0OWU2MjMzYzE2NTMyOWYzYzRhZmY0MTMxNTAwZmE3ZTg0OGQ5Y2ZlZjA2MDM1YmM4NjlhIn0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:01:59] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:01:59 GMT
+
+{"code":304,"detail":"\u65e0\u66f4\u65b0\u6570\u636e"}  
+[2016-12-23 18:01:59] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:01:59 GMT
+
+{"code":304,"detail":"\u65e0\u66f4\u65b0\u6570\u636e"}  
+[2016-12-23 18:03:00] local.ERROR: before------------:GET /hasNewTopicNotification/?token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6InJYZnVWVXNrajViaEJoZU8reDJqQ3c9PSIsInZhbHVlIjoiS2lNSm10bHltZHlRbnE0TjM5Tk56WnZhZ1ZwNzIyQTJPRWpJcGdnVXErWGxkR28yXC9tcXVxMktjNTFoVHFjQjRaY09qMGlyb04wQlh5ZkdyVXRMMjZnPT0iLCJtYWMiOiI3ZTVhM2E0YzVmYjU3OTUwYzhiZDJiODc3MTQwMzU5YzUxYmE1Y2RkNjBlMDFkNjk4NmQzOTUwZTVkNWIwOWU4In0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:03:01] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:01 GMT
+
+{"code":200,"data":0}  
+[2016-12-23 18:03:01] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:01 GMT
+
+{"code":200,"data":0}  
+[2016-12-23 18:03:23] local.ERROR: before------------:GET /hasNewTopicNotification/?token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Cache-Control:   max-age=0
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IlIyZk5oWWo4Z1lFWmo5bVNjQlU2XC93PT0iLCJ2YWx1ZSI6Im1YYXc4N1wvaWo2QTZPZ29URlNuZjMyK2s0Z3JTRFhTaXB1YlZYSGNHQVZOdXloTTlOVkVNVlJTVkNPTXl4Y2NRTUhzVTMxTlRYNGRkT1hjTGZ6eWgwUT09IiwibWFjIjoiNGMzYzE3YzRkZjZjODE3ODcwYzFlZDQzZDFmMmRkYzQ1NTg4MTI0OTgyYThhY2EwMDIxYzI3ZmYzZTI3ZDQ3MiJ9
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:03:23] local.ERROR: before------------:GET /order/remindOrder/?token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IlIyZk5oWWo4Z1lFWmo5bVNjQlU2XC93PT0iLCJ2YWx1ZSI6Im1YYXc4N1wvaWo2QTZPZ29URlNuZjMyK2s0Z3JTRFhTaXB1YlZYSGNHQVZOdXloTTlOVkVNVlJTVkNPTXl4Y2NRTUhzVTMxTlRYNGRkT1hjTGZ6eWgwUT09IiwibWFjIjoiNGMzYzE3YzRkZjZjODE3ODcwYzFlZDQzZDFmMmRkYzQ1NTg4MTI0OTgyYThhY2EwMDIxYzI3ZmYzZTI3ZDQ3MiJ9
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:03:24] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:24 GMT
+
+{"code":200,"data":0}  
+[2016-12-23 18:03:24] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:24 GMT
+
+{"code":200,"data":0}  
+[2016-12-23 18:03:24] local.ERROR: before------------:GET /shop/shops/?page=1 HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IlIyZk5oWWo4Z1lFWmo5bVNjQlU2XC93PT0iLCJ2YWx1ZSI6Im1YYXc4N1wvaWo2QTZPZ29URlNuZjMyK2s0Z3JTRFhTaXB1YlZYSGNHQVZOdXloTTlOVkVNVlJTVkNPTXl4Y2NRTUhzVTMxTlRYNGRkT1hjTGZ6eWgwUT09IiwibWFjIjoiNGMzYzE3YzRkZjZjODE3ODcwYzFlZDQzZDFmMmRkYzQ1NTg4MTI0OTgyYThhY2EwMDIxYzI3ZmYzZTI3ZDQ3MiJ9
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:03:24] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:24 GMT
+
+{"code":304,"detail":"\u65e0\u66f4\u65b0\u6570\u636e"}  
+[2016-12-23 18:03:24] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:24 GMT
+
+{"code":304,"detail":"\u65e0\u66f4\u65b0\u6570\u636e"}  
+[2016-12-23 18:03:24] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:24 GMT
+
+{"code":200,"cart_count":0,"shops":[{"shop_id":1,"uid":77,"cid":1,"college_name":"\u5e7f\u4e1c\u519c\u5de5\u5546\u804c\u4e1a\u6280\u672f\u5b66\u9662","address":"\u98ce\u5149\u8def5\u7bb12\u54fc1\u53f7","shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","description":"123123","shop_favorite_count":2,"shop_click_count":0,"created_at":"2016-08-15 22:10:05"},{"shop_id":8,"uid":83,"cid":1,"college_name":"\u5e7f\u4e1c\u519c\u5de5\u5546\u804c\u4e1a\u6280\u672f\u5b66\u9662","address":"\u98ce\u5149\u8def5\u7bb12\u54fc3\u53f7","shop_name":"\u5609\u57ce\u7684\u5e97","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","description":"12","shop_favorite_count":0,"shop_click_count":0,"created_at":"2016-08-17 16:44:17"},{"shop_id":6,"uid":12,"cid":1,"college_name":"\u5e7f\u4e1c\u519c\u5de5\u5546\u804c\u4e1a\u6280\u672f\u5b66\u9662","address":"\u98ce\u5149\u8def5\u7bb12\u54fc2\u53f7","shop_name":"asdawewae","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","description":"asdasdasd","shop_favorite_count":0,"shop_click_count":0,"created_at":"2016-08-15 22:10:05"}]}  
+[2016-12-23 18:03:24] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:24 GMT
+
+{"code":200,"cart_count":0,"shops":[{"shop_id":1,"uid":77,"cid":1,"college_name":"\u5e7f\u4e1c\u519c\u5de5\u5546\u804c\u4e1a\u6280\u672f\u5b66\u9662","address":"\u98ce\u5149\u8def5\u7bb12\u54fc1\u53f7","shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","description":"123123","shop_favorite_count":2,"shop_click_count":0,"created_at":"2016-08-15 22:10:05"},{"shop_id":8,"uid":83,"cid":1,"college_name":"\u5e7f\u4e1c\u519c\u5de5\u5546\u804c\u4e1a\u6280\u672f\u5b66\u9662","address":"\u98ce\u5149\u8def5\u7bb12\u54fc3\u53f7","shop_name":"\u5609\u57ce\u7684\u5e97","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","description":"12","shop_favorite_count":0,"shop_click_count":0,"created_at":"2016-08-17 16:44:17"},{"shop_id":6,"uid":12,"cid":1,"college_name":"\u5e7f\u4e1c\u519c\u5de5\u5546\u804c\u4e1a\u6280\u672f\u5b66\u9662","address":"\u98ce\u5149\u8def5\u7bb12\u54fc2\u53f7","shop_name":"asdawewae","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","description":"asdasdasd","shop_favorite_count":0,"shop_click_count":0,"created_at":"2016-08-15 22:10:05"}]}  
+[2016-12-23 18:03:26] local.ERROR: before------------:GET /goods/shopGoodses?shop_id=1 HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjVIT3VIZHB5M1U1N3NtV2ZEM3RNWVE9PSIsInZhbHVlIjoiWjd1S2hIQXhJYkVueTlIRzNyd0dFREZ2cmlFb0k0VGoxUEJyTnVkY2ZBaG40MXBcL0lrTmVLYUx6R1N2dFFpSFFiYzJ1Q0l6dUhmb1Jxa3J0b0o2SWdRPT0iLCJtYWMiOiJlNzg2Mjc5OWUzNGM3MjlkOWYxODQwZWJlNTI3YzIyNDk4YTRhMDgwYmUwZDczYzg2NjYwYTgzN2NmMjEyY2NhIn0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-detail.html?sid=1
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:03:26] local.ERROR: before------------:GET /cart/shopCarts?token=b5733d99-c8f6-11e6-83ae-000c292668cf&shop_id=1 HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjVIT3VIZHB5M1U1N3NtV2ZEM3RNWVE9PSIsInZhbHVlIjoiWjd1S2hIQXhJYkVueTlIRzNyd0dFREZ2cmlFb0k0VGoxUEJyTnVkY2ZBaG40MXBcL0lrTmVLYUx6R1N2dFFpSFFiYzJ1Q0l6dUhmb1Jxa3J0b0o2SWdRPT0iLCJtYWMiOiJlNzg2Mjc5OWUzNGM3MjlkOWYxODQwZWJlNTI3YzIyNDk4YTRhMDgwYmUwZDczYzg2NjYwYTgzN2NmMjEyY2NhIn0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-detail.html?sid=1
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:03:27] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:27 GMT
+
+{"code":200,"categories":[{"cat_id":1,"shop_id":1,"cat_name":"\u751f\u6d3b\u7528\u54c1","parent_id":0,"sort":50},{"cat_id":2,"shop_id":1,"cat_name":"\u96f6\u98df","parent_id":0,"sort":50},{"cat_id":4,"shop_id":1,"cat_name":"\u751f\u6d3b\u7528\u54c13","parent_id":0,"sort":50}],"shop":{"shop_id":1,"uid":77,"college_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","address":"\u98ce\u5149\u8def5\u7bb12\u54fc1\u53f7","description":"123123","shop_favorite_count":2,"shop_click_count":0,"sale_count":3,"income":"1.03","shop_type":1,"shop_status":1,"min_goods_amount":"0.00","shipping_fee":"0.00","created_at":"2016-08-15 22:10:05","updated_at":"2016-12-23 16:20:04"},"goodes":[{"goods_id":11,"shop_id":1,"goods_name":"\u82f9\u679c","goods_price":"0.01","goods_click_count":0,"goods_sale_count":0,"goods_number":100,"goods_desc":"123123","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-08-18 19:35:56","is_on_sale":1,"cart_goods_number":0},{"goods_id":5,"shop_id":1,"goods_name":"\u68a8","goods_price":"0.01","goods_click_count":0,"goods_sale_count":0,"goods_number":95,"goods_desc":"123123","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-08-17 16:32:17","is_on_sale":1,"cart_goods_number":0},{"goods_id":1,"shop_id":1,"goods_name":"\u9999\u8549","goods_price":"0.01","goods_click_count":0,"goods_sale_count":0,"goods_number":100,"goods_desc":"123123","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-08-17 16:16:29","is_on_sale":1,"cart_goods_number":0}]}  
+[2016-12-23 18:03:27] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:27 GMT
+
+{"code":200,"categories":[{"cat_id":1,"shop_id":1,"cat_name":"\u751f\u6d3b\u7528\u54c1","parent_id":0,"sort":50},{"cat_id":2,"shop_id":1,"cat_name":"\u96f6\u98df","parent_id":0,"sort":50},{"cat_id":4,"shop_id":1,"cat_name":"\u751f\u6d3b\u7528\u54c13","parent_id":0,"sort":50}],"shop":{"shop_id":1,"uid":77,"college_id":1,"shop_name":"\u6211\u4eec\u4e4b\u95f4","shop_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","address":"\u98ce\u5149\u8def5\u7bb12\u54fc1\u53f7","description":"123123","shop_favorite_count":2,"shop_click_count":0,"sale_count":3,"income":"1.03","shop_type":1,"shop_status":1,"min_goods_amount":"0.00","shipping_fee":"0.00","created_at":"2016-08-15 22:10:05","updated_at":"2016-12-23 16:20:04"},"goodes":[{"goods_id":11,"shop_id":1,"goods_name":"\u82f9\u679c","goods_price":"0.01","goods_click_count":0,"goods_sale_count":0,"goods_number":100,"goods_desc":"123123","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-08-18 19:35:56","is_on_sale":1,"cart_goods_number":0},{"goods_id":5,"shop_id":1,"goods_name":"\u68a8","goods_price":"0.01","goods_click_count":0,"goods_sale_count":0,"goods_number":95,"goods_desc":"123123","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-08-17 16:32:17","is_on_sale":1,"cart_goods_number":0},{"goods_id":1,"shop_id":1,"goods_name":"\u9999\u8549","goods_price":"0.01","goods_click_count":0,"goods_sale_count":0,"goods_number":100,"goods_desc":"123123","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","created_at":"2016-08-17 16:16:29","is_on_sale":1,"cart_goods_number":0}]}  
+[2016-12-23 18:03:27] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:27 GMT
+
+{"code":200,"shop_total":0.09,"carts":[{"cart_id":130,"uid":83,"goods_id":5,"goods_sn":"","shop_id":1,"goods_name":"\u68a8","goods_price":"0.01","goods_number":2,"created_at":"2016-12-23 17:14:47","updated_at":"2016-12-23 17:14:47","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.02},{"cart_id":128,"uid":83,"goods_id":8,"goods_sn":"","shop_id":1,"goods_name":"\u51e4\u68a8","goods_price":"0.01","goods_number":1,"created_at":"2016-12-23 15:02:31","updated_at":"2016-12-23 15:02:31","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.01},{"cart_id":127,"uid":83,"goods_id":9,"goods_sn":"","shop_id":1,"goods_name":"\u67da\u5b50","goods_price":"0.01","goods_number":1,"created_at":"2016-12-23 15:02:28","updated_at":"2016-12-23 15:02:28","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.01},{"cart_id":126,"uid":83,"goods_id":11,"goods_sn":"","shop_id":1,"goods_name":"\u82f9\u679c","goods_price":"0.01","goods_number":5,"created_at":"2016-12-23 13:32:59","updated_at":"2016-12-23 15:00:38","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.05}]}  
+[2016-12-23 18:03:27] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:27 GMT
+
+{"code":200,"shop_total":0.09,"carts":[{"cart_id":130,"uid":83,"goods_id":5,"goods_sn":"","shop_id":1,"goods_name":"\u68a8","goods_price":"0.01","goods_number":2,"created_at":"2016-12-23 17:14:47","updated_at":"2016-12-23 17:14:47","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.02},{"cart_id":128,"uid":83,"goods_id":8,"goods_sn":"","shop_id":1,"goods_name":"\u51e4\u68a8","goods_price":"0.01","goods_number":1,"created_at":"2016-12-23 15:02:31","updated_at":"2016-12-23 15:02:31","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.01},{"cart_id":127,"uid":83,"goods_id":9,"goods_sn":"","shop_id":1,"goods_name":"\u67da\u5b50","goods_price":"0.01","goods_number":1,"created_at":"2016-12-23 15:02:28","updated_at":"2016-12-23 15:02:28","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.01},{"cart_id":126,"uid":83,"goods_id":11,"goods_sn":"","shop_id":1,"goods_name":"\u82f9\u679c","goods_price":"0.01","goods_number":5,"created_at":"2016-12-23 13:32:59","updated_at":"2016-12-23 15:00:38","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.05}]}  
+[2016-12-23 18:03:29] local.ERROR: before------------:GET /orderInfo/create?shop_id=1&token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6Ik1oYUo0dSt0VVFsaTF5bTVVSGpBbHc9PSIsInZhbHVlIjoic1wvUTlmOTZ3ME1ZUzZqdk93cVBsWVBqSEpJaWhQOEdhcEt5TlwvaDhKYlIwa1Z0MkY3K2tkMWwzeHdIMXJHbExUa0pWdlZTaE5qTmdidTFMTmpFRGgrUT09IiwibWFjIjoiYTBjMGJmNGMyN2JhZmJjYjM1ODNhNDcwN2IzZjAxNmQ4NDczNzg1YjNlYjg0MDEwM2Q2ZWQxYmM3ZDQ1NWY4YiJ9
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-createOrder.html?sid=1
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:03:30] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:30 GMT
+
+{"code":200,"shop_name":"\u6211\u4eec\u4e4b\u95f4","user_address":{"address_id":10,"uid":83,"consignee":"212","mobile":"15920541739","address":"212","is_default":0,"created_at":"2016-12-14 18:39:10","updated_at":"2016-12-15 13:47:06"},"pay":{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}},"carts":[{"cart_id":130,"uid":83,"goods_id":5,"goods_sn":"","shop_id":1,"goods_name":"\u68a8","goods_price":"0.01","goods_number":2,"created_at":"2016-12-23 17:14:47","updated_at":"2016-12-23 17:14:47","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.02},{"cart_id":128,"uid":83,"goods_id":8,"goods_sn":"","shop_id":1,"goods_name":"\u51e4\u68a8","goods_price":"0.01","goods_number":1,"created_at":"2016-12-23 15:02:31","updated_at":"2016-12-23 15:02:31","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.01},{"cart_id":127,"uid":83,"goods_id":9,"goods_sn":"","shop_id":1,"goods_name":"\u67da\u5b50","goods_price":"0.01","goods_number":1,"created_at":"2016-12-23 15:02:28","updated_at":"2016-12-23 15:02:28","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.01},{"cart_id":126,"uid":83,"goods_id":11,"goods_sn":"","shop_id":1,"goods_name":"\u82f9\u679c","goods_price":"0.01","goods_number":5,"created_at":"2016-12-23 13:32:59","updated_at":"2016-12-23 15:00:38","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.05}],"total_fee":0.09,"shipping_fee":0,"goods_count":4}  
+[2016-12-23 18:03:30] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:30 GMT
+
+{"code":200,"shop_name":"\u6211\u4eec\u4e4b\u95f4","user_address":{"address_id":10,"uid":83,"consignee":"212","mobile":"15920541739","address":"212","is_default":0,"created_at":"2016-12-14 18:39:10","updated_at":"2016-12-15 13:47:06"},"pay":{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}},"carts":[{"cart_id":130,"uid":83,"goods_id":5,"goods_sn":"","shop_id":1,"goods_name":"\u68a8","goods_price":"0.01","goods_number":2,"created_at":"2016-12-23 17:14:47","updated_at":"2016-12-23 17:14:47","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.02},{"cart_id":128,"uid":83,"goods_id":8,"goods_sn":"","shop_id":1,"goods_name":"\u51e4\u68a8","goods_price":"0.01","goods_number":1,"created_at":"2016-12-23 15:02:31","updated_at":"2016-12-23 15:02:31","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.01},{"cart_id":127,"uid":83,"goods_id":9,"goods_sn":"","shop_id":1,"goods_name":"\u67da\u5b50","goods_price":"0.01","goods_number":1,"created_at":"2016-12-23 15:02:28","updated_at":"2016-12-23 15:02:28","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.01},{"cart_id":126,"uid":83,"goods_id":11,"goods_sn":"","shop_id":1,"goods_name":"\u82f9\u679c","goods_price":"0.01","goods_number":5,"created_at":"2016-12-23 13:32:59","updated_at":"2016-12-23 15:00:38","goods_thumb":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_img":"http:\/\/192.168.0.146:8085\/uploads\/shop\/shop_img.jpg","goods_total":0.05}],"total_fee":0.09,"shipping_fee":0,"goods_count":4}  
+[2016-12-23 18:03:32] local.ERROR: before------------:GET /pay HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6Iis2WEErb0IzZ2hFb1wvUWlJSlwvT0drQT09IiwidmFsdWUiOiJrMVdmMXN2MkR1cjg3QTF3bHI5WFFOSGptZ2wyaDRnODVBRGNUeTZldTg4NGNjTjNcL2tsQXpwS2Z3RWY0azcrbVwvbklzRjZMQTEydXdNYzNUblVrcThBPT0iLCJtYWMiOiI5ZmNlM2JlZjc0ODlhOWRjNTRiMzZjN2Y2NDgwYzJmOTVmNzI1MmFjMGVlZTQzYjM1ZWFkZGYyYzlmYjMwYzhkIn0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-pay.html?sid=1&address_id=10
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:03:32] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:32 GMT
+
+{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}}  
+[2016-12-23 18:03:32] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:03:32 GMT
+
+{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}}  
+[2016-12-23 18:04:14] local.ERROR: before------------:GET /pay HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IlFuUnRPRGZ0N3c5RUpEK2RPWk9QaFE9PSIsInZhbHVlIjoidjdEYmFaVXk2VjVtUllDRzVuZHpiQnY3bTRENDRhSGw3aVFoRnZcL2owaUVEbWFEeXNQOHZLV2x2bGg4SVlCNDVtblh0Sm1UY1lEekVta0drY2lvTkR3PT0iLCJtYWMiOiIzMmZmODFlNzBhMjY1NmY0YjJiZjJkYjU3YjNmYzQxODliMTE2ODE5MTZhY2M3MzE4NmIwMzVjZGQ4NzIwMGFlIn0%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-pay.html?sid=1&address_id=10
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:04:14] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:04:14 GMT
+
+{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}}  
+[2016-12-23 18:04:14] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:04:14 GMT
+
+{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}}  
+[2016-12-23 18:04:42] local.ERROR: before------------:GET /pay HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Cache-Control:   max-age=0
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IjNcL3YxWTZ0Zit1ZGF0WnhKXC81azhSdz09IiwidmFsdWUiOiJ0bXV4OStuMmNwQWdPUTlNUWVVWFEyZzRRVGN4czdRUnBBM2t6dVVsbUJsUHZjN3dBUk5DNXROa3habTVJSERSTXRHRkJUdmtVWFBnYkxhZTFWbUNMUT09IiwibWFjIjoiZDllMThmYzEwZDY4MGUxMmYwYTJlZjdlNWJlMTAxZjFjMjdjZTM0YTdhY2I1NTg1ZGQ0MjExMjk2MjExZjg5NyJ9
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-pay.html?sid=1&address_id=10
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:04:43] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:04:43 GMT
+
+{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}}  
+[2016-12-23 18:04:43] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:04:43 GMT
+
+{"1":{"pay_name":"alipay","description":"\u652f\u4ed8\u5b9d"},"3":{"pay_name":"wallet","description":"\u4f59\u989d"}}  
+[2016-12-23 18:04:47] local.ERROR: before------------:POST /orderInfo/store HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Content-Length:  121
+Content-Type:    application/x-www-form-urlencoded; charset=UTF-8
+Cookie:          session=eyJpdiI6IlB5eTUrTDVXRm40Q0x6RUdsSHJhVGc9PSIsInZhbHVlIjoiXC9ERzkzSDZZOThSa0ZUVU5kY3NNMWFmWG52VmdtemtZTFh3XC9tc2UzZDZFTERVVGdRdU1ZQyt6WUk4a2pKdEVJQ28rOFJVVG1jeHMzUytwQ3ZcL2lhVnc9PSIsIm1hYyI6ImE1ZDYwYTcyZjQwN2Q0MjYzZDY3NjA3OTk3YTkzYTRjMTljMDczNzUyOTQ0YjE3ODljZjAyZDg4NzgwNmU3YTIifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/shop/shop-pay.html?sid=1&address_id=10
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+token=b5733d99-c8f6-11e6-83ae-000c292668cf&shop_id=1&pay_id=3&address_id=10&pay_password=429d1f33098f564ac61f1e0d2762c44b  
+[2016-12-23 18:04:48] local.ERROR: after------------:a:2:{s:4:"code";i:200;s:6:"detail";s:12:"支付成功";}  
+[2016-12-23 18:04:53] local.ERROR: before------------:GET /hasNewTopicNotification/?token=b5733d99-c8f6-11e6-83ae-000c292668cf HTTP/1.1
+Accept:          application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: zh-CN,zh;q=0.8
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IlB5eTUrTDVXRm40Q0x6RUdsSHJhVGc9PSIsInZhbHVlIjoiXC9ERzkzSDZZOThSa0ZUVU5kY3NNMWFmWG52VmdtemtZTFh3XC9tc2UzZDZFTERVVGdRdU1ZQyt6WUk4a2pKdEVJQ28rOFJVVG1jeHMzUytwQ3ZcL2lhVnc9PSIsIm1hYyI6ImE1ZDYwYTcyZjQwN2Q0MjYzZDY3NjA3OTk3YTkzYTRjMTljMDczNzUyOTQ0YjE3ODljZjAyZDg4NzgwNmU3YTIifQ%3D%3D
+Host:            192.168.0.146:8085
+Origin:          http://192.168.0.129
+Referer:         http://192.168.0.129/index.html
+User-Agent:      Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1
+
+  
+[2016-12-23 18:04:56] local.ERROR: after------------:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:04:56 GMT
+
+{"code":200,"data":0}  
+[2016-12-23 18:04:56] local.ERROR: after------------encrypt:HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers:     Origin, Content-Type, Cookie, Accept
+Access-Control-Allow-Methods:     GET, POST, PATCH, PUT, OPTIONS
+Access-Control-Allow-Origin:      http://192.168.0.129
+Cache-Control:                    no-cache
+Content-Type:                     application/json
+Date:                             Fri, 23 Dec 2016 10:04:56 GMT
+
+{"code":200,"data":0}  
+[2016-12-23 18:07:39] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip, deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 5.1; MX5 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.124 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+
+  
+[2016-12-23 18:07:47] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip, deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 5.1; MX5 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.124 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+
+  
+[2016-12-23 18:08:28] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip, deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 5.1; MX5 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.124 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+
+  
+[2016-12-23 18:09:00] local.ERROR: before------------:GET /uploads/shop/shop_img.jpghttp://192.168.0.146:8085/uploads/goods/5de788686e68ef9ca2773e5f765a2eda.jpg HTTP/1.1
+Accept:           image/webp,*/*;q=0.8
+Accept-Encoding:  gzip, deflate
+Accept-Language:  zh-CN,en-US;q=0.8
+Connection:       keep-alive
+Host:             192.168.0.146:8085
+Referer:          http://web.flyexp.cn/shop/shop-detail.html?sid=8
+User-Agent:       Mozilla/5.0 (Linux; Android 5.1; MX5 Build/LMY47I) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.124 Mobile Safari/537.36
+X-Requested-With: cn.flyexp
+
+  
+[2016-12-23 18:40:27] local.ERROR: before------------:POST /orderInfo/store?token=18c23da7-c8ef-11e6-83ae-000c292668cf&shop_id=8&pay_id=3&pay_password=96e79218965eb72c92a549dd5a330112&address_id=1 HTTP/1.1
+Accept:          */*
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8
+Cache-Control:   no-cache
+Connection:      keep-alive
+Cookie:          session=eyJpdiI6IkljT3I4RDN4YjJsZjVyNG5ybkp6d2c9PSIsInZhbHVlIjoiZUZ4cDJyOXJcL2tpTlN1dnREcDluMGw5N2dMMnMwOVNtSkFkV0w2dFpmQURMMGIwRFlsY09kVzhIbHpUKzVXNHliU2N4SDlEZExhT2haUGhaTUtTUWlnPT0iLCJtYWMiOiI2YjU0MDQ1Mzg2MjdlOGEzMGM1MjQyODAxZjNmN2Q3MjRiYmNhNjQ0ODgxZTk0Yzk0MThmMDM1N2VhNWFjYWMzIn0%3D
+Host:            localhost:8085
+Origin:          chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop
+Postman-Token:   2ad5dab7-106a-45b8-4994-28c6bd52d073
+User-Agent:      Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+
+  
+[2016-12-23 18:40:29] local.ERROR: after------------:a:2:{s:4:"code";i:200;s:6:"detail";s:12:"支付成功";}  
