@@ -24,6 +24,8 @@ class CreateTableShops extends Migration
             $table->tinyInteger('shop_status')->default(0)->comment('0.待审核;1.正常;2.审核不通过;3.关闭');
             $table->integer('shop_favorite_count')->default(0)->comment('收藏数');
             $table->integer('shop_click_count')->default(0)->comment('浏览数');
+            $table->integer('sale_count')->default(0)->comment('销售量');
+            $table->decimal('income')->default(0)->comment('收入');
             $table->tinyInteger('top')->default(0)->comment('是否置顶');
             $table->decimal('shipping_fee',10,2)->comment('运费');
             $table->decimal('min_goods_amount',10,2)->comment('满多少免运费');
