@@ -206,15 +206,13 @@ class GoodsController extends Controller
 	    $this->helpService->validateParameter($rules);  	 
 		$user = $this->userService->getUser(); 
 		if(!isset($request->shop_id)){
-	    	$shop = $this->shopService->getShop(['uid' => $user->uid]);  
+	    	$shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
 	    	$shop_id = $shop->shop_id;
+	    	sellerHandle($shop);
 		}else{
-			$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);  
+			$shop = $this->shopService->isExistsShop(['shop_id' => $request->shop_id]);  
 			$shop_id = $request->shop_id;
 		} 
-		
-	    sellerHandle($shop);
-	    
 	    $categories = $this->goodsCategoryService->getCategories($shop_id);
 	    $firstCate = $this->goodsCategoryService->getFirst($shop_id);
 	    $cat_id = isset($request->cat_id) ? $request->cat_id : isset($firstCate->cat_id) ? $firstCate->cat_id : 0 ;
