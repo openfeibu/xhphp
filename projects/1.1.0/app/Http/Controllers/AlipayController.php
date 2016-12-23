@@ -17,6 +17,7 @@ use App\Services\WalletService;
 use App\Services\TelecomService;
 use App\Services\OrderInfoService;
 use App\Services\SMSService;
+use App\Services\ShopService;
 
 class AlipayController extends Controller
 {
@@ -37,6 +38,7 @@ class AlipayController extends Controller
                          		UserService $userService,
                          		HelpService $helpService,
                          		SMSService $smsService,
+                         		ShopService $shopService,
                          		WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
                          		OrderInfoService $orderInfoService,
@@ -49,6 +51,7 @@ class AlipayController extends Controller
         $this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
         $this->telecomService = $telecomService;
+        $this->shopService = $shopService ;
         $this->orderInfoService = $orderInfoService;
 	}
 	 public function alipayAppNotify ()
@@ -181,7 +184,9 @@ class AlipayController extends Controller
 	    		}else if($type == 'SP'){
 		    		$this->orderInfoService->updateOrderInfo($out_trade_no,['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
 		    		$order_info = $this->orderInfoService->isExistsOrderInfo(['order_sn' => $out_trade_no]);
-		    		$user = $this->userService->getUserByUserID($order_info->uid);
+		    		$shop = $this->shopService->getShop(['shop_id' =>$order_info->shop_id],['uid']) ;
+		    		$user = $this->userService->getUserByUserID($shop->uid);
+		    		$this->orderInfoService->deGoodsNumber(['order_sn' => $order_info->order_sn]);
 		    		$this->smsService->sendCommonSMS($user->mobile_no, config('sms.order'));
 			    	$trade = array(
 			        	'uid' => $order_info->uid,

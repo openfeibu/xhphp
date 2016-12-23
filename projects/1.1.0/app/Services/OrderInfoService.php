@@ -112,6 +112,10 @@ class OrderInfoService
 	{
 		return $this->orderInfoRepository->getOrderGoodses($order_id,$columns);
 	}
+	public function getOrderInfoGoodses ($where,$columns = ['*'])
+	{
+		return $this->orderInfoRepository->getOrderInfoGoodses($where,$columns);
+	}
 	public function isExistsOrderInfo ($where,$columns = ['*'])
 	{
 		$order_info = $this->orderInfoRepository->isExistsOrderInfo($where,$columns = ['*']);
@@ -178,7 +182,7 @@ class OrderInfoService
 		$goodses = $this->getOrderGoodses($order_id,['goods_id','goods_number']);
 		foreach( $goodses as $key => $goods )
 		{
-			$this->goodsRepository->deGoodsNumber(['goods_id' => $goods->goods_id],$goods->goods_number);
+		/*	$this->goodsRepository->deGoodsNumber(['goods_id' => $goods->goods_id],$goods->goods_number);*/
 			$this->goodsRepository->inGoodsSale(['goods_id' => $goods->goods_id],$goods->goods_number);
 			$this->shopRepository->inSale(['shop_id' => $shop_id],$goods->goods_number);	
 		}
@@ -187,5 +191,14 @@ class OrderInfoService
 	public function destroy ($where)
 	{
 		return $this->orderInfoRepository->destroy($where);
+	}
+	public function deGoodsNumber ($where)
+	{
+		$goodses = $this->getOrderInfoGoodses($where,['goods_id','goods_number']);
+		foreach( $goodses as $key => $goods )
+		{
+			$this->goodsRepository->deGoodsNumber(['goods_id' => $goods->goods_id],$goods->goods_number);
+		}
+		return true;
 	}
 }

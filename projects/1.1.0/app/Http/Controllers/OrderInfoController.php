@@ -212,6 +212,7 @@ class OrderInfoController extends Controller
 		$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
 		$total_fee = $goods_amount = $carts['shop_total'];
 		$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);
+		$shop_user = $this->userService->getUser($shop->uid);
 		buyerHandle($shop);
 		$shipping_fee = 0;
 		if($goods_amount < $shop->min_goods_amount){
@@ -253,7 +254,7 @@ class OrderInfoController extends Controller
         	'body' => '校汇商店订单', 
         	'total_fee' => $total_fee,
         	'trade_type' => 'Shopping',
-        	'mobile_no' => $this->user->mobile_no
+        	'mobile_no' => $shop_user->mobile_no
         ];								
         $data = $this->payService->payHandle($request->pay_id,$pay_platform,'shop',$data);		
         return [

@@ -84,6 +84,10 @@ class OrderInfoRepository
 	{
 		return OrderGoods::where('order_id',$order_id)->get($columns);
 	}
+	public function getOrderInfoGoodses ($where,$columns)
+	{
+		return OrderGoods::where($where)->get($columns);
+	}
 	public function getShopOrderInfo ($order_id,$shop_id)
 	{
 		return OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.order_id,order_info.order_sn,order_info.pay_status,order_info.order_status,order_info.shipping_status,order_info.goods_amount,order_info.shipping_fee,order_info.total_fee,order_info.consignee,order_info.address,order_info.mobile,order_info.postscript,order_info.pay_time,order_info.created_at'))
