@@ -72,26 +72,26 @@ if (!function_exists('seller_check_Shipping_order_info')) {
 if (!function_exists('sellerHandle')) {
 	function sellerHandle($shop){
 		if($shop->shop_status == 4){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('µêÆÌÒÑ¾­±»¹ÜÀíÔ±¹Ø±Õ£¬½ûÖ¹ËùÓĞ²Ù×÷');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('åº—é“ºå·²ç»è¢«ç®¡ç†å‘˜å…³é—­ï¼Œç¦æ­¢æ‰€æœ‰æ“ä½œ');
 		}else if($shop->shop_status == 0){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('µêÆÌÉóºËÖĞ£¬½ûÖ¹ËùÓĞ²Ù×÷');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('åº—é“ºå®¡æ ¸ä¸­ï¼Œç¦æ­¢æ‰€æœ‰æ“ä½œ');
 		}
 		else if($shop->shop_status == 2){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('µêÆÌÎ´Í¨¹ıÉóºË£¬½ûÖ¹ËùÓĞ²Ù×÷');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('åº—é“ºæœªé€šè¿‡å®¡æ ¸ï¼Œç¦æ­¢æ‰€æœ‰æ“ä½œ');
 		}
 	}
 }
 if (!function_exists('buyerHandle')) {
 	function buyerHandle($shop){
 		if($shop->shop_status == 4){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('µêÆÌÒÑ¾­±»¹ÜÀíÔ±¹Ø±Õ£¬½ûÖ¹ËùÓĞ²Ù×÷');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('åº—é“ºå·²ç»è¢«ç®¡ç†å‘˜å…³é—­ï¼Œç¦æ­¢æ‰€æœ‰æ“ä½œ');
 		}else if($shop->shop_status == 0){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('µêÆÌÉóºËÖĞ£¬½ûÖ¹ËùÓĞ²Ù×÷');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('åº—é“ºå®¡æ ¸ä¸­ï¼Œç¦æ­¢æ‰€æœ‰æ“ä½œ');
 		}
 		else if($shop->shop_status == 2){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('µêÆÌÎ´Í¨¹ıÉóºË£¬½ûÖ¹ËùÓĞ²Ù×÷');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('åº—é“ºæœªé€šè¿‡å®¡æ ¸ï¼Œç¦æ­¢æ‰€æœ‰æ“ä½œ');
 		}else if($shop->shop_status == 3){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('µêÆÌÔİÍ£ÓªÒµ');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('åº—é“ºæš‚åœè¥ä¸š');
 		}
 	}
 }
