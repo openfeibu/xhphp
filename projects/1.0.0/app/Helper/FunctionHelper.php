@@ -59,6 +59,16 @@ if (!function_exists('check_confirm_order_info')) {
 		return true;
 	}
 }
+if (!function_exists('seller_check_Shipping_order_info')) {
+	function seller_check_Shipping_order_info ($pay_status,$shipping_status,$order_status)
+	{
+		if($pay_status !=1 || $shipping_status !=0 || $order_status >=2 ){
+			return false;
+		}
+		return true;
+	}
+}
+
 if (!function_exists('sellerHandle')) {
 	function sellerHandle($shop){
 		if($shop->shop_status == 4){

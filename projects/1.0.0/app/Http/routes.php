@@ -157,6 +157,7 @@ Route::post('cart/destroyAll','CartController@destroyAll');
 Route::get('cart/getTotal','CartController@getTotal')->name('shop_getTotalCart');
 
 Route::get('orderInfo/index','OrderInfoController@index')->name('shop_indexOrderInfoController');
+Route::get('orderInfo/sellerOrderInfos','OrderInfoController@sellerOrderInfos');
 Route::get('orderInfo/create','OrderInfoController@create');
 Route::get('orderInfo/show','OrderInfoController@show');
 Route::post('orderInfo/store', 'OrderInfoController@store')->name('shop_storeOrderInfo');
@@ -164,6 +165,7 @@ Route::post('orderInfo/destroy','OrderInfoController@destroy');
 Route::post('orderInfo/refund','OrderInfoController@refund');
 Route::post('orderInfo/confirm','OrderInfoController@confirm');
 Route::post('orderInfo/agreeCancel','OrderInfoController@agreeCancel');
+Route::post('orderInfo/shipping','OrderInfoController@shipping');
 Route::get('orderInfo/orders','OrderInfoController@orders')->name('shop_OrderInfos');
 
 Route::get('userAddress/index','UserAddressController@index');

@@ -95,6 +95,9 @@ class CartController extends Controller
         	'goods_number'	=> 'required|integer|min:0'
     	];
     	$this->helpService->validateParameter($rules);
+    	$goods = $this->goodsService->isExistsGoods(['goods_id' => $request->goods_id],['goods_number','shop_id']);
+    	$shop = $this->shopService->isExistsShop(['shop_id' => $goods->shop_id]);
+    	buyerHandle($shop);
     	if($request->goods_number == 0 ){
 	    	$this->cartService->removeCarts(['goods_id' => $request->goods_id ,'uid' => $this->user->uid]);
 	    	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功');
@@ -103,7 +106,7 @@ class CartController extends Controller
     	if(!$exitCart){
 	    	$this->store($request->goods_id,$request->goods_number);
     	}
-    	$goods = $this->goodsService->existGoods($exitCart->goods_id);
+    	
     	if($request->goods_number > $goods->goods_number){	
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('操作失败，选择的数量超出库存,最多可购买'.$goods->goods_number.'件');
     	}

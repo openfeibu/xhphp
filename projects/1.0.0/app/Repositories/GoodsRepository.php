@@ -21,7 +21,6 @@ class GoodsRepository
 	{
 		$goods = new Goods;
 		$goods->setConnection('write');
-		$goods->uid = $user->uid;
 		$goods->shop_id = $shop->shop_id;
 		$goods->cat_id = $this->request->cat_id;				
 		$goods->goods_name = trim($this->request->goods_name);                
@@ -52,7 +51,7 @@ class GoodsRepository
 	}
 	public function getShopGoodses ($where)
 	{
-		$ShopGoodsesList = Goods::select(DB::raw('goods_id,shop_id,uid,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,created_at,is_on_sale'))
+		$ShopGoodsesList = Goods::select(DB::raw('goods_id,shop_id,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,goods_thumb,created_at,is_on_sale'))
 								->where('is_on_sale', 1)
 								->where($where)
 								->orderBy('goods_click_count', 'desc')
@@ -67,7 +66,7 @@ class GoodsRepository
 	}
 	public function getGoodses ()
 	{
-		$goodses = Goods::select(DB::raw('goods_id,shop_id,uid,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,created_at,is_on_sale'))
+		$goodses = Goods::select(DB::raw('goods_id,shop_id,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,goods_thumb,created_at,is_on_sale'))
 						->where('is_on_sale', 1)
 						->orderBy('top', 'desc')
 						->orderBy('goods_sale_count', 'desc')

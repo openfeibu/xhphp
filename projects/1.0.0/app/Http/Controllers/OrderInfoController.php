@@ -132,6 +132,20 @@ class OrderInfoController extends Controller
 			'order_infos' => $order_infos
         ];
 	}
+	public function sellerOrderInfos (Request $request)
+	{
+		$rule = [
+            'page' => 'required|integer',
+            'type' => 'required|in:beship,shipping,succ,cancell',
+        ];
+        $this->helpService->validateParameter($rule);
+		$shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
+		$order_infos = $this->orderInfoService->getShopOrderInfos($shop->shop_id,$request->type);
+        return [
+			'code' => 200,
+			'order_infos' => $order_infos
+        ];
+	}
 	public function create(Request $request)
 	{
 		$rules = [
@@ -198,6 +212,7 @@ class OrderInfoController extends Controller
 		$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
 		$total_fee = $goods_amount = $carts['shop_total'];
 		$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);
+		buyerHandle($shop);
 		$shipping_fee = 0;
 		if($goods_amount < $shop->min_goods_amount){
 			$total_fee = $goods_amount + $shop->shipping_fee;
@@ -332,7 +347,7 @@ class OrderInfoController extends Controller
 
 		$shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
 
-		$order_info = $this->orderInfoService->sellerCheck($request->order_id,$shop->shop_id);
+		$order_info = $this->orderInfoService->sellerCheckRefund($request->order_id,$shop->shop_id);
 
 		$user = $this->userService->getUserByUserID($order_info->uid);
 		
@@ -364,6 +379,22 @@ class OrderInfoController extends Controller
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
 		
     	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
+    }
+    public function shipping (Request $request)
+    {
+    	$rules = [
+        	'token' 	=> 'required',
+			'order_id'  => 'required|exists:order_info,order_id',
+    	];
+    	$this->helpService->validateParameter($rules);    	
+
+		$shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
+
+		$order_info = $this->orderInfoService->sellerCheckShipping($request->order_id,$shop->shop_id);
+
+		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
+		
+		throw new \App\Exceptions\Custom\RequestSuccessException('操作成功');
     }
     public function confirm (Request $request)
     {

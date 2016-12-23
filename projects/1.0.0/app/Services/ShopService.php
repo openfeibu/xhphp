@@ -54,6 +54,9 @@ class ShopService
 	{
 		$shop = $this->shopRepository->getShop($where,$columns);
 		if(!$shop){
+			if(isset($where['uid'])){
+				throw new \App\Exceptions\Custom\OutputServerMessageException('非商家没有权限');
+			}
 			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺不存在');
 		}
 		return $shop;

@@ -53,6 +53,8 @@ class CartService
 		{
 			$goods = $this->goodsService->existGoods($cart->goods_id);
 			$goods_total = $cart->goods_price * $cart->goods_number;
+			$cart->goods_thumb = $goods->goods_thumb;
+			$cart->goods_img = $goods->goods_img;
 			$cart->goods_total = $goods_total;
 			$shop_total += $goods_total;
 		}

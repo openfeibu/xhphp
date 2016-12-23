@@ -212,11 +212,9 @@ class GoodsController extends Controller
 			$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);  
 			$shop_id = $request->shop_id;
 		} 
-	   
-	    if($shop->shop_status != 1){
-		    throw new \App\Exceptions\Custom\OutputServerMessageException('店铺'.trans('common.shop_status'.$shop->shop_status));
-    		break;	
-	    }
+		
+	    sellerHandle($shop);
+	    
 	    $categories = $this->goodsCategoryService->getCategories($shop_id);
 	    $firstCate = $this->goodsCategoryService->getFirst($shop_id);
 	    $cat_id = isset($request->cat_id) ? $request->cat_id : isset($firstCate->cat_id) ? $firstCate->cat_id : 0 ;

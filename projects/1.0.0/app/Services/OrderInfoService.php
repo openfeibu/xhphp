@@ -52,7 +52,7 @@ class OrderInfoService
 		{
 			$order_info->status_desc = trans('common.pay_status.'.$order_info->pay_status);
 			if($order_info->pay_status == 1){
-				$order_info->status_desc = trans('common.order_status.'.$order_info->order_status);
+				$order_info->status_desc = trans('common.order_status.buyer.'.$order_info->order_status);
 				if($order_info->order_status == 1)
 				{
 					$order_info->status_desc = trans('common.shipping_status.'.$order_info->shipping_status);
@@ -62,6 +62,25 @@ class OrderInfoService
 			$order_info->can_cancel = 1; 
 			if(!$result){
 				$order_info->can_cancel = 0; 
+			}
+		}
+		return $order_infos;
+	}
+	public function getShopOrderInfos ($shop_id,$type)
+	{
+		$where = ['order_info.shop_id' => $shop_id];
+		
+		$order_infos = $this->orderInfoRepository->getOrderInfos($where,$type);
+		
+		foreach( $order_infos as $key => $order_info )
+		{
+			$order_info->status_desc = trans('common.pay_status.'.$order_info->pay_status);
+			if($order_info->pay_status == 1){
+				$order_info->status_desc = trans('common.order_status.seller.'.$order_info->order_status);
+				if($order_info->order_status == 1)
+				{
+					$order_info->status_desc = trans('common.shipping_status.'.$order_info->shipping_status);
+				}
 			}
 		}
 		return $order_infos;
@@ -88,6 +107,7 @@ class OrderInfoService
 		$order_info->order_goodses = $order_goodses;
 		return $order_info;
 	}
+	
 	public function getOrderGoodses ($order_id,$columns = ['*'])
 	{
 		return $this->orderInfoRepository->getOrderGoodses($order_id,$columns);
@@ -126,12 +146,21 @@ class OrderInfoService
 		}
 		return $order_info;
 	}
-	public function sellerCheck ($order_id,$shop_id)
+	public function sellerCheckRefund ($order_id,$shop_id)
 	{
 		$order_info = $this->isExistsOrderInfo(['order_id' => $order_id,'shop_id' => $shop_id]);
 		$result = seller_check_refund_order_info($order_info->pay_status,$order_info->shipping_status,$order_info->order_status);
 		if(!$result){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('该订单状态不支持退款');
+		}
+		return $order_info;
+	}
+	public function sellerCheckShipping ($order_id,$shop_id)
+	{
+		$order_info = $this->isExistsOrderInfo(['order_id' => $order_id,'shop_id' => $shop_id]);
+		$result = seller_check_Shipping_order_info($order_info->pay_status,$order_info->shipping_status,$order_info->order_status);
+		if(!$result){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('该订单状态不支持发货');
 		}
 		return $order_info;
 	}

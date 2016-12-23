@@ -627,8 +627,12 @@ class OrderController extends Controller
 		];
 		$this->pushService->PushUserTokenDevice($type, json_encode($data), $user_id,2);
 		return true;*/
-       // $rs = $this->pushService->PushUserTokenDevice('哈哈', '哈哈', '89');
-		$this->messageService->SystemMessage2SingleOne('77', '哈哈。');
+		$data = [
+			'open' => 'window',
+			'data' => 'http://baidu.com'
+		];
+        $rs = $this->pushService->PushUserTokenDevice('哈哈', json_encode($data), '77');
+		//$this->messageService->SystemMessage2SingleOne('77', '哈哈。');
         return [
 			'code' => 200
         ];

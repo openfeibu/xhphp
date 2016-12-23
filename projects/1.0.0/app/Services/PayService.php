@@ -120,6 +120,7 @@ class PayService
 				{
 					case 'shop':
 						$this->orderInfoService->updateOrderInfo($data['order_sn'],['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
+						
 						break;		
 					default:
 						break;
