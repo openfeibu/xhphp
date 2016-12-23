@@ -16,6 +16,7 @@ use App\Services\TradeAccountService;
 use App\Services\WalletService;
 use App\Services\TelecomService;
 use App\Services\OrderInfoService;
+use App\Services\SMSService;
 
 class AlipayController extends Controller
 {
@@ -35,6 +36,7 @@ class AlipayController extends Controller
     public function __construct(OrderService $orderService,
                          		UserService $userService,
                          		HelpService $helpService,
+                         		SMSService $smsService,
                          		WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
                          		OrderInfoService $orderInfoService,
@@ -43,6 +45,7 @@ class AlipayController extends Controller
 		$this->orderService = $orderService;
         $this->userService = $userService;
         $this->helpService = $helpService;
+        $this->smsService = $smsService;
         $this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
         $this->telecomService = $telecomService;
@@ -178,6 +181,8 @@ class AlipayController extends Controller
 	    		}else if($type == 'SP'){
 		    		$this->orderInfoService->updateOrderInfo($out_trade_no,['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
 		    		$order_info = $this->orderInfoService->isExistsOrderInfo(['order_sn' => $out_trade_no]);
+		    		$user = $this->userService->getUserByUserID($order_info->uid);
+		    		$this->smsService->sendCommonSMS($user->mobile_no, config('sms.order'));
 			    	$trade = array(
 			        	'uid' => $order_info->uid,
 						'out_trade_no' => $out_trade_no,
@@ -191,6 +196,7 @@ class AlipayController extends Controller
 						'pay_id' => 1,
 						'description' => '校汇商店订单',
 		    		);
+		    		
 	    		}
 		    	$this->tradeAccountService->addThradeAccount($trade);
     		}
@@ -259,7 +265,7 @@ class AlipayController extends Controller
 			    	);
 	    		}
 		    	$this->tradeAccountService->addThradeAccount($trade);
-
+				
 
     		}
 		    Log::debug('Alipay notify get data verification success.', [
