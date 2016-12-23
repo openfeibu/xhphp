@@ -212,7 +212,7 @@ class OrderInfoController extends Controller
 		$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
 		$total_fee = $goods_amount = $carts['shop_total'];
 		$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);
-		$shop_user = $this->userService->getUser($shop->uid);
+		$shop_user = $this->userService->getUserByUserID($shop->uid);
 		buyerHandle($shop);
 		$shipping_fee = 0;
 		if($goods_amount < $shop->min_goods_amount){
@@ -250,6 +250,7 @@ class OrderInfoController extends Controller
         $data = [
         	'return_url' => config('common.order_info_return_url'),
         	'order_sn' => $order_sn,
+        	'order_id' => $order_info->order_id,
         	'subject' => '校汇商店订单',
         	'body' => '校汇商店订单', 
         	'total_fee' => $total_fee,

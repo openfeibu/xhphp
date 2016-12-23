@@ -192,9 +192,9 @@ class OrderInfoService
 	{
 		return $this->orderInfoRepository->destroy($where);
 	}
-	public function deGoodsNumber ($where)
+	public function deGoodsNumber ($order_id)
 	{
-		$goodses = $this->getOrderInfoGoodses($where,['goods_id','goods_number']);
+		$goodses = $this->getOrderGoodses($order_id,['goods_id','goods_number']);
 		foreach( $goodses as $key => $goods )
 		{
 			$this->goodsRepository->deGoodsNumber(['goods_id' => $goods->goods_id],$goods->goods_number);

@@ -186,7 +186,7 @@ class AlipayController extends Controller
 		    		$order_info = $this->orderInfoService->isExistsOrderInfo(['order_sn' => $out_trade_no]);
 		    		$shop = $this->shopService->getShop(['shop_id' =>$order_info->shop_id],['uid']) ;
 		    		$user = $this->userService->getUserByUserID($shop->uid);
-		    		$this->orderInfoService->deGoodsNumber(['order_sn' => $order_info->order_sn]);
+		    		$this->orderInfoService->deGoodsNumber($order_info->order_id);
 		    		$this->smsService->sendCommonSMS($user->mobile_no, config('sms.order'));
 			    	$trade = array(
 			        	'uid' => $order_info->uid,
