@@ -118,7 +118,7 @@ class SMSService
 	/**
 	 * 发送短信验证码
 	 */
-	public function sendCommonSMS($mobile_no,$sms_template_code)
+	public function sendCommonSMS($mobile_no, $sms_template_code)
 	{
 		require app_path() . '\Helper\alidayu\TopSdk.php';
 		$c = new TopClient;
