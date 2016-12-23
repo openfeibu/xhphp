@@ -41,7 +41,7 @@ class ShopRepository
 	{
 		$shopList = Shop::select(DB::raw('shop.shop_id,shop.uid,college.cid,college.name as college_name,shop.address,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite_count,shop.shop_click_count,shop.shipping_fee,shop.created_at'))
 						->leftJoin('college', 'college.cid', '=', 'shop.college_id')
-						->where('shop_status', 1)
+						->whereIn('shop_status', [1,3])
 						->skip(20 * $this->request->page - 20)
 						->orderBy('shop_favorite_count','desc')
 						->orderBy('shop_click_count','desc')
