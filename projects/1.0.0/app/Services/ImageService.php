@@ -188,7 +188,7 @@ class ImageService
 		    Storage::put($img_url, file_get_contents($file->getRealPath()));
 
 		    $images_url[$i]['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() . $img_url;
-		    $images_url[$i]['uid'] = $user->uid ? $user->uid : 0;
+		    $images_url[$i]['uid'] = isset($user->uid) ? $user->uid : 0;
 		    $images_url[$i]['usage'] = $usage;
 		    $images_url[$i]['created_at'] = date("Y-m-d H:i:s");
 
