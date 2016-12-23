@@ -27,11 +27,11 @@ class AlipayController extends Controller
     protected $helpService;
 
 	protected $walletService;
-	
+
     protected $tradeAccountService;
 
 	protected $telecomService;
-	
+
     public function __construct(OrderService $orderService,
                          		UserService $userService,
                          		HelpService $helpService,
@@ -39,7 +39,7 @@ class AlipayController extends Controller
                          		TradeAccountService $tradeAccountService,
                          		OrderInfoService $orderInfoService,
                          		TelecomService $telecomService){
-	    parent::__construct();	    
+	    parent::__construct();
 		$this->orderService = $orderService;
         $this->userService = $userService;
         $this->helpService = $helpService;
@@ -67,11 +67,11 @@ class AlipayController extends Controller
 	    		if(Input::get('trade_status') == 'TRADE_FINISHED') {
 
 	    		}
-	    		else if (Input::get('trade_status') == 'TRADE_SUCCESS') {				
+	    		else if (Input::get('trade_status') == 'TRADE_SUCCESS') {
 					$type = substr($out_trade_no,0,2);
 					if($type == 'RT'){
 						Log::debug("android支付宝支付回调 RT");
-						
+
 						$this->orderService->updateOrderStatusNew($out_trade_no);
 						$order = $this->orderService->getOrderBysn($out_trade_no);
 			    		$trade = array(
@@ -90,17 +90,17 @@ class AlipayController extends Controller
 		    		}
 					$this->tradeAccountService->addThradeAccount($trade);
 	    		}
-    		   
+
 				Log::debug("android支付宝支付回调 success");
-				echo "success";	
+				echo "success";
 			}
-			else 
+			else
 			{
 				Log::debug("android支付宝支付回调 sign fail");
 				echo "sign fail";
 			}
 		}
-		else 
+		else
 		{
 			Log::debug("android支付宝支付回调 response fail");
 			echo "response fail";
@@ -174,9 +174,9 @@ class AlipayController extends Controller
 							'wallet_type' => -1,
 							'pay_id' => 1,
 							'description' => '电信套餐',
-			    	);					
+			    	);
 	    		}else if($type == 'SP'){
-		    		$this->orderInfoService->updateOrderInfo($out_trade_no,['pay_status' => 1,'order_status' => 1,'cancelled_time' => dtime()]);
+		    		$this->orderInfoService->updateOrderInfo($out_trade_no,['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
 		    		$order_info = $this->orderInfoService->isExistsOrderInfo(['order_sn' => $out_trade_no]);
 			    	$trade = array(
 			        	'uid' => $order_info->uid,
@@ -192,18 +192,18 @@ class AlipayController extends Controller
 						'description' => '校汇商店订单',
 		    		);
 	    		}
-		    	$this->tradeAccountService->addThradeAccount($trade);	
+		    	$this->tradeAccountService->addThradeAccount($trade);
     		}
 		    Log::debug('Alipay notify get data verification success.', [
             	'out_trade_no' => Input::get('out_trade_no'),
             	'trade_no' => Input::get('trade_no')
             ]);
 			Log::debug("手机网站支付宝回调 success");
-			echo "success";	
+			echo "success";
 		}
 		else {
 		    //验证失败
-		    Log::debug("手机网站支付宝回调 fail"); 
+		    Log::debug("手机网站支付宝回调 fail");
 		    echo "fail";
 		}
     }
@@ -256,22 +256,22 @@ class AlipayController extends Controller
 							'wallet_type' => -1,
 							'pay_id' => 1,
 							'description' => '电信套餐',
-			    	);					
+			    	);
 	    		}
 		    	$this->tradeAccountService->addThradeAccount($trade);
 
-					
+
     		}
 		    Log::debug('Alipay notify get data verification success.', [
             	'out_trade_no' => Input::get('out_trade_no'),
             	'trade_no' => Input::get('trade_no')
             ]);
 			Log::debug("手机网站支付宝回调 success");
-			echo "success";	
+			echo "success";
 		}
 		else {
 		    //验证失败
-		    Log::debug("手机网站支付宝回调 fail"); 
+		    Log::debug("手机网站支付宝回调 fail");
 		    echo "fail";
 		}
     }
