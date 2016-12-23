@@ -33,7 +33,7 @@ class CartController extends Controller
 								HelpService $helpService)
 	{
 		parent::__construct();
-		$this->middleware('auth');
+		$this->middleware('auth',['except' => ['getShopCarts']]);
 		$this->userService = $userService;
 		$this->goodsService = $goodsService ;
 		$this->shopService = $shopService ;
@@ -80,7 +80,14 @@ class CartController extends Controller
         	'shop_id'	=> 'required|integer'
     	];
     	$this->helpService->validateParameter($rules);
-		$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
+    	$carts = [
+			'shop_total' => 0,
+			'carts' => []
+		];
+    	if($this->user){
+	    	$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
+    	}
+		
 		return [
             'code' => 200,
         	'shop_total' => $carts['shop_total'],

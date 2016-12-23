@@ -45,7 +45,7 @@ class SMSService
       			    throw new \App\Exceptions\Custom\PhoneNumRegisteredException();
 				}
 				break;
-
+			
 			case 'reset':
 				$user = $this->userRepository->findMobileNo($mobile_no);
 				if (!$user) {
@@ -105,6 +105,27 @@ class SMSService
 		$req->setSmsType("normal");
 		$req->setSmsFreeSignName(config('sms.signName'));
 		$req->setSmsParam("{\"code\":\"$code\",\"product\":\"校汇\"}");
+		$req->setRecNum($mobile_no);
+		$req->setSmsTemplateCode($sms_template_code);
+		$resp = $c->execute($req);
+		if (!isset($resp->result->err_code) or $resp->result->err_code !== '0') {
+			Log::error('----------------------------------------------------------------');
+			Log::error('短信发送故障，收到阿里大于的错误信息：' . serialize($resp));
+			Log::error('----------------------------------------------------------------');
+		}
+		return true;
+	}
+	/**
+	 * 发送短信验证码
+	 */
+	public function sendCommonSMS($mobile_no,$sms_template_code)
+	{
+		require app_path() . '\Helper\alidayu\TopSdk.php';
+		$c = new TopClient;
+		$req = new AlibabaAliqinFcSmsNumSendRequest;
+		$req->setSmsType("normal");
+		$req->setSmsFreeSignName(config('sms.signName'));
+		$req->setSmsParam("{\"product\":\"校汇\"}");
 		$req->setRecNum($mobile_no);
 		$req->setSmsTemplateCode($sms_template_code);
 		$resp = $c->execute($req);

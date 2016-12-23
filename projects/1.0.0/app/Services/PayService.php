@@ -10,6 +10,7 @@ use App\Services\UserService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
 use App\Services\OrderInfoService;
+use App\Services\SMSService;
 
 class PayService
 {
@@ -23,6 +24,7 @@ class PayService
 	
 	public function __construct (UserService $userService,
 								HelpService $helpService,
+								SMSService $smsService,
 								WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
 								OrderInfoService $orderInfoService)
@@ -32,6 +34,7 @@ class PayService
 	 	$this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
 	 	$this->orderInfoService = $orderInfoService;
+	 	$this->smsService = $smsService;
 	 	$this->user = $this->userService->getUser(); 
 	}
 	public function payHandle($pay_id,$pay_platform,$pay_form,$data)
@@ -120,7 +123,7 @@ class PayService
 				{
 					case 'shop':
 						$this->orderInfoService->updateOrderInfo($data['order_sn'],['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
-						
+						$this->smsService->sendSMS2Phone($data['mobile_no'], config('sms.order'));
 						break;		
 					default:
 						break;
