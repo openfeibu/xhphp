@@ -83,7 +83,7 @@ class GoodsRepository
 	}
 	public function InGoodsNumber ($where = [],$number = 1)
 	{
-		return Goods::where($where)->decrement('goods_number',$number);
+		return Goods::where($where)->increment('goods_number',$number);
 	}
 	public function inGoodsSale ($where = [],$number = 1)
 	{
