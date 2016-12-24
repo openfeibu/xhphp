@@ -85,9 +85,9 @@ class OrderInfoService
 		}
 		return $order_infos;
 	}
-	public function getOrderInfo($order_id,$uid)
+	public function getOrderInfo($order_id)
 	{
-		$order_info = $this->orderInfoRepository->getOrderInfo($order_id,$uid);
+		$order_info = $this->orderInfoRepository->getOrderInfo($order_id);
 		$order_info->status_desc = trans('common.pay_status.'.$order_info->pay_status);
 		if($order_info->pay_status == 1){
 			$order_info->status_desc = trans('common.order_status.'.$order_info->order_status);
