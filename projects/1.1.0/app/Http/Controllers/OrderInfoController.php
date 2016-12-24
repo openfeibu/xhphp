@@ -385,7 +385,7 @@ class OrderInfoController extends Controller
 
 		$user = $this->userService->getUserByUserID($order_info->uid);
 		
-		$fee = 	$user->wallet + $user->total_fee;
+		$fee = 	$user->wallet + $order_info->total_fee;
 		
         $this->walletService->updateWallet($user->uid,$fee);
 
