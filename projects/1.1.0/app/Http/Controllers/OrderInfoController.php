@@ -461,7 +461,7 @@ class OrderInfoController extends Controller
 			'out_trade_no' => $order_info->order_sn,
 			'pay_id' => 5,
 			'wallet_type' => 1,
-			'trade_type' => 'shop',
+			'trade_type' => 'Shop',
 			'description' => '商店收入',
         );
        	$this->walletService->store($walletData);
