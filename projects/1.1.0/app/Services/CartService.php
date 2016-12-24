@@ -63,6 +63,33 @@ class CartService
 			'shop_total' => $shop_total,
 		];
 	}
+	public function checkGoodsNumber($shop_id,$uid)
+	{
+		$carts = $this->cartRepository->getShopCarts($shop_id,$uid);
+		$shop_total = 0;
+		$str = "";
+		foreach( $carts as $k => $cart )
+		{
+			$goods = $this->goodsService->existGoods($cart->goods_id);
+			$goods_total = $cart->goods_price * $cart->goods_number;
+			if($goods->goods_number <= 0){
+				$str.= '商品 '.$goods->goods_name.' 已售罄；';
+			}else if($cart->goods_number > $goods->goods_number){
+				$str.= '商品 '.$goods->goods_name.' 选择的数量超出库存,最多可购买'.$goods->goods_number.'件';
+			}
+			$cart->goods_thumb = $goods->goods_thumb;
+			$cart->goods_img = $goods->goods_img;
+			$cart->goods_total = $goods_total;
+			$shop_total += $goods_total;
+		}
+		if($str){
+			throw new \App\Exceptions\Custom\OutputServerMessageException($str);
+		}
+		return [
+			'carts' => $carts,
+			'shop_total' => $shop_total,
+		];
+	}
 	public function getShop ($uid)
 	{
 		return $this->cartRepository->getShop($uid);

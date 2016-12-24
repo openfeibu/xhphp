@@ -209,7 +209,8 @@ class OrderInfoController extends Controller
 		if(!$count){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('未存在该购物车');
 		}
-		$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
+		//$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
+		$carts = $this->cartService->checkGoodsNumber($request->shop_id,$this->user->uid);
 		$total_fee = $goods_amount = $carts['shop_total'];
 		$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);
 		$shop_user = $this->userService->getUserByUserID($shop->uid);
@@ -409,7 +410,10 @@ class OrderInfoController extends Controller
 		
 		$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
 
+		$this->orderInfoService->inGoodsNumber($order_info->order_id);
+		
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
+
 		
     	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
     }

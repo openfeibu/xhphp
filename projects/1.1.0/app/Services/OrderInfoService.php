@@ -201,4 +201,13 @@ class OrderInfoService
 		}
 		return true;
 	}
+	public function InGoodsNumber ($order_id)
+	{
+		$goodses = $this->getOrderGoodses($order_id,['goods_id','goods_number']);
+		foreach( $goodses as $key => $goods )
+		{
+			$this->goodsRepository->InGoodsNumber(['goods_id' => $goods->goods_id],$goods->goods_number);
+		}
+		return true;
+	}
 }
