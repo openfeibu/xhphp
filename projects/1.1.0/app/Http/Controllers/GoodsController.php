@@ -203,9 +203,12 @@ class GoodsController extends Controller
 			'shop_id' => 'sometimes|required|integer',
 			'cat_id' => 'sometimes|required|integer',
 	    ];
-	    $this->helpService->validateParameter($rules);  	 
+	    $this->helpService->validate Parameter($rules);  	 
 		$user = $this->userService->getUser(); 
 		if(!isset($request->shop_id)){
+			if(!$user){
+				throw new \App\Exceptions\Custom\OutputServerMessageException('参数错误');
+			}
 	    	$shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
 	    	$shop_id = $shop->shop_id;
 	    	sellerHandle($shop);
