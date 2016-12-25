@@ -43,6 +43,7 @@ class TopicService
 		if ($user) {
 			$param['user_id'] = $user->uid;
 		}
+		$this->topicRepository->inCount($param['topic_id'],'view_num',1);
 		return $this->topicRepository->getTopicByTopicID($param);
 	}
 
