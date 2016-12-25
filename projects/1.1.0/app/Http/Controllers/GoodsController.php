@@ -203,7 +203,7 @@ class GoodsController extends Controller
 			'shop_id' => 'sometimes|required|integer',
 			'cat_id' => 'sometimes|required|integer',
 	    ];
-	    $this->helpService->validate Parameter($rules);  	 
+	    $this->helpService->validateParameter($rules);  	 
 		$user = $this->userService->getUser(); 
 		if(!isset($request->shop_id)){
 			if(!$user){
