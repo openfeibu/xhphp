@@ -293,4 +293,8 @@ class TopicRepository
 
 		return  $topic->favourites_count;
 	}
+	public function inCount ($tid,$column,$number)
+	{
+		return Topic::where('tid',$tid)->increment($column,$number);
+	}
 }
