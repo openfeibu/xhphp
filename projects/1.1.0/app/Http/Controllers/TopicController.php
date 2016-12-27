@@ -317,6 +317,8 @@ class TopicController extends Controller
             'topic_id' => $request->topic_id,
             'page' => $request->page,
         ];
+        
+        $this->topicService->incrementViewCount([$request->topic_id]);
         //获取话题评论
         $comments = $this->topicService->getTopicCommentsList($param);
 
