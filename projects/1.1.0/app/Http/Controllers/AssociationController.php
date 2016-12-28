@@ -320,7 +320,7 @@ class AssociationController extends Controller
     {
         //检验请求参数
         $rule = [
-            'introduction' => 'required',
+            'introduction' => 'required|max:140',
         ];
         $this->helpService->validateParameter($rule);
 
