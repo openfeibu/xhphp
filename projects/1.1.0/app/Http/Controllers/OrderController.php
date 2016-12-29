@@ -623,16 +623,17 @@ class OrderController extends Controller
 		/*$data = [
 			'refresh' => 1,
 			'target' => 'message',
-			'data' => $content 
+			'data' => "123" 
 		];
-		$this->pushService->PushUserTokenDevice($type, json_encode($data), $user_id,2);
-		return true;*/
+		 $ret = $this->pushService->PushUserTokenDevice('标题', json_encode($data), '79',2);*/
+	
 		$data = [
 			'open' => 'window',
 			'data' => 'http://baidu.com'
 		];
-        $rs = $this->pushService->PushUserTokenDevice('哈哈', $data, '85');
+        $ret = $this->pushService->PushUserTokenDevice('标题', "内容", '77');
 		//$this->messageService->SystemMessage2SingleOne('77', '哈哈。');
+		var_dump($ret);exit;
         return [
 			'code' => 200
         ];

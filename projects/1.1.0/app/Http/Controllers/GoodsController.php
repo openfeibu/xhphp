@@ -133,6 +133,16 @@ class GoodsController extends Controller
 		
 	    throw new \App\Exceptions\Custom\RequestSuccessException('更新成功');
     }
+    public function delete (Request $request)
+    {
+	    $user = $this->userService->getUser();  
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
+    	$rules = [
+        	'goods_id'		=> 'required|integer',
+	    ];	 
+	    $this->helpService->validateParameter($rules);
+	    $goods =  $this->goodsService->isExistsGoods(['goods_id' => intval($request->goods_id),'shop_id' => $shop->shop_id]);
+    }
 	public function show (Request $request)
 	{
 		$rules = [
