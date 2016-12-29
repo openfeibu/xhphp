@@ -53,7 +53,7 @@ class OrderRepository
 	{
 		return Order::join('user', 'order.owner_id', '=', 'user.uid')
                     ->select(DB::raw('order.oid,order.owner_id, order.order_sn,user.openid,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
-                    				  order.description, order.fee, order.status, order.created_at,order.service_fee,courier.mobile_no as courier_mobile_no'))
+                    				  order.description, order.fee, order.status, order.created_at,order.service_fee,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where('oid', $order_id)
                     ->first();
@@ -66,7 +66,7 @@ class OrderRepository
 	{
 		$order = Order::join('user', 'order.owner_id', '=', 'user.uid')
                     ->select(DB::raw('order.oid,order.owner_id, order.order_sn,user.openid,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
-                    				  order.description, order.fee, order.status, order.created_at,courier.mobile_no as courier_mobile_no'))
+                    				  order.description, order.fee, order.status, order.created_at,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where('oid', $order_id)
                     ->first()->toArray();
