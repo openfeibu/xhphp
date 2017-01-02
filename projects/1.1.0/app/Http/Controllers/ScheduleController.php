@@ -88,8 +88,11 @@ class ScheduleController extends Controller
 	        $this->messageService->SystemMessage2SingleOne($order->courier_id, '您好，发单人已结算你完成的任务，赶紧去看看吧。');
 
 	        //推送给接单人
-
-			$this->pushService->PushUserTokenDevice('任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id);
+			$custom = [
+				'open' => 'mytask',
+				'data' => $order->description,
+			];
+			$this->pushService->PushUserTokenDevice('任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id,1,$custom);
 			
 	      
 			Log::debug('courier:'.$courier);

@@ -54,13 +54,14 @@ class XingeApp {
 	/**
 	 * 使用默认设置推送消息给单个android设备
 	 */
-	public function PushTokenAndroid($title, $content, $token)
+	public function PushTokenAndroid($title, $content, $token,$custom = [])
 	{
 		$mess = new Message();
 		$mess->setTitle($title);
 		$mess->setContent($content);
 		$mess->setType(Message::TYPE_NOTIFICATION);
 		$mess->setStyle(new Style(0, 1, 1, 1, 0));
+		$mess->setCustom($custom);
 		$action = new ClickAction();
 		$action->setActionType(ClickAction::TYPE_ACTIVITY);
 		$mess->setAction($action);
@@ -104,12 +105,13 @@ class XingeApp {
 		$ret = $this->PushSingleAccount(0, $account, $mess);
 		return $ret;
 	}
-	public function PushSingleDeviceMessage ($title, $content, $token)
+	public function PushSingleDeviceMessage ($title, $content, $token,$custom)
 	{
 		$mess = new Message();
 		$mess->setTitle($title);
 		$mess->setContent($content);
 		$mess->setType(Message::TYPE_MESSAGE);
+		$mess->setCustom($custom);
 		$ret = $this->PushSingleDevice($token, $mess);
 		return $ret;
 	}

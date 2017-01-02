@@ -313,14 +313,18 @@ class OrderController extends Controller
         $this->orderService->checkScalping($request->order_id);
 
         //接受任务
-        $this->orderService->claimOrder(['order_id' => $request->order_id]);
+        $order = $this->orderService->claimOrder(['order_id' => $request->order_id]);
 
         $order_owner_id = $this->orderService->getSingleOrderAllInfo($request->order_id)->owner_id;
         //发送纸条给发单者
         $this->messageService->SystemMessage2SingleOne($order_owner_id, '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。');
-
+		
         //推送给发单者
-        $this->pushService->PushUserTokenDevice('校汇任务', '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。', $order_owner_id);
+        $custom = [
+			'open' => 'task',
+			'data' => $order->description,
+		];
+        $this->pushService->PushUserTokenDevice('校汇任务', '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。', $order_owner_id,1,$custom);
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
@@ -514,7 +518,11 @@ class OrderController extends Controller
         $this->messageService->SystemMessage2SingleOne($owner_id, '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。');
 
         //推送给发单人
-        $this->pushService->PushUserTokenDevice('校汇任务', '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。', $owner_id);
+        $custom = [
+			'open' => 'task',
+			'data' => $order->description,
+		];
+        $this->pushService->PushUserTokenDevice('校汇任务', '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。', $owner_id,1,$custom);
 
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
@@ -586,7 +594,11 @@ class OrderController extends Controller
         $this->messageService->SystemMessage2SingleOne($order->courier_id, '您好，发单人已结算你完成的任务，赶紧去看看吧。');
 
         //推送通知给接单人
-        $this->pushService->PushUserTokenDevice('校汇任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id);
+        $custom = [
+			'open' => 'mytask',
+			'data' => $order->description,
+		];
+        $this->pushService->PushUserTokenDevice('校汇任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id,1,$custom);
 		//积分更新(给发单人加分)
         Event::fire(new Integrals('发布任务'));
         //积分更新(给接单人加分)
@@ -625,13 +637,13 @@ class OrderController extends Controller
 			'target' => 'message',
 			'data' => "123" 
 		];
-		 $ret = $this->pushService->PushUserTokenDevice('标题', json_encode($data), '79',2);*/
-	
-		$data = [
-			'open' => 'window',
+		 $ret = $this->pushService->PushUserTokenDevice('标题', json_encode($data), '77',2);
+	var_dump($ret);exit;*/
+		$custom = [
+			'open' => 'web',
 			'data' => 'http://baidu.com'
 		];
-        $ret = $this->pushService->PushUserTokenDevice('标题', "内容", '77');
+        $ret = $this->pushService->PushUserTokenDevice('标题', '内容', '79',1,$custom);
 		//$this->messageService->SystemMessage2SingleOne('77', '哈哈。');
 		var_dump($ret);exit;
         return [

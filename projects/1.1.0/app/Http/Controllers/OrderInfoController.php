@@ -426,9 +426,28 @@ class OrderInfoController extends Controller
     	$this->helpService->validateParameter($rules);    	
 
 		$shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
-
+		
 		$order_info = $this->orderInfoService->sellerCheckShipping($request->order_id,$shop->shop_id);
 
+		$total_fee = $order_info->shipping_fee;
+		
+		$service_fee = $this->helpService->serviceFee($total_fee) ;
+		
+		//商家
+		if($shop->shop_type == 2){
+			//创建新任务
+        	$order = $this->orderService->createOrder(['destination' => $order_info->address,
+                                             'description' => $shop->name,
+                                             'fee' => $request->fee,
+                                             'goods_fee' => 0 ,
+                                             'total_fee' => $total_fee,
+                                             'service_fee' => $service_fee,
+                                             'phone' => $order_info->consignee,
+                                             'order_sn' => $order_sn,
+                                             'status' => 'new',
+                                             'pay_id' => $order_info->pay_id,
+                                            ]);
+		}
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
 		
 		throw new \App\Exceptions\Custom\RequestSuccessException('操作成功');

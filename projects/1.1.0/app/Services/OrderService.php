@@ -134,7 +134,8 @@ class OrderService
 
 			//记录接单时间
 			$this->orderRepository->logOrderstatusChg($user->uid, $orderInfo['order_id'], 'accepted');
-
+			
+			return $order;
 		} elseif ($order->status != 'new') {
 			throw new \App\Exceptions\Custom\OutputServerMessageException('任务已被接');
 		} else {
