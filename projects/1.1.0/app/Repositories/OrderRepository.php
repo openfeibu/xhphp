@@ -219,10 +219,10 @@ class OrderRepository
 	/**
 	 * 	获取当前任务信息
 	 */
-	public function getOrder($where,$columns)
+	public function getOrder($where,$columns,$is_exception)
 	{
 		self::$order = Order::where($where)->first($columns);
-		if (!self::$order) {
+		if (!self::$order && $is_exception) {
         	throw new \App\Exceptions\Custom\FoundNothingException();
 		}
 		return self::$order;

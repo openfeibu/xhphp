@@ -470,8 +470,8 @@ class OrderInfoController extends Controller
 		
 		$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);	
 
-		$task = $this->orderService->getOrder(['order_id' => $order_info->order_id]);
-		
+		$task = $this->orderService->getOrder(['order_id' => $order_info->order_id],['*'],false);
+
 		if($task) {
 			$this->orderService->confirmFinishWork($task);
 		}

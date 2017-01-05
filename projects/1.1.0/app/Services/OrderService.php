@@ -79,9 +79,9 @@ class OrderService
 		$order->order_status = trans('common.task_status.'.$order['status']);
 		return $order;
 	}
-	public function getOrder($where = [],$columns = ['*'])
+	public function getOrder($where = [],$columns = ['*'],$is_exception = true)
 	{
-		$order = $this->orderRepository->getOrder($where,$columns);
+		$order = $this->orderRepository->getOrder($where,$columns,$is_exception);
 		return $order;
 	}
 	/**
