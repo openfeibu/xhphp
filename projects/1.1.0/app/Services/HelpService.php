@@ -243,5 +243,8 @@ class HelpService
 		
 		return $file_contents;
 	}
-	
+	public function shopServiceFee ($fee,$rate)
+	{
+		return $fee * $rate;
+	}
 }

@@ -2,11 +2,7 @@
 
 namespace App\Services;
 
-use Session;
-use Validator;
 use Illuminate\Http\Request;
-use App\Services\HelpService;
-use App\Repositories\UserRepository;
 use App\Repositories\WalletRepository;
 
 class WalletService
@@ -20,13 +16,9 @@ class WalletService
 	protected $helpService;
 	
 	function __construct(Request $request,
-						 HelpService $helpService,
-                         UserRepository $userRepository,
                          WalletRepository $walletRepository)
 	{
         $this->request = $request;
-        $this->helpService = $helpService;
-		$this->userRepository = $userRepository;
 		$this->walletRepository = $walletRepository;
 	}
 	public function store ($walletData)

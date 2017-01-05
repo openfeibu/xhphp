@@ -14,6 +14,7 @@ use App\Services\GoodsService;
 use App\Services\ShopService;
 use App\Services\CartService;
 use App\Services\HelpService;
+use App\Services\OrderService;
 use App\Services\OrderInfoService;
 use App\Services\UserAddressService;
 use App\Services\TradeAccountService;
@@ -42,11 +43,12 @@ class OrderInfoController extends Controller
 								GoodsService $goodsService,
 								CartService $cartService,
 								HelpService $helpService,
-								OrderInfoService $orderInfoService,
+								OrderService $orderService,
 								UserAddressService $userAddressService,
 								WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
-								PayService $payService)
+								PayService $payService,
+								OrderInfoService $orderInfoService)
 	{
 		parent::__construct();
 		$this->middleware('auth');
@@ -56,6 +58,7 @@ class OrderInfoController extends Controller
 		$this->shopService = $shopService ;
 		$this->cartService = $cartService;
 	 	$this->helpService = $helpService;
+	 	$this->orderService = $orderService;
 	 	$this->orderInfoService = $orderInfoService;
 	 	$this->userAddressService = $userAddressService;
 	 	$this->walletService = $walletService;
@@ -277,7 +280,7 @@ class OrderInfoController extends Controller
         	'order_id' => 'required|integer|exists:order_info,order_id',
         ];
         $is_exists = $this->orderInfoService->isExistsOrderInfo(['order_id' => $request->order_id],$columns = ['order_id']);
-        $order_info = $this->orderInfoService->getOrderInfo($request->order_id,$this->user->uid);
+        $order_info = $this->orderInfoService->getOrderInfo($request->order_id);
         return [
         	'code' => 200,
 			'order_info' => $order_info,
@@ -429,16 +432,15 @@ class OrderInfoController extends Controller
 		
 		$order_info = $this->orderInfoService->sellerCheckShipping($request->order_id,$shop->shop_id);
 
-		$total_fee = $order_info->shipping_fee;
-		
-		$service_fee = $this->helpService->serviceFee($total_fee) ;
-		
 		//商家
 		if($shop->shop_type == 2){
 			//创建新任务
+			$order_sn = $this->helpService->buildOrderSn('RT');
+			$total_fee = $order_info->shipping_fee;
+			$service_fee = $this->helpService->serviceFee($total_fee) ;
         	$order = $this->orderService->createOrder(['destination' => $order_info->address,
-                                             'description' => $shop->name,
-                                             'fee' => $request->fee,
+                                             'description' => $shop->shop_name,
+                                             'fee' => $total_fee,
                                              'goods_fee' => 0 ,
                                              'total_fee' => $total_fee,
                                              'service_fee' => $service_fee,
@@ -446,6 +448,8 @@ class OrderInfoController extends Controller
                                              'order_sn' => $order_sn,
                                              'status' => 'new',
                                              'pay_id' => $order_info->pay_id,
+                                             'type' => 'business',
+                                             'order_id' => $order_info->order_id
                                             ]);
 		}
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
@@ -459,53 +463,19 @@ class OrderInfoController extends Controller
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
     	$this->helpService->validateParameter($rules);   
-
+		
     	$order_info = $this->orderInfoService->checkConfirm($request->order_id,$this->user->uid);
-
-		$shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);	
-
-		$user = $this->userService->getUserByUserID($shop->uid);
-
-		$total_fee = $order_info->total_fee;
-
-		$service_fee = 0;
+    	
+		$shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);
 		
-		$fee = 	$user->wallet + $total_fee;
-        
-       	$walletData = array(
-			'uid' => $user->uid,
-			'wallet' => $fee,
-			'fee'	=> $total_fee,
-			'service_fee' => $service_fee,
-			'out_trade_no' => $order_info->order_sn,
-			'pay_id' => 5,
-			'wallet_type' => 1,
-			'trade_type' => 'Shop',
-			'description' => '商店收入',
-        );
-       	$this->walletService->store($walletData);
-		$trade_no = 'walletseller'. $order_info->order_sn;
-        $trade = array(
-        	'uid' => $user->uid,
-			'out_trade_no' =>  $order_info->order_sn,
-			'trade_no' => $trade_no,
-			'trade_status' => 'success',
-			'wallet_type' => 1,
-			'from' => 'shop',
-			'trade_type' => 'Shop',
-			'fee' => $total_fee,
-			'service_fee' => $service_fee,
-			'pay_id' => 5,
-			'description' => '商店收入',
-		);
-		$this->tradeAccountService->addThradeAccount($trade);
-		
-		$this->orderInfoService->confirm($order_info->order_id,$shop->shop_id);
+		$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);	
 
-		$this->walletService->updateWallet($user->uid,$fee);
+		$task = $this->orderService->getOrder(['order_id' => $order_info->order_id]);
 		
-		$this->shopService->inIncome(['shop_id' => $shop->shop_id],$total_fee);		
-		
+		if($task) {
+			$this->orderService->confirmFinishWork($task);
+		}
+
     	throw new \App\Exceptions\Custom\RequestSuccessException('确认成功');
     }
 }

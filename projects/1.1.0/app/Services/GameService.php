@@ -11,6 +11,8 @@ use App\Repositories\GameRepository;
 use App\Repositories\MessageRepository;
 use App\Services\MessageService;
 use App\Services\PushService;
+use App\Services\TradeAccountService;
+use App\Services\WalletService;
 use DB;
 
 class GameService
@@ -27,9 +29,7 @@ class GameService
 
 	protected $pushService;
 
-	function __construct(MessageRepository $messageRepository,
-						 UserRepository $userRepository,
-						 GameRepository $gameRepository,
+	function __construct( GameRepository $gameRepository,
 						 WalletService $walletService,
                          TradeAccountService $tradeAccountService,
                          HelpService $helpService,
@@ -38,8 +38,6 @@ class GameService
 						 PushService $pushService)
 	{
 		$this->orderService = $orderService;
-        $this->messageRepository = $messageRepository;
-        $this->userRepository = $userRepository;
         $this->gameRepository = $gameRepository;
 		$this->messageService = $messageService;
 		$this->helpService = $helpService;

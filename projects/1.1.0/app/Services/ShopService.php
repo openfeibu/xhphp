@@ -59,6 +59,17 @@ class ShopService
 			}
 			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺不存在');
 		}
+		if(isset($where['shop_id']))
+	    {
+		    $user = $this->userRepository->getUserByToken($this->request->token);
+			$shop->is_collect = 0;
+			if ($user) {
+				$shop->is_collect =  $this->isCollect($where['shop_id'],$user->uid);
+			}
+	    }
+	    if($shop){
+		    $shop->goods_count = $this->goodsRepository->getCount(['shop_id' =>$shop->shop_id,'is_on_sale' => 1]);
+	    }
 		return $shop;
 	}
 	public function getShop ($where,$columns = ['*'])

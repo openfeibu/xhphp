@@ -25,6 +25,7 @@ class CreateOrderTable extends Migration
             $table->decimal('service_fee',10,2)->comment('服务费,系统计算生成');
             $table->decimal('total_fee',10,2)->comment('总价');
             $table->string('type',20)->comment('类型:personal:个人，business:商家');
+            $table->integer('order_id')->comment('订单id，来自个人或学生商为0');
             $table->tinyInteger('pay_id')->comment('支付方式：1.支付宝,2,微信,3,余额');
             $table->tinyInteger('admin_deleted')->default(0)->comment('是否被管理员删除：0否，1是');
             $table->string('status')->default('waitpay')->comment('订单状态:waitpay,待支付,new可被接单,cancelling申请取消,cancelled已取消,accepted已被接单,finish接单人完成,completed发单人结算');

@@ -25,10 +25,12 @@ class CreateTableShops extends Migration
             $table->integer('shop_favorite_count')->default(0)->comment('收藏数');
             $table->integer('shop_click_count')->default(0)->comment('浏览数');
             $table->integer('sale_count')->default(0)->comment('销售量');
-            $table->decimal('income')->default(0)->comment('收入');
+            $table->decimal('service_rate',10,2)->default(0)->comment('商店服务费率');
+            $table->decimal('income',10,2)->default(0)->comment('收入');
             $table->tinyInteger('top')->default(0)->comment('是否置顶');
-            $table->decimal('shipping_fee',10,2)->comment('运费');
-            $table->decimal('min_goods_amount',10,2)->comment('满多少免运费');
+            $table->decimal('shipping_fee',10,0)->comment('运费');
+            $table->decimal('min_goods_amount',10,2)->default(0)->comment('最低购买价，不满足不能下单，');
+            $table->decimal('free_shipping_amount',10,2)->comment('免运费最低购买价')
             $table->timestamps();
 			$table->foreign('uid')->references('id')->on('user')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -89,7 +91,7 @@ class CreateTableShops extends Migration
 			$table->string('pay_name',60)->comment('支付名称');
 			$table->timestamp('pay_time')->comment('支付时间');
 			$table->decimal('goods_amount',10,2)->comment('商品总金额');
-			$table->decimal('shipping_fee',10,2)->comment('配送费用');
+			$table->decimal('shipping_fee',10,0)->comment('配送费用');
 			$table->decimal('insure_fee',10,2)->comment('保价费用');
 			$table->string('to_buyer')->comment('商家给买家留言');
 			$table->timestamps();		

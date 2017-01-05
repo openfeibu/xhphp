@@ -15,8 +15,10 @@ use App\Services\OrderService;
 use App\Services\MessageService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
-use App\Services\PushService;
 use App\Services\GameService;
+use App\Services\PushService;
+use App\Services\ShopService;
+use App\Services\OrderInfoService;
 use App\Events\Integral\Integrals;
 use App\Http\Controllers\Controller;
 
@@ -35,17 +37,17 @@ class OrderController extends Controller
     protected $tradeAccountService;
 
     protected $pushService;
-
-	protected $gameService;
 	
     function __construct(OrderService $orderService,
                          UserService $userService,
                          HelpService $helpService,
                          MessageService $messageService,
+                         GameService $gameService,
                          WalletService $walletService,
                          TradeAccountService $tradeAccountService,
                          PushService $pushService,
-                         GameService $gameService)
+                         ShopService $shopService,
+                         OrderInfoService $orderInfoService)
     {
 	    parent::__construct();
         $this->middleware('auth', ['except' => ['getOrderList', 'orderAgreement', 'getOrder','alipayAppReturn','alipayWapNotify','alipayAppNotify','getRecommendOrders']]);
@@ -53,11 +55,13 @@ class OrderController extends Controller
         $this->orderService = $orderService;
         $this->userService = $userService;
         $this->helpService = $helpService;
+        $this->gameService = $gameService;
         $this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
         $this->messageService = $messageService;
         $this->pushService = $pushService;
-        $this->gameService = $gameService;
+        $this->shopService = $shopService ;
+        $this->orderInfoService = $orderInfoService;
         $this->user = $this->userService->getUser();
     }
 
@@ -545,65 +549,17 @@ class OrderController extends Controller
 		}
         $order = $this->orderService->getSingleOrder($request->order_id);
         //检验任务是否已完成
-
-        if ($order->status != 'finish') {
-            throw new \App\Exceptions\Custom\OutputServerMessageException('当前任务状态不允许结算任务');
+		if($order->type == 'business'){
+	        $order_info = $this->orderInfoService->getOrderInfo($order->order_id);
+	        if($order_info){
+		        $shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);
+		        $this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
+	        }
+        }else{
+	        $this->gameService->freeOrder($this->user,$order);
         }
-
-        $param = [
-            'order_id' => $request->order_id,
-            'status' => 'completed',
-        ];
-        $this->orderService->updateOrderStatus($param);
-
-        $courier = $this->userService->getUserByUserID($order->courier_id);
-        $wallet = $courier->wallet + $order->fee - $order->service_fee;
-        $fee = $order->fee - $order->service_fee;
-		$this->walletService->updateWallet($courier->uid,$wallet);
-		$this->gameService->freeOrder($this->user,$order);
-		$walletData = array(
-			'uid' => $courier->uid,
-			'out_trade_no' => $order->order_sn,
-			'wallet' => $wallet ,
-			'fee'	=> $fee,
-			'service_fee' => $order->service_fee,
-			'pay_id' => $order->pay_id,
-			'wallet_type' => 1,
-			'trade_type' => 'AcceptTask',
-			'description' => '接任务',
-        );
-        $this->walletService->store($walletData);
-        $trade_no = 'wallet'.$this->helpService->buildOrderSn('XH');
-		$trade = array(
-    		
-    		'uid' => $courier->uid,
-			'out_trade_no' => $order->order_sn,
-			'trade_no' => $trade_no,
-			'fee' => $fee,
-			'service_fee' => $order->service_fee,
-			'pay_id' => $order->pay_id,
-			'wallet_type' => 1,
-			'trade_status' => 'income',
-			'from' => 'order',
-			'trade_type' => 'AcceptTask',
-			'description' => '接任务' ,
-		);
-		$this->tradeAccountService->addThradeAccount($trade);
-		//纸条通知接单人
-        $order = $this->orderService->getSingleOrderAllInfo($request->order_id);
-        $this->messageService->SystemMessage2SingleOne($order->courier_id, '您好，发单人已结算你完成的任务，赶紧去看看吧。');
-
-        //推送通知给接单人
-        $custom = [
-			'open' => 'mytask',
-			'data' => $order->description,
-		];
-        $this->pushService->PushUserTokenDevice('校汇任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id,1,$custom);
-		//积分更新(给发单人加分)
-        Event::fire(new Integrals('发布任务'));
-        //积分更新(给接单人加分)
-        Event::fire(new Integrals('完成任务', $courier));
-
+        $this->orderService->confirmFinishWork($order,$this->walletService,$this->tradeAccountService);
+        
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
 

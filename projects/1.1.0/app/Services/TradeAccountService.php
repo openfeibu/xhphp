@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Validator;
 use Illuminate\Http\Request;
 use App\Repositories\TradeAccountRepository;
 use App\TradeAccount;

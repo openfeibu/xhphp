@@ -191,6 +191,7 @@ class OrderRepository
 			self::$order->alt_phone = $order_info['phone'];
 			self::$order->order_sn = $order_info['order_sn'];
 			self::$order->pay_id = $order_info['pay_id'];
+			self::$order->type = $order_info['type'];
 			self::$order->status = $order_info['status'] ? $order_info['status'] : 'new';
 			self::$order->save();
 
@@ -218,9 +219,9 @@ class OrderRepository
 	/**
 	 * 	获取当前任务信息
 	 */
-	public function getOrder($order_id)
+	public function getOrder($where,$columns)
 	{
-		self::$order = Order::find($order_id);
+		self::$order = Order::where($where)->first($columns);
 		if (!self::$order) {
         	throw new \App\Exceptions\Custom\FoundNothingException();
 		}

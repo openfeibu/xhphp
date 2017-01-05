@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Log;
 use Illuminate\Http\Request;
+use App\Services\HelpService;
 use App\Repositories\UserRepository;
 use App\Repositories\ShopRepository;
 use App\Repositories\GoodsRepository;
@@ -18,12 +19,14 @@ class OrderInfoService
     protected $userRepository;
 
 	function __construct(Request $request,
+						 HelpService $helpService,
 						 GoodsRepository $goodsRepository,
 						 ShopRepository $shopRepository,
 						 OrderInfoRepository $orderInfoRepository,
 						 UserRepository $userRepository)
 	{
 		$this->request = $request;
+		$this->helpService = $helpService;
         $this->orderInfoRepository = $orderInfoRepository;
         $this->userRepository = $userRepository;
         $this->goodsRepository = $goodsRepository;
@@ -176,16 +179,63 @@ class OrderInfoService
 		}
 		return $order_info;
 	}
-	public function confirm ($order_id,$shop_id)
+	/*public function confirm ($order_id,$shop_id)
 	{
 		$this->updateOrderInfoById($order_id,['order_status' => 2,'shipping_status' => 2,'succ_time' => dtime()]);
 		$goodses = $this->getOrderGoodses($order_id,['goods_id','goods_number']);
 		foreach( $goodses as $key => $goods )
 		{
-		/*	$this->goodsRepository->deGoodsNumber(['goods_id' => $goods->goods_id],$goods->goods_number);*/
 			$this->goodsRepository->inGoodsSale(['goods_id' => $goods->goods_id],$goods->goods_number);
 			$this->shopRepository->inSale(['shop_id' => $shop_id],$goods->goods_number);	
 		}
+		return true;
+	}*/
+	public function confirm ($order_info,$shop,$walletService,$tradeAccountService)
+	{
+        $shop_user = $this->userRepository->getUserByUserID($shop->uid);
+
+		$service_fee = $this->helpService->shopServiceFee($order_info->goods_amount,$shop->service_rate) ;
+		$fee = $order_info->goods_amount - $service_fee;
+
+        $wallet = $shop_user->wallet + $fee;
+        //商家加物品费用
+		$walletData = array(
+			'uid' => $shop->uid,
+			'out_trade_no' => $order_info->order_sn,
+			'wallet' => $wallet,
+			'fee'	=> $fee,
+			'service_fee' => $service_fee,
+			'pay_id' => 5,
+			'wallet_type' => 1,
+			'trade_type' => 'Shop',
+			'description' => '商店收入',
+        );
+        $walletService->store($walletData);
+        $trade_no = 'wallet'.$this->helpService->buildOrderSn('XH');
+		$trade = array(
+    		'uid' => $shop->uid,
+			'out_trade_no' => $order_info->order_sn,
+			'trade_no' => $trade_no,
+			'fee' => $fee,
+			'service_fee' => $service_fee,
+			'pay_id' => 5,
+			'wallet_type' => 1,
+			'trade_status' => 'income',
+			'from' => 'shop',
+			'trade_type' => 'Shop',
+			'description' => '商店收入' ,
+		);
+		$tradeAccountService->addThradeAccount($trade);
+		$walletService->updateWallet($shop_user->uid,$wallet);
+
+		$this->updateOrderInfoById($order_info->order_id,['order_status' => 2,'shipping_status' => 2,'succ_time' => dtime()]);
+		$goodses = $this->getOrderGoodses($order_info->order_id,['goods_id','goods_number']);
+		foreach( $goodses as $key => $goods )
+		{
+			$this->goodsRepository->inGoodsSale(['goods_id' => $goods->goods_id],$goods->goods_number);
+			$this->shopRepository->inSale(['shop_id' => $shop->shop_id],$goods->goods_number);	
+		}
+		$this->shopRepository->inIncome(['shop_id' => $shop->shop_id],$fee);
 		return true;
 	}
 	public function destroy ($where)
