@@ -57,6 +57,7 @@ class UserRepository
 	 */
 	public function getUser()
 	{
+		self::$user = $this->tokenAuth($this->request->token);
 		return self::$user;
 	}
 
