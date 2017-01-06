@@ -38,7 +38,7 @@ class UserService
     {
         return $this->userRepository->getUser();
     }
-	
+
 	/**
      * 根据用户ID获取该用户信息
      */
@@ -302,7 +302,7 @@ class UserService
         if ($param['platform'] == 'web') {
             return true;
         }
-       
+
         return $this->userRepository->bindDeviceToken($param);
     }
 

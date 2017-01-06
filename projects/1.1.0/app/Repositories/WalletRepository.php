@@ -21,9 +21,9 @@ class WalletRepository
 	public function updateWallet ($uid,$fee)
 	{
 
-		User::where('uid',$uid)->update(['wallet' => $fee]);
+		$update = User::where('uid',$uid)->update(['wallet' => $fee]);
 
-		return true;
+		return $update;
 	}
 	public function store (array $walletData)
 	{
@@ -32,8 +32,8 @@ class WalletRepository
 		$walletAccount->uid = $walletData['uid'];
 		$walletAccount->out_trade_no = $walletData['out_trade_no'];
 		$walletAccount->wallet_type = $walletData['wallet_type'];
-		$walletAccount->fee = $walletData['fee'];		
-		$walletAccount->service_fee = $walletData['service_fee'];	
+		$walletAccount->fee = $walletData['fee'];
+		$walletAccount->service_fee = $walletData['service_fee'];
 		$walletAccount->wallet = $walletData['wallet'];
 		$walletAccount->trade_type = $walletData['trade_type'];
 		$walletAccount->description = $walletData['description'];
@@ -56,9 +56,9 @@ class WalletRepository
 		$applyWallet->setConnection('write');
 		$applyWallet->uid = $applyData['uid'];
 		$applyWallet->out_trade_no = $applyData['out_trade_no'];
-		$applyWallet->fee = $applyData['fee'];		 
-		$applyWallet->service_fee = $applyData['service_fee'];	
-		$applyWallet->total_fee = $applyData['total_fee'];	
+		$applyWallet->fee = $applyData['fee'];
+		$applyWallet->service_fee = $applyData['service_fee'];
+		$applyWallet->total_fee = $applyData['total_fee'];
 		$applyWallet->description = $applyData['description'];
 		$applyWallet->alipay = $applyData['alipay'];
 		$applyWallet->alipay_name = $applyData['alipay_name'];

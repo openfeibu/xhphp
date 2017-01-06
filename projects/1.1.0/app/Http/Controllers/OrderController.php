@@ -154,6 +154,8 @@ class OrderController extends Controller
         ];
         $this->helpService->validateParameter($rule);
 
+       	$this->user = $this->userService->getUserByUserID($this->user->uid);
+
 		$alipayInfo = $this->userService->getAlipayInfo($this->user->uid);
 
 		if($request->pay_id == 3&&!$alipayInfo->is_paypassword){
@@ -257,40 +259,44 @@ class OrderController extends Controller
         }
         else if($request->pay_id==3){
 	        $fee = 	$this->user->wallet - $total_fee;
-	        $this->walletService->updateWallet($this->user->uid,$fee);
-	       	$walletData = array(
-				'uid' => $this->user->uid,
-				'wallet' => $this->user->wallet - $total_fee,
-				'fee'	=> $total_fee,
-				'service_fee' => 0,
-				'out_trade_no' => $order_sn,
-				'pay_id' => 3,
-				'wallet_type' => -1,
-				'trade_type' => 'ReleaseTask',
-				'description' => '发布任务',
-	        );
-	        $this->walletService->store($walletData);
-			$trade_no = 'wallet'.$order_sn;
-	        $trade = array(
-	        	'uid' => $this->user->uid,
-				'out_trade_no' => $order_sn,
-				'trade_no' => $trade_no,
-				'trade_status' => 'success',
-				'wallet_type' => -1,
-				'from' => 'order',
-				'trade_type' => 'ReleaseTask',
-				'fee' => $total_fee,
-				'service_fee' => 0,
-				'pay_id' => 3,
-				'description' => '发布任务',
-    		);
-			$this->tradeAccountService->addThradeAccount($trade);
-			$this->orderService->updateOrderStatusNew($order_sn);
-			return [
-	            'code' => 200,
-	            'detail' => "支付成功",
-	            'data' => ''
-	        ];
+	        $updateWallet = $this->walletService->updateWallet($this->user->uid,$fee);
+	        if($updateWallet){
+		       	$walletData = array(
+					'uid' => $this->user->uid,
+					'wallet' => $this->user->wallet - $total_fee,
+					'fee'	=> $total_fee,
+					'service_fee' => 0,
+					'out_trade_no' => $order_sn,
+					'pay_id' => 3,
+					'wallet_type' => -1,
+					'trade_type' => 'ReleaseTask',
+					'description' => '发布任务',
+		        );
+		        $this->walletService->store($walletData);
+				$trade_no = 'wallet'.$order_sn;
+		        $trade = array(
+		        	'uid' => $this->user->uid,
+					'out_trade_no' => $order_sn,
+					'trade_no' => $trade_no,
+					'trade_status' => 'success',
+					'wallet_type' => -1,
+					'from' => 'order',
+					'trade_type' => 'ReleaseTask',
+					'fee' => $total_fee,
+					'service_fee' => 0,
+					'pay_id' => 3,
+					'description' => '发布任务',
+	    		);
+				$this->tradeAccountService->addThradeAccount($trade);
+				$this->orderService->updateOrderStatusNew($order_sn);
+				return [
+		            'code' => 200,
+		            'detail' => "支付成功",
+		            'data' => ''
+		        ];
+	        }else{
+	        	throw new \App\Exceptions\Custom\OutputServerMessageException('支付失败');
+	        }
         }
         return [
             'code' => 110,
