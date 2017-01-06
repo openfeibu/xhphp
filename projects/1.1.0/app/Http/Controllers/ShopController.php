@@ -113,8 +113,10 @@ class ShopController extends Controller
 			'page' => 'required|string|digits:1',
 			'token' => 'sometimes|required|string',
 	    ];	    
-	    $this->helpService->validateParameter($rules);    		
-		$user = $this->userService->getUser(); 
+	    $this->helpService->validateParameter($rules);   
+	    if(isset($request->token)){
+		    $user = $this->userService->getUserByToken($request->token); 
+		}		
 		$uid = isset($user->uid) ? $user->uid : 0;
 		$shops = $this->shopService->getShops($uid);
 		if($user){
