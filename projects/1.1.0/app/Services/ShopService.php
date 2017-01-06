@@ -46,6 +46,7 @@ class ShopService
 			foreach( $shops as $key => $shop )
 			{
 				$shop->cart_count = $this->cartRepository->getCount(['uid' => $uid,'shop_id' => $shop->shop_id ]);
+				$shop->goods_number = $this->cartRepository->getGoodsNumber(['uid' => $uid,'shop_id' => $shop->shop_id ]);
 			}
 		}
 		return $shops;

@@ -39,6 +39,8 @@ class PayService
 	}
 	public function payHandle($pay_id,$pay_platform,$pay_form,$data)
 	{
+		$this->user = $this->userService->getUserByUserID($this->user->uid); 
+		
 		switch($pay_id)
 		{
 			case 1:
@@ -91,34 +93,38 @@ class PayService
 				break;
 			case 3:
 				$fee = 	$this->user->wallet - $data['total_fee'];
-		        $this->walletService->updateWallet($this->user->uid,$fee);
-		       	$walletData = array(
-					'uid' => $this->user->uid,
-					'wallet' => $this->user->wallet - $data['total_fee'],
-					'fee'	=> $data['total_fee'],
-					'service_fee' => 0,
-					'out_trade_no' => $data['order_sn'],
-					'pay_id' => 3,
-					'wallet_type' => -1,
-					'trade_type' => $data['trade_type'],
-					'description' => $data['body'],
-		        );
-		        $this->walletService->store($walletData);
-				$trade_no = 'walletbuyer'.$data['order_sn'];
-		        $trade = array(
-		        	'uid' => $this->user->uid,
-					'out_trade_no' => $data['order_sn'],
-					'trade_no' => $trade_no,
-					'trade_status' => 'success',
-					'wallet_type' => -1,
-					'from' => $pay_form,
-					'trade_type' => $data['trade_type'],
-					'fee' => $data['total_fee'],
-					'service_fee' => 0,
-					'pay_id' => 3,
-					'description' => $data['body'],
-	    		);
-				$this->tradeAccountService->addThradeAccount($trade);
+		        $update = $this->walletService->updateWallet($this->user->uid,$fee);
+		        if($update){
+			       	$walletData = array(
+						'uid' => $this->user->uid,
+						'wallet' => $this->user->wallet - $data['total_fee'],
+						'fee'	=> $data['total_fee'],
+						'service_fee' => 0,
+						'out_trade_no' => $data['order_sn'],
+						'pay_id' => 3,
+						'wallet_type' => -1,
+						'trade_type' => $data['trade_type'],
+						'description' => $data['body'],
+			        );
+			        $this->walletService->store($walletData);
+					$trade_no = 'walletbuyer'.$data['order_sn'];
+			        $trade = array(
+			        	'uid' => $this->user->uid,
+						'out_trade_no' => $data['order_sn'],
+						'trade_no' => $trade_no,
+						'trade_status' => 'success',
+						'wallet_type' => -1,
+						'from' => $pay_form,
+						'trade_type' => $data['trade_type'],
+						'fee' => $data['total_fee'],
+						'service_fee' => 0,
+						'pay_id' => 3,
+						'description' => $data['body'],
+		    		);
+					$this->tradeAccountService->addThradeAccount($trade);
+				}else{
+	        		throw new \App\Exceptions\Custom\OutputServerMessageException('支付失败');
+	        	}
 				switch($pay_form)
 				{
 					case 'shop':

@@ -67,6 +67,11 @@ class CartRepository
 	{
 		return Cart::where($where)->count();
 	}
+	public function getGoodsNumber ($where)
+	{
+		$data = Cart::select(DB::raw('SUM(goods_number) as goods_number'))->where($where)->first();
+		return $data->goods_number;
+	}
 	public function existCart ($where)
 	{
 		return Cart::where($where)->first();
