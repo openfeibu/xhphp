@@ -37,7 +37,7 @@ class OrderController extends Controller
     protected $tradeAccountService;
 
     protected $pushService;
-	
+
     function __construct(OrderService $orderService,
                          UserService $userService,
                          HelpService $helpService,
@@ -77,9 +77,9 @@ class OrderController extends Controller
             'type' => 'sometimes|required|in:all,personal,business'
         ];
         $this->helpService->validateParameter($rule);
-        
+
 		$type = isset($request->type) ? $request->type : 'all';
-		
+
         //获取任务列表
         $orders = $this->orderService->getOrderList($request->page,$type);
 
@@ -111,7 +111,7 @@ class OrderController extends Controller
             'data' => $order,
         ];
     }
-	
+
 	/**
      * 获取指定任务ID可公开信息
      */
@@ -322,7 +322,7 @@ class OrderController extends Controller
         $order_owner_id = $this->orderService->getSingleOrderAllInfo($request->order_id)->owner_id;
         //发送纸条给发单者
         $this->messageService->SystemMessage2SingleOne($order_owner_id, '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。');
-		
+
         //推送给发单者
         $custom = [
 			'open' => 'task',
@@ -393,7 +393,7 @@ class OrderController extends Controller
         $order = $this->orderService->getSingleOrder($request->order_id);
 
 		if ($order->courier_id == $this->user->uid) {
-			
+
 			if ($order->status != 'accepted') {
 	            throw new \App\Exceptions\Custom\OutputServerMessageException('当前任务状态不允许取消');
 	        }
@@ -416,7 +416,7 @@ class OrderController extends Controller
 	            'order_id' => $request->order_id,
 	            'only_in_status' => ['new'],
 	        ];
-			
+
 
 			if($order->pay_id == 3){
 				$walletData = array(
@@ -430,7 +430,7 @@ class OrderController extends Controller
 					'trade_type' => 'CancelTask',
 					'description' => '取消任务',
 		        );
-		        $this->walletService->store($walletData);        
+		        $this->walletService->store($walletData);
 				$tradeData = array(
 					'wallet_type' => 1,
 					'trade_type' => 'CancelTask',
@@ -559,7 +559,7 @@ class OrderController extends Controller
 	        $this->gameService->freeOrder($this->user,$order);
         }
         $this->orderService->confirmFinishWork($order,$this->walletService,$this->tradeAccountService);
-        
+
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
 
@@ -591,9 +591,9 @@ class OrderController extends Controller
 		$data = [
 			'refresh' => 1,
 			'target' => 'message',
-			'data' => "123" 
+			'data' => "123"
 		];
-	
+
 	var_dump($ret);exit;
 		$data = [
 			'open' => 'window',
@@ -652,14 +652,14 @@ class OrderController extends Controller
 		return $data ;
 
 	}*/
-	
+
 	public function remindOrder(Request $request){
 		//检验请求参数
         $rule = [
             'token' => 'required',
         ];
         $this->helpService->validateParameter($rule);
-		
+
 		$remindOrder = $this->orderService->remindOrder();
         if($remindOrder == 200){
 			return [
@@ -680,18 +680,18 @@ class OrderController extends Controller
 		$rule = [
             'number' => 'sometimes|numeric',
         ];
-        
+
         $this->helpService->validateParameter($rule);
-        
+
         $number = isset($request->number) && intval($request->number) > 0 ?  intval($request->number) : 10;
-        
+
         $orders = $this->orderService->getRecommendOrders($number);
 
         return [
 			'code' => 200,
 			'data' => $orders,
         ];
-	}	
+	}
 
 }
 
