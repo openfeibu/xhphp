@@ -25,6 +25,13 @@ class GetWebUrlController extends Controller
         $this->help->validateParameter($rule);
 
         $paper = Paper::where('name', $request->url_name)->first();
+       /*  if($paper->id == 11 || $paper->id == 10){
+             return [
+                'code' => 200,
+                'detail' => "请求成功",
+                "url" => 'http://192.168.0.129'.$paper->url
+            ];
+        } */
         return [
             'code' => 200,
             'detail' => "请求成功",

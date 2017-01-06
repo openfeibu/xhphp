@@ -588,15 +588,15 @@ class OrderController extends Controller
         // $mess->setCustom($custom);
         // $mess->setType(2);
         // return $push->PushSingleDevice('f2b79a9f938d7a4c440e8048338e14905ed7e759', $mess);
-		/*$data = [
+		$data = [
 			'refresh' => 1,
 			'target' => 'message',
 			'data' => "123" 
 		];
-		 $ret = $this->pushService->PushUserTokenDevice('标题', json_encode($data), '77',2);
-	var_dump($ret);exit;*/
-		$custom = [
-			'open' => 'web',
+	
+	var_dump($ret);exit;
+		$data = [
+			'open' => 'window',
 			'data' => 'http://baidu.com'
 		];
         $ret = $this->pushService->PushUserTokenDevice('标题', '内容', '79',1,$custom);

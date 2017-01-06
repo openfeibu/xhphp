@@ -74,7 +74,7 @@ class UserController extends Controller
             'sms_code' => 'required',
             'nickname' => 'required|alpha_dash|unique:user,nickname',
             'gender' => 'required|in:0,1,2',
-            'enrollment_year' => 'required|after:2000|before:' . (date('Y')+1),
+            'enrollment_year' => 'sometimes|required|after:2000|before:' . (date('Y')+1),
             'avatar_url' => 'sometimes|required|string',
         ];
         $this->helpService->validateParameter($rule);
@@ -91,7 +91,7 @@ class UserController extends Controller
             'password' => $request->password,
             'nickname' => $request->nickname,
             'gender' => $request->gender,
-            'enrollment_year' => $request->enrollment_year,
+            'enrollment_year' => isset($request->enrollment_year) ? $request->enrollment_year : '2016',
             'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : config('app.url').'/uploads/system/avatar.png' ,
         ];
         $this->userService->createUser($user);

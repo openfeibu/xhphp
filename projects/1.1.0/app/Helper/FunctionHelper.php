@@ -22,7 +22,8 @@ if (!function_exists('round_route')) {
 			'topic_getTopicList',
 			'topic_getTopics',
 			'topic_getTopicCommentsList',
-			/*'shop_getShopGoodses',*/
+			'shop_getShopList',
+			'shop_getShopGoodses',
 		];
 	}
 }

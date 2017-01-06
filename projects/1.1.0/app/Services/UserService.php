@@ -38,7 +38,14 @@ class UserService
     {
         return $this->userRepository->getUser();
     }
-
+	
+	/**
+     * 根据用户ID获取该用户信息
+     */
+    public function getUserByToken($token)
+    {
+        return $this->userRepository->getUserByToken($token);
+    }
     /**
      * 根据用户ID获取该用户信息
      */
