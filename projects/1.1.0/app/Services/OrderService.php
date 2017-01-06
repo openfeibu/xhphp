@@ -32,7 +32,7 @@ class OrderService
         $this->pushService = $pushService;
         $this->helpService = $helpService;
         $this->orderRepository = $orderRepository;
-        $this->userRepository = $userRepository;  
+        $this->userRepository = $userRepository;
 	}
 
 	/**
@@ -121,7 +121,7 @@ class OrderService
         $order['uid'] = $user->uid;
         $order['phone'] = $order['phone'] ?: $user->mobile_no;
 		$order['type'] = isset($order['type']) ? $order['type'] : 'personal';
-		
+
 		$order_id = $this->orderRepository->createOrder($order)->oid;
 
 		//记录发单时间
@@ -134,7 +134,7 @@ class OrderService
 	public function claimOrder(array $orderInfo)
 	{
 		//获取当前任务信息
-		$order = $this->getOrder(['order_id' => $orderInfo['order_id']]);
+		$order = $this->getOrder(['oid' => $orderInfo['order_id']]);
 
 		//获取当前用户信息
 		$user = $this->userRepository->getUser();
@@ -149,7 +149,7 @@ class OrderService
 
 			//记录接单时间
 			$this->orderRepository->logOrderstatusChg($user->uid, $orderInfo['order_id'], 'accepted');
-			
+
 			return $order;
 		} elseif ($order->status != 'new') {
 			throw new \App\Exceptions\Custom\OutputServerMessageException('任务已被接');
@@ -222,12 +222,12 @@ class OrderService
 		}
 
 		//记录操作时间
-		if(isset($param['courier_cancel'])&&$param['courier_cancel']){		
+		if(isset($param['courier_cancel'])&&$param['courier_cancel']){
 			$this->orderRepository->logOrderstatusChg($uid, $param['order_id'], 'courier_cancel');
 		}else{
 			$this->orderRepository->logOrderstatusChg($uid, $param['order_id'], $param['status']);
 		}
-		
+
 
     }
     public function schedluUpdateOrderStatus ($param)
@@ -278,7 +278,7 @@ class OrderService
             'status' => 'completed',
         ];
         $courier = $this->userRepository->getUserByUserID($order->courier_id);
-        
+
         $wallet = $courier->wallet + $order->fee - $order->service_fee;
         $fee = $order->fee - $order->service_fee;
 		$walletData = array(
@@ -316,7 +316,7 @@ class OrderService
 
         //推送通知给接单人
         $custom = [
-			'open' => 'mytask', 
+			'open' => 'mytask',
 			'data' => $order->description,
 		];
         $this->pushService->PushUserTokenDevice('校汇任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id,1,$custom);

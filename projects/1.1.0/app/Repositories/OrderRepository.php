@@ -38,7 +38,7 @@ class OrderRepository
                     ->whereIn('order.status', ['new','accepted','finish','completed']);
         if(!empty($type) && $type != 'all'){
 	        $orders = $orders->where('type',$type);
-	    }            
+	    }
 	    return $orders->orderBy('order.created_at', 'desc')
                     ->skip(10 * $page - 10)
                     ->take(10)
@@ -58,7 +58,7 @@ class OrderRepository
                     ->where('oid', $order_id)
                     ->first();
 	}
-	
+
 	/**
 	 * 获取指定任务ID可公开信息
 	 */
@@ -70,7 +70,7 @@ class OrderRepository
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where('oid', $order_id)
                     ->first()->toArray();
-					
+
 			$orderHistory = OrderHistory::select(DB::raw('created_at as status_change_at,new_status'))
 									->where('oid',$order['oid'])
 									->get();
@@ -98,7 +98,7 @@ class OrderRepository
 			}
 		$order_time = ['time'=>$or];
 		if($order){
-			return array_merge_recursive($order_time,$order);	
+			return array_merge_recursive($order_time,$order);
 		}else{
 			return $order;
 		}
@@ -245,7 +245,7 @@ class OrderRepository
                     ->skip(10 * $page - 10)
                     ->take(10)
                     ->get()->toArray();
-		
+
 		foreach($orders as $k => $order){
 			$orderHistory = OrderHistory::select(DB::raw('created_at as status_change_at,new_status'))
 									->where('oid',$order['oid'])
@@ -305,17 +305,17 @@ class OrderRepository
                     ->skip(10 * $page - 10)
                     ->take(10)
                     ->get()->toArray();
-					
+
 		foreach($orders as $k => $order){
 			$orderHistory = OrderHistory::select(DB::raw('created_at as status_change_at,new_status'))
 								->where('oid',$order['oid'])->get();
-								
+
 			$or[$k]['new_time'] = "2016-10-01 09:40:44";
 			$or[$k]['accepted_time'] = "";
 			$or[$k]['finish_time'] = "";
 			$or[$k]['completed_time'] = "";
 			$or[$k]['cancelled_time'] = "";
-			
+
 			foreach($orderHistory as $kk=>$v){
 				if($v['new_status']=='new'){
 					$or[$k]['new_time'] = $v['status_change_at'];
@@ -363,7 +363,7 @@ class OrderRepository
 				    			case 'completed':
 				    				$query->where('owner_id', $param['uid']);
 				    				break;
-								
+
 				    			default:
 				    				return false;
 				    				break;
@@ -406,11 +406,11 @@ class OrderRepository
     }
 	public function remindOrder($uid){
 		$order_accepted = Order::select(DB::raw('oid'))
-						->where('courier_id',$uid)	
+						->where('courier_id',$uid)
 						->where('status','accepted')
 						->first();
 		$order_send = Order::select(DB::raw('oid'))
-						->where('owner_id',$uid)	
+						->where('owner_id',$uid)
 						->where('status','finish')
 						->first();
 		if(!empty($order_accepted) || !empty($order_send)){
