@@ -119,7 +119,7 @@ class ShopController extends Controller
 		}		
 		$uid = isset($user->uid) ? $user->uid : 0;
 		$shops = $this->shopService->getShops($uid);
-		if($user){
+		if(isset($user->uid)){
 			$cart_count = $this->cartService->getCount(['uid' => $user->uid]);
 		}
         return [
