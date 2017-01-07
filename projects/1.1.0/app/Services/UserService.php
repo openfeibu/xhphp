@@ -36,7 +36,10 @@ class UserService
      */
     public function getUser()
     {
-        return $this->userRepository->getUser();
+	    if(isset($this->request->token)){
+		    return $this->userRepository->getUser();
+	    }
+        return false;
     }
 
 	/**
