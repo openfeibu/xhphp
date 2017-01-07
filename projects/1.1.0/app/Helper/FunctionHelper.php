@@ -19,6 +19,7 @@ if (!function_exists('round_route')) {
 	function round_route()
 	{
 		return [
+			'order_getOrderList',
 			'topic_getTopicList',
 			'topic_getTopics',
 			'topic_getTopicCommentsList',

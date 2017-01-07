@@ -35,7 +35,8 @@ class SMSService
 	{
         //todo 频率限制
 		if (Session::get('SMSLimit') and (time() - Session::get('SMSLimit')) <= 180) {
-			throw new \App\Exceptions\Custom\RequestTooFrequentException();
+			throw new \App\Exceptions\Custom\OutputServerMessageException("请求频繁，请稍后重试");
+			//throw new \App\Exceptions\Custom\RequestTooFrequentException();
 		}
 
 		switch ($usage) {
