@@ -62,7 +62,6 @@ class OrderController extends Controller
         $this->pushService = $pushService;
         $this->shopService = $shopService ;
         $this->orderInfoService = $orderInfoService;
-        $this->user = $this->userService->getUser();
     }
 
 
@@ -141,7 +140,7 @@ class OrderController extends Controller
     {
 	    //检验是否已实名
         /*$this->userService->isRealnameAuth();*/
-
+		
         //检验请求参数
         $rule = [
             'phone' => 'sometimes|required|regex:/^1[34578][0-9]{9}/',
@@ -394,7 +393,9 @@ class OrderController extends Controller
             'order_id' => 'required|integer',
         ];
         $this->helpService->validateParameter($rule);
-
+        
+		$this->user = $this->userService->getUser();
+		
         //检验任务是否已被接
         $order = $this->orderService->getSingleOrder($request->order_id);
 
@@ -510,7 +511,9 @@ class OrderController extends Controller
             'order_id' => 'required|integer',
         ];
         $this->helpService->validateParameter($rule);
-
+        
+		$this->user = $this->userService->getUser();
+		
         $order = $this->orderService->getSingleOrder($request->order_id);
         //检验任务是否已接
         if ($order->status != 'accepted') {
@@ -550,6 +553,8 @@ class OrderController extends Controller
         ];
         $this->helpService->validateParameter($rule);
 
+		$this->user = $this->userService->getUser();
+		
 		if (!password_verify($request->pay_password, $this->user->pay_password)) {
 		 	throw new \App\Exceptions\Custom\OutputServerMessageException('支付密码错误');
 		}
@@ -665,7 +670,9 @@ class OrderController extends Controller
             'token' => 'required',
         ];
         $this->helpService->validateParameter($rule);
-
+        
+		$this->user = $this->userService->getUser();
+		
 		$remindOrder = $this->orderService->remindOrder();
         if($remindOrder == 200){
 			return [
