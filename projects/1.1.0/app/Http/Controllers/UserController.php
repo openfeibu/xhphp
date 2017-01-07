@@ -220,7 +220,9 @@ class UserController extends Controller
 
         //获得当前用户信息
         $user = $this->userService->getUser();
-
+		if($request->password == $request->new_password){
+			throw new \App\Exceptions\Custom\RequestSuccessException("新密码不能与旧密码相同");
+		}
         //检验账号密码是否一致
         $this->userService->checkPassword($user->mobile_no, $request->password);
 
