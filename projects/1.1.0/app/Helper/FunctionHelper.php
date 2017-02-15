@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if (!function_exists('escape_content')) {
 	function escape_content($content)
@@ -8,10 +8,10 @@ if (!function_exists('escape_content')) {
 				return $content;
 			}elseif(preg_match("/^[a-z]+$/",$content)){
 				return $content;
-			}else{	
+			}else{
 				return base64_decode($content);
-			} 
-		}	
+			}
+		}
 		return $content;
 	}
 }
@@ -25,7 +25,6 @@ if (!function_exists('round_route')) {
 			'topic_getTopicCommentsList',
 			'shop_getShopList',
 			'shop_getShopGoodses',
-			'user_register',
 		];
 	}
 }
