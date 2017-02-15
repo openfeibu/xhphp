@@ -85,7 +85,7 @@ class ImageService
 	public function uploadThumbImages($files, $usage)
 	{
 		//获取用户信息
-		$user = $this->userRepository->getUser();
+		$user = $this->userRepository->getUserByToken($this->request->token);
 
 		//如果文件夹不存在，则创建文件夹
         $directory = public_path('uploads') . '\\' . $usage;
@@ -169,14 +169,14 @@ class ImageService
 	public function uploadImages($files, $usage)
 	{
 		//获取用户信息
-		$user = $this->userRepository->getUser();
+		$user = $this->userRepository->getUserByToken($this->request->token);
 
 		//如果文件夹不存在，则创建文件夹
         $directory = public_path('uploads') . '\\' . $usage;
         if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
-		
+
 		//保存图片文件到服务器
 		$i = 0;
 		foreach ($files['uploadfile'] as $file) {
