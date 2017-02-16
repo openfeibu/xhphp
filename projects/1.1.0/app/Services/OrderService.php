@@ -44,6 +44,11 @@ class OrderService
 		foreach( $orders as $key => $order )
 		{
 			$order->share_url = config('app.order_share_url').'?oid='.$order->oid;
+			$order->courier_openid = '';
+			if($order->courier_id){
+				$user = $this->userRepository->getUserByUserID($order->courier_id,'openid');
+				$order->courier_openid = $user->openid;
+			}			
 		}
 		return $orders;
 	}
