@@ -89,6 +89,12 @@ class OrderService
 		$order = $this->orderRepository->getOrder($where,$columns,$is_exception);
 		return $order;
 	}
+	public function getOrderDetail($order_id)
+	{
+		$order = $this->orderRepository->getOrderDetail($order_id);
+		$order->order_status = trans('common.task_status.'.$order['status']);
+		return $order;
+	}
 	/**
 	 * 检验是否已超过发单限制
 	 */
@@ -191,7 +197,7 @@ class OrderService
 		}
 		return $orders;
 	}
-
+	
 	/**
 	 * 获取我的工作列表
 	 */
@@ -208,7 +214,6 @@ class OrderService
 		}
 		return $orders;
 	}
-
 	/**
      * 更新任务状态
      */

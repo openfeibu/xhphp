@@ -50,7 +50,7 @@ class OrderController extends Controller
                          OrderInfoService $orderInfoService)
     {
 	    parent::__construct();
-        $this->middleware('auth', ['except' => ['getOrderList', 'orderAgreement', 'getOrder','alipayAppReturn','alipayWapNotify','alipayAppNotify','getRecommendOrders']]);
+        $this->middleware('auth', ['except' => ['getOrderList', 'orderAgreement', 'getOrder','alipayAppReturn','alipayWapNotify','alipayAppNotify','getRecommendOrders','getOrderDetail']]);
 
         $this->orderService = $orderService;
         $this->userService = $userService;
@@ -110,7 +110,20 @@ class OrderController extends Controller
             'data' => $order,
         ];
     }
-
+	public function getOrderDetail(Request $request)
+	{
+		//检验请求参数
+        $rule = [
+            'order_id' => 'required',
+        ];
+        $this->helpService->validateParameter($rule);
+		$order = $this->orderService->getOrderDetail($request->order_id);
+		return [
+            'code' => 200,
+            'detail' => '请求成功',
+            'data' => $order,
+        ];
+	}
 	/**
      * 获取指定任务ID可公开信息
      */
@@ -601,18 +614,19 @@ class OrderController extends Controller
         // $mess->setCustom($custom);
         // $mess->setType(2);
         // return $push->PushSingleDevice('f2b79a9f938d7a4c440e8048338e14905ed7e759', $mess);
-		$data = [
+        
+		/*$data = [
 			'refresh' => 1,
 			'target' => 'message',
 			'data' => "123"
 		];
-
-	var_dump($ret);exit;
-		$data = [
+$ret = $this->pushService->PushUserTokenDevice('系统通知', json_encode($data), 77,2);
+	var_dump($ret);exit;*/
+		$custom = [
 			'open' => 'window',
 			'data' => 'http://baidu.com'
 		];
-        $ret = $this->pushService->PushUserTokenDevice('标题', '内容', '79',1,$custom);
+        $ret = $this->pushService->PushUserTokenDevice('标题', '内容', '77',1,$custom);
 		//$this->messageService->SystemMessage2SingleOne('77', '哈哈。');
 		var_dump($ret);exit;
         return [

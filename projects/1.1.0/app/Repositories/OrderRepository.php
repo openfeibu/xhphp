@@ -227,7 +227,46 @@ class OrderRepository
 		}
 		return self::$order;
 	}
-
+	public function getOrderDetail($order_id)
+	{
+		$order = Order::select(DB::raw('order.oid, if(user_courier.nickname IS NOT NULL,user_courier.nickname,"") as nickname, if(user_courier.avatar_url IS NOT NULL,user_courier.avatar_url,"") as avatar_url, if(order.courier_id!=0,user_courier.openid,"") as openid,
+									  if(user_courier.mobile_no IS NOT NULL,user_courier.mobile_no,"") as phone, order.destination, order.description,
+									  order.fee, order.alt_phone as alt_phone,CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num, order.status,order.created_at'))
+                    ->join('user as user_owner', 'order.owner_id', '=', 'user_owner.uid')
+                    ->leftJoin('user as user_courier', 'order.courier_id', '=', 'user_courier.uid')
+                    ->where('order.oid', $order_id)
+                    ->first();
+		if(!$order && $is_exception) {
+        	throw new \App\Exceptions\Custom\FoundNothingException();
+		}
+		$orderHistory = OrderHistory::select(DB::raw('created_at as status_change_at,new_status'))
+								->where('oid',$order->oid)
+								->get();
+								
+		$order->new_time = $order->created_at;
+		$order->accepted_time = "";
+		$order->finish_time = "";
+		$order->completed_time = "";
+		$order->cancelled_time = "";
+		foreach($orderHistory as $kk=>$v){
+			if($v['new_status']=='new'){
+				$order->new_time = $v['status_change_at'];
+			}
+			if($v['new_status']=='accepted'){
+				$order->accepted_time = $v['status_change_at'];
+			}
+			if($v['new_status']=='finish'){
+				$order->finish_time = $v['status_change_at'];
+			}
+			if($v['new_status']=='completed'){
+				$order->completed_time = $v['status_change_at'];
+			}
+			if($v['new_status']=='cancelled'){
+				$order->cancelled_time = $v['status_change_at'];
+			}
+		}	
+		return $order;
+	}
 	/**
 	 * 获取我的任务列表
 	 */
@@ -250,7 +289,7 @@ class OrderRepository
 			$orderHistory = OrderHistory::select(DB::raw('created_at as status_change_at,new_status'))
 									->where('oid',$order['oid'])
 									->get();
-			$or[$k]['new_time'] = "2016-10-01 09:40:44";
+			$or[$k]['new_time'] = $order['created_at'];
 			$or[$k]['accepted_time'] = "";
 			$or[$k]['finish_time'] = "";
 			$or[$k]['completed_time'] = "";
