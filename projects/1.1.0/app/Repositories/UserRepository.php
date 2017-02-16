@@ -64,9 +64,9 @@ class UserRepository
 	/**
 	 * 根据用户ID获取该用户信息
 	 */
-	public function getUserByUserID($user_id)
+	public function getUserByUserID($user_id,$custom = '*')
 	{
-	  	return User::find($user_id);
+	  	return User::select(DB::raw($custom))->find($user_id);
 	}
 	/**
 	 * 根据用户ID获取该用户信息
