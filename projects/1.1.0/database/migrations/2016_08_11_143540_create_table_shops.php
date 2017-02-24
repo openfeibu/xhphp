@@ -57,6 +57,7 @@ class CreateTableShops extends Migration
 			$table->foreign('uid')->references('id')->on('user')
                 ->onUpdate('cascade')->onDelete('cascade');
 			$table->timestamps();
+			$table->softDeletes();
 			$table->index('goods_name');
 			$table->index('goods_sn');
 		});
@@ -91,7 +92,8 @@ class CreateTableShops extends Migration
 			$table->string('pay_name',60)->comment('支付名称');
 			$table->timestamp('pay_time')->comment('支付时间');
 			$table->decimal('goods_amount',10,2)->comment('商品总金额');
-			$table->decimal('shipping_fee',10,0)->comment('配送费用');
+			$table->decimal('shipping_fee',10,0)->comment('买家出配送费用');
+			$table->decimal('task_fee',10,0)->comment('任务费');
 			$table->decimal('insure_fee',10,2)->comment('保价费用');
 			$table->string('to_buyer')->comment('商家给买家留言');
 			$table->timestamps();		
