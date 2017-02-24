@@ -54,6 +54,20 @@ class GoodsService
 		}
 		return $goodses;
 	}
+	public function getBusinessGoodses ($where)
+	{
+		$goodses = $this->goodsRepository->getBusinessGoodses($where);	
+		return $goodses;
+	}
+	public function count ($where)
+	{
+		return $this->goodsRepository->count($where);
+	}
+	public function getBusinessGoods ($where)
+	{
+		$goodses = $this->goodsRepository->getBusinessGoods($where);	
+		return $goodses;
+	}
 	public function isExistsGoods ($where,$columns = ['*'])
 	{
 		$goods = $this->goodsRepository->getGoods($where,$columns);	
@@ -62,10 +76,10 @@ class GoodsService
 		}
 		return $goods;
 	}
-	public function getGoods ($goods_id)
+	public function getGoods ($goods_id,$columns = ['*'])
 	{
 		$goods_id = intval($goods_id);
-		return 	$this->goodsRepository->getGoods(['goods_id' => $goods_id]);			
+		return 	$this->goodsRepository->getGoods(['goods_id' => $goods_id],$columns = ['*']);			
 	}
 	public function getGoodses ($page)
 	{
@@ -79,5 +93,8 @@ class GoodsService
 	{
 		return $this->goodsRepository->getCount($where);
 	}
-	
+	public function delete ($where)
+	{
+		return $this->goodsRepository->delete($where);
+	}
 }

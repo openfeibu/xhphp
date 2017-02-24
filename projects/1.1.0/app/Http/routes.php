@@ -217,3 +217,16 @@ Route::get('hasNewTopicNotification','NotificationController@hasNewTopicNotifica
 
 Route::get('chickenSoupList', 'ChickenSoupController@chickenSoupList');
 Route::get('chickenSoupDetail', 'ChickenSoupController@chickenSoupDetail');
+
+Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
+Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');
+Route::post('business/goods/store','ShopAdmin\GoodsController@store');
+Route::post('business/goods/update','ShopAdmin\GoodsController@update');
+Route::post('business/goods/uploadGoodsImage','ShopAdmin\GoodsController@uploadGoodsImage');
+Route::post('business/goods/addCat','ShopAdmin\GoodsController@addCat');
+Route::post('business/goods/updateCat','ShopAdmin\GoodsController@updateCat');
+Route::post('business/goods/deleteCat','ShopAdmin\GoodsController@deleteCat');
+Route::get('business/orderInfo/orderInfos','ShopAdmin\OrderInfoController@orderInfos');
+Route::get('business/orderInfo/show','ShopAdmin\OrderInfoController@show');
+Route::post('business/orderInfo/shipping','ShopAdmin\OrderInfoController@shipping');
+Route::post('business/orderInfo/agreeCancel','ShopAdmin\OrderInfoController@agreeCancel');

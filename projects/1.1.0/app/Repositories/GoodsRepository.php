@@ -59,6 +59,32 @@ class GoodsRepository
                            		->get();
         return $ShopGoodsesList;
 	}
+	public function getBusinessGoodses ($where)
+	{
+		$ShopGoodsesList = Goods::select(DB::raw('goods.goods_id,goods.shop_id,goods.goods_name,goods.goods_price,goods.goods_click_count,goods.goods_sale_count,goods.goods_number,goods.goods_price,goods.goods_desc,goods.goods_img,goods.goods_thumb,goods.created_at,goods.is_on_sale,goods_category.cat_name,goods_category.cat_id'))
+								->leftJoin('goods_category','goods.cat_id','=','goods_category.cat_id')
+								->where($where)
+								->orderBy('goods_click_count', 'desc')
+								->orderBy('goods_id', 'desc')
+								->skip(1 * $this->request->page - 1)
+                    			->take(1)
+                           		->get();
+                 
+        return $ShopGoodsesList;
+	}
+	public function count ($where)
+	{
+		return Goods::where($where)->count();
+	}
+	public function getBusinessGoods ($where)
+	{
+		$goods = Goods::select(DB::raw('goods.goods_id,goods.shop_id,goods.goods_name,goods.goods_price,goods.goods_click_count,goods.goods_sale_count,goods.goods_number,goods.goods_price,goods.goods_desc,goods.goods_img,goods.goods_thumb,goods.created_at,goods.is_on_sale,goods_category.cat_name,goods_category.cat_id'))
+								->leftJoin('goods_category','goods.cat_id','=','goods_category.cat_id')
+								->where($where)
+                           		->first();
+                 
+        return $goods;
+	}
 	public function getGoods ($where,$columns)
 	{
 		$goods = Goods::where($where)->first($columns);
@@ -93,5 +119,8 @@ class GoodsRepository
 	{
 		return Goods::where($where)->count();
 	}
-	
+	public function delete ($where)
+	{
+		return Goods::where($where)->delete();
+	}
 }

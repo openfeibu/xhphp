@@ -49,4 +49,8 @@ class GoodsCategoryService
 	{
 		return $this->goodsCategoryRepository->updateCat($where,$update);
 	}
+	public function delete ($where)
+	{
+		return $this->goodsCategoryRepository->delete($where);
+	}
 }

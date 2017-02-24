@@ -45,4 +45,8 @@ class GoodsCategoryRepository
 		config(['database.default' => 'write']);
 		return GoodsCategory::where($where)->update($update);
 	}
+	public function delete ($where)
+	{
+		return GoodsCategory::where($where)->delete();
+	}
 }

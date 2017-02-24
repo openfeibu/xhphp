@@ -53,7 +53,10 @@ class UserService
     {
         return $this->userRepository->getUserByUserID($user_id);
     }
-
+	public function getBussiness ()
+	{
+		return $this->userRepository->getBussiness();
+	}
     /**
      * 获取指定用户的device_token
      */

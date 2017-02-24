@@ -40,7 +40,7 @@ class OrderInfoRepository
 	{
 		return OrderInfo::where('order_id',$order_id)->update($update);
 	}
-	public function getOrderInfos($where,$type)
+	public function getOrderInfos($where,$type,$num = 20)
 	{
 		
 		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,shop.shop_id,shop.shop_name,shop.shop_img,order_info.created_at,order_info.pay_time,order_info.order_id,order_info.pay_status,order_info.order_status,order_info.shipping_status,order_info.total_fee'))
@@ -53,6 +53,8 @@ class OrderInfoRepository
 			$order_infos = $order_infos->where('order_info.pay_status',1);
 			switch ($type)
 			{
+				case 'all':
+					break;
 				case 'beship':
 					$order_infos = $order_infos->where('order_info.shipping_status',0)->where('order_info.order_status',1);
 					break;	
@@ -68,8 +70,8 @@ class OrderInfoRepository
 			}
 		}
 		return $order_infos->orderBy('order_info.order_id', 'desc')
-                          	->skip(20 * $this->request->page - 20)
-	                   	  	->take(20)
+                          	->skip($num * $this->request->page - $num)
+	                   	  	->take($num)
                           	->get();
 	}
 	public function getOrderInfo($order_id)

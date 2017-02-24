@@ -75,6 +75,11 @@ class UserRepository
 	{
 	  	return User::where('token', $token)->first();
 	}
+	
+	public function getBussiness ()
+	{
+		return User::where('uid', 83)->first();
+	}
 	/**
 	 * 获取指定用户的device_token
 	 */

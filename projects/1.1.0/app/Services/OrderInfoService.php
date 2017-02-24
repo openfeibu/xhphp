@@ -69,7 +69,7 @@ class OrderInfoService
 		}
 		return $order_infos;
 	}
-	public function getShopOrderInfos ($shop_id,$type)
+	public function getShopOrderInfos ($shop_id,$type,$num = 20)
 	{
 		$where = ['order_info.shop_id' => $shop_id];
 		
