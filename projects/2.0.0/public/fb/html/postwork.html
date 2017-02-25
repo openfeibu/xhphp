@@ -1,0 +1,291 @@
+<script type="text/javascript" src="js/md5.js"></script>
+<div class="pt1 bgf postwork">
+	<div class="header_title">
+			<p>发布任务</p>
+			<div class="return" onclick="returnUp()">
+			</div>
+	</div>
+	<textarea name="" class="post_textarea" maxlength='200' placeholder="让人帮我:"></textarea>
+	<div class="inner-container">
+		<ul class="ul1">
+			<li>
+				<label for="">任务赏金(元)：</label>
+				<input type="text" class="money_input" placeholder="最低2元起"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+			</li>
+			<li>
+				<label for="">到达地点：</label>
+				<input type="text" class="map_input" placeholder="到达地点" />
+			</li>
+			<li>
+				<label for="">手机号码：</label>
+				<input type="text" class="number_input" placeholder="手机号码" data-name="phone"/>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="postwork_footer">
+	<span class="declare"><a href="statement/workAgreement.html">校园任务声明</a></span>
+	<input type="button" value="发布" class="postwork_submit">
+</div>
+<ul class="payType">
+    <li class="on">请选择支付方式</li>
+	<li >
+		<div class="wallet on">钱包余额：￥-.--(余额不足)</div>
+	</li>
+	<li class="on"><div class="alipay">支付宝支付</div></li>
+	<li class='close'>取消</li>
+</ul>
+    
+<script type="text/javascript">
+        var token = window.localStorage.token;
+        var phone = window.localStorage.phone;
+        $('[data-name="phone"]').val(phone);
+        $(".postwork_submit").on("click",showPayType);
+        function showPayType () {
+        	var post_textarea = $(".post_textarea").val();
+        	var money_input = $(".money_input").val();
+        	var map_input = $(".map_input").val();
+        	var number_input = $(".number_input").val();
+        	if(post_textarea.length == 0){
+        		fb_alert(fb_error["100"])
+        		return false;
+        	}else if(money_input < 2){
+        		fb_alert(fb_error["500"])
+        		return false;
+        	}else if(map_input.length == 0){
+        		fb_alert(fb_error["300"])
+        		return false;
+        	}else if(!checkMobile(number_input)){
+        		fb_alert(fb_error["400"])
+        		return false;
+        	}
+            is_alipay(true)
+             $.getJSON(locahost+'/user/getWallet/?token='+token,function(data){
+                if(data.code == 2001){
+                        fb_alert(fb_error["2001"])
+                        window.location.href = "login.html";
+                        return;
+                }else if(data.code == 200){
+                    is_alipay(false)
+                    if(parseFloat(data.data.wallet) >= money_input){
+                        $(".payType .wallet").text('钱包余额：￥'+data.data.wallet).addClass("on");
+                    }else{
+                        $(".payType .wallet").text('钱包余额：￥'+data.data.wallet+'(余额不足)').removeClass("on");
+                    }
+                    $(".payType").addClass("on");
+                }else{
+                   fb_alert(data.detail)
+                }
+                
+
+                
+             })
+        	 
+
+        }
+        $(".payType .close").on("click",function(){
+        	 $(".payType").removeClass("on")
+        })
+        //支付宝支付
+        $(".alipay").on("click",{pay_id:"1"},postwork_submit)
+        function postwork_submit(event){
+        	var pay_id = event.data.pay_id
+        	var post_textarea = removeBr($(".post_textarea").val());
+        	var money_input = $(".money_input").val();
+        	var map_input = $(".map_input").val();
+        	var number_input = $(".number_input").val();
+        	if(post_textarea.length == 0){
+        		fb_alert(fb_error["100"])
+        		return false;
+        	}else if(money_input <= 0){
+        		fb_alert(fb_error["500"])
+        		return false;
+        	}else if(map_input.length == 0){
+        		fb_alert(fb_error["300"])
+        		return false;
+        	}else if(!checkMobile(number_input)){
+        		fb_alert(fb_error["400"])
+        		return false;
+        	}
+       		 $(".postwork_submit").off("click",postwork_submit);
+       		 var token = window.localStorage.token;
+             is_alipay(true)
+             var alipay_info = {
+                    "token":token,
+                    "phone":number_input,
+                    "destination":map_input,
+                    "description":post_textarea,
+                    "fee":money_input,
+                    "pay_id":pay_id,
+                    "wap":1,
+                }
+			$.post(locahost+'/order/createOrder/',alipay_info, function(data){
+                    if(data.code == 2001){
+                        fb_alert(fb_error["2001"])
+                        window.location.href = "login.html";
+                        return;
+                    }else if(data.code == 200){
+                             is_alipay(false)
+        					$("body").append(data.data)
+        					$("#alipaysubmit").submit();
+                    }else{
+                        is_alipay(false)
+                       fb_alert(data.detail)
+                    }
+				})
+
+        }
+        //钱包支付
+        var wallet_pass='';
+         $(".wallet").on("click",function(){
+            if(!$(this).hasClass("on")){
+                //金额不足
+                return;
+            }
+            $(".payPassVal span").text("");
+            wallet_pass='';
+            var post_textarea = removeBr($(".post_textarea").val());
+            var money_input = $(".money_input").val();
+            var map_input = $(".map_input").val();
+            var number_input = $(".number_input").val();
+            if(post_textarea.length == 0){
+                fb_alert(fb_error["100"])
+                return false;
+            }else if(money_input <= 0){
+                fb_alert(fb_error["500"])
+                return false;
+            }else if(map_input.length == 0){
+                fb_alert(fb_error["300"])
+                return false;
+            }else if(!checkMobile(number_input)){
+                fb_alert(fb_error["400"])
+                return false;
+            }
+            var payHtml = '<div class="payPass">\
+                            <div class="payPassVal">\
+                                <div class="payPass_close">X</div>\
+                                <div class="payPassVal_title">请输入钱包支付密码</div>\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                                <span></span>\
+                            </div>\
+                            <ul class="payNum">\
+                                <li>1</li>\
+                                <li>2</li>\
+                                <li>3</li>\
+                                <li>4</li>\
+                                <li>5</li>\
+                                <li>6</li>\
+                                <li>7</li>\
+                                <li>8</li>\
+                                <li>9</li>\
+                                <li></li>\
+                                <li>0</li>\
+                                <li>删除</li>\
+                            </ul>\
+                        </div>';
+            $('.postwork').append(payHtml)
+            $(".payType").removeClass("on")
+         })
+          $('.postwork').on("click",".payNum li",function(){
+
+                var i = $(this).index(".payNum li");
+                var key;
+                switch (i) {
+                    case 0 : 
+                        key = 1;
+                        break;
+                    case 1 : 
+                        key = 2;
+                        break;
+                    case 2 : 
+                        key = 3;
+                        break;
+                    case 3 : 
+                        key = 4;
+                        break;
+                    case 4 : 
+                        key = 5;
+                        break;
+                    case 5 : 
+                        key = 6;
+                        break;
+                    case 6 : 
+                        key = 7;
+                        break;
+                    case 7 : 
+                        key = 8;
+                        break;
+                    case 8 : 
+                        key = 9;
+                        break;
+                    case 9 : 
+                        return;
+                    case 10 : 
+                        key = 0;
+                        break;
+                    case 11 : 
+                        key = 11;
+                        break;
+                }
+            if(key == 11){
+                //删除键
+                wallet_pass = wallet_pass.substr(0,wallet_pass.length-1);
+                $(".payPassVal span").text("")
+                for(var j = 0,c=wallet_pass.length ; j <c;j++ ){
+                    $(".payPassVal span").eq(j).text("*")
+                }
+                return;
+            }
+            wallet_pass += key;
+            if(wallet_pass.length == 6 ){
+                //满6位 执行支付
+                $(".payPassVal span").text("*");
+                $(".payPass").remove();
+                is_alipay(true)
+                var post_textarea = $(".post_textarea").val();
+                var money_input = $(".money_input").val();
+                var map_input = $(".map_input").val();
+                var number_input = $(".number_input").val();
+                var alipay_info = {
+                    "token":token,
+                    "phone":number_input,
+                    "destination":map_input,
+                    "description":post_textarea,
+                    "fee":money_input,
+                    "pay_id":3,
+                    "wap":1,
+                    "pay_password":$.md5(wallet_pass)
+                };
+                $.post(locahost+'/order/createOrder/',alipay_info,  function(data){
+                    if(data.code == 2001){
+                        fb_alert(fb_error["2001"])
+                        window.location.href = "login.html";
+                        return;
+                    }
+                    if(data.code == 110){
+                        fb_alert(data.detail);
+                    }
+                    if(data.code == 200){
+                        fb_alert(fb_error["3"]);
+                        history.go(-1)
+                    }else{
+                        fb_alert(data.detail)
+                    }
+                    is_alipay(false);
+                })
+            }else{
+                for(var j = 0,c=wallet_pass.length ; j <c;j++ ){
+                    $(".payPassVal span").eq(j).text("*");
+                }
+            }
+          })
+          $('.postwork').on("click",".payPass_close",function(){
+            $(".payPass").remove();
+          })
+
+
+    </script>

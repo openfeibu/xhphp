@@ -1,0 +1,169 @@
+<?php
+
+namespace App\Http\Controllers\ShopAdmin;
+
+use DB;
+use App\Cart;
+use App\OrderGoods;
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\CommonController;
+use App\Services\PayService;
+use App\Services\UserService;
+use App\Services\GoodsService;
+use App\Services\ShopService;
+use App\Services\HelpService;
+use App\Services\OrderInfoService;
+use App\Services\TradeAccountService;
+use App\Services\WalletService;
+
+class OrderInfoController extends CommonController
+{
+	protected $helpService;
+
+	protected $goodsService;
+
+	protected $shopService;
+	
+	protected $userService;
+
+	protected $cartService;
+
+	protected $orderInfoService;
+
+	protected $payService;
+	
+	protected $user;
+	
+	public function __construct (UserService $userService,
+								ShopService $shopService,
+								GoodsService $goodsService,
+								HelpService $helpService,
+								WalletService $walletService,
+                         		TradeAccountService $tradeAccountService,
+								OrderInfoService $orderInfoService)
+	{
+		$this->userService = $userService;
+		$this->goodsService = $goodsService ;
+		$this->shopService = $shopService ;
+	 	$this->helpService = $helpService;
+	 	$this->orderInfoService = $orderInfoService;
+	 	$this->walletService = $walletService;
+        $this->tradeAccountService = $tradeAccountService;
+	 	$this->user = $this->userService->getBussiness(); 
+	 	$this->shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);    
+	}
+	public function orderInfos (Request $request)
+	{
+		$rule = [
+            'page' => 'required|integer',
+            'type' => 'required|in:beship,shipping,succ,cancell,all',
+        ];
+        $this->helpService->validateParameter($rule);
+		$order_infos = $this->orderInfoService->getShopOrderInfos($this->shop->shop_id,$request->type,15);
+        return [
+			'code' => 200,
+			'count' => count($order_infos),
+			'order_infos' => $order_infos
+        ];
+	}
+	/**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request)
+    {
+        $rules = [
+        	'order_id' => 'required|integer|exists:order_info,order_id',
+        ];
+        $is_exists = $this->orderInfoService->isExistsOrderInfo(['order_id' => $request->order_id],$columns = ['order_id']);
+        $order_info = $this->orderInfoService->getOrderInfo($request->order_id);
+        return [
+        	'code' => 200,
+			'order_info' => $order_info,
+        ];
+    }
+	public function shipping (Request $request)
+    {
+    	$rules = [
+        	'token' 	=> 'required',
+			'order_id'  => 'required|exists:order_info,order_id',
+    	];
+    	$this->helpService->validateParameter($rules);    	
+		
+		$order_info = $this->orderInfoService->sellerCheckShipping($request->order_id,$this->shop->shop_id);
+
+		//商家
+		if($shop->shop_type == 2){
+			//创建新任务
+			$order_sn = $this->helpService->buildOrderSn('RT');
+			$total_fee = $order_info->shipping_fee;
+			$service_fee = $this->helpService->serviceFee($total_fee) ;
+        	$order = $this->orderService->createOrder(['destination' => $order_info->address,
+                                             'description' => $shop->shop_name,
+                                             'fee' => $total_fee,
+                                             'goods_fee' => 0 ,
+                                             'total_fee' => $total_fee,
+                                             'service_fee' => $service_fee,
+                                             'phone' => $order_info->consignee,
+                                             'order_sn' => $order_sn,
+                                             'status' => 'new',
+                                             'pay_id' => $order_info->pay_id,
+                                             'type' => 'business',
+                                             'order_id' => $order_info->order_id
+                                            ]);
+		}
+		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
+		
+		throw new \App\Exceptions\Custom\RequestSuccessException('操作成功');
+    }
+    public function agreeCancel(Request $request)
+    {
+    	$rules = [
+        	'token' 	=> 'required',
+			'order_id'  => 'required|exists:order_info,order_id',
+    	];
+    	$this->helpService->validateParameter($rules);    	
+
+
+		$order_info = $this->orderInfoService->sellerCheckRefund($request->order_id,$this->shop->shop_id);
+
+		$user = $this->userService->getUserByUserID($order_info->uid);
+		
+		$fee = 	$user->wallet + $order_info->total_fee;
+		
+        $this->walletService->updateWallet($user->uid,$fee);
+
+       	$walletData = array(
+			'uid' => $user->uid,
+			'wallet' => $fee,
+			'fee'	=> $order_info->total_fee,
+			'service_fee' => 0,
+			'out_trade_no' => $order_info->order_sn,
+			'pay_id' => 3,
+			'wallet_type' => 1,
+			'trade_type' => 'CancelOrder',
+			'description' => '取消订单',
+        );
+        $this->walletService->store($walletData);
+        $tradeData = array(
+			'wallet_type' => 1,
+			'trade_type' => 'CancelOrder',
+			'description' => '取消订单',
+			'trade_status' => 'income',
+		);
+		
+		$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
+
+		$this->orderInfoService->inGoodsNumber($order_info->order_id);
+		
+		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
+
+		
+    	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
+    }
+    
+}

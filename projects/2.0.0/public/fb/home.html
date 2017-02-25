@@ -1,0 +1,323 @@
+<div class='index_main'>
+  
+</div>
+<div class='index_nav'>
+  <div class="index_nav_title">
+  	<p>发现</p>
+  </div>
+  <ul>
+  	<li>
+  		<a href="association.html">校园社团</a>  
+  	</li>
+  	<li>
+      <a href="html/soulSoother.html">秘制鸡汤</a>  
+    </li>
+    <li>
+      <a href="fault/faultLogin.html" onclick="">报故障</a>  
+    </li>
+  </ul>
+</div>
+<div class='index_no'>
+  
+</div>
+<!-- 推荐任务 -->
+<div class="recommendOrders">
+  <div class="title"><i></i><p>推荐任务</p></div>
+  <div class="orderList">
+    <!-- <div class="order-item">
+      <a href="">
+        <div class="order-up">
+          <div class="img"><img src="images/tx.png" alt="" /></div>
+          <div class="test">
+            <div class="name">xiaoc</div>
+            <div class="money">¥2</div>
+          </div>
+        </div>
+        <div class="order-dowm">
+          <div class="con">dadas</div>
+          <div class="map">[sdasd]</div>
+        </div>
+        <div class="order-button">抢</div>
+      </a>
+    </div> -->
+  </div>
+</div>
+<div class='index_club_play'>
+  
+</div>
+
+<script type="text/javascript">
+  loading(true)
+  home();
+  //主页
+  function home(a){
+    var thislocaTime = locaTime;
+    if(a) {
+      thislocaTime = 0;
+    }
+    //获取轮播图 S
+    if(!!getItem("banner")){
+      var loca = getItem("banner");
+      var now = new Date().getTime();
+      /*先展示旧内容 S*/
+      var htmldom = loca[0];
+      $(".index_main").html(htmldom);
+      var mySwiper = new Swiper ('.swiper-container1', {
+            loop: true,
+            autoplay:3000,
+            autoHeight:true,
+            autoplayDisableOnInteraction : false,
+            // 如果需要分页器
+            pagination: '.swiper-pagination1',
+         }) 
+      /*先展示旧内容 E*/
+      if(now-loca[1] >= thislocaTime){
+        //已过期
+         bannerGet()
+      }else{
+         loading(false); //移除动画
+      }
+    }else{
+      //没有缓存
+      bannerGet()
+    }
+    //获取轮播图 E
+    //获取index_no S
+    if(!!getItem("indexNo")){
+      var loca = getItem("indexNo");
+      var now = new Date().getTime();
+       /*先展示旧内容 S*/
+      var htmldom = loca[0]; 
+      $(".index_no").html(htmldom);
+      /*先展示旧内容 E*/
+      if(now-loca[1] >= thislocaTime){
+        //已过期
+          noGet();
+      }
+    }else{
+      //没有缓存
+      noGet()
+    }
+     //获取index_no E
+    
+    //获取活动资讯 S
+    if(!!getItem("club_play")){
+      var loca = getItem("club_play");
+      var now = new Date().getTime();
+      /*先展示旧内容 S*/
+      var htmldom = loca[0]; 
+      $(".index_club_play").html(htmldom);
+      /*先展示旧内容 E*/
+      if(now-loca[1] >= thislocaTime){
+        //已过期
+          club_playGet()
+      }
+    }else{
+      //没有缓存
+      club_playGet()
+    }
+    //获取活动资讯 E
+     //获取推荐任务 S
+    if(!!getItem("recommendOrders")){
+      var loca = getItem("recommendOrders");
+      var now = new Date().getTime();
+      /*先展示旧内容 S*/
+      var htmldom = loca[0]; 
+      $(".orderList").html(htmldom);
+      /*先展示旧内容 E*/
+      if(now-loca[1] >= thislocaTime){
+        //已过期
+          getRecommendOrders()
+      }
+    }else{
+      //没有缓存
+      getRecommendOrders()
+    }
+    //获取推荐任务 E
+  }
+   /*号外*/
+  var time_no=0;//校园号外滚动索引
+  var time ;
+  clearInterval(time);
+
+  time = setInterval(function(){
+
+     time_no = ++time_no > $(".index_no ul li").length-1 ? 0 : time_no; 
+     $(".index_no ul li").hide();
+     $(".index_no ul li").eq(time_no).css({"transition":"all 0.2s","-webkit-transition":"all 0.2s"}).show();
+      time01 = setTimeout(function(){
+       $(".index_no ul li").eq(time_no).css("opacity",1);
+     },1)
+    },3000)
+  function bannerGet(){     
+        $.getJSON(locahost+'/home/getADList/', function(data, status, xhr){
+            if(data.code == "200"){
+              clearLoading()//移除顶部动画
+		        var dom='' ,htmldom='';
+		        $.each(data.data,function(a,b){
+              if(b["ad_url"] != ""){
+                b["ad_url"] = 'href="'+b["ad_url"]+'"';
+              }
+		          dom += '<div class="swiper-slide"><a '+b["ad_url"]+'><img src="'+b["ad_image_url"]+'" alt="'+b["description"]+'"></a></div>'
+		        })
+		        htmldom='<div class="banner">'+
+		                          '<div class="swiper-container swiper-container1"><div class="swiper-wrapper">'+dom+
+		                            '</div><div class="swiper-pagination swiper-pagination1"></div>'+
+		                          '</div>'+
+		                    '</div>';
+		        $(".index_main").html(htmldom);
+		        setItem("banner",htmldom)//增加缓存
+		          var mySwiper = new Swiper ('.swiper-container1', {
+		              loop: true,
+		              autoplay:3000,
+                  autoHeight:true,
+                   autoplayDisableOnInteraction : false,
+		              // 如果需要分页器
+		              pagination: '.swiper-pagination1',
+		           }) 
+		          loading(false); //移除动画
+		      }
+		    })
+
+  }
+
+  function club_playGet(){
+        $.getJSON(locahost+'/association/getHotActivities/',function(data, status, xhr){
+        	if(data.code == "200"){
+		        var dom='' ,htmldom='',img_url="";
+		          $.each(data.data,function(a,value){
+		            now = new Date().getTime();
+              if (now > toUnix(value["start_time"])) {
+                var datadom = '<div class="ing"></div>';
+                var classT='startTime on';
+              } else {
+                var datadom = '<div class="will"></div>';
+                var classT='startTime';
+              }
+              dom += "<div class='item'>" + datadom + "<a href='#/associationActive/" + value.actid + "'>\
+                        <div class='item_img' style='background:url("+value.img_url.split(",")[0]+") no-repeat center;background-size:cover;'>\
+                          <div class='item_text_bg'>\
+                            <div class='title'>" + value.title + "</div>\
+                            <div class='content'>\
+                              <p>" + value.content +"</p>\
+                            </div>\
+                          </div>\
+                        </div>\
+                          <div class='ass_info'>\
+                            <div class='place'>地点："+value.place+"</div>\
+                            <div class='time'>\
+                              <div class='"+classT+"'>开始时间："+value.start_time+"</div>\
+                              <div class='endTime'>结束时间："+value.end_time+"</div>\
+                            </div>\
+                            <div class='content-bottom'>\
+                              <span class='user-num'>浏览 " + value.view_num + "</span>\
+                              <span class='social-name'>" + value.aname + "</span>\
+                            </div></div></a></div>";
+		          })
+		        htmldom='<div class="club_play_title"><i></i><p>社团活动</p></div>'+
+		                '<ul class="club_play_con">'+
+		                    dom+
+		                '</div>';
+		        $(".index_club_play").html(htmldom);
+		         setItem("club_play",htmldom)//增加缓存
+         }
+        })
+  
+  }
+ function noGet(){
+        $.getJSON(locahost+'/home/getExtra/',function(data, status, xhr){
+	    	if(data.code == "200"){
+	       	 var dom='' ,htmldom='';
+	          $.each(data.data,function(a,b){
+	            dom += '<li><p>'+b.extra+'</p></li>';
+	          })
+	        htmldom='<ul>'+dom+'</ul>';
+	        $(".index_no").html(htmldom);
+	         setItem("indexNo",htmldom)//增加缓存
+	         }
+        })
+  
+  }
+  //获取推荐任务方法
+  function getRecommendOrders(){
+     $.getJSON(locahost+'/order/getRecommendOrders/?number=2',function(data, status, xhr){
+        if(data.code == "200"){
+           var htmldom='';
+            $.each(data.data,function(a,b){
+              htmldom += '<div class="order-item">\
+                        <a href="schoolwork_de.html?oid='+b.oid+'">\
+                          <div class="order-up">\
+                            <div class="img"><img src="'+b.avatar_url+'" alt="" /></div>\
+                            <div class="test">\
+                              <div class="name">'+b.nickname+'</div>\
+                              <div class="money">¥'+b.fee+'</div>\
+                            </div>\
+                          </div>\
+                          <div class="order-dowm">\
+                            <div class="con">'+b.description+'</div>\
+                            <div class="map">['+b.destination+']</div>\
+                          </div>\
+                          <div class="order-button">抢</div>\
+                        </a>\
+                      </div>';
+            })
+            if(data.data.length == 0){
+               $(".orderList").html("<aside>暂无推荐任务</aside>");
+
+            }else{
+               $(".orderList").html(htmldom);
+                setItem("recommendOrders",htmldom)//增加缓存
+            }
+          
+            }
+        })
+  }
+  //
+        //活动详情
+   function associationActive(id){
+        tab = "";
+      	loading(true)
+      	clearWindowScroll();
+      	routDom($("#ClassC"));
+        $("#ClassC").html('<div id="consult"><div class="header_title"><p>活动内容</p><div class="return" onclick="returnUp()"></div></div><div class="container "></div></div>').css({"background":"#fff","minHeight":$(window).height()-$(".header_title").height()})
+      	$.getJSON(locahost+"/association/getActivity/?activity_id="+id,function(data){
+      		if(data.code == 200){
+      			loading(false)
+      			var b = data.data;
+      			var time=afterTime(b.created_at);
+            var now = new Date().getTime();
+              if (now > toUnix(b["start_time"])) {
+                var datadom = '<div class="ing"></div>';
+                var classT='startTime on';
+              } else {
+                var datadom = '<div class="will"></div>';
+                var classT='startTime';
+              }
+		      	var html =datadom+'<div class="title">\
+      									<p>'+b.title+'</p>\
+      								</div>\
+      								<div class="content">'+b.content+'</div>\
+      								<div class="img-container"><img src="'+b["img_url"].split(",")[0]+'" /></div>\
+                      <div class="ass_bottom">\
+                          <div class="map">活动地点：'+b.place+'</div>\
+                          <div class="time">\
+                            <div class='+classT+' ">开始时间：'+b.start_time+'</div>\
+                            <div class="endTime ">结束时间：'+b.end_time+'</div>\
+                          </div>\
+                          <div class="content-bottom">\
+                            <span class="user-num">浏览 '+b.view_num+'</span>\
+                            <span class="social-name">'+b.aname+'</span>\
+                          </div>\
+                      </div>'
+							
+						;
+					$("#ClassC .container").html(html).css({"paddingBottom":$(".ass_bottom").height()})
+				}else{
+					fb_alert(data.detail)
+				}
+	})
+  }
+  router.on("associationActive/:id",associationActive)
+  refresh["home"]= home;
+
+</script>

@@ -1,0 +1,140 @@
+<div class="header_title">
+          <p>修改支付密码管理</p>
+          <div class="return" onclick="returnUp()">
+            </div>
+</div>
+<div class="setWalletPass pt1">
+    <div class="walletPass">
+        <div class="payPassVal">  
+            <div class="payPassVal_title">请输入旧的钱包支付密码</div>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="payNum">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li></li>
+            <li>0</li>
+            <li>删除</li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+  var token = window.localStorage.token;
+  var Oldwallet_pass='';
+  var Newwallet_pass='';
+  var wallet_pass='';
+     $('.walletPass').on("click",".payNum li",function(){
+                var i = $(this).index(".payNum li");
+                var key;
+                switch (i) {
+                    case 0 : 
+                        key = 1;
+                        break;
+                    case 1 : 
+                        key = 2;
+                        break;
+                    case 2 : 
+                        key = 3;
+                        break;
+                    case 3 : 
+                        key = 4;
+                        break;
+                    case 4 : 
+                        key = 5;
+                        break;
+                    case 5 : 
+                        key = 6;
+                        break;
+                    case 6 : 
+                        key = 7;
+                        break;
+                    case 7 : 
+                        key = 8;
+                        break;
+                    case 8 : 
+                        key = 9;
+                        break;
+                    case 10 : 
+                        key = 0;
+                        break;
+                    case 11 : 
+                        key = 11;
+                        break;
+                }
+            if(key == 11){
+                //删除键
+                wallet_pass = wallet_pass.substr(0,wallet_pass.length-1);
+                $(".payPassVal span").text("")
+                for(var j = 0,c=wallet_pass.length ; j <c;j++ ){
+                    $(".payPassVal span").eq(j).text("*")
+                }
+                return;
+            }
+            wallet_pass += key;
+            if(wallet_pass.length == 6 ){
+                //满6位 
+                $(".payPassVal span").text("*");
+                if(Oldwallet_pass.length != 6){   
+                  Oldwallet_pass=wallet_pass;
+                  wallet_pass=''
+                  $(".payPassVal_title").text("请输入新的钱包支付密码");
+                  $(".payPassVal span").text("");
+                }else{
+                    //修改密码
+                    is_alipay(true);
+                    Newwallet_pass=wallet_pass;
+                    if(Oldwallet_pass == Newwallet_pass){
+                      //新密码不可与旧密码相同
+                      is_alipay(false);
+                      fb_alert(fb_error["1004"]);
+                         setTimeout(function(){
+                          window.history.go(-1);
+                         },1000)
+                      return  ;
+                    }
+                   
+                    $.post(locahost+"/user/changePayPassword/?token="+token+'&old_paypassword='+$.md5(Oldwallet_pass)+'&new_paypassword='+$.md5(Newwallet_pass),function(data){
+                      is_alipay(false);
+                      if(data.code == 2001){
+                        fb_alert(fb_error["2001"])
+                        window.location.href = "../login.html";
+                        return;
+                      }
+                      if(data.code == 110){
+                         fb_alert(fb_error["1003"]);
+                         setTimeout(function(){
+                          window.history.go(-1);
+                         },1000)
+                      }else if(data.code == 200){
+                         fb_alert(fb_error["1"]);
+                         setTimeout(function(){
+                          window.history.go(-1);
+                         },1000)
+                      }
+                    })
+
+                }
+                return;
+
+            }else{
+                for(var j = 0,c=wallet_pass.length ; j <c;j++ ){
+                    $(".payPassVal span").eq(j).text("*")
+                }
+            }
+
+          })
+
+
+</script>

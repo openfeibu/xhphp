@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+	<link rel="apple-touch-icon-precomposed" href="1.jpg" />
+	<meta content="telephone=no" name="format-detection" />
+	 <!-- uc强制竖屏 -->
+	  <meta name="screen-orientation" content="portrait">
+	  <!-- UC应用模式 --> 
+	  <meta name="browsermode" content="application">
+	  <!-- QQ强制竖屏 -->
+	  <meta name="x5-orientation" content="portrait">
+	  <!-- QQ应用模式 -->
+	  <meta name="x5-page-mode" content="app">
+	    <!-- UC禁止放大字体 -->
+  	<meta name="wap-font-scale" content="no">
+	<title>校汇Plus | 校汇 </title>
+    <meta name="Keywords" content="校汇,广东农工商职业技术学院,AIB,农工商,能赚钱,大学生,大学生创业,大学生校园,大学生校园社团,大学生校园快递,大学生周边生活" />
+    <meta name="Description" content="校汇是一个以校园任务为核心的移动互联网综合服务平台，立足于校园，致力打造完整的校园生态辐射圈。校汇一直专注于大学生活、社团文化、校园资讯、学生互动" />
+    <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+  	<link rel="shortcut icon" href="../icon.png" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="../css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="../css/info.css">
+	<script src="../js/director.js"></script>
+	<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+</head>
+	<style>
+		html{background:#e09d5b url("../images/wel.png") no-repeat top center;background-size: 100% auto;}
+
+		#write-list-input{width:100%;}
+		#write-list-input .write-container{width: 100%;margin-top: 4rem;box-sizing:border-box; -moz-box-sizing:border-box; /* Firefox */ -webkit-box-sizing:border-box; /* Safari */ padding:0.3rem 0.15rem;}
+		.write-container p{width: 100%;text-align: center;line-height: 0.33rem;font-size: 0.35rem;text-align: center;color: #fff;}
+		#write-list-input .write-container .input-p{width: 100%;height: 0.95rem;}
+		#write-list-input .write-container .input-s{width: 100%;height: 0.95rem;box-sizing:border-box; -moz-box-sizing:border-box; /* Firefox */ -webkit-box-sizing:border-box; /* Safari */ padding:0.3rem;background: #fff;font-size: 0.33rem;border-radius: 0.1rem;margin-top: 0.36rem;}
+		#write-list-input .verify-btn{width: 2.12rem;height: 0.6rem;vertical-align: middle;border-radius: 0.1rem;background: #ef7272;color: #fff;font-size: 0.34rem;text-align: center;position: absolute;right:0.2rem;top: 0.55rem;}
+		#write-list-input .input_b:nth-of-type(4){position: relative;}
+		#write-list-input .write-container .btn-submit{margin-top:0.5rem;padding: 0rem 0.3rem;box-sizing:border-box; -moz-box-sizing:border-box; /* Firefox */ -webkit-box-sizing:border-box; /* Safari */ }
+		#write-list-input .write-container .pay{width: 100%;height: 1rem;border-radius: 0.1rem;text-align: center;background:#3CBDF7;box-sizing:border-box; -moz-box-sizing:border-box; /* Firefox */ -webkit-box-sizing:border-box; /* Safari */ text-align: center;font-size: 0.42rem;color: #fff;}	
+		#write-list-input .write-container .pay.on{background:#3CBDF7;}
+		#write-list-input .write-container .dormitory{font-size: 0.28rem;}
+		#write-list-input aside{display: none;color: red;}
+		#write-list-input .write-container .seeOrder{margin: 0.3rem;height: 1rem;border-radius: 0.1rem;text-align: center;background:#3CBDF7;line-height: 1rem;color:#fff;font-size:0.35rem;box-sizing:border-box; -moz-box-sizing:border-box; /* Firefox */ -webkit-box-sizing:border-box; /* Safari */ }
+		#write-list-input .write-container .seeOrder a{color:#fff;}
+		.write-container .img{width:100%;margin:0.3rem auto;}
+		.write-container .img img{width:100%}
+	</style>
+<body>
+	<section id="write-list-input">
+		<div class="header_title">
+			<p>在线填单</p>
+			<div class="return"  onclick="returnUp()">
+			</div>
+		</div>
+		<div class="write-container">
+			<p class="">请输入验证信息</p>
+			<div class="input_b">
+				<input type="text" class="input-s name" placeholder="请输入本卡手机号码">
+			</div>
+			<div class="input_b">
+				<input type="text" class="input-s id-card" placeholder="请输入ICCID最后六位数字(不含字母)">
+			</div>
+			<div class="input_b">
+				<input type="text" class="input-s major" placeholder="常用电话">
+			</div>
+			<div class="btn-submit ">
+				<input type="button" class="pay button_active" value="下一步">
+			</div>
+			<div class="img"><img src="../images/img.png" alt=""></div>
+		</div>
+		
+	</section>
+	<script>
+
+		var is_app=0;
+		var android_token = "";
+		if(GetString("device") == "android"){
+			is_app = 1;
+			android_token = JSON.parse(window.feibu.interactive('{"action":"getToken"}')).value;  //获取客户端token;
+			$(".header_title").hide();
+			//$(".write-container").css("marginTop","0");
+		}
+
+		//验证实名
+		if(is_app){
+			var token = android_token;
+		}else{
+			var token = window.localStorage.token;
+		}
+		
+		$(".pay").on("click",verify)
+		function verify(){
+			var that = $(this);
+			var name = $(".name").val();
+			var id_card = $(".id-card").val();
+			var major = $(".major").val();
+			if(!checkMobile(name)){
+				fb_alert("本卡手机号码有误");
+			}else if(id_card.length !=6 || isNaN(id_card)){
+				fb_alert("请输入ICCID最后六位数字(不含字母)");
+			}else if(!checkMobile(major)){
+				fb_alert("常用手机号码有误");
+			}else{
+			 is_alipay(true);
+			 $(".pay").off("click",verify)
+			 //android S
+			 if(is_app){
+			 	if (android_token == ''){
+			 		android_token = JSON.parse(window.feibu.interactive('{"action":"getToken"}')).value;  //再次获取客户端token;
+			 	}
+			 	token = android_token;
+			 }
+			 //android E
+		    $.post(locahost+'/telecom/queryRealName?token='+token+'&phone='+name+'&iccid='+id_card+'&outOrderNumber='+major,  function(data){
+		      		is_alipay(false)
+		           if(data.code == 2001){
+		                fb_alert(fb_error["2001"]);
+		                window.location.href = "../login.html";
+		                return;
+		             }
+		             if(data.code == "200"){
+		               if(is_app){	
+							window.location.href="telecom_cart.html?device=android&telecomPhone="+name+"&iccid="+id_card+"&outOrderNumber="+major; 
+						}else{
+							window.location.href="telecom_cart.html?telecomPhone="+name+"&iccid="+id_card+"&outOrderNumber="+major;
+						}
+		             }else{
+		              fb_alert(data.detail);
+					  $(".pay").on("click",verify);
+		             }
+		      }).error(function(xhr,errorText,errorType){
+			        fb_alert('网络超时，请稍后再试');
+		      		is_alipay(false);
+					$(".pay").on("click",verify);
+			    });
+			}
+		}
+		$(".seeOrder").on("click",function(){
+			  if(is_app){	
+					window.location.href="telecom_order.html?device=android"; 
+				}else{
+					window.location.href="telecom_order.html";
+
+				}
+		})
+	</script>
+</body>
+</html>
