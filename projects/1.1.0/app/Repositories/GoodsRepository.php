@@ -31,6 +31,7 @@ class GoodsRepository
 		$goods->goods_price = $this->request->goods_price;
 		$goods->created_at = date('Y-m-d H:i:s');
 		$goods->save();
+		return $goods;
 	}
 	public function update ($where,$update)
 	{
@@ -66,8 +67,8 @@ class GoodsRepository
 								->where($where)
 								->orderBy('goods_click_count', 'desc')
 								->orderBy('goods_id', 'desc')
-								->skip(1 * $this->request->page - 1)
-                    			->take(1)
+								->skip(15 * $this->request->page - 15)
+                    			->take(15)
                            		->get();
                  
         return $ShopGoodsesList;

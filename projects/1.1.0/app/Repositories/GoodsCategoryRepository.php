@@ -30,6 +30,14 @@ class GoodsCategoryRepository
 								->orderBy('cat_id', 'asc')
                            		->first();
 	}
+	public function getCats ($where)
+	{
+		return GoodsCategory::where($where)
+							->orderBy('cat_id','desc')
+							->skip(15 * $this->request->page - 15)
+                    		->take(15)
+                           	->get();
+	}
 	public function isExistsCat ($where,$columns)
 	{
 		$cat = GoodsCategory::where($where)->first($columns);
@@ -48,5 +56,9 @@ class GoodsCategoryRepository
 	public function delete ($where)
 	{
 		return GoodsCategory::where($where)->delete();
+	}
+	public function getCatCount ($where)
+	{
+		return GoodsCategory::where($where)->count();
 	}
 }

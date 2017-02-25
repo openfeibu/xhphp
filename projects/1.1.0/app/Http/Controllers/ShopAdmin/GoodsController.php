@@ -55,7 +55,6 @@ class GoodsController extends CommonController
     {	    
           
     	$rules = [
-        	'token' 	  	=> 'required',
         	'cat_id'		=> 'required|integer',
 	        'goods_name'   	=> 'required|string|between:2,10',
 	        'goods_img'    	=> 'required|string',
@@ -87,9 +86,15 @@ class GoodsController extends CommonController
     	
     	$isExistsCat = $this->goodsCategoryService->isExistsCat(['shop_id' => $this->shop->shop_id,'cat_id' => $request->cat_id]);
     	
-		$this->goodsService->addGoods($this->user,$this->shop);		
+		$goods = $this->goodsService->addGoods($this->user,$this->shop);		
 	
-        throw new \App\Exceptions\Custom\RequestSuccessException('添加成功');
+      //  $goods = $this->goodsService->getBusinessGoods(['goods_id' => $goods->goods_id]);
+		
+		return [
+			'code' => 200,
+			'detail' => '添加成功',
+			'goods' => $goods
+		];
     }
 	public function goodses(Request $request)
 	{
@@ -115,7 +120,7 @@ class GoodsController extends CommonController
 			'code' => 200 ,
 			'count' => $count,
 			'categories' => $categories,
-			'goodes' => $shopGoodses,			
+			'goods' => $shopGoodses,			
         ];
 	}
 	public function update (Request $request)
@@ -162,6 +167,20 @@ class GoodsController extends CommonController
 		];
 
     }
+    public function cats (Request $request)
+    {
+    	$rules = [
+			'page' => 'required|integer',
+	    ];
+	    $this->helpService->validateParameter($rules);  	
+	    $cats = $this->goodsCategoryService->getCats(['shop_id' => $this->shop->shop_id]);
+	    $count = $this->goodsCategoryService->getCatCount(['shop_id' => $this->shop->shop_id]);
+	    return [
+	    	'code' 	=> 200,
+	    	'count'	=> $count,
+	    	'cats' 	=> $cats
+	    ];
+    }
 	public function addCat (Request $request)
 	{
 		$rules = [
@@ -174,13 +193,16 @@ class GoodsController extends CommonController
 
 		$this->goodsCategoryService->isExistsCat(['shop_id' => $this->shop->shop_id,'cat_name' => $request->cat_name]);
 
-		$this->goodsCategoryService->addCat([
+		$cat = $this->goodsCategoryService->addCat([
 			'cat_name'	=> $request->cat_name,
 			'shop_id'	=> $this->shop->shop_id,
 			'parent_id' => 0,
 		]);
-		
-        throw new \App\Exceptions\Custom\RequestSuccessException('添加成功');
+		$cat->cat_id = $cat->id;
+        return [
+			'code' => 200,
+			'cats'  => $cat,
+       	];
 	}
 	public function updateCat (Request $request)
 	{
@@ -195,10 +217,13 @@ class GoodsController extends CommonController
 		if($isExistsCat->cat_name != $request->cat_name){
 			$this->goodsCategoryService->isExistsCat(['shop_id' => $this->shop->shop_id,'cat_name' => $request->cat_name]);
 		}
-		/*$isExistsCat =  isset($request->parent_id) ? $this->goodsCategoryService->isExistsCat(['shop_id' => $shop->shop_id,'cat_id' => $request->parent_id]);*/
 		$this->goodsCategoryService->updateCat(['cat_id' => $request->cat_id],['cat_name' => $request->cat_name]);
-		
-        throw new \App\Exceptions\Custom\RequestSuccessException('更新成功');
+
+		$cat = $this->goodsCategoryService->getCat(['cat_id' => $request->cat_id]);
+       	return [
+			'code' => 200,
+			'cats'  => $cat,
+       	];
 	}
 	public function deleteCat (Request $request)
 	{
@@ -208,9 +233,9 @@ class GoodsController extends CommonController
         $this->helpService->validateParameter($rules);  
         $goods = $this->goodsService->getGoods(['cat_id' => $request->cat_id,'shop_id' => $this->shop->shop_id],['goods_id']);
         if($goods){
-	        throw new \App\Exceptions\Custom\OutputServerMessageException('该分类下还存在商品');
+	        throw new \App\Exceptions\Custom\OutputServerMessageException('该分类下存在商品');
         }
-        
+
         $this->goodsCategoryService->delete(['cat_id' => $request->cat_id,'shop_id' => $this->shop->shop_id]);
         
         throw new \App\Exceptions\Custom\RequestSuccessException('删除成功');

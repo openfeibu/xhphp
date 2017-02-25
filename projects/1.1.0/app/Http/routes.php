@@ -223,6 +223,7 @@ Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');
 Route::post('business/goods/store','ShopAdmin\GoodsController@store');
 Route::post('business/goods/update','ShopAdmin\GoodsController@update');
 Route::post('business/goods/uploadGoodsImage','ShopAdmin\GoodsController@uploadGoodsImage');
+Route::get('business/goods/getCats','ShopAdmin\GoodsController@cats');
 Route::post('business/goods/addCat','ShopAdmin\GoodsController@addCat');
 Route::post('business/goods/updateCat','ShopAdmin\GoodsController@updateCat');
 Route::post('business/goods/deleteCat','ShopAdmin\GoodsController@deleteCat');

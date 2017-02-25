@@ -73,7 +73,7 @@ class OrderInfoService
 	{
 		$where = ['order_info.shop_id' => $shop_id];
 		
-		$order_infos = $this->orderInfoRepository->getOrderInfos($where,$type);
+		$order_infos = $this->orderInfoRepository->getOrderInfos($where,$type,$num);
 		
 		foreach( $order_infos as $key => $order_info )
 		{

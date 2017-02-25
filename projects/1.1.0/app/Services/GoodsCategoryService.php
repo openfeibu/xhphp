@@ -30,6 +30,14 @@ class GoodsCategoryService
 	{
 		return $this->goodsCategoryRepository->getFirst($shop_id);
 	}
+	public function getCat ($where)
+	{
+		return $this->goodsCategoryRepository->isExistsCat($where,['*']);
+	}
+	public function getCats ($where)
+	{
+		return $this->goodsCategoryRepository->getCats($where);
+	}
 	public function isExistsCat ($where,$columns = ['*'])
 	{
 		$cat = $this->goodsCategoryRepository->isExistsCat($where,$columns);
@@ -52,5 +60,9 @@ class GoodsCategoryService
 	public function delete ($where)
 	{
 		return $this->goodsCategoryRepository->delete($where);
+	}
+	public function getCatCount ($where)
+	{
+		return $this->goodsCategoryRepository->getCatCount($where);
 	}
 }

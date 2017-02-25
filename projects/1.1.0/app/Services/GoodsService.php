@@ -28,7 +28,7 @@ class GoodsService
 	}
 	public function addGoods($user,$shop)
 	{
-		$this->goodsRepository->addGoods($user,$shop);
+		return $this->goodsRepository->addGoods($user,$shop);
 	}
 	public function existShopGoods ($shop_id,$goods_name)
 	{
@@ -76,10 +76,9 @@ class GoodsService
 		}
 		return $goods;
 	}
-	public function getGoods ($goods_id,$columns = ['*'])
+	public function getGoods ($where,$columns = ['*'])
 	{
-		$goods_id = intval($goods_id);
-		return 	$this->goodsRepository->getGoods(['goods_id' => $goods_id],$columns = ['*']);			
+		return 	$this->goodsRepository->getGoods($where,$columns = ['*']);			
 	}
 	public function getGoodses ($page)
 	{
