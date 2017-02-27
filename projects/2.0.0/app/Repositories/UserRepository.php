@@ -78,7 +78,7 @@ class UserRepository
 	
 	public function getBussiness ()
 	{
-		return User::where('uid', 85)->first();
+		return User::where('uid', 85)->first(['uid','wallet','mobile_no','nickname','avatar_url','created_at']);
 	}
 	/**
 	 * 获取指定用户的device_token

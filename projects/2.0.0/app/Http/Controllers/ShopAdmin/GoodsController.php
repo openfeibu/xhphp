@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\ShopAdmin;
 
-
-
 use Input;
 use App\User;
 use App\Shop;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\Http\Controllers\CommonController;
+use App\Http\Controllers\ShopAdmin\Controller;
 use App\Services\UserService;
 use App\Services\GoodsService;
 use App\Services\GoodsCategoryService;
@@ -19,7 +17,7 @@ use App\Services\HelpService;
 use App\Services\ImageService;
 use App\Services\FileUploadService;
 
-class GoodsController extends CommonController
+class GoodsController extends Controller
 {
 	protected $helpService;
 
@@ -34,22 +32,20 @@ class GoodsController extends CommonController
 	protected $goodsCategoryService;
 	
 	public function __construct (UserService $userService,
-								ShopService $shopService,
 								GoodsService $goodsService,
+								ShopService $shopService,
 								HelpService $helpService ,
 								FileUploadService $fileUploadService,
 								ImageService $imageService,
 								GoodsCategoryService $goodsCategoryService)
 	{ 
+		parent::__construct($shopService);
 		$this->userService = $userService;
-		$this->shopService = $shopService ;
 		$this->goodsService = $goodsService ;
 		$this->goodsCategoryService = $goodsCategoryService ;
 		$this->helpService = $helpService;
 		$this->imageService = $imageService; 
-		$this->fileUploadService = $fileUploadService;
-		$this->user = $this->userService->getBussiness();
-		$this->shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);    
+		$this->fileUploadService = $fileUploadService;   
 	}
 	public function store (Request $request)
     {	    
@@ -243,7 +239,7 @@ class GoodsController extends CommonController
 	public function uploadGoodsImage (Request $request)
     {
          //上传商品图片
-        $images_url = $this->imageService->uploadAdminImages(Input::all(), 'goods');
+        $images_url = $this->imageService->uploadAdminImages(Input::all(), 'goods',$this->user->uid);
         
         return [
             'code' => 200,

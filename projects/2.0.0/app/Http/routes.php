@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+Route::group(['middleware' => 'web'], function () {
 
 Route::get('/','HomeController@index');
 
@@ -231,3 +231,21 @@ Route::get('business/orderInfo/orderInfos','ShopAdmin\OrderInfoController@orderI
 Route::get('business/orderInfo/show','ShopAdmin\OrderInfoController@show');
 Route::post('business/orderInfo/shipping','ShopAdmin\OrderInfoController@shipping');
 Route::post('business/orderInfo/agreeCancel','ShopAdmin\OrderInfoController@agreeCancel');
+
+Route::get('business/user/getUser', 'ShopAdmin\UserController@getUser');
+Route::get('business/user/getShop', 'ShopAdmin\UserController@getShop');
+Route::post('business/shop/updateShop', 'ShopAdmin\UserController@updateShop');
+
+Route::post('business/shop/uploadShopImage','ShopAdmin\UserController@uploadShopImage');
+});
+
+
+Route::group(['middleware' => 'business'], function () {
+ 
+    Route::get('business/login', 'ShopAdmin\AuthController@getLogin');
+    Route::post('business/login', 'ShopAdmin\AuthController@postLogin');
+    Route::get('business/register', 'ShopAdmin\AuthController@getRegister');
+    Route::post('business/register', 'ShopAdmin\AuthController@postRegister');
+    Route::get('business', 'ShopAdmin\BusinessController@index');
+
+});

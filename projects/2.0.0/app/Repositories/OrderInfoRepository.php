@@ -43,7 +43,7 @@ class OrderInfoRepository
 	public function getOrderInfos($where,$type,$num = 20)
 	{
 		
-		$order_infos = OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.order_id,order_info.order_sn,order_info.pay_status,order_info.order_status,order_info.shipping_status,order_info.goods_amount,order_info.shipping_fee,order_info.total_fee,order_info.consignee,order_info.address,order_info.mobile,order_info.postscript,order_info.pay_time,order_info.created_at'))
+		$order_infos = OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.*'))
 							->leftJoin('shop', 'shop.shop_id', '=', 'order_info.shop_id')
 							->where($where);
 							

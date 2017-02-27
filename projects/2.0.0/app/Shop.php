@@ -15,7 +15,9 @@ class Shop extends Model
     	'shop_name',
     	'shop_img',
     	'description',    	
-        'shop_type',     
+        'shop_type',   
+        'open_time',
+        'colse_time',  
         'created_at',
         'updated_at',
     ];

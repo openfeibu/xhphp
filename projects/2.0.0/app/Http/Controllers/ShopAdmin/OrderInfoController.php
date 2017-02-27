@@ -7,8 +7,7 @@ use App\Cart;
 use App\OrderGoods;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\CommonController;
+use App\Http\Controllers\ShopAdmin\Controller;
 use App\Services\PayService;
 use App\Services\UserService;
 use App\Services\GoodsService;
@@ -18,7 +17,7 @@ use App\Services\OrderInfoService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
 
-class OrderInfoController extends CommonController
+class OrderInfoController extends Controller
 {
 	protected $helpService;
 
@@ -44,6 +43,7 @@ class OrderInfoController extends CommonController
                          		TradeAccountService $tradeAccountService,
 								OrderInfoService $orderInfoService)
 	{
+		parent::__construct($shopService);
 		$this->userService = $userService;
 		$this->goodsService = $goodsService ;
 		$this->shopService = $shopService ;
@@ -51,8 +51,7 @@ class OrderInfoController extends CommonController
 	 	$this->orderInfoService = $orderInfoService;
 	 	$this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
-	 	$this->user = $this->userService->getBussiness(); 
-	 	$this->shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);    
+	 	  
 	}
 	public function orderInfos (Request $request)
 	{
@@ -89,7 +88,6 @@ class OrderInfoController extends CommonController
 	public function shipping (Request $request)
     {
     	$rules = [
-        	'token' 	=> 'required',
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
     	$this->helpService->validateParameter($rules);    	
@@ -97,13 +95,13 @@ class OrderInfoController extends CommonController
 		$order_info = $this->orderInfoService->sellerCheckShipping($request->order_id,$this->shop->shop_id);
 
 		//商家
-		if($shop->shop_type == 2){
+		if($this->shop->shop_type == 2){
 			//创建新任务
 			$order_sn = $this->helpService->buildOrderSn('RT');
 			$total_fee = $order_info->shipping_fee;
 			$service_fee = $this->helpService->serviceFee($total_fee) ;
         	$order = $this->orderService->createOrder(['destination' => $order_info->address,
-                                             'description' => $shop->shop_name,
+                                             'description' => $this->shop->shop_name,
                                              'fee' => $total_fee,
                                              'goods_fee' => 0 ,
                                              'total_fee' => $total_fee,
@@ -123,7 +121,6 @@ class OrderInfoController extends CommonController
     public function agreeCancel(Request $request)
     {
     	$rules = [
-        	'token' 	=> 'required',
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
     	$this->helpService->validateParameter($rules);    	
@@ -165,5 +162,4 @@ class OrderInfoController extends CommonController
 		
     	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
     }
-    
 }

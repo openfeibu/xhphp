@@ -33,7 +33,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $hidden = ['password'];
+    protected $hidden = ['password','pay_password','remember_token'];
 
     public function verifyCode()
     {

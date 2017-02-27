@@ -19,12 +19,11 @@ class DES3Encrypt
     {
 	   
         $response = $next($request);
-         
         Log::error('after------------:' . $response);
         if ($request->isDecrypt === 1) {
-            $data = ['data' => DES3::encrypt($response->getOriginalContent())];
+            $data = ['data' => DES3::encrypt($response->getContent())];
         } else {
-            $data = $response->getOriginalContent();
+            $data = $response->getContent();
         }
         $response->setContent($data);
         Log::error('after------------encrypt:' . $response);

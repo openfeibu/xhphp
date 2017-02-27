@@ -231,48 +231,52 @@ class ImageService
 	    return $image_url;
 	}
 
-	public function uploadAdminImages ($files, $usage)
+	public function uploadAdminImages ($files, $usage,$id = 0)
 	{
 		//如果文件夹不存在，则创建文件夹
-        $directory = public_path('uploads') . '\\' . $usage;
+        $directory = $id ? public_path('uploads') . '\\' . $usage.'\\'.$id : public_path('uploads') . '\\' . $usage;
+        $thumb_directory = $directory.'\\thumb';
+        $url = $id ?  '/uploads/'.$usage.'/'.$id : '/uploads/'.$usage;
+        $thumb_url = $url.'/thumb';
         if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
+            File::makeDirectory($thumb_directory, 0755, true);
         }
-
+		
 		//保存图片文件到服务器
 		$i = 0;
 		foreach ($files['uploadfile'] as $file) {
 		    $extension = $file->getClientOriginalExtension();
 		    $imageName = md5(time().rand()) . '.' . $extension;
-		    $img_url = '/uploads/'.$usage.'/'.$imageName;
-			$thumb_url = public_path().'/uploads/'.$usage.'/thumb/'.$imageName;
+		    $img = $url.'/'.$imageName;
+			$thumb = $thumb_url.'/'.$imageName;
 		    #todo 图片压缩：分别上传图片缩略图及其原图
-		    Storage::put($img_url, file_get_contents($file->getRealPath()));
+		    Storage::put($img, file_get_contents($file->getRealPath()));
 
-		    $images_url[$i]['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/'. $img_url;
+		    $images_url[$i]['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/'. $img;
 		    $images_url[$i]['usage'] = $usage;
 		    $images_url[$i]['created_at'] = date("Y-m-d H:i:s");
 
 		    $imgs_url[$i] = $images_url[$i]['img_url'];
-		    $thumbs_url[$i] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/uploads/'.$usage.'/thumb/'.$imageName;
-		    $this->helpService->image_png_size_add(public_path().$img_url,$thumb_url);
+		    $thumbs_url[$i] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/'.$thumb;
+		    $this->helpService->image_png_size_add(public_path().$img,public_path().$thumb);
 		    $i++;
 		}
 		if ($i === 0) {
 			$extension = $files['uploadfile']->getClientOriginalExtension();
 			$imageName = md5(time().rand()) . '.' . $extension;
-			$img_url = 'uploads/'.$usage.'/'.$imageName;
-			$thumb_url = public_path().'/uploads/'.$usage.'/thumb/'.$imageName;
+			$img = $url.'/'.$imageName;
+			$thumb = $thumb_url.'/'.$imageName;
 
-		    Storage::put($img_url, file_get_contents($files['uploadfile']->getRealPath()));
+		    Storage::put($img, file_get_contents($files['uploadfile']->getRealPath()));
 
-		    $images_url['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/'. $img_url;
+		    $images_url['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/'. $img;
 		    $images_url['usage'] = $usage;
 		    $images_url['created_at'] = date("Y-m-d H:i:s");
 
 		    $imgs_url[] = $images_url['img_url'];
-		    $thumbs_url[] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/uploads/'.$usage.'/thumb/'.$imageName;
-		    $this->helpService->image_png_size_add($img_url,$thumb_url);
+		    $thumbs_url[] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/'.$thumb;
+		    $this->helpService->image_png_size_add($img,public_path().$thumb);
 		}
 
 		//保存图片信息到数据库

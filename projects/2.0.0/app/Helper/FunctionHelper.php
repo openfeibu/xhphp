@@ -93,7 +93,11 @@ if (!function_exists('buyerHandle')) {
 		else if($shop->shop_status == 2){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺未通过审核，禁止所有操作');
 		}else if($shop->shop_status == 3){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺暂停营业');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺休息中');
+		}
+		$time = strtotime(date('m:i:s',time()));
+		if($time <= strtotime($shop->open_time) || $time >= strtotime($shop->close_time)){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺休息中');
 		}
 	}
 }
