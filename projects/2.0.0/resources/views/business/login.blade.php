@@ -7,18 +7,24 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('admin/login') }}">
+	                 @if($errors->first())
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">¡Á</button>
+                        <strong>{{ $errors->first() }}!</strong>
+                    </div>
+                @endif
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('business/login') }}">
                         {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('account_number') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Account Number</label>
+                        <div class="form-group{{ $errors->has('mobile_no') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Mobile</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="account_number" value="{{ old('account_number') }}">
+                                <input type="text" class="form-control" name="mobile_no" value="{{ old('mobile_no') }}">
 
-                                @if ($errors->has('account_number'))
+                                @if ($errors->has('mobile_no'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('account_number') }}</strong>
+                                        <strong>{{ $errors->first('mobile_no') }}</strong>
                                     </span>
                                 @endif
                             </div>
