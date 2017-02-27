@@ -1,72 +1,88 @@
-@extends('layouts.business')
+@extends('layouts.common')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-	                 @if($errors->first())
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">��</button>
-                        <strong>{{ $errors->first() }}!</strong>
-                    </div>
-                @endif
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('business/login') }}">
-                        {!! csrf_field() !!}
+<body class="loginBg">
+  <div id="app" style="height:100%">
+	<el-form :model="login" :rules="rules" ref="login" label-width="90px" class="login" action="{{ url('business/login') }}" method="post">
+	  <div class="logo"></div>
+	  <el-form-item label="账号" prop="mobile_no">
+	    <el-input  v-model="login.mobile_no" auto-complete="off" value="{{ old('mobile_no') }}" name="mobile_no"></el-input>
+	    @if ($errors->has('mobile_no'))
+	        <div class="el-form-item__error">
+	            <strong>{{ $errors->first('mobile_no') }}</strong>
+	        </div>
+	  	@endif
+	  </el-form-item>
+	  
+	  <el-form-item label="密码" prop="password">
+	    <el-input type="password" v-model="login.password" auto-complete="off" name="password"></el-input>
+	    @if ($errors->has('password'))
+	        <div class="el-form-item__error">
+	            <strong>{{ $errors->first('password') }}</strong>
+	        </div>
+      	@endif
+	  </el-form-item>
+	  
+	  <el-form-item>
+	    <el-button type="primary" @click="submit('login')">登录</el-button>
+	  </el-form-item>
+	</el-form>
+  </div>
+</body >
+  
+  <script>
 
-                        <div class="form-group{{ $errors->has('mobile_no') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Mobile</label>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="mobile_no" value="{{ old('mobile_no') }}">
-
-                                @if ($errors->has('mobile_no'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('mobile_no') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+  	var Main = {
+	    methods: {
+		     submit:function(formName){
+		     	this.$refs[formName].validate((valid) => {
+		          if (valid) {
+			  		$(".login").submit();
+		          } else {
+				    this.$message.error('账号密码不可为空');
+		            return false;
+		          }
+		        });
+		     }
+		
+		  },
+		  created:function(){
+		  	//获取列表
+		  	
+		  },
+		 data() {
+		 	 var validateA = (rule, value, callback) => {
+		        if (value === '') {
+		          callback(new Error('请输入校汇账号'));
+		        }else {
+		          callback();
+		        }
+		      };
+		      var validateP = (rule, value, callback) => {
+		        if (value === '') {
+		          callback(new Error('请输入校汇密码'));
+		        }else {
+		          callback();
+		        }
+		      };
+	        return {
+	          login:{
+	          	"mobile_no":"",
+	          	"password":""
+	          },
+	           rules: {
+			          mobile_no: [
+			            { validator: validateA, trigger: 'blur' }
+			          ],
+			          password: [
+			            { validator: validateP, trigger: 'blur' }
+			          ],
+			        }
+	        }
+	      }
+	  }
+	var Ctor = Vue.extend(Main);
+	new Ctor({router}).$mount('#app');
+	
+  </script>
+@stop
