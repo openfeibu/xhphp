@@ -17,8 +17,7 @@ class Controller extends CommonController
    public function __construct (ShopService $shopService)
    {
 	   	$this->shopService = $shopService ;
-	   	$this->user = User::where('uid', 85)->first(['uid','wallet','mobile_no','nickname','avatar_url','created_at']);
-   		//$this->user = Auth::guard('business')->user();
+   		$this->user = Auth::guard('business')->user();
    		$this->shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);  
    }
 }
