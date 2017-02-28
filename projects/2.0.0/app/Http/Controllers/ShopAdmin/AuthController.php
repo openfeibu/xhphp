@@ -4,6 +4,8 @@ namespace App\Http\Controllers\ShopAdmin;
 
 use App\ShopAdmin;
 use Validator;
+use Auth;
+use Redirect;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -32,7 +34,12 @@ class AuthController extends Controller
         ]);
 
     }
-
+	  // µÇ³ö
+     public function getLogout()
+     {
+          Auth::logout();
+          return Redirect::to('business');
+     }
     protected function create(array $data)
     {
        	

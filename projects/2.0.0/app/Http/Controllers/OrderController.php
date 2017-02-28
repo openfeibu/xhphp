@@ -626,7 +626,7 @@ $ret = $this->pushService->PushUserTokenDevice('系统通知', json_encode($data
 			'open' => 'window',
 			'data' => 'http://baidu.com'
 		];
-        $ret = $this->pushService->PushUserTokenDevice('标题', '内容', '77',1,$custom);
+        $ret = $this->pushService->PushUserTokenDevice('标题', '内容', '958',1,$custom);
 		//$this->messageService->SystemMessage2SingleOne('77', '哈哈。');
 		var_dump($ret);exit;
         return [

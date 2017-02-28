@@ -95,8 +95,8 @@ if (!function_exists('buyerHandle')) {
 		}else if($shop->shop_status == 3){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺休息中');
 		}
-		$time = strtotime(date('m:i:s',time()));
-		if($time <= strtotime($shop->open_time) || $time >= strtotime($shop->close_time)){
+		$time = strtotime(date('H:i:s',time()));
+		if($time < strtotime($shop->open_time) || $time > strtotime($shop->close_time)){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺休息中');
 		}
 	}

@@ -243,6 +243,7 @@ Route::post('business/shop/uploadShopImage','ShopAdmin\UserController@uploadShop
 Route::group(['middleware' => 'business'], function () {
  
     Route::get('business/login', 'ShopAdmin\AuthController@getLogin');
+    Route::get('business/logout', 'ShopAdmin\AuthController@getLogout');
     Route::post('business/login', 'ShopAdmin\AuthController@postLogin');
     Route::get('business/register', 'ShopAdmin\AuthController@getRegister');
     Route::post('business/register', 'ShopAdmin\AuthController@postRegister');

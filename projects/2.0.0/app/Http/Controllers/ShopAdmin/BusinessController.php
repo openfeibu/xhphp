@@ -11,7 +11,7 @@ use Auth;
 class BusinessController extends Controller
 {
 
-    
+
     public function index()
     {
         return view('business.index');
