@@ -20,7 +20,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
     	'web' => [
-	        
+
 	        // \App\Http\Middleware\VerifyCsrfToken::class,
 	        \App\Http\Middleware\DES3Decrypt::class,
 	        \App\Http\Middleware\DES3Encrypt::class,
