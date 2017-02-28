@@ -192,7 +192,7 @@ class Handler extends ExceptionHandler
       /*  if ($request->isDecrypt === 1) {
             $resposeJson = ['data' => DES3::encrypt($resposeJson)];
         }*/
-        return $resposeJson;
+        return response()->json($resposeJson);
         Log::debug('reponse----------'.response()->json($resposeJson));
 
         return response()->json($resposeJson, 200, ['Access-Control-Allow-Origin' => config('app.allow_origin'),
