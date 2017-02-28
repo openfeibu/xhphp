@@ -17,6 +17,7 @@ class DES3Encrypt
      */
     public function handle($request, Closure $next)
     {
+
         $response = $next($request);
         Log::error('after------------:' . $response);
         if ($request->isDecrypt === 1) {
