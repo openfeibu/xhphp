@@ -278,9 +278,11 @@ class OrderInfoController extends Controller
     {
         $rules = [
         	'order_id' => 'required|integer|exists:order_info,order_id',
+        	'type'	   => 'sometimes|in:buyer,seller'
         ];
         $is_exists = $this->orderInfoService->isExistsOrderInfo(['order_id' => $request->order_id],$columns = ['order_id']);
-        $order_info = $this->orderInfoService->getOrderInfo($request->order_id);
+        $type = isset($request->type) ?  $request->type : 'buyer';
+        $order_info = $this->orderInfoService->getOrderInfo($request->order_id,$type);
         return [
         	'code' => 200,
 			'order_info' => $order_info,
