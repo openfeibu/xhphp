@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
-        $response = $this->handle($e, $request);	
+        $response = $this->handle($e, $request);
         if ($response) {
             return $response;
         }
@@ -189,16 +189,17 @@ class Handler extends ExceptionHandler
                 return false;
                 break;
         }
-        if ($request->isDecrypt === 1) {
+      /*  if ($request->isDecrypt === 1) {
             $resposeJson = ['data' => DES3::encrypt($resposeJson)];
-        }
-        Log::error('after------------:' . serialize($resposeJson));
+        }*/
+        return $resposeJson;
+        Log::debug('reponse----------'.response()->json($resposeJson));
 
         return response()->json($resposeJson, 200, ['Access-Control-Allow-Origin' => config('app.allow_origin'),
                                                     'Access-Control-Allow-Headers' => 'Origin, Content-Type, Cookie, Accept',
                                                     'Access-Control-Allow-Methods' => 'GET, POST, PATCH, PUT, OPTIONS',
                                                     'Access-Control-Allow-Credentials' => 'true']);
-												
-		
+
+
     }
 }
