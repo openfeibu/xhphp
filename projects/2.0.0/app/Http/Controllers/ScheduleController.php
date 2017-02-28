@@ -90,7 +90,9 @@ class ScheduleController extends Controller
 	        //推送给接单人
 			$custom = [
 				'open' => 'mytask',
-				'data' => $order->description,
+				'data' => [
+					'id' => $order->oid,
+				],
 			];
 			$this->pushService->PushUserTokenDevice('任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id,1,$custom);
 			

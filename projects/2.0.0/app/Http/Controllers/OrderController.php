@@ -346,7 +346,9 @@ class OrderController extends Controller
         //推送给发单者
         $custom = [
 			'open' => 'task',
-			'data' => $order->description,
+			'data' => [
+				'id' => $request->order_id,
+			],
 		];
         $this->pushService->PushUserTokenDevice('校汇任务', '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。', $order_owner_id,1,$custom);
 
@@ -548,7 +550,9 @@ class OrderController extends Controller
         //推送给发单人
         $custom = [
 			'open' => 'task',
-			'data' => $order->description,
+			'data' => [
+				'id' => $request->order_id,
+			],
 		];
         $this->pushService->PushUserTokenDevice('校汇任务', '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。', $owner_id,1,$custom);
 
@@ -622,9 +626,11 @@ class OrderController extends Controller
 		];
 $ret = $this->pushService->PushUserTokenDevice('系统通知', json_encode($data), 77,2);
 	var_dump($ret);exit;*/
-		$custom = [
-			'open' => 'window',
-			'data' => 'http://baidu.com'
+		 return $custom = [
+			'open' => 'task',
+			'data' => [
+				'id' => '1094',
+			],
 		];
         $ret = $this->pushService->PushUserTokenDevice('标题', '内容', '958',1,$custom);
 		//$this->messageService->SystemMessage2SingleOne('77', '哈哈。');

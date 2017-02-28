@@ -27,6 +27,7 @@ class Kernel extends HttpKernel
 	        \App\Http\Middleware\EnableCrossRequestMiddleware::class,
 	    ],
 	    'business' =>[
+	    	
 	    ],
     ];
 

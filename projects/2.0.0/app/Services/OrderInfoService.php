@@ -53,6 +53,14 @@ class OrderInfoService
 		
 		foreach( $order_infos as $key => $order_info )
 		{
+			$order_goodses =  $this->getOrderGoodses($order_info->order_id);
+			$order_goodses =  $this->getOrderGoodses($order_info->order_id,['goods_number']);
+			$goods_number = 0;
+			foreach( $order_goodses as $k => $order_goods )
+			{
+				$goods_number = $goods_number + $order_goods->goods_number;
+			}
+			$order_info->goods_number = $goods_number;
 			$order_info->status_desc = trans('common.pay_status.'.$order_info->pay_status);
 			if($order_info->pay_status == 1){
 				$order_info->status_desc = trans('common.order_status.buyer.'.$order_info->order_status);

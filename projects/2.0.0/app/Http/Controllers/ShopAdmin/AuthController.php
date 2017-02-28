@@ -22,7 +22,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:business', ['except' => 'logout']);
+        $this->middleware('business:business', ['except' => ['getLogout','getLogin','postLogin']]);
     }
 
     protected function validator(array $data)
@@ -37,8 +37,10 @@ class AuthController extends Controller
 	  // µÇ³ö
      public function getLogout()
      {
-          Auth::logout();
-          return Redirect::to('business');
+        if(Auth::guard('business')->user()){
+            Auth::guard('business')->logout();
+        }
+          return Redirect::to('business/login');
      }
     protected function create(array $data)
     {
