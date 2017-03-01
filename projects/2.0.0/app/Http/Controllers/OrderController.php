@@ -626,13 +626,13 @@ class OrderController extends Controller
 		];
 $ret = $this->pushService->PushUserTokenDevice('系统通知', json_encode($data), 77,2);
 	var_dump($ret);exit;*/
-		 return $custom = [
+		$custom = [
 			'open' => 'task',
 			'data' => [
 				'id' => '1094',
 			],
 		];
-        $ret = $this->pushService->PushUserTokenDevice('标题', '内容', '958',1,$custom);
+        $ret = $this->pushService->PushUserTokenDevice('这是标题', '这是内容', '957',1,$custom);
 		//$this->messageService->SystemMessage2SingleOne('77', '哈哈。');
 		var_dump($ret);exit;
         return [

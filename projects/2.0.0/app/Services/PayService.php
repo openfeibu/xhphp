@@ -37,6 +37,22 @@ class PayService
 	 	$this->smsService = $smsService;
 	 	$this->user = $this->userService->getUser(); 
 	}
+	/**
+		* 支付处理
+		* 
+		* @access public
+		* 
+	*/
+	/** 
+	* 支付处理
+	* 
+	* @access public 
+	* @param mixed $pay_id 支付方式：1.支付宝 。2.微信支付（待接入）。3.余额支付
+	* @param mixed $pay_platform 请求平台：web(网页)  其他为and ，ios 
+	* @param mixed $pay_form 使用场合 : shop ，task
+	* @since 1.0 
+	* @return array 
+	*/
 	public function payHandle($pay_id,$pay_platform,$pay_form,$data)
 	{
 		$this->user = $this->userService->getUserByUserID($this->user->uid); 

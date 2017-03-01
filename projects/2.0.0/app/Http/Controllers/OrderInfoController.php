@@ -252,7 +252,7 @@ class OrderInfoController extends Controller
         										]);	        																								
         $pay_platform = isset($request->platform) ? $request->platform : 'web';	
         $data = [
-        	'return_url' => config('common.order_info_return_url'),
+        	'return_url' => config('common.order_info_return_url').'?order_id='. $order_info->order_id,
         	'order_sn' => $order_sn,
         	'order_id' => $order_info->order_id,
         	'subject' => '校汇商店订单',
@@ -264,6 +264,7 @@ class OrderInfoController extends Controller
         $data = $this->payService->payHandle($request->pay_id,$pay_platform,'shop',$data);		
         return [
 			'code' => 200,
+			'order_id' => $order_info->order_id,
 			'data' => $data
         ];
     }

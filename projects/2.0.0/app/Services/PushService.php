@@ -59,7 +59,7 @@ class PushService
 					        $message1->title($title);  // 通知栏的title
 				        	$message1->description($content); // 通知栏的descption
 				        	$message1->passThrough(0);  // 这是一条通知栏消息，如果需要透传，把这个参数设置成1,同时去掉title和descption两个参数
-				        	$message1->extra(Builder::notifyForeground, 0); // 应用在前台是否展示通知，如果不希望应用在前台时候弹出通知，则设置这个参数为0
+				        	$message1->extra(Builder::notifyForeground, 1); // 应用在前台是否展示通知，如果不希望应用在前台时候弹出通知，则设置这个参数为0
 				        }else{
 					        $message1->passThrough(1);
 					        $message1->extra(Builder::notifyForeground, 1); // 应用在前台是否展示通知，如果不希望应用在前台时候弹出通知，则设置这个参数为0
@@ -72,7 +72,7 @@ class PushService
 						$targetMessage = new TargetedMessage();
 						$targetMessage->setTarget('regID', 1); // 设置发送目标。可通过regID,alias和topic三种方式发送
 						$targetMessage->setMessage($message1);
-
+						
 						//$ret = $sender->sendToAliases($message1,$aliasList)->getRaw();
 						$ret = $sender->send($message1,$device->device_token);
 						//var_dump($ret);
