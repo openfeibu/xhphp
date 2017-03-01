@@ -189,6 +189,7 @@ class Handler extends ExceptionHandler
                 return false;
                 break;
         }
+
        	/*if ($request->isDecrypt === 1) {
             $resposeJson = ['data' => DES3::encrypt($resposeJson)];
         }*/
