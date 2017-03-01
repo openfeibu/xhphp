@@ -492,6 +492,7 @@ class UserController extends Controller
 			'data' => [
 				'wallet' => $alipayInfo->wallet,
 				'alipay' => $alipayInfo->alipay,
+				'alipay_name' =>$alipayInfo->alipay_name,
 				'is_alipay' => $alipayInfo->is_alipay,
 				'is_paypassword' =>$alipayInfo->is_paypassword,
 			],
