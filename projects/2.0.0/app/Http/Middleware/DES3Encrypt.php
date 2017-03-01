@@ -21,7 +21,7 @@ class DES3Encrypt
         $response = $next($request);
         Log::error('after------------:' . $response);
         if ($request->isDecrypt === 1) {
-            $data = ['data' => DES3::encrypt($response->original)];
+            $data = json_encode(['data' => DES3::encrypt($response->getContent())]);
         } else {
             $data = $response->getContent();
         }
