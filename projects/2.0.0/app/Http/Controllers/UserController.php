@@ -530,10 +530,10 @@ class UserController extends Controller
     public function changeAlipay (Request $request)
     {
 	    $user = $this->userService->getUser();
-	    $alipayInfo = $this->userService->getAlipayInfo($user->uid);
+	    /*$alipayInfo = $this->userService->getAlipayInfo($user->uid);
 	    if(!$alipayInfo->is_alipay){
 		    throw new \App\Exceptions\Custom\OutputServerMessageException('未绑定支付宝');
-	    }
+	    }*/
     	$rule = [
             'alipay' => 'required|string|max:50',
             'alipay_name' => 'required|string|max:50',
