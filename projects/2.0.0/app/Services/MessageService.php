@@ -51,7 +51,7 @@ class MessageService
 			'target' => 'message',
 			'data' => $content 
 		];
-		$this->pushService->PushUserTokenDevice($type, json_encode($data), $user_id,2);
+		$this->pushService->PushUserTokenDevice($type, '', $user_id,2,$data);
 		return true;
 	}
 

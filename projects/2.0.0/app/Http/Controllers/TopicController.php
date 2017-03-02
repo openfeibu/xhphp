@@ -380,7 +380,7 @@ class TopicController extends Controller
 				'target' => 'topic',
 				'data' => '你有新消息' 
 			];
-			$this->pushService->PushUserTokenDevice('校汇', json_encode($content), $to_uid,2);
+			$this->pushService->PushUserTokenDevice('校汇', '', $to_uid,2,$content);
 		}
         return [
             'code' => 200,

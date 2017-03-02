@@ -624,7 +624,7 @@ class OrderController extends Controller
 			'target' => 'message',
 			'data' => "123"
 		];
-$ret = $this->pushService->PushUserTokenDevice('系统通知', json_encode($data), 77,2);
+$ret = $this->pushService->PushUserTokenDevice('系统通知', '这是内容', 957,2,$data);
 	var_dump($ret);exit;*/
 		$custom = [
 			'open' => 'task',
