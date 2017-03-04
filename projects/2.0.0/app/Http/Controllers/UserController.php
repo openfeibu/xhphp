@@ -556,9 +556,9 @@ class UserController extends Controller
     {
 	    $user = $this->userService->getUser();
 	    $alipayInfo = $this->userService->getAlipayInfo($user->uid);
-	    if(!$alipayInfo->is_alipay){
+	    /*if(!$alipayInfo->is_alipay){
 		    throw new \App\Exceptions\Custom\OutputServerMessageException('未绑定支付宝');
-	    }
+	    }*/
 	    $user = $this->userService->getUser();
     	$this->smsService->sendSMS2Phone($user->mobile_no, 'changeAli');
     	throw new \App\Exceptions\Custom\RequestSuccessException();
