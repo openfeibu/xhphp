@@ -162,6 +162,7 @@ class UserRepository
 		self::$user->setConnection('write');
         self::$user->token = $logout ? '' : DB::raw('(select UUID())');
         self::$user->last_ip = $this->request->ip();
+        self::$user->last_login = dtime();
         self::$user->save();
 
         return User::find(self::$user->uid)->token;
