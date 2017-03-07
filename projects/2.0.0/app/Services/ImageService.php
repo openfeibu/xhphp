@@ -128,7 +128,7 @@ class ImageService
 
 		    $imgs_url[] = $images_url['img_url'];
 		    $thumbs_url[] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/uploads/'.$usage.'/thumb/'.$imageName;
-		    $this->helpService->image_png_size_add($img_url,$thumb_url);
+		    $this->helpService->image_png_size_add(public_path().$img_url,$thumb_url);
 		}
 
 		//保存图片信息到数据库
@@ -276,7 +276,7 @@ class ImageService
 
 		    $imgs_url[] = $images_url['img_url'];
 		    $thumbs_url[] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/'.$thumb;
-		    $this->helpService->image_png_size_add($img,public_path().$thumb);
+		    $this->helpService->image_png_size_add(public_path().$img,public_path().$thumb);
 		}
 
 		//保存图片信息到数据库
