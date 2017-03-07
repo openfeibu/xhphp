@@ -1117,6 +1117,7 @@ var setting = Vue.extend({
 			  	this.$refs[formName].validate((valid) => {
 		          if (valid) {
 			  		that.loading = true;
+			  		that.shopInfo.shop_status = that.shopInfo.shop_status_flag ? 1 : 3;
 		            $.post(this.localhost+'/business/shop/updateShop',that.shopInfo,function(data){
 			  				if(data.code == 200){	
 			  					that.loading = false;
