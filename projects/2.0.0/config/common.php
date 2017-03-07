@@ -11,5 +11,5 @@ return [
 		"jpg","gif","bmp","jpeg","png"
 	],
 	'shop_fee' => 0,
-	'no_goods_img' => config('app.url').'/uploads/system/no_goods_image',
+	'no_goods_img' => config('app.url').'/uploads/system/no_goods_image.jpg',
 ];
