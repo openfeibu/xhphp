@@ -20,6 +20,7 @@ class User extends Model implements AuthenticatableContract,
 
     protected $primaryKey = 'uid';
 
+	protected $fillable = ['*'];
 
     /**
      * The database table used by the model.

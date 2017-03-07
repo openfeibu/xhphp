@@ -31,6 +31,7 @@ class UserRepository
 				//token 无效
             	throw new \App\Exceptions\Custom\UserUnauthorizedException();
 			}
+			self::$user->update(['last_visit' => dtime()]);
 		}
 	}
 
@@ -73,7 +74,10 @@ class UserRepository
 	 */
 	public function getUserByToken($token)
 	{
-	  	return User::where('token', $token)->first();
+	  	$user = User::where('token', $token)->first();
+	  	$user->last_visit = dtime();
+        $user->save();
+	  	return $user;
 	}
 	
 	public function getBussiness ()
@@ -163,6 +167,7 @@ class UserRepository
         self::$user->token = $logout ? '' : DB::raw('(select UUID())');
         self::$user->last_ip = $this->request->ip();
         self::$user->last_login = dtime();
+        self::$user->last_visit = dtime();
         self::$user->save();
 
         return User::find(self::$user->uid)->token;
