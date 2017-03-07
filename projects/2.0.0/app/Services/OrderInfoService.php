@@ -126,8 +126,12 @@ class OrderInfoService
 		{
 			$order_goods->total_fee = $order_goods->goods_price * $order_goods->goods_number;
 			$goods = $this->goodsRepository->getGoods(['goods_id' => $order_goods->goods_id],['goods_img','goods_thumb']);
-			$order_goods->goods_img = $goods->goods_img;
-			$order_goods->goods_thumb = $goods->goods_thumb;
+			if(!$goods){
+				$order_goods->goods_img = $order_goods->goods_thumb = config('common.no_goods_img');
+			}else{
+				$order_goods->goods_img = $goods->goods_img;
+				$order_goods->goods_thumb = $goods->goods_thumb;
+			}
 		}
 		$order_info->order_goodses = $order_goodses;
 		return $order_info;
