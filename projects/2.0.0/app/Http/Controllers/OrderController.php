@@ -131,7 +131,6 @@ class OrderController extends Controller
     {
         //检验请求参数
         $rule = [
-			'token' => 'required',
             'order_id' => 'required',
         ];
         $this->helpService->validateParameter($rule);

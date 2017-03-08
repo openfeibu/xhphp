@@ -25,6 +25,7 @@ if (!function_exists('round_route')) {
 			'topic_getTopicCommentsList',
 			'shop_getShopList',
 			'shop_getShopGoodses',
+			'order_getOrderDetail',
 		];
 	}
 }

@@ -25,7 +25,7 @@ class UserAuthenticate
     public function handle($request, Closure $next)
     {
         if ($request->token !== '0') {
-            $this->user->tokenAuth($request->token);
+            $this->user->getUserByToken($request->token);
         }
 
         return $next($request);

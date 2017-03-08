@@ -66,6 +66,7 @@ class OrderService
 	{
 		$order = $this->orderRepository->getSingleOrderByToken($order_id);
 		$order['order_status'] = trans('common.task_status.'.$order['status']);
+		$order['share_url'] = config('app.order_share_url').'?oid='.$order['oid'];
 		return $order;
 	}
 
@@ -93,6 +94,7 @@ class OrderService
 	{
 		$order = $this->orderRepository->getOrderDetail($order_id);
 		$order->order_status = trans('common.task_status.'.$order['status']);
+		$order->share_url = config('app.order_share_url').'?oid='.$order->oid;
 		return $order;
 	}
 	/**

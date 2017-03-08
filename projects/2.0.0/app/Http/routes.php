@@ -48,7 +48,7 @@ Route::get('pay','UserController@pay');
 Route::get('order/getOrderList', 'OrderController@getOrderList')->name('order_getOrderList');
 Route::get('order/getOrder', 'OrderController@getOrder')->name('order_getOrder');
 Route::get('order/getOrderDetail', 'OrderController@getOrderDetail')->name('order_getOrderDetail');
-Route::get('order/getOrderByToken', 'OrderController@getOrderByToken');
+Route::get('order/getOrderByToken', 'OrderController@getOrderByToken')->name('order_getOrderDetail');;
 Route::post('order/createOrder', 'OrderController@createOrder')->name('order_createOrder');
 Route::post('order/claimOrder', 'OrderController@claimOrder')->name('order_claimOrder');
 Route::get('order/getMyOrder', 'OrderController@getMyOrder')->name('order_getMyOrder');

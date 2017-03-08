@@ -15,6 +15,7 @@ use App\Services\GoodsCategoryService;
 use App\Services\ShopService;
 use App\Services\HelpService;
 use App\Services\ImageService;
+use App\Services\CartService;
 use App\Services\FileUploadService;
 
 class GoodsController extends Controller
@@ -33,6 +34,7 @@ class GoodsController extends Controller
 	
 	public function __construct (UserService $userService,
 								GoodsService $goodsService,
+								CartService $cartService,
 								ShopService $shopService,
 								HelpService $helpService ,
 								FileUploadService $fileUploadService,
@@ -42,6 +44,7 @@ class GoodsController extends Controller
 		parent::__construct($shopService);
 		$this->userService = $userService;
 		$this->goodsService = $goodsService ;
+		$this->cartService = $cartService;
 		$this->goodsCategoryService = $goodsCategoryService ;
 		$this->helpService = $helpService;
 		$this->imageService = $imageService; 
@@ -256,6 +259,7 @@ class GoodsController extends Controller
         $this->helpService->validateParameter($rules); 
 		$where = ['goods_id' => $request->goods_id,'shop_id' => $this->shop->shop_id];
 		$this->goodsService->delete($where);
+		$this->cartService->removeCarts($where);
 		throw new \App\Exceptions\Custom\RequestSuccessException('删除成功');
     }
     
