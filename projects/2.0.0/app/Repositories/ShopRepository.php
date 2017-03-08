@@ -89,7 +89,7 @@ class ShopRepository
 	{
 		return  CollectShop::select(DB::raw('shop.shop_id,shop.college_id,shop.uid,shop.shipping_fee,college.cid,college.name as college_name,shop.address,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite_count,shop.shop_click_count,shop.created_at,shop.shop_status'))
 		 			->rightjoin('shop', function ($join) {
-			            $join->on('shop.shop_id', '=', 'collect_shops.shop_id')->where('shop.shop_status','=',1);
+			            $join->on('shop.shop_id', '=', 'collect_shops.shop_id')->whereIn('shop.shop_status',[1,3]);
 			        })
 			        ->leftJoin('college', 'college.cid', '=', 'shop.college_id')
 			        ->where('collect_shops.uid',$uid)
