@@ -54,11 +54,18 @@ class OrderInfoService
 		foreach( $order_infos as $key => $order_info )
 		{
 			$order_goodses =  $this->getOrderGoodses($order_info->order_id);
-			$order_goodses =  $this->getOrderGoodses($order_info->order_id,['goods_number']);
 			$goods_number = 0;
 			foreach( $order_goodses as $k => $order_goods )
 			{
 				$goods_number = $goods_number + $order_goods->goods_number;
+				$order_goods->total_fee = $order_goods->goods_price * $order_goods->goods_number;
+				$goods = $this->goodsRepository->getGoods(['goods_id' => $order_goods->goods_id],['goods_img','goods_thumb']);
+				if(!$goods){
+					$order_goods->goods_img = $order_goods->goods_thumb = config('common.no_goods_img');
+				}else{
+					$order_goods->goods_img = $goods->goods_img;
+					$order_goods->goods_thumb = $goods->goods_thumb;
+				}
 			}
 			$order_info->goods_number = $goods_number;
 			$order_info->status_desc = trans('common.pay_status.'.$order_info->pay_status);
