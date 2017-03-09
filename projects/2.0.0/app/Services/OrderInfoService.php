@@ -67,6 +67,7 @@ class OrderInfoService
 					$order_goods->goods_thumb = $goods->goods_thumb;
 				}
 			}
+			$order_info->order_goodses = $order_goodses;
 			$order_info->goods_number = $goods_number;
 			$order_info->status_desc = trans('common.pay_status.'.$order_info->pay_status);
 			if($order_info->pay_status == 1){
