@@ -116,7 +116,7 @@ class ImageService
 		if ($i === 0) {
 			$extension = $files['uploadfile']->getClientOriginalExtension();
 			$imageName = md5($user->token.time().rand()) . '.' . $extension;
-			$img_url = 'uploads/'.$usage.'/'.$imageName;
+			$img_url = '/uploads/'.$usage.'/'.$imageName;
 			$thumb_url = public_path().'/uploads/'.$usage.'/thumb/'.$imageName;
 
 		    Storage::put($img_url, file_get_contents($files['uploadfile']->getRealPath()));

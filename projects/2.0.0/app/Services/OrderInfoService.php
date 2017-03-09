@@ -142,6 +142,8 @@ class OrderInfoService
 			}
 		}
 		$order_info->order_goodses = $order_goodses;
+		$shop = $this->shopRepository->getShop(['shop_id' => $order_info->shop_id],['*']);
+		$order_info->shop = $shop;
 		return $order_info;
 	}
 	
