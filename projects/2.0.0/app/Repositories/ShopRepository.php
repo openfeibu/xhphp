@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use DB;
 use Session;
+use App\User;
 use App\Shop;
 use App\Goods;
 use App\CollectShop;
@@ -63,6 +64,10 @@ class ShopRepository
 	public function getShop ($where,$columns)
 	{
 		$shop = Shop::where($where)->first($columns);
+		if($shop){
+			$user = User::where('uid',$shop->uid)->first(['mobile_no']);
+			$shop->mobile_no = $user->mobile_no;
+		}
 		return 	$shop;			
 	}
 	public function collect ($shop_id,$uid)
