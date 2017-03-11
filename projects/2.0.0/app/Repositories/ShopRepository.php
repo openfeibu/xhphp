@@ -63,11 +63,9 @@ class ShopRepository
 	}
 	public function getShop ($where,$columns)
 	{
-		$shop = Shop::where($where)->first($columns);
+		$shop = Shop::where($where)->first();
 		if($shop){
 			$user = User::where('uid',$shop->uid)->first(['mobile_no']);
-
-			var_dump($user);exit;
 			$shop->mobile_no = $user->mobile_no;
 		}
 		return 	$shop;			
