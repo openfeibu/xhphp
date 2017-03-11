@@ -47,7 +47,8 @@ class ShopRepository
 						->orderBy('top', 'desc')
 						->orderBy('shop_favorite_count','desc')
 						->orderBy('shop_click_count','desc')
-						->orderBy('shop_id', 'asc')
+						->orderBy('shop_status','asc')
+						->orderBy('shop_id', 'desc')
                         ->take(20)
                         ->get();
         return $shopList;
