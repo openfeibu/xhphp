@@ -44,10 +44,10 @@ class ShopRepository
 						->leftJoin('college', 'college.cid', '=', 'shop.college_id')
 						->whereIn('shop_status', [1,3])
 						->skip(20 * $this->request->page - 20)
+						->orderBy('shop_status','asc')
 						->orderBy('top', 'desc')
 						->orderBy('shop_favorite_count','desc')
-						->orderBy('shop_click_count','desc')
-						->orderBy('shop_status','asc')
+						->orderBy('shop_click_count','desc')	
 						->orderBy('shop_id', 'desc')
                         ->take(20)
                         ->get();
