@@ -145,9 +145,9 @@ class CartService
 				$goodsDetail = $this->goodsService->existGoods($cart->goods_id);
 				$goods_total = $cart->goods_price * $cart->goods_number;
 				$arrCarts[$cartShop->shop_id]['carts'][$cart->cart_id] = array(
-					'goods_desc' 	=> $goodsDetail->goods_desc ,
 					'goods_img'  	=> $goodsDetail->goods_img,
 					'goods_name' 	=> $cart->goods_name,
+					'goods_desc' 	=> $cart->goods_desc,
 					'goods_id'	 	=> $cart->goods_id,				
 					'goods_price'	=> $cart->goods_price,
 					'goods_number'	=> $cart->goods_number,

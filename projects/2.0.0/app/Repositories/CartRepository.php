@@ -33,6 +33,7 @@ class CartRepository
 		$cart->goods_id = $goods->goods_id;		
 		$cart->goods_name = $goods->goods_name;                 
 		$cart->goods_price = $goods->goods_price;
+		$cart->goods_desc = $goods->goods_desc;
 		$cart->goods_number = $this->request->goods_number;
 		$cart->created_at = date('Y-m-d H:i:s');
 		$cart->save();

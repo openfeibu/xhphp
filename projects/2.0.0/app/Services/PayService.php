@@ -152,7 +152,7 @@ class PayService
 						break;
 				}
 				
-				throw new \App\Exceptions\Custom\RequestSuccessException("支付成功");
+				return '支付成功过';
 				break;			
 			default:
 				throw new \App\Exceptions\Custom\OutputServerMessageException('未存在该支付方式');
