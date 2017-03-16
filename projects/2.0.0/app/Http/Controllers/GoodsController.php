@@ -198,7 +198,11 @@ class GoodsController extends Controller
     public function uploadGoodsImage(Request $request)
     {
          //上传头像文件
-        $images_url = $this->imageService->uploadThumbImages(Input::all(), 'goods');
+        $user = $this->userService->getUser();  
+        
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);   
+         
+        $images_url = $this->imageService->uploadAdminImages(Input::all(), 'goods',$shop->shop_id);
         
         return [
             'code' => 200,
