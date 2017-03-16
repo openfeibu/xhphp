@@ -231,7 +231,7 @@ class GoodsController extends Controller
         ];
         $this->helpService->validateParameter($rules);  
         $goods = $this->goodsService->getGoods(['cat_id' => $request->cat_id,'shop_id' => $this->shop->shop_id],['goods_id']);
-        if($goods){
+        if(count($goods)){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('该分类下存在商品');
         }
 
