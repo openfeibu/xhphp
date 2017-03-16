@@ -27,7 +27,7 @@ class OrderInfoController extends Controller
 	protected $goodsService;
 
 	protected $shopService;
-	
+
 	protected $userService;
 
 	protected $cartService;
@@ -35,9 +35,9 @@ class OrderInfoController extends Controller
 	protected $orderInfoService;
 
 	protected $payService;
-	
+
 	protected $user;
-	
+
 	public function __construct (UserService $userService,
 								ShopService $shopService,
 								GoodsService $goodsService,
@@ -63,7 +63,7 @@ class OrderInfoController extends Controller
 	 	$this->userAddressService = $userAddressService;
 	 	$this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
-	 	$this->user = $this->userService->getUser(); 
+	 	$this->user = $this->userService->getUser();
 	}
 
 	/*public function index (Request $request)
@@ -74,13 +74,13 @@ class OrderInfoController extends Controller
     	];
     	$this->helpService->validateParameter($rules);
     	$cart_ids = array_filter(explode(',',$request->cart_ids));
-    	$shop_ids = $this->cartService->getShopIds($cart_ids,$this->user->uid);  	
+    	$shop_ids = $this->cartService->getShopIds($cart_ids,$this->user->uid);
     	if(!count($shop_ids)){
 	    	throw new \App\Exceptions\Custom\OutputServerMessageException('参数错误');
     	}
     	$total = 0;
     	foreach( $shop_ids as $key => $shop_id )
-    	{    	
+    	{
     		$carts = $this->cartService->getShopCartsByCartIds($shop_id,$cart_ids,$this->user->uid);
 			$shopDetail = $this->shopService->getShop($shop_id);
 			$arrCarts[$shop_id] = array(
@@ -89,7 +89,7 @@ class OrderInfoController extends Controller
 				'shop_status'	=> $shopDetail->shop_status,
 				'shop_status_description' => trans("common.shop_status.$shopDetail->shop_status"),
 			);
-			$shop_total = 0; 
+			$shop_total = 0;
 			foreach( $carts as $k => $cartsValue )
 			{
 				$goodsDetail = $this->goodsService->existGoods($cartsValue->goods_id);
@@ -99,7 +99,7 @@ class OrderInfoController extends Controller
 					'goods_name' 	=> $goodsDetail->goods_name,
 					'goods_img'  	=> $goodsDetail->goods_img,
 					'is_on_sale'	=> $goodsDetail->is_on_sale,
-					'goods_id'	 	=> $cartsValue->goods_id,				
+					'goods_id'	 	=> $cartsValue->goods_id,
 					'goods_price'	=> $cartsValue->goods_price,
 					'goods_number'	=> $cartsValue->goods_number,
 					'cart_id'		=> $cartsValue->cart_id,
@@ -111,7 +111,7 @@ class OrderInfoController extends Controller
 			$total += $shop_total;
     	}
     	$pay = config("pay");
-    	//$address = 
+    	//$address =
     	return [
             'code' => 200,
             'data' => [
@@ -128,7 +128,7 @@ class OrderInfoController extends Controller
             'type' => 'required|in:waitpay,beship,shipping,succ,cancell',
         ];
         $this->helpService->validateParameter($rule);
-		
+
         $order_infos = $this->orderInfoService->getOrderInfos($this->user->uid,$request->type);
         return [
 			'code' => 200,
@@ -206,7 +206,7 @@ class OrderInfoController extends Controller
 				'detail' => '未设置支付密码',
 			];
 		}
-		
+
 		$order_sn = $this->helpService->buildOrderSn('SP');
 		$count = $this->cartService->getCount(['uid' => $this->user->uid,'shop_id' => $request->shop_id]);
 		if(!$count){
@@ -235,7 +235,7 @@ class OrderInfoController extends Controller
 		        ];
 	        }
         }
-		
+
         $order_info = $this->orderInfoService->create([
         											'order_sn' => $order_sn,
         											'uid' => $this->user->uid,
@@ -249,26 +249,26 @@ class OrderInfoController extends Controller
         											'goods_amount' => $goods_amount,
         											'total_fee' => $total_fee,
         											'shipping_fee' => $shipping_fee
-        										]);	        																								
-        $pay_platform = isset($request->platform) ? $request->platform : 'web';	
+        										]);
+        $pay_platform = isset($request->platform) ? $request->platform : 'web';
         $data = [
         	'return_url' => config('common.order_info_return_url').'?order_id='. $order_info->order_id,
         	'order_sn' => $order_sn,
         	'order_id' => $order_info->order_id,
         	'subject' => '校汇商店订单',
-        	'body' => '校汇商店订单', 
+        	'body' => '校汇商店订单',
         	'total_fee' => $total_fee,
         	'trade_type' => 'Shopping',
         	'mobile_no' => $shop_user->mobile_no
-        ];								
-        $data = $this->payService->payHandle($request->pay_id,$pay_platform,'shop',$data);		
+        ];
+        $data = $this->payService->payHandle($request->pay_id,$pay_platform,'shop',$data);
         return [
 			'code' => 200,
 			'order_id' => $order_info->order_id,
 			'data' => $data
         ];
     }
-	
+
     /**
      * Display the specified resource.
      *
@@ -339,29 +339,29 @@ class OrderInfoController extends Controller
         	'token' 	=> 'required',
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
-    	
-    	$pay_platform = isset($request->platform) ? $request->platform : 'web';	
-    	
+
+    	$pay_platform = isset($request->platform) ? $request->platform : 'web';
+
     	$this->helpService->validateParameter($rules);
-    	
+
     	$order_info = $this->orderInfoService->checkPay($request->order_id,$this->user->uid);
-    	
+
     	$data = [
         	'return_url' => config('common.order_info_return_url'),
         	'order_sn' => $order_info->order_sn,
         	'subject' => '校汇商店订单',
-        	'body' => '校汇商店订单', 
+        	'body' => '校汇商店订单',
         	'total_fee' => $order_info->total_fee,
         	'trade_type' => 'Shopping',
         	'mobile_no' => $this->user->mobile_no
-        ];			
-        $data = $this->payService->payHandle(1,$pay_platform,'shop',$data);	
+        ];
+        $data = $this->payService->payHandle(1,$pay_platform,'shop',$data);
 
         return [
 			'code' => 200,
 			'data' => $data
         ];
-        
+
     }
     public function refund(Request $request)
     {
@@ -370,7 +370,7 @@ class OrderInfoController extends Controller
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
     	$this->helpService->validateParameter($rules);
-    	
+
     	$order_info = $this->orderInfoService->checkRefund($request->order_id,$this->user->uid);
 
     	$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 3,'cancelling_time' => dtime()]);
@@ -383,16 +383,16 @@ class OrderInfoController extends Controller
         	'token' 	=> 'required',
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
-    	$this->helpService->validateParameter($rules);    	
+    	$this->helpService->validateParameter($rules);
 
 		$shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
 
 		$order_info = $this->orderInfoService->sellerCheckRefund($request->order_id,$shop->shop_id);
 
 		$user = $this->userService->getUserByUserID($order_info->uid);
-		
+
 		$fee = 	$user->wallet + $order_info->total_fee;
-		
+
         $this->walletService->updateWallet($user->uid,$fee);
 
        	$walletData = array(
@@ -413,14 +413,14 @@ class OrderInfoController extends Controller
 			'description' => '取消订单',
 			'trade_status' => 'income',
 		);
-		
+
 		$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
 
 		$this->orderInfoService->inGoodsNumber($order_info->order_id);
-		
+
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
 
-		
+
     	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
     }
     public function shipping (Request $request)
@@ -429,10 +429,10 @@ class OrderInfoController extends Controller
         	'token' 	=> 'required',
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
-    	$this->helpService->validateParameter($rules);    	
+    	$this->helpService->validateParameter($rules);
 
 		$shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
-		
+
 		$order_info = $this->orderInfoService->sellerCheckShipping($request->order_id,$shop->shop_id);
 
 		//商家
@@ -456,7 +456,7 @@ class OrderInfoController extends Controller
                                             ]);
 		}
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
-		
+
 		throw new \App\Exceptions\Custom\RequestSuccessException('操作成功');
     }
     public function confirm (Request $request)
@@ -465,13 +465,13 @@ class OrderInfoController extends Controller
         	'token' 	=> 'required',
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
-    	$this->helpService->validateParameter($rules);   
-		
+    	$this->helpService->validateParameter($rules);
+
     	$order_info = $this->orderInfoService->checkConfirm($request->order_id,$this->user->uid);
-    	
+
 		$shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);
-		
-		$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);	
+
+		$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
 
 		$task = $this->orderService->getOrder(['order_id' => $order_info->order_id],['*'],false);
 

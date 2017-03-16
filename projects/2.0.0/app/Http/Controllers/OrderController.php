@@ -617,18 +617,39 @@ class OrderController extends Controller
         // $mess->setCustom($custom);
         // $mess->setType(2);
         // return $push->PushSingleDevice('f2b79a9f938d7a4c440e8048338e14905ed7e759', $mess);
-        
+        $data = [
+            'refresh' => 1,
+            'target' => '',
+            'open' => 'task',
+            'data' => [
+                'id' => '1131',
+                'title' => 'hajaha',
+                'content' => 'asdfasdfasdf',
+            ],
+        ];
+
+        $ret = $this->pushService->PushUserTokenDeviceList('系统通知', '这是内容', ['2jus5aQfz37BfyVGBep8lodefOBkV1UYeKxQqi5hzLY='],2,'xiaomi',$data);
+        var_dump($ret);exit;
+
 		$data = [
 			'refresh' => 1,
 			'target' => '',
 			'open' => 'task',
 			'data' => [
+				'id' => '1131',
+				'title' => 'hajaha',
+				'content' => 'asdfasdfasdf',
+			],
+		];
+
+$ret = $this->pushService->PushUserTokenDevice('系统通知', '这是内容', 957,2,$data);
+	var_dump($ret);exit;
+		$custom = [
+			'open' => 'task',
+			'data' => [
 				'id' => '1094',
 			],
 		];
-		var_dump(json_encode($data));exit;
-$ret = $this->pushService->PushUserTokenDevice('系统通知', '这是内容', 957,2,$data);
-	var_dump($ret);exit;
 		$custom = [
 			'open' => 'task',
 			'data' => [

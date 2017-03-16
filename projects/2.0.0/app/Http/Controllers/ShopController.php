@@ -28,7 +28,7 @@ class ShopController extends Controller
 	protected $userService;
 
 	protected $cartService;
-	
+
 	public function __construct (UserService $userService,
 								ShopService $shopService,
 								GoodsService $goodsService,
@@ -41,7 +41,7 @@ class ShopController extends Controller
 		$this->userService = $userService;
 		$this->shopService = $shopService ;
 		$this->goodsService = $goodsService ;
-		$this->helpService = $helpService; 
+		$this->helpService = $helpService;
 		$this->cartService = $cartService;
 		$this->fileUploadService = $fileUploadService;
 	}
@@ -53,8 +53,8 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        	
-    	$user = $this->userService->getUser();  	
+    {
+    	$user = $this->userService->getUser();
         $shop = Shop::where('uid', $user->uid)->first();
         if($shop->shop_id){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('已拥有店铺 -- '.$shop->shop_name);
@@ -64,19 +64,19 @@ class ShopController extends Controller
 	        'shop_name'   => 'required|unique:shop|between:4,30',
 	        'shop_img'    => 'required|string',
 	        'description' => 'required|string|max:255',
-	    ];	    
+	    ];
 	    $this->helpService->validateParameter($rules);
-	    
+
 	    $this->helpService->validateData($request->shop_name,"商店名称");
-	    
+
 	    $exitShop = $this->shopService->existShop();
-	    
+
 	    if($exitShop){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('已存在同名店铺');
 	    }
-	    
+
         $this->shopService->addShop($user);
-        
+
         throw new \App\Exceptions\Custom\RequestSuccessException('提交成功，等待审核');
     }
 	public function update (Request $request)
@@ -89,11 +89,11 @@ class ShopController extends Controller
 	        'min_goods_amount' 	  =>   'sometimes|numeric|min:0',
 	        'shipping_fee' 	  => 'sometimes|numeric|min:0',
 	        'shop_status' 	  => 'sometimes|numeric|in:1,3',
-	    ];	    
+	    ];
 	    $this->helpService->validateParameter($rules);
-	    $user = $this->userService->getUser();  
-	    $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
-		sellerHandle($shop);	
+	    $user = $this->userService->getUser();
+	    $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);
+		sellerHandle($shop);
 		$where = ['shop_id' => $shop->shop_id];
 		$update = [
 		/*	'shop_img' => isset($request->shop_img) ? $request->shop_img : $shop->shop_img,*/
@@ -103,7 +103,7 @@ class ShopController extends Controller
 			'shipping_fee' => isset($request->shipping_fee) ? $request->shipping_fee : $shop->shipping_fee,
 			'shop_status' => isset($request->shop_status) ? $request->shop_status : $shop->shop_status,
 		];
-		
+
 	    $this->shopService->update($where,$update);
 	    throw new \App\Exceptions\Custom\RequestSuccessException('更新成功');
 	}
@@ -112,11 +112,11 @@ class ShopController extends Controller
 	    $rules = [
 			'page' => 'required|string|digits:1',
 			'token' => 'sometimes|required|string',
-	    ];	    
-	    $this->helpService->validateParameter($rules);   
+	    ];
+	    $this->helpService->validateParameter($rules);
 	    if(isset($request->token)){
-		    $user = $this->userService->getUserByToken($request->token); 
-		}		
+		    $user = $this->userService->getUserByToken($request->token);
+		}
 		$uid = isset($user->uid) ? $user->uid : 0;
 		$shops = $this->shopService->getShops($uid);
 		if(isset($user->uid)){
@@ -126,13 +126,13 @@ class ShopController extends Controller
 			'code' => 200 ,
 			'cart_count' => isset($cart_count) ? $cart_count : 0,
 			'shops' => $shops,
-			
+
         ];
     }
     public function myShop ()
     {
-    	$user = $this->userService->getUser();  
-	    $shop = $this->shopService->getShop(['uid' => $user->uid]);  
+    	$user = $this->userService->getUser();
+	    $shop = $this->shopService->getShop(['uid' => $user->uid]);
 	    return [
 			'code' => 200,
 			'shop' => $shop
@@ -141,15 +141,15 @@ class ShopController extends Controller
 
     public function uploadShopImg (Request $request)
     {
-    	
+
     }
     public function collect (Request $request)
     {
     	$rules = [
 			'token' => 'required|string',
 			'shop_id' => 'required|exists:shop,shop_id',
-	    ];	
-	    $this->helpService->validateParameter($rules);   
+	    ];
+	    $this->helpService->validateParameter($rules);
 	    $user = $this->userService->getUser();
 	    $is_collect = $this->shopService->collect($request->shop_id,$user->uid);
 	    return [
@@ -158,11 +158,11 @@ class ShopController extends Controller
 		];
     }
     public function userCollects (Request $request)
-	{	
+	{
 		$rules = [
 			'page' => 'required|integer|min:1',
-		];	
-		$this->helpService->validateParameter($rules);  
+		];
+		$this->helpService->validateParameter($rules);
 		$user = $this->userService->getUser();
 		$shops = $this->shopService->userCollects($user->uid);
 		 return [

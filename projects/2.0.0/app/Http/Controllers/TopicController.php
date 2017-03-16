@@ -29,11 +29,11 @@ class TopicController extends Controller
     protected $imageService;
 
 	protected $pushService;
-	
+
 	protected $messageService;
 
 	protected $notificationService;
-	
+
     function __construct(HelpService $helpService,
                          UserService $userService,
                          TopicService $topicService,
@@ -70,7 +70,7 @@ class TopicController extends Controller
         $topic = $this->topicService->getTopicByTopicID($param);
 
 		$this->topicService->incrementViewCount([$topic->tid]);
-			
+
         return[
             'code' => 200,
             'detail' => '请求成功',
@@ -317,7 +317,7 @@ class TopicController extends Controller
             'topic_id' => $request->topic_id,
             'page' => $request->page,
         ];
-        
+
         $this->topicService->incrementViewCount([$request->topic_id]);
         //获取话题评论
         $comments = $this->topicService->getTopicCommentsList($param);
@@ -350,7 +350,7 @@ class TopicController extends Controller
 			$to_uid = $old_comment->uid;
 			$type = "comment_comment";
 		}
-		
+
         $param = [
             'topic_id' => $request->topic_id,
             'comment' => $request->topic_comment,
@@ -373,12 +373,12 @@ class TopicController extends Controller
 				'new_uid' => $user->uid,
 				'type' => $type,
 				'attr' => 'topic',
-			];		
+			];
 			$this->notificationService->store($notificatin_data);
 			$content = [
 				'refresh' => 1,
 				'target' => 'topic',
-				'data' => '你有新消息' 
+				'data' => '你有新消息'
 			];
 			$this->pushService->PushUserTokenDevice('校汇', '', $to_uid,2,$content);
 		}
@@ -431,7 +431,7 @@ class TopicController extends Controller
 			'isthumb' => $isthumb,
 			'data' => $thumbUpCount
 		];
-      
+
     }
-	
+
 }

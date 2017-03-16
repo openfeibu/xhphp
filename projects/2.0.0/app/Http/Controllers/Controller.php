@@ -21,9 +21,9 @@ class Controller extends CommonController
 				$interface = $currentRouteNameHandle[1] ? $currentRouteNameHandle[1] : 0;
 				$module_name = config('statistics.'.$module.'.name');
 				$interface_name = config('statistics.'.$module.'.interface.'.$interface);
-				$success = true; $code = 200; $msg = '';				
-				StatisticClient::report($module_name, $interface_name, $success, $code, $msg,'udp://127.0.0.1:55656');				
-			}			
+				$success = true; $code = 200; $msg = '';
+				StatisticClient::report($module_name, $interface_name, $success, $code, $msg,'udp://127.0.0.1:55656');
+			}
 		}
    }
 }
