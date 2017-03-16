@@ -40,7 +40,7 @@ class ShopRepository
 	}
 	public function getShops()
 	{
-		$shopList = Shop::select(DB::raw('shop.shop_id,shop.uid,college.cid,college.name as college_name,shop.address,shop.shop_name,shop.shop_img,shop.description,shop.shop_favorite_count,shop.shop_click_count,shop.shipping_fee,shop.min_goods_amount,shop.created_at,shop.shop_status'))
+		$shopList = Shop::select(DB::raw('shop.*,college.cid,college.name as college_name,'))
 						->leftJoin('college', 'college.cid', '=', 'shop.college_id')
 						->whereIn('shop_status', [1,3])
 						->skip(20 * $this->request->page - 20)

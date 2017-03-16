@@ -618,13 +618,17 @@ class OrderController extends Controller
         // $mess->setType(2);
         // return $push->PushSingleDevice('f2b79a9f938d7a4c440e8048338e14905ed7e759', $mess);
         
-		/*$data = [
+		$data = [
 			'refresh' => 1,
-			'target' => 'message',
-			'data' => "123"
+			'target' => '',
+			'open' => 'task',
+			'data' => [
+				'id' => '1094',
+			],
 		];
+		var_dump(json_encode($data));exit;
 $ret = $this->pushService->PushUserTokenDevice('系统通知', '这是内容', 957,2,$data);
-	var_dump($ret);exit;*/
+	var_dump($ret);exit;
 		$custom = [
 			'open' => 'task',
 			'data' => [
