@@ -98,7 +98,70 @@ class PushService
 
 		return $ret;
 	}
+	
+	/**
+	 * 使用默认设置推送消息给指定用户id的android/ios设备
+	 */
+	public function PushUserTokenListDevice($title, $content, $device_token_list,$type = 1,$push_server = 'xiaomi',$custom = [])
+	{
+		switch ($device->platform) {
+			case 'and':
+				switch ($push_server) {
+					case 'xinge':
+						//$ret = $this->PushTokenAndroid($title, $content, $device_token_list,$type,$custom);
+						//记录推送失败信息
+						//$this->logFailedPush($ret);
+						break;
 
+					case 'xiaomi':				
+				        $payload = json_encode($custom);
+				        Constants::setPackage(config('xiaomi.package'));
+						Constants::setSecret(config('xiaomi.secret'));
+						$sender = new Sender();
+						$message1 = new Builder();	
+				       if($type == 1)
+				        {
+					        $message1->title($title);  // 通知栏的title
+				        	$message1->description($content); // 通知栏的descption
+				        	$message1->passThrough(0);  // 这是一条通知栏消息，如果需要透传，把这个参数设置成1,同时去掉title和descption两个参数
+				        	$message1->extra(Builder::notifyForeground, 0); // 应用在前台是否展示通知，如果不希望应用在前台时候弹出通知，则设置这个参数为0
+				        }else{
+					        $message1->passThrough(1);
+					        $message1->extra(Builder::notifyForeground, 0); // 应用在前台是否展示通知，如果不希望应用在前台时候弹出通知，则设置这个参数为0
+				        }  
+						$message1->payload($payload); // 携带的数据，点击后将会通过客户端的receiver中的onReceiveMessage方法传入。
+						
+						$message1->notifyId(0); // 通知类型。最多支持0-4 5个取值范围，同样的类型的通知会互相覆盖，不同类型可以在通知栏并存
+						$message1->notifyType(5);
+						$message1->build();
+						$targetMessage = new TargetedMessage();
+						$targetMessage->setTarget('regID', 1); // 设置发送目标。可通过regID,alias和topic三种方式发送
+						$targetMessage->setMessage($message1);
+						
+						$ret = $sender->sendToIds($message1,$device_token_list);
+						//var_dump($ret);
+						break;
+
+					default:
+						$ret = '非法推送提供商';
+						break;
+				}
+				break;
+
+			case 'ios':
+				$ret = $this->PushTokenIos($content, $device->device_token);
+				break;
+
+			default:
+				$ret = '非法platform类型';
+				break;
+		}
+
+		//记录推送失败信息
+		// $this->logFailedPush($ret);
+
+		return $ret;
+	}
 
 	/**
 	 * 使用默认设置推送消息给当前用户的android/ios设备
