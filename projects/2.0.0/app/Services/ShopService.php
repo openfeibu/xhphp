@@ -47,6 +47,10 @@ class ShopService
 			{
 				$shop->cart_count = $this->cartRepository->getCount(['uid' => $uid,'shop_id' => $shop->shop_id ]);
 				$shop->goods_number = $this->cartRepository->getGoodsNumber(['uid' => $uid,'shop_id' => $shop->shop_id ]);
+				$time = strotime(date('H:i:s',time()));
+				if($shop->status == 1 && ($time < strtotime($shop->start_time) || $time > strtotime($shop->end_time))){
+					$shop->status = 3;
+				}
 			}
 		}
 		return $shops;
