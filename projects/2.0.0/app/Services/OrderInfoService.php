@@ -231,7 +231,7 @@ class OrderInfoService
         $shop_user = $this->userRepository->getUserByUserID($shop->uid);
 
 		$service_fee = $this->helpService->shopServiceFee($order_info->goods_amount,$shop->service_rate) ;
-		$fee = $order_info->goods_amount - $service_fee;
+		$fee = $order_info->total_fee - $service_fee;
 
         $wallet = $shop_user->wallet + $fee;
         //商家加物品费用
