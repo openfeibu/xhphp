@@ -34,7 +34,7 @@ class AuthController extends Controller
         ]);
 
     }
-	  // µÇ³ö
+	  // ç™»å‡º
      public function getLogout()
      {
         if(Auth::guard('business')->user()){
