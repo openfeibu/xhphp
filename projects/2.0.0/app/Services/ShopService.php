@@ -42,15 +42,18 @@ class ShopService
 	public function getShops($uid = 0)
 	{
 		$shops = $this->shopRepository->getShops();
+		foreach( $shops as $key => $shop )
+		{
+			$time = strtotime(date('H:i:s',time()));
+				if($shop->shop_status == 1 && ($time < strtotime($shop->open_time) || $time > strtotime($shop->close_time))){
+					$shop->shop_status = 3;
+				}
+		}
 		if($uid){
 			foreach( $shops as $key => $shop )
 			{
 				$shop->cart_count = $this->cartRepository->getCount(['uid' => $uid,'shop_id' => $shop->shop_id ]);
 				$shop->goods_number = $this->cartRepository->getGoodsNumber(['uid' => $uid,'shop_id' => $shop->shop_id ]);
-				$time = strtotime(date('H:i:s',time()));
-				if($shop->shop_status == 1 && ($time < strtotime($shop->open_time) || $time > strtotime($shop->close_time))){
-					$shop->shop_status = 3;
-				}
 			}
 		}
 		return $shops;
