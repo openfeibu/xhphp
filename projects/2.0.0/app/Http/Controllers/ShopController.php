@@ -110,7 +110,7 @@ class ShopController extends Controller
     public function getShopList (Request $request)
     {
 	    $rules = [
-			'page' => 'required|string|digits:1',
+			'page' => 'required',
 			'token' => 'sometimes|required|string',
 	    ];
 	    $this->helpService->validateParameter($rules);
