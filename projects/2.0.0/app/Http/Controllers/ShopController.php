@@ -125,7 +125,7 @@ class ShopController extends Controller
         return [
 			'code' => 200 ,
 			'cart_count' => isset($cart_count) ? $cart_count : 0,
-			'shops' => $shops,
+			'data' => $shops,
 
         ];
     }
