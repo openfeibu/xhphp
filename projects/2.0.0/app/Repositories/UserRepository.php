@@ -75,14 +75,14 @@ class UserRepository
 	public function getUserByToken($token)
 	{
 	  	self::$user = $user = User::where('token', $token)->first();
-	  	
+
 		if($user){
 			$user->last_visit = dtime();
 			$user->save();
 		}
 	  	return $user;
 	}
-	
+
 	public function getBussiness ()
 	{
 		return User::where('uid', 85)->first(['uid','wallet','mobile_no','nickname','avatar_url','created_at']);
@@ -248,7 +248,7 @@ class UserRepository
 	 */
 	public function getOthersInfoByOpenid($openid)
 	{
-		return User::select(DB::raw('user.nickname, user.avatar_url, user.integral, user_info.gender, user_info.college_id, college.name as college,
+		return User::select(DB::raw('user.uid,user.nickname, user.avatar_url, user.integral, user_info.gender, user_info.college_id, college.name as college,
 									 user_info.enrollment_year, user_info.birth_year, user_info.birth_month,
 									 user_info.birth_day, user_info.favourites_count, user_info.introduction,
 									 if(shop.shop_status=1,1,0) as is_merchant'))
@@ -299,6 +299,6 @@ class UserRepository
 
 	public function getRealUids()
 	{
-		return UserInfo::where('realname','<>','')->lists('uid')->toArray(); 
+		return UserInfo::where('realname','<>','')->lists('uid')->toArray();
 	}
 }

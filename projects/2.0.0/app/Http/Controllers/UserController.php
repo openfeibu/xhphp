@@ -418,13 +418,13 @@ class UserController extends Controller
             'money' => 'required|integer|min:10',
             'pay_password' => 'required|string',
         ];
-        
+
         $this->helpService->validateParameter($rule);
-        
+
         if (!password_verify($request->pay_password, $user->pay_password)) {
 		 	throw new \App\Exceptions\Custom\OutputServerMessageException('支付密码错误');
 		}
-		
+
 		$service_fee = $this->helpService->applyServiceFee($request->money);
 
 		if($user->wallet < $request->money)

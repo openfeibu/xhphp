@@ -179,11 +179,14 @@ class TopicController extends Controller
         //检验请求参数
         $rule = [
             'page' => 'required|integer',
+            'uid' => 'sometimes|required',
         ];
         $this->helpService->validateParameter($rule);
 
+        $where = isset($request->uid) && $request->uid ? ['topic.uid' => $request->uid] : [];
+
         //获得话题列表
-        $topics = $this->topicService->getTopics(['page' => $request->page]);
+        $topics = $this->topicService->getTopics(['page' => $request->page],$where);
 
         //增加话题浏览量
         //$this->topicService->incrementViewCount($topics->lists('tid')->toArray());

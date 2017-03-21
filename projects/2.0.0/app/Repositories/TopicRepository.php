@@ -20,7 +20,7 @@ class TopicRepository
 	{
 		$this->request = $request;
 	}
-	
+
 	/**
 	 * 获取指定ID的话题部分信息
 	 */
@@ -28,7 +28,7 @@ class TopicRepository
 	{
 		return Topic::where('tid',$tid)->first($columns);
 	}
-	
+
 	/**
 	 * 获取指定ID的话题信息
 	 */
@@ -78,7 +78,7 @@ class TopicRepository
 					->skip(20 * $param['page'] - 20)
 					->take(20)
 					->get();
-		
+
 		return $topics;
 	}
 
@@ -99,7 +99,7 @@ class TopicRepository
 	/**
 	 * 获取话题列表
 	 */
-	public function getTopicList(array $param)
+	public function getTopicList(array $param,$where = [])
 	{
 		$topics = Topic::select(DB::raw("topic.tid, topic.type, topic.content, topic.img, topic.thumb,topic.view_num,
                                     topic.comment_num, topic.favourites_count, topic.created_at, user.openid, user.nickname,
@@ -113,13 +113,14 @@ class TopicRepository
                                		$join->where('topic_favourite.tid', '=', 0);
                                }
                            })
+                           ->where($where)
                            ->whereNull('topic.deleted_at')
                            ->orderBy('topic.created_at', 'desc')
                            ->skip(20 * $param['page'] - 20)
                            ->take(20)
                            ->get();
 		return $topics;
-		 
+
 	}
 
 	/**
@@ -200,7 +201,7 @@ class TopicRepository
                             ->where('topic_comment.admin_deleted', 0)
                             ->orderBy('topic_comment.created_at', 'asc')
                             ->get();
-		
+
 		return $topicComments;
 	}
 	/**

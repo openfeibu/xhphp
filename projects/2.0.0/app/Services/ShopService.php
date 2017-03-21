@@ -45,9 +45,10 @@ class ShopService
 		foreach( $shops as $key => $shop )
 		{
 			$time = strtotime(date('H:i:s',time()));
-				if($shop->shop_status == 1 && ($time < strtotime($shop->open_time) || $time > strtotime($shop->close_time))){
-					$shop->shop_status = 3;
-				}
+			if($shop->shop_status == 1 && ($time < strtotime($shop->open_time) || $time > strtotime($shop->close_time))){
+				$shop->shop_status = 3;
+			}
+			$shop->url = config('app.web_url').'/shop/shop-detail.html?sid='.$shop->shop_id;
 		}
 		if($uid){
 			foreach( $shops as $key => $shop )
@@ -122,7 +123,11 @@ class ShopService
 	}
 	public function userCollects ($uid)
 	{
-		return $this->shopRepository->userCollects($uid);
+		$shops = $this->shopRepository->userCollects($uid);
+		foreach ($shops as $key => $shop) {
+			$shop->url = config('app.web_url').'/shop/shop-detail.html?sid='.$shop->shop_id;
+		}
+		return $shops;
 	}
 	public function inIncome ($where = [],$number)
 	{

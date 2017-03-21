@@ -33,7 +33,7 @@ class TopicService
 	{
 		return $this->topicRepository->getTopic($tid,$columns = ['*']);
 	}
-	
+
 	/**
 	 * 获取指定ID的话题评论信息
 	 */
@@ -99,22 +99,22 @@ class TopicService
 			$param['user_id'] = $user->uid;
 		}
 		$topics = $this->topicRepository->getTopicList($param);
-		foreach($topics as $k=>$topic){	
-			$topic['content'] = escape_content($topic['content']);	  
+		foreach($topics as $k=>$topic){
+			$topic['content'] = escape_content($topic['content']);
 			$topicComments = $this->getTopicAllCommentsList(['topic_id'=> $topic->tid]  );
 			$topics[$k]['comment'] = $topicComments;
 		}
 		return $topics;
 	}
-	public function getTopics (array $param)
+	public function getTopics (array $param,$where = [])
 	{
 		$user = DB::table('user')->where('token', $this->request->token)->first();
 		if ($user) {
 			$param['user_id'] = $user->uid;
 		}
-		$topics = $this->topicRepository->getTopicList($param);
-		foreach($topics as $k=>$topic){	
-			$topic['content'] = escape_content($topic['content']);	 
+		$topics = $this->topicRepository->getTopicList($param,$where);
+		foreach($topics as $k=>$topic){
+			$topic['content'] = escape_content($topic['content']);
 		}
 		return $topics;
 	}
@@ -128,7 +128,7 @@ class TopicService
 
         //增加阅读量
 		$this->topicRepository->incrementViewCount($topics, $topicList_tag);
-		
+
 		if ($topicList_tag) {
 		    $topicList_tag = array_unique(array_merge($topics, $topicList_tag));
 		} else {
@@ -182,7 +182,7 @@ class TopicService
 			$topicComment['content'] = escape_content($topicComment['content']);
 		}
 		return $topicComments;
-	}	
+	}
 	/**
 	 * 检验评论是否存在
 	 */
@@ -252,10 +252,10 @@ class TopicService
 				$favour->topicComment->increment('favourites_count');
 			} else {
 				$favour->topic->increment('favourites_count');
-			}	
+			}
 			return 1;
 		}
-		
+
 	}
 	public function thumbUpCount (array $param)
 	{
