@@ -167,7 +167,7 @@ class ShopController extends Controller
 		$shops = $this->shopService->userCollects($user->uid);
 		 return [
 			'code' => 200,
-			'shops' => $shops,
+			'data' => $shops,
 		];
 	}
 }

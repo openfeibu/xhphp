@@ -59,7 +59,7 @@ class TopicController extends Controller
     {
         //检验请求参数
         $rule = [
-            'topic_id' => 'required|integer',
+            'topic_id' => 'required|integer|exists:topic,tid',
         ];
         $this->helpService->validateParameter($rule);
 
