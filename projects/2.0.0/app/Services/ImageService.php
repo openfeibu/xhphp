@@ -88,9 +88,12 @@ class ImageService
 		$user = $this->userRepository->getUserByToken($this->request->token);
 
 		//如果文件夹不存在，则创建文件夹
-        $directory = public_path('uploads') . '\\' . $usage;
+		$directory = public_path('uploads') . DIRECTORY_SEPARATOR . $usage;
+        $thumb_directory = $directory . DIRECTORY_SEPARATOR . 'thumb';
+
         if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
+            File::makeDirectory($thumb_directory, 0755, true);
         }
 
 		//保存图片文件到服务器
@@ -172,7 +175,7 @@ class ImageService
 		$user = $this->userRepository->getUserByToken($this->request->token);
 
 		//如果文件夹不存在，则创建文件夹
-        $directory = public_path('uploads') . '\\' . $usage;
+        $directory = public_path('uploads') . DIRECTORY_SEPARATOR . $usage;
         if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
@@ -235,8 +238,8 @@ class ImageService
 	public function uploadAdminImages ($files, $usage,$id = 0)
 	{
 		//如果文件夹不存在，则创建文件夹
-        $directory = $id ? public_path('uploads') . '\\' . $usage.'\\'.$id : public_path('uploads') . '\\' . $usage;
-        $thumb_directory = $directory.'\\thumb';
+        $directory = $id ? public_path('uploads') . DIRECTORY_SEPARATOR . $usage. DIRECTORY_SEPARATOR .$id : public_path('uploads') . DIRECTORY_SEPARATOR . $usage;
+        $thumb_directory = $directory. DIRECTORY_SEPARATOR .'thumb';
         $url = $id ?  '/uploads/'.$usage.'/'.$id : '/uploads/'.$usage;
         $thumb_url = $url.'/thumb';
         if (!File::isDirectory($directory)) {
