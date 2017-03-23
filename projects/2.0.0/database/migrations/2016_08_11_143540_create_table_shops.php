@@ -29,8 +29,8 @@ class CreateTableShops extends Migration
             $table->decimal('income',10,2)->default(0)->comment('收入');
             $table->tinyInteger('top')->default(0)->comment('是否置顶');
             $table->decimal('shipping_fee',10,0)->comment('运费');
-            $table->decimal('min_goods_amount',10,2)->default(0)->comment('最低购买价，不满足不能下单，');
-            $table->decimal('free_shipping_amount',10,2)->comment('免运费最低购买价')
+            $table->decimal('min_goods_amount',10,2)->default(0)->comment('N元起免运费');
+            $table->decimal('free_shipping_amount',10,2)->comment('免运费最低购买价(暂时不用)');
             $table->timestamps();
 			$table->foreign('uid')->references('id')->on('user')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -96,6 +96,10 @@ class CreateTableShops extends Migration
 			$table->decimal('task_fee',10,0)->comment('任务费');
 			$table->decimal('insure_fee',10,2)->comment('保价费用');
 			$table->string('to_buyer')->comment('商家给买家留言');
+			$table->timestamp('shipping_time');
+			$table->timestamp('cancelling_time');
+			$table->timestamp('cancelled_time');
+			$table->timestamp('succ_time');
 			$table->timestamps();		
 			$table->index('uid');
 			$table->index('shop_id');
