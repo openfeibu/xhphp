@@ -231,6 +231,7 @@ class ImageService
 	    return $image_url;
 	}
 
+	/*  后台上传图片 */
 	public function uploadAdminImages ($files, $usage,$id = 0)
 	{
 		//如果文件夹不存在，则创建文件夹

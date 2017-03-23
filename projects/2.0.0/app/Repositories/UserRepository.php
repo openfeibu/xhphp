@@ -131,6 +131,7 @@ class UserRepository
 	        $u->mobile_no = $mobile_no;
 	        $u->password = $password;
 	        $u->nickname = $nickname;
+			$u->college_id = '1';
 	        $u->avatar_url = $avatar_url;
 	        $u->created_ip = $this->request->ip();
 	        $u->save();
@@ -141,7 +142,6 @@ class UserRepository
 	        $userInfo->setConnection('write');
 	        $userInfo->uid = $u->uid;
 	        $userInfo->gender = $gender;
-	        $userInfo->college_id = '1';
 	        $userInfo->enrollment_year = $enrollment_year;
 	        $userInfo->save();
 

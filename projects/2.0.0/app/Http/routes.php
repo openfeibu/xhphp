@@ -218,6 +218,11 @@ Route::get('hasNewTopicNotification','NotificationController@hasNewTopicNotifica
 Route::get('chickenSoupList', 'ChickenSoupController@chickenSoupList');
 Route::get('chickenSoupDetail', 'ChickenSoupController@chickenSoupDetail');
 
+Route::get('lostAndFind/getList', 'LostAndFindController@getList');
+Route::get('lostAndFind/getCats', 'LostAndFindController@getCats');
+Route::post('lostAndFind/create', 'LostAndFindController@create');
+Route::post('lostAndFind/uploadImage', 'LostAndFindController@uploadImage');
+
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');
 Route::post('business/goods/store','ShopAdmin\GoodsController@store');
