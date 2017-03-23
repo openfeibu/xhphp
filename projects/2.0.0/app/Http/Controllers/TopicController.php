@@ -366,6 +366,7 @@ class TopicController extends Controller
 		$user = $this->userService->getUser();
 		if($to_uid != $user->uid)
 		{
+			$to_user = $this->userService->getUserByUserID($to_uid,['avatar_url']);
 			$notificatin_data = [
 				'uid' => $to_uid,
 				'top_id' => $request->topic_id,
@@ -378,12 +379,20 @@ class TopicController extends Controller
 				'attr' => 'topic',
 			];
 			$this->notificationService->store($notificatin_data);
-			$content = [
+			$where = ['uid' => $uid ,'attr' => 'topic','read'=>0];
+			$count = $this->notificationService->newTopicNotificationCount($where);
+			$data = [
 				'refresh' => 1,
 				'target' => 'topic',
-				'data' => '你有新消息'
+				'open' => '',
+				'data' => [
+					'url' => $to_user->avatar_url,
+					'num' => $count,
+					'title' => '校汇圈',
+					'content' => $request->topic_comment,
+				],
 			];
-			$this->pushService->PushUserTokenDevice('校汇', '', $to_uid,2,$content);
+			$ret = $this->pushService->PushUserTokenDevice('校汇圈', $request->topic_comment, $to_uid,2,$data);
 		}
         return [
             'code' => 200,

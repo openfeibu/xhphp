@@ -49,9 +49,12 @@ class MessageService
 		$data = [
 			'refresh' => 1,
 			'target' => 'message',
-			'data' => $content 
+			'data' => [
+				'title' 	=> $type,
+				'content' 	=> $content,
+			],
 		];
-		$this->pushService->PushUserTokenDevice($type, '', $user_id,2,$data);
+		$this->pushService->PushUserTokenDevice($type, $content, $user_id,2,$data);
 		return true;
 	}
 

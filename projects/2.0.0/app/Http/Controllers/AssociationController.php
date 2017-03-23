@@ -501,6 +501,17 @@ class AssociationController extends Controller
 		$admins = $this->associationService->getAssociationAdmins($request->association_id);		
 		foreach( $admins as $key => $admin )
 		{
+			$data = [
+				'refresh' => 1,
+				'target' => '',
+				'open' => 'assn',
+				'data' => [
+					'id' 	=> $request->association_id,
+					'title' => '社团',
+					'content' => '新成员加入,快去审核吧',
+				],
+			];
+			$ret = $this->pushService->PushUserTokenDevice('社团', '新成员加入,快去审核吧', $admin->uid,2,$data);
 			$this->messageService->SystemMessage2SingleOne($admin->uid, '新成员加入,快去审核吧', $push = false, $type = '社团信息', $name = '社团');
 		}
         return [
@@ -562,7 +573,17 @@ class AssociationController extends Controller
 		{
 			$name = $associationsDetails->aname.'社团公告';
 			$this->messageService->SystemMessage2SingleOne($association_member->uid, $request->notice,true,'社团公告',$name);
-        	$this->pushService->PushUserTokenDevice($name, $request->notice, $association_member->uid);
+			$data = [
+				'refresh' => 1,
+				'target' => '',
+				'open' => 'assn',
+				'data' => [
+					'id'	=> $request->association_id,
+					'title' => $name,
+					'content' => $request->notice,
+				],
+			];
+			$ret = $this->pushService->PushUserTokenDevice($name, $request->notice, $association_member->uid,2,$data);
 		}
 
 		throw new \App\Exceptions\Custom\RequestSuccessException();
