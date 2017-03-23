@@ -379,7 +379,7 @@ class TopicController extends Controller
 				'attr' => 'topic',
 			];
 			$this->notificationService->store($notificatin_data);
-			$where = ['uid' => $user->uid ,'attr' => 'topic','read'=>0];
+			$where = ['uid' => $to_uid ,'attr' => 'topic','read'=>0];
 			$count = $this->notificationService->newTopicNotificationCount($where);
 			$data = [
 				'refresh' => 1,
