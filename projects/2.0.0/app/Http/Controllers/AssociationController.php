@@ -576,7 +576,7 @@ class AssociationController extends Controller
 			$data = [
 				'refresh' => 1,
 				'target' => '',
-				'open' => 'assn',
+				'open' => 'assn_notice',
 				'data' => [
 					'id'	=> $request->association_id,
 					'title' => $name,
