@@ -29,7 +29,7 @@ class OrderInfoRepository
         	Cart::where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->delete();
         	return $order_info;
         } catch (Exception $e) {
-        	throw new \App\Exceptions\Custom\RequestFailedException('无法创建订单');
+        	throw new \App\Exceptions\Custom\RequestFailedException('鏃犳硶鍒涘缓璁㈠崟');
         }
 	}
 	public function updateOrderInfo($order_sn,$update)
@@ -105,5 +105,10 @@ class OrderInfoRepository
 	{
 		return OrderInfo::where($where)->delete();
 	}
-	
+	public function getAllOrderInfos($where)
+	{
+		return OrderInfo::select(DB::raw('OrderInfo.*'))
+							->where($where)
+                          	->get();
+	}
 }

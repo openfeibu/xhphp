@@ -19,7 +19,7 @@ class LostAndFindController extends Controller
 	protected $imageService;
 
 	protected $helpService;
-    
+
     protected $lostAndFindService;
 
 	public function __construct (UserService $userService,
@@ -28,13 +28,13 @@ class LostAndFindController extends Controller
                                 LostAndFindService $lostAndFindService)
 	{
 		parent::__construct();
-		$this->middleware('auth', ['only' => ['create','uploadImage']]);
+		$this->middleware('auth', ['only' => ['create','uploadImage','delete']]);
 		$this->helpService = $helpService;
         $this->userService = $userService;
         $this->imageService = $imageService;
         $this->lostAndFindService = $lostAndFindService;
 	}
-    
+
     public function getList(Request $request)
     {
         $rules = [
@@ -44,7 +44,7 @@ class LostAndFindController extends Controller
 	    $this->helpService->validateParameter($rules);
         $where = ['loss.type' => $request->type];
         $loss = $this->lostAndFindService->getList($where);
-        
+
         return [
             'code'      => 200,
             'detail'    => '提交成功',
@@ -61,12 +61,12 @@ class LostAndFindController extends Controller
             'content'   => 'required|string|between:1,120',
             'img'       => 'sometimes',
             'thumb'     => 'sometimes',
-            
+
         ];
         $this->helpService->validateParameter($rule);
-        
+
         $loss = $this->lostAndFindService->create();
-        
+
         return [
             'code'      => 200,
             'detail'    => '提交成功',
@@ -75,7 +75,7 @@ class LostAndFindController extends Controller
     }
     public function uploadImage(Request $request)
     {
-        $images_url = $this->imageService->uploadThumbImages(Input::all(), 'loss');      
+        $images_url = $this->imageService->uploadThumbImages(Input::all(), 'loss');
         return [
             'code' => 200,
             'detail' => '请求成功',
@@ -90,5 +90,18 @@ class LostAndFindController extends Controller
             'code' => 200,
             'data' => $cats
         ];
+    }
+    public function delete(Request $request)
+    {
+        $rule = [
+            'loss_id' => 'required|exists:loss,loss_id'
+        ];
+
+        $this->helpService->validateParameter($rule);
+        $user = $this->userService->getUser();
+        $where = ['loss_id' => $request->loss_id,'uid' => $user->uid];
+        $this->lostAndFindService->delete($where);
+
+        throw new \App\Exceptions\Custom\RequestSuccessException('删除成功！');
     }
 }

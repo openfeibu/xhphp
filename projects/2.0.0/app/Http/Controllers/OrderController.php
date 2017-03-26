@@ -343,13 +343,18 @@ class OrderController extends Controller
         $this->messageService->SystemMessage2SingleOne($order_owner_id, '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。');
 
         //推送给发单者
-        $custom = [
+
+		$data = [
+			'refresh' => 1,
+			'target' => '',
 			'open' => 'task',
 			'data' => [
 				'id' => $request->order_id,
+				'title' => '校汇任务',
+				'content' => '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。',
 			],
 		];
-        $this->pushService->PushUserTokenDevice('校汇任务', '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。', $order_owner_id,1,$custom);
+        $this->pushService->PushUserTokenDevice('校汇任务', '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。', $order_owner_id,2,$data);
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
@@ -547,13 +552,17 @@ class OrderController extends Controller
         $this->messageService->SystemMessage2SingleOne($owner_id, '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。');
 
         //推送给发单人
-        $custom = [
+		$data = [
+			'refresh' => 1,
+			'target' => '',
 			'open' => 'task',
 			'data' => [
 				'id' => $request->order_id,
+				'title' => '校汇任务',
+				'content' => '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。',
 			],
 		];
-        $this->pushService->PushUserTokenDevice('校汇任务', '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。', $owner_id,1,$custom);
+        $this->pushService->PushUserTokenDevice('校汇任务', '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。', $owner_id,2,$data);
 
 
         throw new \App\Exceptions\Custom\RequestSuccessException();

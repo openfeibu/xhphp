@@ -9,13 +9,16 @@ use Log;
 use Event;
 use DB;
 use App\Order;
+use App\OrderInfo;
 use App\TradeAccount;
 use App\Http\Requests;
 use App\Services\HelpService;
 use App\Services\UserService;
 use App\Services\OrderService;
 use App\Services\GameService;
+use App\Services\ShopService;
 use App\Services\MessageService;
+use App\Services\OrderInfoService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
 use App\Events\Integral\Integrals;
@@ -38,6 +41,8 @@ class ScheduleController extends Controller
     protected $tradeAccountService;
 
     protected $gameService;
+	
+	protected $orderInfoService;
 
     function __construct(OrderService $orderService,
                          UserService $userService,
@@ -47,7 +52,9 @@ class ScheduleController extends Controller
                          TelecomService $telecomService,
                          TradeAccountService $tradeAccountService,
                          PushService $pushService,
-                         GameService $gameService)
+                         GameService $gameService,
+						 OrderInfoService $orderInfoService,
+						 ShopService $shopService)
     {
         $this->orderService = $orderService;
         $this->userService = $userService;
@@ -58,6 +65,8 @@ class ScheduleController extends Controller
         $this->messageService = $messageService;
         $this->pushService = $pushService;
         $this->gameService = $gameService;
+		$this->shopService = $shopService;
+		$this->orderInfoService = $orderInfoService;
     }
     public function  autoFinishWork()
     {
@@ -88,13 +97,17 @@ class ScheduleController extends Controller
 	        $this->messageService->SystemMessage2SingleOne($order->courier_id, '您好，发单人已结算你完成的任务，赶紧去看看吧。');
 
 	        //推送给接单人
-			$custom = [
+			$data = [
+				'refresh' => 1,
+				'target' => '',
 				'open' => 'mytask',
 				'data' => [
 					'id' => $order->oid,
+					'title' => '校汇任务',
+					'content' => '您好，发单人已结算你完成的任务，赶紧去看看吧。',
 				],
 			];
-			$this->pushService->PushUserTokenDevice('任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id,1,$custom);
+			$this->pushService->PushUserTokenDevice('校汇任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id,2,$data);
 			
 	      
 			Log::debug('courier:'.$courier);
@@ -163,5 +176,51 @@ class ScheduleController extends Controller
 			sleep(5);
     	}
     }
+	public function auto()
+	{
+		$this->shipping();
+		$this->shipped();
+	}
+	/*  24小时后通知收货 */
+	private function shipping()
+	{
+		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid'))
+								->where('shipping_status',1)
+								->where('shipping_time','<=',DB::raw('(select date_sub(now(), interval 24 HOUR))'))
+								->get();
+		$data = [
+			'refresh' => 1,
+			'target' => '',
+			'open' => 'order_info',
+			'data' => [
+				'url' => '',
+				'title' => '订单通知',
+				'content' => '您的订单已经发货超过24小时，如果已收到货物请及时确认收货。24小时后将自动收货，如未收到货物请联系管理员',
+			],
+		];
+		foreach($order_infos as $key => $order_info)
+		{
+			$data['data']['url'] = config('app.web_url').'/shop/shop-orderDetail.html?order_id='.$order_info->order_id;
+			$ret = $this->pushService->PushUserTokenDevice($data['data']['title'], $data['data']['content'], $order_info->uid,2,$data);
+		}
+	}
+	/*  48小时后自动收货 */
+	private function shipped()
+	{
+		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid,order_info.total_fee,order_info.order_sn,shop.shop_id,shop.uid as shop_uid,shop.service_rate'))
+								->rightJoin('shop','shop.shop_id','=','order_info.shop_id')
+								->rightJoin('user','user.uid','=','shop.uid')
+								->where('order_info.shipping_status',1)
+								->where('order_info.shipping_time','<=',DB::raw('(select date_sub(now(), interval 48 HOUR))'))
+								->get();
+		foreach($order_infos as $key => $order_info)
+		{
+			$shop = (object)array();
+			$shop->shop_id = $order_info->shop_id;
+			$shop->uid = $order_info->shop_uid;
+			$shop->service_rate = $order_info->service_rate;
+			$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
+		}
+	}
 }
 

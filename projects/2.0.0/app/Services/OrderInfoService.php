@@ -296,4 +296,8 @@ class OrderInfoService
 		}
 		return true;
 	}
+	public function getAllOrderInfos($where)
+	{
+		return $this->orderInfoRepository->getAllOrderInfos($where);
+	}
 }

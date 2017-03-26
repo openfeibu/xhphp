@@ -9,7 +9,7 @@ use App\Repositories\LostAndFindRepository;
 use App\Repositories\UserRepository;
 
 class LostAndFindService{
-    
+
     public function __construct(Request $request,
                                 LostAndFindRepository $lostAndFindRepository,
                                 UserRepository $userRepository)
@@ -41,5 +41,9 @@ class LostAndFindService{
     {
         return $this->lostAndFindRepository->getCats();
     }
-    
+    public function delete($where)
+    {
+        return $this->lostAndFindRepository->delete($where);
+    }
+
 }

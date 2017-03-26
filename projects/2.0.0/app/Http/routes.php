@@ -222,6 +222,7 @@ Route::get('lostAndFind/getList', 'LostAndFindController@getList');
 Route::get('lostAndFind/getCats', 'LostAndFindController@getCats');
 Route::post('lostAndFind/create', 'LostAndFindController@create');
 Route::post('lostAndFind/uploadImage', 'LostAndFindController@uploadImage');
+Route::post('lostAndFind/delete', 'LostAndFindController@delete');
 
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');
@@ -242,11 +243,13 @@ Route::get('business/user/getShop', 'ShopAdmin\UserController@getShop');
 Route::post('business/shop/updateShop', 'ShopAdmin\UserController@updateShop');
 
 Route::post('business/shop/uploadShopImage','ShopAdmin\UserController@uploadShopImage');
+
+Route::get('schedule/auto', 'ScheduleController@auto');
 });
 
 
 Route::group(['middleware' => 'business'], function () {
- 
+
     Route::get('business/login', 'ShopAdmin\AuthController@getLogin');
     Route::get('business/logout', 'ShopAdmin\AuthController@getLogout');
     Route::post('business/login', 'ShopAdmin\AuthController@postLogin');

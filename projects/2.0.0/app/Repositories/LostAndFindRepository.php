@@ -38,4 +38,8 @@ class LostAndFindRepository
                            ->take(20)
                            ->get();
     }
+		public function delete($where)
+		{
+				return Loss::where($where)->delete();
+		}
 }

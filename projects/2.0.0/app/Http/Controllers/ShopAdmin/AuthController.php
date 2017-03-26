@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\ShopAdmin;
 
 use App\ShopAdmin;
