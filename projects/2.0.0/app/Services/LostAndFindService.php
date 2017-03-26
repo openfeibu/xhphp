@@ -50,5 +50,9 @@ class LostAndFindService{
     {
         return $this->lostAndFindRepository->getLoss($where);
     }
+    public function delete($where)
+    {
+        return $this->lostAndFindRepository->delete($where);
+    }
 
 }
