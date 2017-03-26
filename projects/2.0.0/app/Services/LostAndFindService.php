@@ -28,7 +28,7 @@ class LostAndFindService{
             'content'   => $this->request->content,
             'type'      => $this->request->type,
             'cat_id'    => $this->request->cat_id,
-         
+
             'img'       => isset($this->request->img) ? $this->request->img : '',
             'thumb'     => isset($this->request->thumb) ? $this->request->thumb : ''
         ];
@@ -38,7 +38,7 @@ class LostAndFindService{
     {
         $losses = $this->lostAndFindRepository->getList($where);
         foreach ($losses as $key => $loss) {
-            $loss->url = config('app.web');
+            $loss->url = config('app.web_url');
         }
         return $losses;
     }

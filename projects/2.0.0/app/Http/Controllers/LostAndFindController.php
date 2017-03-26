@@ -71,7 +71,7 @@ class LostAndFindController extends Controller
         if($loss){
             $where = ['loss.loss_id' => $loss->loss_id];
             $loss = $this->lostAndFindService->getLoss($where);
-            $loss->url = config('app.web');
+            $loss->url = config('app.web_url');
         }
         return [
             'code'      => 200,
