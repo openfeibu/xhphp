@@ -243,7 +243,7 @@ class AssociationController extends Controller
         ];
         //创建社团资讯
         $this->associationService->createInformation($param);
-		
+
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
 
@@ -281,7 +281,7 @@ class AssociationController extends Controller
         $this->helpService->validateParameter($rule);
 
 		$associationsDetails = $this->associationService->getAssociationsDetails($request->aid,$request->token);
-		
+
 		if(!$associationsDetails){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('社团不存在');
 		}
@@ -296,8 +296,8 @@ class AssociationController extends Controller
         ];
         //创建社团活动
         $this->associationService->createActivity($param);
-        
-		
+
+
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
 
@@ -438,7 +438,7 @@ class AssociationController extends Controller
             'page' => 'required',
         ];
         $this->helpService->validateParameter($rule);
-		
+
         $association_member = $this->associationService->getAssociationMember($request->association_id,$request->page);
          return [
             'code' => 200,
@@ -474,7 +474,7 @@ class AssociationController extends Controller
 				'detail' => '请求失败',
 			];
 		}
-        
+
     }
 
 	/* 社团成员加入 */
@@ -490,7 +490,7 @@ class AssociationController extends Controller
 			'causes' => 'required'
         ];
         $this->helpService->validateParameter($rule);
-		
+
         $joinAssociationMember = $this->associationReviewService->joinAssociationMember($request->association_id,$request->ar_username,$request->profession,$request->causes,$request->mobile_no);
 		if($joinAssociationMember == 401){
 			return [
@@ -498,7 +498,7 @@ class AssociationController extends Controller
 				'detail' => '已经是社团的成员',
 			];
 		}
-		$admins = $this->associationService->getAssociationAdmins($request->association_id);		
+		$admins = $this->associationService->getAssociationAdmins($request->association_id);
 		foreach( $admins as $key => $admin )
 		{
 			$data = [
@@ -547,7 +547,7 @@ class AssociationController extends Controller
 				'detail' => '请求失败',
 			];
 		}
-        
+
     }
 
 	/* 发布公告 */
@@ -558,17 +558,17 @@ class AssociationController extends Controller
 			'notice' => 'required'
         ];
         $this->helpService->validateParameter($rule);
-        
+
 		$associationsDetails = $this->associationService->getAssociationsDetails($request->association_id,$request->token);
-		
+
 		if(!$associationsDetails){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('社团不存在');
 		}
-		
+
 		$releaseNotice = $this->associationService->releaseNotice($request->association_id,$request->notice);
-	
+
 		$association_members = $this->associationService->getAssociationAllMemberUids($request->association_id);
-		
+
 		foreach( $association_members as $key => $association_member )
 		{
 			$name = $associationsDetails->aname.'社团公告';
@@ -587,7 +587,7 @@ class AssociationController extends Controller
 		}
 
 		throw new \App\Exceptions\Custom\RequestSuccessException();
-        
+
 	}
 
 	/* 检查是否有新公告 */
@@ -611,7 +611,7 @@ class AssociationController extends Controller
 				'detail' => '还没加入社团',
 			];
 		}
-		
+
 		if($checkNewNotice == 200 && $checkNewMember == 200){
 			return [
 				'code' => 200,
@@ -698,7 +698,7 @@ class AssociationController extends Controller
         ];
 
 	}
-	
+
 	public function deleteActivity(Request $request){
 		$rule = [
 			'token' => 'required',
@@ -706,7 +706,7 @@ class AssociationController extends Controller
 			'aid' => 'required',
 		];
 		$this->helpService->validateParameter($rule);
-		
+
 		$deleteActivity = $this->associationService->deleteActivity($request->actid,$request->aid);
 		if($deleteActivity == 200){
 			return [

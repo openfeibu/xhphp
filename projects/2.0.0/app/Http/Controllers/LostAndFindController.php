@@ -28,6 +28,7 @@ class LostAndFindController extends Controller
                                 LostAndFindService $lostAndFindService)
 	{
 		parent::__construct();
+
 		$this->middleware('auth', ['only' => ['create','uploadImage','delete']]);
 		$this->helpService = $helpService;
         $this->userService = $userService;
@@ -67,6 +68,11 @@ class LostAndFindController extends Controller
 
         $loss = $this->lostAndFindService->create();
 
+        if($loss){
+            $where = ['loss.loss_id' => $loss->loss_id];
+            $loss = $this->lostAndFindService->getLoss($where);
+            $loss->url = config('app.web');
+        }
         return [
             'code'      => 200,
             'detail'    => '提交成功',

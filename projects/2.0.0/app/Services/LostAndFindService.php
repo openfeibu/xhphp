@@ -28,22 +28,27 @@ class LostAndFindService{
             'content'   => $this->request->content,
             'type'      => $this->request->type,
             'cat_id'    => $this->request->cat_id,
-            'img'       => $this->request->img,
-            'thumb'     => $this->request->thumb
+         
+            'img'       => isset($this->request->img) ? $this->request->img : '',
+            'thumb'     => isset($this->request->thumb) ? $this->request->thumb : ''
         ];
         return $this->lostAndFindRepository->create($data);
     }
     public function getList($where)
     {
-        return $this->lostAndFindRepository->getList($where);
+        $losses = $this->lostAndFindRepository->getList($where);
+        foreach ($losses as $key => $loss) {
+            $loss->url = config('app.web');
+        }
+        return $losses;
     }
     public function getCats()
     {
         return $this->lostAndFindRepository->getCats();
     }
-    public function delete($where)
+    public function getLoss($where)
     {
-        return $this->lostAndFindRepository->delete($where);
+        return $this->lostAndFindRepository->getLoss($where);
     }
 
 }

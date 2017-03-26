@@ -32,6 +32,7 @@ class LostAndFindRepository
     {
         return Loss::select(DB::raw('loss.college_id,loss.uid,loss.content,loss.mobile,loss.type,loss.img,loss.thumb,loss.created_at,loss.loss_id,loss_category.cat_name,loss_category.cat_id,user.nickname,user.avatar_url'))
                            ->where($where)
+                           ->orderBy('loss.loss_id','desc')
                            ->rightJoin('user','user.uid','=','loss.uid')
                            ->rightJoin('loss_category','loss_category.cat_id','=','loss.cat_id')
                            ->skip(20 * $this->request->page - 20)
@@ -42,4 +43,13 @@ class LostAndFindRepository
 		{
 				return Loss::where($where)->delete();
 		}
+    public function getLoss($where)
+    {
+         return Loss::select(DB::raw('loss.college_id,loss.uid,loss.content,loss.mobile,loss.type,loss.img,loss.thumb,loss.created_at,loss.loss_id,loss_category.cat_name,loss_category.cat_id,user.nickname,user.avatar_url'))
+                           ->where($where)
+                           ->orderBy('loss.loss_id','desc')
+                           ->rightJoin('user','user.uid','=','loss.uid')
+                           ->rightJoin('loss_category','loss_category.cat_id','=','loss.cat_id')
+                           ->first();
+    }
 }
