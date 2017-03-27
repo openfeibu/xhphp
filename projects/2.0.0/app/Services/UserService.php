@@ -30,6 +30,14 @@ class UserService
         Event::fire(new Integrals('每日登录签到'));
         return $this->userRepository->tokenAuth($token);
     }
+	/**
+     * token检验 用户新信息
+     */
+    public function getUserTokenAuth()
+    {
+        Event::fire(new Integrals('每日登录签到'));
+        return $this->userRepository->getUserTokenAuth();
+    }
 
     /**
      * 获取当前用户信息

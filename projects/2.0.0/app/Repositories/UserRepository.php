@@ -52,7 +52,18 @@ class UserRepository
         }
 		return self::$user;
 	}
-
+	public function getUserTokenAuth()
+	{
+		$user = User::where('token', $this->request->token)->first();
+		if (!$user) {
+			//token 无效
+        	throw new \App\Exceptions\Custom\UserUnauthorizedException();
+		}
+        if ($user->ban_flag) {
+            throw new \App\Exceptions\Custom\UserBanningException();
+        }
+		return $user;
+	}
 	/**
 	 * 获得当前用户信息
 	 */

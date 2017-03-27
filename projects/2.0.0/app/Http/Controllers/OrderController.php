@@ -165,9 +165,7 @@ class OrderController extends Controller
         ];
         $this->helpService->validateParameter($rule);
 
-        $this->user = $this->userService->getUser();
-
-       	$this->user = $this->userService->getUserByUserID($this->user->uid);
+        $this->user = $this->userService->getUserTokenAuth();
 
 		$alipayInfo = $this->userService->getAlipayInfo($this->user->uid);
 
@@ -762,4 +760,3 @@ $ret = $this->pushService->PushUserTokenDevice('系统通知', '这是内容', 9
 	}
 
 }
-
