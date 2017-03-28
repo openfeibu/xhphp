@@ -50,6 +50,7 @@ class CreateTableShops extends Migration
 			$table->text('goods_desc')->comment('商品描述');
 			$table->string('goods_img')->comment('商品图片');
 			$table->string('goods_thumb')->comment('商品图片');
+			$table->tinyInteger('sort')->default('50')->unsigned()->comment('在售');
 			$table->tinyInteger('is_on_sale')->default('1')->unsigned()->comment('在售');
 			$table->tinyInteger('top')->default(0)->comment('是否置顶');
 			$table->foreign('shop_id')->references('shop_id')->on('shop')

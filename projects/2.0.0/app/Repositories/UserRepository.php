@@ -52,6 +52,9 @@ class UserRepository
         }
 		return self::$user;
 	}
+	/*
+		token 校验（不获取缓存）
+	*/
 	public function getUserTokenAuth()
 	{
 		$user = User::where('token', $this->request->token)->first();
@@ -81,9 +84,9 @@ class UserRepository
 	  	return User::select(DB::raw($custom))->find($user_id);
 	}
 	/**
-	 * 根据用户ID获取该用户信息
+	 * 根据用户token获取该用户信息
 	 */
-	public function getUserByToken($token)
+	public function getUserByToken($token = '')
 	{
 	  	self::$user = $user = User::where('token', $token)->first();
 

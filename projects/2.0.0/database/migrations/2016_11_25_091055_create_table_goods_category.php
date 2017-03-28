@@ -16,9 +16,9 @@ class CreateTableGoodsCategory extends Migration
 			$table->increments('cat_id');
 			$table->integer('uid')->unsigned() ;
 			$table->integer('shop_id')->unsigned() ;
-            $table->string('cat_name')->comment('分类名称');
-            $table->integer('parent_id')->default(0)->comment('父ID');
-            $table->tinyInteger('sort')->default(50)->comment('排序');
+            $table->string('cat_name')->comment('鍒嗙被鍚嶇О');
+            $table->integer('parent_id')->default(0)->comment('鐖禝D');
+            $table->tinyInteger('sort')->default(50)->comment('鎺掑簭');
             $table->index(['uid','shop_id','parent_id']);
 		});
     }

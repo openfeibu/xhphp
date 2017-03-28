@@ -52,9 +52,11 @@ class GoodsRepository
 	}
 	public function getShopGoodses ($where)
 	{
-		$ShopGoodsesList = Goods::select(DB::raw('goods_id,shop_id,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,goods_thumb,created_at,is_on_sale'))
+		$ShopGoodsesList = Goods::select(DB::raw('goods_id,shop_id,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,goods_thumb,created_at,is_on_sale,CASE goods_number WHEN 0 THEN 0 ELSE 1 END AS is_goods_number'))
 								->where('is_on_sale', 1)
 								->where($where)
+								->orderBy('is_goods_number','desc')
+								->orderBy('sort','asc')
 								->orderBy('goods_click_count', 'desc')
 								->orderBy('goods_id', 'desc')
                            		->get();

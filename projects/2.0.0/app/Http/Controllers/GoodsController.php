@@ -218,7 +218,7 @@ class GoodsController extends Controller
 			'cat_id' => 'sometimes|required|integer',
 	    ];
 	    $this->helpService->validateParameter($rules);  	 
-		$user = $this->userService->getUser(); 
+		$user = $this->userService->getUserByToken(); 
 		if(!isset($request->shop_id)){
 			if(!$user){
 				throw new \App\Exceptions\Custom\OutputServerMessageException('参数错误');

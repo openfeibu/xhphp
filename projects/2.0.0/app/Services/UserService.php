@@ -48,10 +48,14 @@ class UserService
     }
 
 	/**
-     * 根据用户ID获取该用户信息
+     * 根据用户token获取该用户信息
      */
-    public function getUserByToken($token)
+    public function getUserByToken($token = '')
     {
+		if(isset($this->request->token) && !$token)
+		{
+			$token = $this->request->token;
+		}
         return $this->userRepository->getUserByToken($token);
     }
     /**

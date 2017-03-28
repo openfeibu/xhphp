@@ -115,7 +115,7 @@ class ShopController extends Controller
 	    ];
 	    $this->helpService->validateParameter($rules);
 	    if(isset($request->token)){
-		    $user = $this->userService->getUserByToken($request->token);
+		    $user = $this->userService->getUserByToken();
 		}
 		$uid = isset($user->uid) ? $user->uid : 0;
 		$shops = $this->shopService->getShops($uid);
