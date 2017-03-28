@@ -87,7 +87,7 @@ class GoodsController extends Controller
     	
 		$goods = $this->goodsService->addGoods($this->user,$this->shop);		
 	
-      //  $goods = $this->goodsService->getBusinessGoods(['goods_id' => $goods->goods_id]);
+        $goods = $this->goodsService->getBusinessGoods(['goods_id' => $goods->goods_id]);
 		
 		return [
 			'code' => 200,
