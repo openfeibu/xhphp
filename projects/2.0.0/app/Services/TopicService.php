@@ -125,15 +125,15 @@ class TopicService
 	{
 		//提取Session记录
         $topicList_tag = Session::get('topicList_tag', []);
-
-        //增加阅读量
-		$this->topicRepository->incrementViewCount($topics, $topicList_tag);
-
+		
 		if ($topicList_tag) {
 		    $topicList_tag = array_unique(array_merge($topics, $topicList_tag));
 		} else {
 		    $topicList_tag = [];
 		}
+		
+		//增加阅读量
+		$this->topicRepository->incrementViewCount($topics, $topicList_tag);
 		//记录Session
 		Session::put('topicList_tag', $topicList_tag);
 	}
