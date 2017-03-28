@@ -67,10 +67,10 @@ class TopicController extends Controller
             'topic_id' => $request->topic_id,
         ];
 		
+		$this->topicService->incrementViewCount([$topic->tid]);
+		
         //获取话题信息
         $topic = $this->topicService->getTopicByTopicID($param);
-
-		$this->topicService->incrementViewCount([$topic->tid]);
 
         return[
             'code' => 200,
