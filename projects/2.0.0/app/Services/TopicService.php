@@ -39,7 +39,7 @@ class TopicService
 	 */
 	public function getTopicByTopicID(array $param)
 	{
-		$user = $this->userRepository->getUser();
+		$user = $this->userRepository->getUserByToken();
 		if ($user) {
 			$param['user_id'] = $user->uid;
 		}
@@ -129,7 +129,7 @@ class TopicService
 		if ($topicList_tag) {
 		    $topicList_tag = array_unique(array_merge($topics, $topicList_tag));
 		} else {
-		    $topicList_tag = [];
+		    $topicList_tag = $topics;
 		}
 		
 		//增加阅读量
