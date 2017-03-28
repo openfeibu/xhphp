@@ -125,7 +125,7 @@ class TopicService
 	{
 		//提取Session记录
         $topicList_tag = Session::get('topicList_tag', []);
-		//var_dump($topicList_tag);exit;
+
 		//增加阅读量
 		$this->topicRepository->incrementViewCount($topics, $topicList_tag);
 		
