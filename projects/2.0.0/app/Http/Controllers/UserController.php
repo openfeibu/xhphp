@@ -380,10 +380,10 @@ class UserController extends Controller
     {
         //检验请求参数
         $rule = [
-            'mobile_no' => 'required',
+            'mobile_no' => 'required|unique:user,mobile_no,NULL',
         ];
         $this->helpService->validateParameter($rule);
-
+		
         //发送短信
         $this->smsService->sendSMS2Phone($request->mobile_no, 'reg');
 
