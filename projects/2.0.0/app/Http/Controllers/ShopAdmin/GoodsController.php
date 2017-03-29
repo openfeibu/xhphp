@@ -78,11 +78,12 @@ class GoodsController extends Controller
 		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺 '.$this->shop->shop_name.' 已关闭不能添加商品');
     			break;
 		}
+		/*
     	$existShopGoods = $this->goodsService->existShopGoods($this->shop->shop_id,$request->goods_name);
     	if($existShopGoods){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已存在同名商品');
     	}
-    	
+    	*/
     	$isExistsCat = $this->goodsCategoryService->isExistsCat(['shop_id' => $this->shop->shop_id,'cat_id' => $request->cat_id]);
     	
 		$goods = $this->goodsService->addGoods($this->user,$this->shop);		
