@@ -30,7 +30,7 @@ class NotificationController extends Controller
     public function getNewTopicNotifications()
     {
 	    $uid = $this->userService->getUser()->uid;
-		$where = ['uid' => $uid ,'attr' => 'topic','read'=>1];
+		$where = ['uid' => $uid ,'attr' => 'topic','read'=>0];
 	    $notifications = $this->notificationService->getNewNotifications($where);
 	    return [
 			'code' => 200,

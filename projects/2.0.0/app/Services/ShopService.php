@@ -48,7 +48,7 @@ class ShopService
 			if($shop->shop_status == 1 && ($time < strtotime($shop->open_time) || $time > strtotime($shop->close_time))){
 				$shop->shop_status = 3;
 			}
-			$shop->url = config('app.web_url').'/shop/shop-detail.html?sid='.$shop->shop_id;
+			$shop->url = config('app.web_url').'/shop/shop-detail.html?device=android&sid='.$shop->shop_id;
 		}
 		if($uid){
 			foreach( $shops as $key => $shop )
@@ -125,7 +125,7 @@ class ShopService
 	{
 		$shops = $this->shopRepository->userCollects($uid);
 		foreach ($shops as $key => $shop) {
-			$shop->url = config('app.web_url').'/shop/shop-detail.html?sid='.$shop->shop_id;
+			$shop->url = config('app.web_url').'/shop/shop-detail.html?device=android&sid='.$shop->shop_id;
 		}
 		return $shops;
 	}

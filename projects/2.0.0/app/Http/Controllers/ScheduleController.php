@@ -200,7 +200,7 @@ class ScheduleController extends Controller
 		];
 		foreach($order_infos as $key => $order_info)
 		{
-			$data['data']['url'] = config('app.web_url').'/shop/shop-orderDetail.html?order_id='.$order_info->order_id;
+			$data['data']['url'] = config('app.web_url').'/shop/shop-orderDetail.html?device=android&order_id='.$order_info->order_id;
 			$ret = $this->pushService->PushUserTokenDevice($data['data']['title'], $data['data']['content'], $order_info->uid,2,$data);
 		}
 	}
