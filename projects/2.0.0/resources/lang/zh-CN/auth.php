@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => '�˺Ż��������',
-    'throttle' => '��½̫Ƶ�������Ժ�����',
+        'failed' => '账号或密码错误。',
+        'throttle' => '操作太频繁，请稍后重试。',
 
 ];
