@@ -223,6 +223,7 @@ Route::get('lostAndFind/getCats', 'LostAndFindController@getCats');
 Route::post('lostAndFind/create', 'LostAndFindController@create');
 Route::post('lostAndFind/uploadImage', 'LostAndFindController@uploadImage');
 Route::post('lostAndFind/delete', 'LostAndFindController@delete');
+Route::get('lostAndFind/getLoss','LostAndFindController@getLoss');
 
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');

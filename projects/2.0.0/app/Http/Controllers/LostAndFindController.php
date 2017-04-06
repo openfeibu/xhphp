@@ -110,4 +110,18 @@ class LostAndFindController extends Controller
 
         throw new \App\Exceptions\Custom\RequestSuccessException('删除成功！');
     }
+    public function getLoss(Request $request)
+    {
+        $rule = [
+            'loss_id' => 'required|exists:loss,loss_id'
+        ];
+        $user = $this->userService->getUser();
+        $where = ['loss_id' => $request->loss_id,'uid' => $user->uid];
+        $data = $this->lostAndFindService->getLoss(['loss_id' => $request->loss_id,]);
+        return [
+            'code' => 200,
+            'data' => $data
+
+        ];
+    }
 }

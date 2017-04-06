@@ -407,6 +407,7 @@ class UserController extends Controller
     public function withdrawalsApply (Request $request)
     {
 	    $user = $this->userService->getUser();
+		$this->userService->isRealnameAuth();
 	    $alipayInfo = $this->userService->getAlipayInfo($user->uid);
 	    if(!$alipayInfo->is_paypassword){
 		    throw new \App\Exceptions\Custom\OutputServerMessageException('请先设置支付密码');
