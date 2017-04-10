@@ -33,16 +33,16 @@ class GoodsService
 	public function existShopGoods ($shop_id,$goods_name)
 	{
 		$shop_id = intval($shop_id);
-		return $this->goodsRepository->existShopGoods($shop_id,trim($goods_name));		
+		return $this->goodsRepository->existShopGoods($shop_id,trim($goods_name));
 	}
 	public function existGoods ($goods_id)
-	{	
+	{
 		$goods_id = intval($goods_id);
 		return $this->goodsRepository->existGoods($goods_id);
 	}
 	public function getShopGoodses ($where,$uid = 0)
 	{
-		$goodses = $this->goodsRepository->getShopGoodses($where);		
+		$goodses = $this->goodsRepository->getShopGoodses($where);
 		foreach( $goodses as $key => $goods )
 		{
 			if($uid){
@@ -56,7 +56,7 @@ class GoodsService
 	}
 	public function getBusinessGoodses ($where)
 	{
-		$goodses = $this->goodsRepository->getBusinessGoodses($where);	
+		$goodses = $this->goodsRepository->getBusinessGoodses($where);
 		return $goodses;
 	}
 	public function count ($where)
@@ -65,12 +65,12 @@ class GoodsService
 	}
 	public function getBusinessGoods ($where)
 	{
-		$goodses = $this->goodsRepository->getBusinessGoods($where);	
+		$goodses = $this->goodsRepository->getBusinessGoods($where);
 		return $goodses;
 	}
 	public function isExistsGoods ($where,$columns = ['*'])
 	{
-		$goods = $this->goodsRepository->getGoods($where,$columns);	
+		$goods = $this->goodsRepository->getGoods($where,$columns);
 		if(!$goods){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('商品不存在');
 		}
@@ -78,7 +78,7 @@ class GoodsService
 	}
 	public function getGoods ($where,$columns = ['*'])
 	{
-		return 	$this->goodsRepository->getGoods($where,$columns = ['*']);			
+		return 	$this->goodsRepository->getGoods($where,$columns = ['*']);
 	}
 	public function getGoodses ($page)
 	{
@@ -87,7 +87,7 @@ class GoodsService
 	public function update ($where = [],$update = [])
 	{
 		return $this->goodsRepository->update($where,$update);
-	}	
+	}
 	public function getCount ($where)
 	{
 		return $this->goodsRepository->getCount($where);

@@ -48,18 +48,21 @@ class CartService
 	public function getShopCarts($shop_id,$uid)
 	{
 		$carts = $this->cartRepository->getShopCarts($shop_id,$uid);
-		$shop_total = 0;
+		$shop_total = $weight = 0;
 		foreach( $carts as $k => $cart )
 		{
 			$goods = $this->goodsService->existGoods($cart->goods_id);
 			$goods_total = $cart->goods_price * $cart->goods_number;
+			$goods_weight = $goods->weight * $cart->goods_number;
 			$cart->goods_thumb = $goods->goods_thumb;
 			$cart->goods_img = $goods->goods_img;
 			$cart->goods_total = $goods_total;
 			$shop_total += $goods_total;
+			$weight += $goods_weight;
 		}
 		return [
 			'carts' => $carts,
+			'weight' => $weight,
 			'shop_total' => $shop_total,
 		];
 	}
@@ -139,7 +142,7 @@ class CartService
 				'shop_status'	=> $shopDetail->shop_status,
 				'shop_status_description' => trans("common.shop_status.$shopDetail->shop_status"),
 			);
-			$shop_total = 0; 
+			$shop_total = 0;
 			foreach( $carts['carts'] as $k => $cart )
 			{
 				$goodsDetail = $this->goodsService->existGoods($cart->goods_id);
@@ -148,13 +151,13 @@ class CartService
 					'goods_img'  	=> $goodsDetail->goods_img,
 					'goods_name' 	=> $cart->goods_name,
 					'goods_desc' 	=> $cart->goods_desc,
-					'goods_id'	 	=> $cart->goods_id,				
+					'goods_id'	 	=> $cart->goods_id,
 					'goods_price'	=> $cart->goods_price,
 					'goods_number'	=> $cart->goods_number,
 					'cart_id'		=> $cart->cart_id,
 					'goods_total'	=> $goods_total,
 				);
-				
+
 			}
 			$arrCarts[$cartShop->shop_id]['shop_total'] =  $carts['shop_total'];
 			$total += $shop_total;

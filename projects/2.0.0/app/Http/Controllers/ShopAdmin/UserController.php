@@ -45,9 +45,9 @@ class UserController extends Controller
 	        'min_goods_amount' 	  =>   'sometimes|numeric|min:0',
 	        'shipping_fee' 	  => 'sometimes|numeric|min:0',
 	        'shop_status' 	  => 'sometimes|numeric|in:1,3',
-	    ];	    
+	    ];
 	    $this->helpService->validateParameter($rules);
-		sellerHandle($this->shop);	
+		sellerHandle($this->shop);
 		$where = ['shop_id' => $this->shop->shop_id];
 		$update = [
 			'shop_img' => isset($request->shop_img) ? $request->shop_img : $this->shop->shop_img,
@@ -65,7 +65,7 @@ class UserController extends Controller
 			$update['close_time'] = $request->close_time;
 		}
 	    $this->shopService->update($where,$update);
-	    $shop = $this->shopService->getShop($where); 
+	    $shop = $this->shopService->getShop($where);
 	    return [
 			'code' => 200,
 			'shop' => $shop,
@@ -75,7 +75,7 @@ class UserController extends Controller
     {
          //上传商品图片
         $images_url = $this->imageService->uploadAdminImages(Input::all(), 'shop');
-        
+
         return [
             'code' => 200,
             'detail' => '请求成功',

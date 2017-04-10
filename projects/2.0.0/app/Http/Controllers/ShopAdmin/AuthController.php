@@ -33,6 +33,7 @@ class AuthController extends Controller
         ]);
 
     }
+    
 	  // 登出
      public function getLogout()
      {
@@ -43,7 +44,7 @@ class AuthController extends Controller
      }
     protected function create(array $data)
     {
-       	
+
 
     }
 

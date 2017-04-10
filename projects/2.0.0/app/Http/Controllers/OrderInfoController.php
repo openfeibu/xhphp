@@ -158,13 +158,20 @@ class OrderInfoController extends Controller
     	$user_address = $this->userAddressService->getUserAddress(['uid' => $this->user->uid]);
 		$pay = config('pay');
 		$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
-    	$shop = $this->shopService->getShop(['shop_id' => $request->shop_id],['min_goods_amount','shipping_fee','shop_name','shop_img']);
+    	$shop = $this->shopService->getShop(['shop_id' => $request->shop_id],['min_goods_amount','shipping_fee','shop_name','shop_img','shop_type']);
 		$total_fee = $goods_amount = $carts['shop_total'];
 		$shipping_fee = 0;
-		if($goods_amount < $shop->min_goods_amount){
-			$total_fee = $goods_amount + $shop->shipping_fee;
-			$shipping_fee = $shop->shipping_fee;
+		if($shop_type == 1)
+		{
+			if($goods_amount < $shop->min_goods_amount){
+				$total_fee = $goods_amount + $shop->shipping_fee;
+				$shipping_fee = $shop->shipping_fee;
+			}
+		}else
+		{
+			//$shipping_fee = 
 		}
+
 		$count = $this->cartService->getCount(['uid' => $this->user->uid,'shop_id' => $request->shop_id]);
 		return [
             'code' => 200,

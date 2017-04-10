@@ -41,7 +41,7 @@ class GoodsCategoryRepository
 	public function isExistsCat ($where,$columns)
 	{
 		$cat = GoodsCategory::where($where)->first($columns);
-		return 	$cat;		
+		return 	$cat;
 	}
 	public function addCat ($data)
 	{

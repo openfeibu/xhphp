@@ -144,9 +144,11 @@ Route::post('goods/store','GoodsController@store')->name('shop_storeGoods');
 Route::post('goods/update','GoodsController@update');
 Route::get('goods/shopGoodses','GoodsController@getShopGoodses')->name('shop_getShopGoodses');
 Route::get('goods/goodses','GoodsController@getGoodses')->name('shop_getGoodses');
+Route::get('goods/getGoods','GoodsController@getGoods')->name('shop_getGoods');
 Route::post('goods/uploadGoodsImage','GoodsController@uploadGoodsImage');
 Route::post('goods/addCat','GoodsController@addCat');
 Route::post('goods/updateCat','GoodsController@updateCat');
+ROute::get('goods/getCats','GoodsController@getCats');
 
 
 Route::post('cart/store','CartController@store')->name('shop_storeCart');
@@ -238,6 +240,7 @@ Route::get('business/orderInfo/orderInfos','ShopAdmin\OrderInfoController@orderI
 Route::get('business/orderInfo/show','ShopAdmin\OrderInfoController@show');
 Route::post('business/orderInfo/shipping','ShopAdmin\OrderInfoController@shipping');
 Route::post('business/orderInfo/agreeCancel','ShopAdmin\OrderInfoController@agreeCancel');
+//Route::get('business/goods/getCats','ShopAdmin\GoodsController@getCats');
 
 Route::get('business/user/getUser', 'ShopAdmin\UserController@getUser');
 Route::get('business/user/getShop', 'ShopAdmin\UserController@getShop');

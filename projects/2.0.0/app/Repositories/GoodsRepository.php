@@ -22,31 +22,32 @@ class GoodsRepository
 		$goods = new Goods;
 		$goods->setConnection('write');
 		$goods->shop_id = $shop->shop_id;
-		$goods->cat_id = $this->request->cat_id;				
-		$goods->goods_name = trim($this->request->goods_name);                
+		$goods->cat_id = $this->request->cat_id;
+		$goods->goods_name = trim($this->request->goods_name);
 		$goods->goods_img = $this->request->goods_img;
 		$goods->goods_thumb = $this->request->goods_thumb;
 		$goods->goods_desc = trim($this->request->goods_desc);
 		$goods->goods_number = $this->request->goods_number;
 		$goods->goods_price = $this->request->goods_price;
+		$goods->is_on_sale = $this->request->is_on_sale;
 		$goods->created_at = date('Y-m-d H:i:s');
 		$goods->save();
 		return $goods;
 	}
 	public function update ($where,$update)
 	{
-		return Goods::where($where)->update($update);		
+		return Goods::where($where)->update($update);
 	}
 	public function existShopGoods ($shop_id,$goods_name)
 	{
-		$existShopGoods = Goods::where('shop_id', $shop_id)->where('goods_name',$goods_name)->first();		
+		$existShopGoods = Goods::where('shop_id', $shop_id)->where('goods_name',$goods_name)->first();
 
 		return $existShopGoods;
-		
+
 	}
 	public function existGoods ($goods_id)
 	{
-		$existGoods = Goods::where('goods_id',$goods_id)->first();		
+		$existGoods = Goods::where('goods_id',$goods_id)->first();
 		return $existGoods;
 
 	}
@@ -72,7 +73,7 @@ class GoodsRepository
 								->skip(15 * $this->request->page - 15)
                     			->take(15)
                            		->get();
-                 
+
         return $ShopGoodsesList;
 	}
 	public function count ($where)
@@ -85,13 +86,13 @@ class GoodsRepository
 								->leftJoin('goods_category','goods.cat_id','=','goods_category.cat_id')
 								->where($where)
                            		->first();
-                 
+
         return $goods;
 	}
 	public function getGoods ($where,$columns)
 	{
 		$goods = Goods::where($where)->first($columns);
-		return 	$goods;			
+		return 	$goods;
 	}
 	public function getGoodses ()
 	{

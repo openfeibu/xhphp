@@ -81,6 +81,13 @@ class Handler extends ExceptionHandler
                 ];
                 break;
 
+            case ($e instanceof \App\Exceptions\Custom\AccessForbiddenException):
+                $resposeJson = [
+                    'code' => 403,
+                    'detail' => sprintf(config('error.403'), $e->getMessage() ?: ''),
+                ];
+                break;
+
             case ($e instanceof \App\Exceptions\Custom\ParameterMissingOrIllegalException):
                 $resposeJson = [
                     'code' => 1001,

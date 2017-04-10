@@ -24,7 +24,7 @@ class OrderInfoController extends Controller
 	protected $goodsService;
 
 	protected $shopService;
-	
+
 	protected $userService;
 
 	protected $cartService;
@@ -32,9 +32,9 @@ class OrderInfoController extends Controller
 	protected $orderInfoService;
 
 	protected $payService;
-	
+
 	protected $user;
-	
+
 	public function __construct (UserService $userService,
 								ShopService $shopService,
 								GoodsService $goodsService,
@@ -51,7 +51,7 @@ class OrderInfoController extends Controller
 	 	$this->orderInfoService = $orderInfoService;
 	 	$this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
-	 	  
+
 	}
 	public function orderInfos (Request $request)
 	{
@@ -60,7 +60,7 @@ class OrderInfoController extends Controller
             'type' => 'required|in:beship,shipping,succ,cancell,all',
         ];
         $this->helpService->validateParameter($rule);
-		$order_infos = $this->orderInfoService->getShopOrderInfos($this->shop->shop_id,$request->type,15);
+		$order_infos = $this->orderInfoService->getShopOrderInfos($this->shop->shop_id,$request->type,20);
         return [
 			'code' => 200,
 			'count' => count($order_infos),
@@ -90,8 +90,8 @@ class OrderInfoController extends Controller
     	$rules = [
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
-    	$this->helpService->validateParameter($rules);    	
-		
+    	$this->helpService->validateParameter($rules);
+
 		$order_info = $this->orderInfoService->sellerCheckShipping($request->order_id,$this->shop->shop_id);
 
 		//商家
@@ -115,7 +115,7 @@ class OrderInfoController extends Controller
                                             ]);
 		}
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
-		
+
 		throw new \App\Exceptions\Custom\RequestSuccessException('操作成功');
     }
     public function agreeCancel(Request $request)
@@ -123,15 +123,15 @@ class OrderInfoController extends Controller
     	$rules = [
 			'order_id'  => 'required|exists:order_info,order_id',
     	];
-    	$this->helpService->validateParameter($rules);    	
+    	$this->helpService->validateParameter($rules);
 
 
 		$order_info = $this->orderInfoService->sellerCheckRefund($request->order_id,$this->shop->shop_id);
 
 		$user = $this->userService->getUserByUserID($order_info->uid);
-		
+
 		$fee = 	$user->wallet + $order_info->total_fee;
-		
+
         $this->walletService->updateWallet($user->uid,$fee);
 
        	$walletData = array(
@@ -152,14 +152,14 @@ class OrderInfoController extends Controller
 			'description' => '取消订单',
 			'trade_status' => 'income',
 		);
-		
+
 		$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
 
 		$this->orderInfoService->inGoodsNumber($order_info->order_id);
-		
+
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
 
-		
+
     	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
     }
 }

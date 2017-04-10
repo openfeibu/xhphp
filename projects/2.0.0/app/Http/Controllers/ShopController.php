@@ -141,7 +141,7 @@ class ShopController extends Controller
 
     public function uploadShopImg (Request $request)
     {
-		
+
     }
     public function collect (Request $request)
     {

@@ -30,7 +30,7 @@ class GoodsController extends Controller
 	protected $userService;
 
 	protected $goodsCategoryService;
-	
+
 	public function __construct (UserService $userService,
 								ShopService $shopService,
 								GoodsService $goodsService,
@@ -46,14 +46,14 @@ class GoodsController extends Controller
 		$this->goodsService = $goodsService ;
 		$this->goodsCategoryService = $goodsCategoryService ;
 		$this->helpService = $helpService;
-		$this->imageService = $imageService; 
+		$this->imageService = $imageService;
 		$this->fileUploadService = $fileUploadService;
 	}
-	
+
 	public function store (Request $request)
-    {	    
-    	$user = $this->userService->getUser();  
-        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
+    {
+    	$user = $this->userService->getUser();
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);
     	$rules = [
         	'token' 	  	=> 'required',
         	'cat_id'		=> 'required|integer',
@@ -63,19 +63,19 @@ class GoodsController extends Controller
 	        'goods_price' 	=> 'required|numeric|min:0.01',
 	        'goods_desc' 	=> 'required|string|max:255',
 	        'goods_number' 	=> 'required|integer|min:0',
-	    ];	    
-    	$this->helpService->validateParameter($rules);  
+	    ];
+    	$this->helpService->validateParameter($rules);
 
-    	$this->helpService->validateData(trim($request->goods_name),"商品名称"); 	
-    	
+    	$this->helpService->validateData(trim($request->goods_name),"商品名称");
+
     	switch ($shop->shop_status)
     	{
     		case 0:
 		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺 '.$shop->shop_name.' 在审核中不能添加商品');
-    			break;	
+    			break;
     		case 2:
 		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺 '.$shop->shop_name.' 审核不通过不能添加商品，请重新申请开店');
-    			break;		
+    			break;
     		case 3:
 		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺 '.$shop->shop_name.' 已关闭不能添加商品');
     			break;
@@ -84,18 +84,18 @@ class GoodsController extends Controller
     	if($existShopGoods){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已存在同名商品');
     	}
-    	
+
     	$isExistsCat = $this->goodsCategoryService->isExistsCat(['shop_id' => $shop->shop_id,'cat_id' => $request->cat_id]);
-    	
-		$this->goodsService->addGoods($user,$shop);		
-	
+
+		$this->goodsService->addGoods($user,$shop);
+
         throw new \App\Exceptions\Custom\RequestSuccessException('添加成功');
     }
     public function update (Request $request)
     {
-    	$user = $this->userService->getUser();  
-        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);    
-    	
+    	$user = $this->userService->getUser();
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);
+
     	$rules = [
         	'token' 	  	=> 'required',
         	'cat_id'		=> 'sometimes|required|integer',
@@ -107,17 +107,17 @@ class GoodsController extends Controller
 	        'goods_desc' 	=> 'sometimes|required|string|max:255',
 	        'goods_number' 	=> 'sometimes|required|integer|min:0',
 	        'is_on_sale'    => 'sometimes|required|integer|in:0,1',
-	    ];	 
+	    ];
 	    $this->helpService->validateParameter($rules);
 
 	    $goods =  $this->goodsService->isExistsGoods(['goods_id' => intval($request->goods_id),'shop_id' => $shop->shop_id]);
 
 		if(isset($request->goods_name)){
-			$this->helpService->validateData(trim($request->goods_name),"商品名称"); 	
+			$this->helpService->validateData(trim($request->goods_name),"商品名称");
 		}
-		
+
 		$isExistsCat = $this->goodsCategoryService->isExistsCat(['shop_id' => $shop->shop_id,'cat_id' => $request->cat_id]);
-		
+
 	    $update = [
 			'goods_name' 	=> isset($request->goods_name) ? $request->goods_name : $goods->goods_name,
 			'goods_img'    	=> isset($request->goods_img) ? $request->goods_img : $goods->goods_img,
@@ -130,28 +130,32 @@ class GoodsController extends Controller
 	    ];
 
 		$this->goodsService->update(['goods_id' => intval($request->goods_id),'shop_id' => $shop->shop_id],$update);
-		
+
 	    throw new \App\Exceptions\Custom\RequestSuccessException('更新成功');
     }
     public function delete (Request $request)
     {
-	    $user = $this->userService->getUser();  
-        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
+	    $user = $this->userService->getUser();
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);
     	$rules = [
         	'goods_id'		=> 'required|integer',
-	    ];	 
+	    ];
 	    $this->helpService->validateParameter($rules);
 	    $goods =  $this->goodsService->isExistsGoods(['goods_id' => intval($request->goods_id),'shop_id' => $shop->shop_id]);
     }
-	public function show (Request $request)
+	public function getGoods (Request $request)
 	{
 		$rules = [
-        	'goods_id'		=> 'required|integer',
-	    ];	 
+        	'goods_id'		=> 'required',
+	    ];
 	    $this->helpService->validateParameter($rules);
-	    $goods = $this->goodsService->isExistsGoods(['goods_id' => intval($request->goods_id)],['goods_id','shop_id','uid','goods_name','goods_price','goods_click_count','goods_sale_count','goods_number','goods_price','goods_desc','goods_img','created_at','is_on_sale']);
-	    
-	}    
+	    $goods = $this->goodsService->isExistsGoods(['goods_id' => intval($request->goods_id)],['goods_id','cat_id','shop_id','goods_name','goods_price','goods_click_count','goods_sale_count','goods_number','goods_price','goods_desc','goods_img','goods_thumb','created_at','is_on_sale']);
+        return [
+            'code' => 200,
+            'data' => $goods
+        ];
+
+	}
 	public function addCat (Request $request)
 	{
 		$rules = [
@@ -160,9 +164,9 @@ class GoodsController extends Controller
         	'parent_id'     => 'sometimes|required|integer|min:0',
         	'sort' 			=> 'sometimes|required|integer|min:0|max:50',
         ];
-		$user = $this->userService->getUser();  
-        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);   
-		$this->helpService->validateData(trim($request->cat_name),"分类名称"); 
+		$user = $this->userService->getUser();
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);
+		$this->helpService->validateData(trim($request->cat_name),"分类名称");
 
 		$this->goodsCategoryService->isExistsCat(['shop_id' => $shop->shop_id,'cat_name' => $request->cat_name]);
 		/*$isExistsCat =  isset($request->parent_id) ? $this->goodsCategoryService->isExistsCat(['shop_id' => $shop->shop_id,'cat_id' => $request->parent_id]);*/
@@ -171,7 +175,7 @@ class GoodsController extends Controller
 			'shop_id'	=> $shop->shop_id,
 			'parent_id' => 0,
 		]);
-		
+
         throw new \App\Exceptions\Custom\RequestSuccessException('添加成功');
 	}
 	public function updateCat (Request $request)
@@ -181,9 +185,9 @@ class GoodsController extends Controller
         	'cat_id'		=> 'required|integer',
         	'cat_name'   	=> 'required|string|between:2,10',
         ];
-		$user = $this->userService->getUser();  
-        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);   
-		$this->helpService->validateData(trim($request->cat_name),"分类名称"); 
+		$user = $this->userService->getUser();
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);
+		$this->helpService->validateData(trim($request->cat_name),"分类名称");
 
 		$isExistsCat =  $this->goodsCategoryService->isExistsCat(['shop_id' => $shop->shop_id,'cat_id' => $request->cat_id]);
 		if($isExistsCat->cat_name != $request->cat_name){
@@ -191,19 +195,30 @@ class GoodsController extends Controller
 		}
 		/*$isExistsCat =  isset($request->parent_id) ? $this->goodsCategoryService->isExistsCat(['shop_id' => $shop->shop_id,'cat_id' => $request->parent_id]);*/
 		$this->goodsCategoryService->updateCat(['cat_id' => $request->cat_id],['cat_name' => $request->cat_name]);
-		
+
         throw new \App\Exceptions\Custom\RequestSuccessException('更新成功');
 	}
-	
+    public function getCats(Request $request)
+    {
+        $rules = [
+			'shop_id' => 'required|exists:shop,shop_id',
+	    ];
+        $this->helpService->validateParameter($rules);
+        $categories = $this->goodsCategoryService->getCategories($request->shop_id);
+        return [
+			'code' => 200 ,
+			'data' => $categories,
+        ];
+    }
     public function uploadGoodsImage(Request $request)
     {
          //上传头像文件
-        $user = $this->userService->getUser();  
-        
-        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);   
-         
+        $user = $this->userService->getUser();
+
+        $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);
+
         $images_url = $this->imageService->uploadAdminImages(Input::all(), 'goods',$shop->shop_id);
-        
+
         return [
             'code' => 200,
             'detail' => '请求成功',
@@ -217,19 +232,19 @@ class GoodsController extends Controller
 			'shop_id' => 'sometimes|required|integer',
 			'cat_id' => 'sometimes|required|integer',
 	    ];
-	    $this->helpService->validateParameter($rules);  	 
-		$user = $this->userService->getUserByToken(); 
+	    $this->helpService->validateParameter($rules);
+		$user = $this->userService->getUserByToken();
 		if(!isset($request->shop_id)){
 			if(!$user){
 				throw new \App\Exceptions\Custom\OutputServerMessageException('参数错误');
 			}
-	    	$shop = $this->shopService->isExistsShop(['uid' => $user->uid]);  
+	    	$shop = $this->shopService->isExistsShop(['uid' => $user->uid]);
 	    	$shop_id = $shop->shop_id;
 	    	sellerHandle($shop);
 		}else{
-			$shop = $this->shopService->isExistsShop(['shop_id' => $request->shop_id]);  
+			$shop = $this->shopService->isExistsShop(['shop_id' => $request->shop_id]);
 			$shop_id = $request->shop_id;
-		} 
+		}
 	    $categories = $this->goodsCategoryService->getCategories($shop_id);
 	    $firstCate = $this->goodsCategoryService->getFirst($shop_id);
 	    $cat_id = isset($request->cat_id) ? $request->cat_id : isset($firstCate->cat_id) ? $firstCate->cat_id : 0 ;
@@ -242,22 +257,22 @@ class GoodsController extends Controller
 		    $cat_id = 0;
 	    }
 	    $uid = $user ? $user->uid : 0;
-	    $shopGoodses = $cat_id ? $this->goodsService->getShopGoodses(['goods.shop_id' =>$shop_id ,'goods.cat_id' => $cat_id],$uid) : [];	
+	    $shopGoodses = $cat_id ? $this->goodsService->getShopGoodses(['goods.shop_id' =>$shop_id ,'goods.cat_id' => $cat_id],$uid) : [];
         return [
 			'code' => 200 ,
 			'categories' => $categories,
 			'shop' => $shop,
 			'goodes' => $shopGoodses,
         ];
-      	
+
     }
-    
+
     public function getGoodses(Request $request)
     {
 	    $rules = [
 			'page' => 'required|string|digits:1',
-	    ];	    
-	    $this->helpService->validateParameter($rules);  
+	    ];
+	    $this->helpService->validateParameter($rules);
 	    $goodses = $this->goodsService->getGoodses($request->page);
 	    return [
 			'code' => 200 ,

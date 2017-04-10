@@ -74,27 +74,17 @@ if (!function_exists('seller_check_Shipping_order_info')) {
 
 if (!function_exists('sellerHandle')) {
 	function sellerHandle($shop){
-		if($shop->shop_status == 4){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已经被管理员关闭，禁止所有操作');
-		}else if($shop->shop_status == 0){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺审核中，禁止所有操作');
-		}
-		else if($shop->shop_status == 2){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺未通过审核，禁止所有操作');
+		if(in_array($shop->shop_status,[4,0,2]))
+		{
+			throw new \App\Exceptions\Custom\OutputServerMessageException(trans('common.shop_status_validator.'.$shop->shop_status));
 		}
 	}
 }
 if (!function_exists('buyerHandle')) {
 	function buyerHandle($shop){
-		if($shop->shop_status == 4){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺已经被管理员关闭，禁止所有操作');
-		}else if($shop->shop_status == 0){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺审核中，禁止所有操作');
-		}
-		else if($shop->shop_status == 2){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺未通过审核，禁止所有操作');
-		}else if($shop->shop_status == 3){
-			throw new \App\Exceptions\Custom\OutputServerMessageException('店铺休息中');
+		if($shop->shop_status != 1)
+		{
+			throw new \App\Exceptions\Custom\OutputServerMessageException(trans('common.shop_status_validator.'.$shop->shop_status));
 		}
 		$time = strtotime(date('H:i:s',time()));
 		if($time < strtotime($shop->open_time) || $time > strtotime($shop->close_time)){
