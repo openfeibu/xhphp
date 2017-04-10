@@ -9,10 +9,17 @@ return [
 		'0'	=> '待审核',
 		'1' => '正常',
 		'2' => '审核不通过',
-		'3' => '关闭',
+		'3' => '休息中',
+		'4' => '禁用',
 	],
-	'pay_name'  => [		
-		'1' => '支付宝支付', 
+	'shop_status_validator' => [
+		'0'	=> '店铺审核中，禁止所有操作',
+		'2' => '店铺未通过审核，禁止所有操作',
+		'3' => '店铺休息中',
+		'4' => '店铺已经被管理员关闭，禁止所有操作',
+	],
+	'pay_name'  => [
+		'1' => '支付宝支付',
 		'2' => '微信支付',
 		'3' => '余额支付',
 		'4' => '系统返现',
@@ -21,11 +28,11 @@ return [
 	],
 	'trade_type' => [
 		'ReleaseTask' => '发布任务',
-		'AcceptTask'  => '接受任务',	
+		'AcceptTask'  => '接受任务',
 		'Withdrawals' => '提现',
 		'WithdrawalsFail' => '提现失败',
 		'CancelTask'  => '取消任务',
-		'Shopping'	  => '购物',	
+		'Shopping'	  => '购物',
 		'CancelOrder'  => '取消订单',
 		'Shop' => '商店收入',
 		'TelecomOrder' => '电信套餐',
@@ -84,8 +91,8 @@ return [
 			'shipping' => '发货中',
 			'succ' => '已收款',
 		],*/
-		
-		
+
+
 	],
     // trade_account 交易状态
 	'trade_status' => [
@@ -118,7 +125,7 @@ return [
 		'2' => '管理员',
 		'3' => '管理员',
 	],
-	//申请状态 
+	//申请状态
 	'apply_status' => [
 		'success' => '已转账',
 		'wait' => '待转账',

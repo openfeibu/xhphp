@@ -13,7 +13,7 @@
 	        </div>
 	  	@endif
 	  </el-form-item>
-	  
+
 	  <el-form-item label="密码" prop="password">
 	    <el-input type="password" v-model="login.password" auto-complete="off" name="password"></el-input>
 	    @if ($errors->has('password'))
@@ -22,14 +22,14 @@
 	        </div>
       	@endif
 	  </el-form-item>
-	  
+
 	  <el-form-item>
 	    <el-button type="primary" @click="submit('login')">登录</el-button>
 	  </el-form-item>
 	</el-form>
   </div>
 </body >
-  
+
   <script>
 
   	var Main = {
@@ -44,11 +44,11 @@
 		          }
 		        });
 		     }
-		
+
 		  },
 		  created:function(){
 		  	//获取列表
-		  	
+
 		  },
 		 data() {
 		 	 var validateA = (rule, value, callback) => {
@@ -83,6 +83,6 @@
 	  }
 	var Ctor = Vue.extend(Main);
 	new Ctor({router}).$mount('#app');
-	
+
   </script>
 @stop
