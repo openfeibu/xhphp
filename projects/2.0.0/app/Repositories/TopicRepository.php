@@ -71,7 +71,7 @@ class TopicRepository
 	public function getUserTopic(array $param)
 	{
 		$user = User::select(DB::raw('uid,nickname,avatar_url'))->where('uid', $param['user_id'])->first();
-		$topics = Topic::select(DB::raw('tid, type, content, img, view_num, comment_num, favourites_count, created_at, deleted_at,
+		$topics = Topic::select(DB::raw('tid, type, content, img,thumb, view_num, comment_num, favourites_count, created_at, deleted_at,
 									  if(deleted_at IS NULL,0,1) as is_deleted, admin_deleted'))
 					->where('uid', $param['user_id'])
 					->orderBy('created_at', 'desc')
