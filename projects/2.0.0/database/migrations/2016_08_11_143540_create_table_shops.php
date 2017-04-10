@@ -21,7 +21,7 @@ class CreateTableShops extends Migration
             $table->string('address');
             $table->integer('college_id')->default(0)->comment('所在学校ID');
             $table->tinyInteger('shop_type')->default(1)->comment('1.学生.2.商家');
-            $table->tinyInteger('shop_status')->default(0)->comment('0.待审核;1.正常;2.审核不通过;3.关闭');
+            $table->tinyInteger('shop_status')->default(0)->comment('0.待审核;1.正常;2.审核不通过;3.休息；4.关闭');
             $table->integer('shop_favorite_count')->default(0)->comment('收藏数');
             $table->integer('shop_click_count')->default(0)->comment('浏览数');
             $table->integer('sale_count')->default(0)->comment('销售量');
@@ -101,13 +101,13 @@ class CreateTableShops extends Migration
 			$table->timestamp('cancelling_time');
 			$table->timestamp('cancelled_time');
 			$table->timestamp('succ_time');
-			$table->timestamps();		
+			$table->timestamps();
 			$table->index('uid');
 			$table->index('shop_id');
 			$table->index('order_status');
 			$table->index('pay_status');
 			$table->index('pay_id');
-			
+
 		});
 		Schema::create('order_goods',function(Blueprint $table){
 			$table->increments('id');
@@ -115,7 +115,7 @@ class CreateTableShops extends Migration
 			$table->integer('goods_id')->unsigned();
 			$table->string('goods_sn',60);
 			$table->string('goods_name',60);
-			$table->integer('goods_number')->unsigned();		
+			$table->integer('goods_number')->unsigned();
 			$table->decimal('goods_price',10,2);
 			$table->foreign('order_id')->references('order_id')->on('order_info')
                 ->onUpdate('cascade')->onDelete('cascade');
