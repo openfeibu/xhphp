@@ -102,7 +102,7 @@
         <mt-cell  title="联系客服" to="tel:020-32168995" is-link class="mt01">
          020-32168995
         </mt-cell>
-        <mt-button size="large" onclick="window.location.href={{ url('mbusiness/logout') }}">注销</mt-button>
+        <mt-button style="margin-top:0.5rem" size="large" type="danger" onclick="window.location.href=\"{{ url('mbusiness/logout') }}\"">注销</mt-button>
         <!-- 日期修改 -->
           <mt-datetime-picker
               ref="open"
