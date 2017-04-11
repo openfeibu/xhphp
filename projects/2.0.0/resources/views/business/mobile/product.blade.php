@@ -1,7 +1,6 @@
 @extends('layouts.mobile_business.common')
 
 @section('content')
-<script>alert(product)</script>
 <body >
 	 <div id="app" v-cloak>
     <transition name="fade">
@@ -11,6 +10,7 @@
   <!-- 商品列表 -->
   <template id="product">
     <div style="min-height:100%;" class="bgf5">
+    123
     <section class="main pt boxSizing " style="height:100%;">
       <mt-header title="我的宝贝" :fixed="true">
         <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
