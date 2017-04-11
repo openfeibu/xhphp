@@ -92,7 +92,7 @@
   <!-- 商品详情 -->
   <template id="productDe">
     <div style="min-height:100%;" class="bgf">
-    <section class="main pd boxSizing" style="height:100%;background:#fff">
+    <section class="main pd boxSizing" style="height:100%">
       <mt-header title="宝贝详情" :fixed="true">
         <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
         </mt-button>
