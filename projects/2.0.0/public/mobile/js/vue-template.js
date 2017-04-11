@@ -952,7 +952,9 @@ var product = Vue.extend({
               }
               $.getJSON(this.localhost+'/business/goods/getGoodses',prodata,function(data){
                 that.$indicator.close();
-                this.$refs.loadmore.onBottomLoaded();
+                console.log(this.$refs)
+                console.log(this.$refs.$loadmore)
+                // this.$refs.loadmore.onBottomLoaded();
                 if(flag){
                     that.list = [];
                     // $(".mint-loadmore-content").css({"transform":"matrix(1, 0, 0, 1, 0, 0)","-webkit-transform":"matrix(1, 0, 0, 1, 0, 0)","-o-transform":"matrix(1, 0, 0, 1, 0, 0)","-moz-transform":"matrix(1, 0, 0, 1, 0, 0)","-ms-transform":"matrix(1, 0, 0, 1, 0, 0)"})
