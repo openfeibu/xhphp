@@ -25,8 +25,8 @@
   <!-- 引入样式 -->
   <link rel="stylesheet" href="{{ asset('/mobile/css/style.css') }}">
   <!-- 引入组件库 -->
-  <script src="{{ asset('/mobile/js/index.js') }}"></script>
   <script src="{{ asset('/mobile/js/vue.js') }}"></script>
+  <script src="{{ asset('/mobile/js/index.js') }}"></script>
   <script src="{{ asset('/mobile/js/jquery2.1.1.min.js') }}"></script>
   <script src="{{ asset('/mobile/js/main.js') }}"></script>
   <script src="{{ asset('/mobile/js/vue-router.js') }}"></script>
