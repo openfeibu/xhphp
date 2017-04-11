@@ -27,7 +27,7 @@ class Kernel extends HttpKernel
 	        \App\Http\Middleware\EnableCrossRequestMiddleware::class,
 	    ],
 	    'business' =>[
-	    	
+
 	    ],
     ];
 
@@ -40,5 +40,6 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\UserAuthenticate::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'business' => \App\Http\Middleware\BusinessAuthenticate::class,
+		'mbusiness' => \App\Http\Middleware\MobileBusinessAuthenticate::class,
     ];
 }

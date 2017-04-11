@@ -264,6 +264,11 @@ Route::group(['middleware' => 'business'], function () {
     Route::get('mbusiness/login', 'ShopAdmin\Mobile\AuthController@getLogin');
     Route::post('mbusiness/login', 'ShopAdmin\Mobile\AuthController@postLogin');
     Route::get('mbusiness/logout', 'ShopAdmin\Mobile\AuthController@getLogout');
+
+});
+
+
+Route::group(['middleware' => 'mbusiness'], function () {
     Route::get('mbusiness', 'ShopAdmin\Mobile\BusinessController@index');
     Route::get('mbusiness/order', 'ShopAdmin\Mobile\BusinessController@order');
     Route::get('mbusiness/product', 'ShopAdmin\Mobile\BusinessController@product');
