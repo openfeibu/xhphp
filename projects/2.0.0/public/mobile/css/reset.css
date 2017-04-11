@@ -39,8 +39,8 @@ select {
 
 #app{height: 100%;}
 .bgf5{background:#f5f5f5;}
-.pd{padding-top: 46px;padding-bottom: 55px;}
-.pt{padding-top: 46px;}
+.pd{padding-top: 48px;padding-bottom: 55px;}
+.pt{padding-top: 48px;}
 .pb01{padding-bottom: 55px;}
 .mt01{margin-top:10px;}
 .mint-indicator-mask{z-index: 999}
