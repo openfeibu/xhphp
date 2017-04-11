@@ -863,6 +863,7 @@ var torderDe = Vue.extend({
 var product = Vue.extend({
    template: '#product',
    created:function(){
+    alert(21)
           var that = this;
           that.tloadMore(true);
           //获取分类
