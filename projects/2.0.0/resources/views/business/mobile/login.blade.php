@@ -2,7 +2,7 @@
 
 @section('content')
 <body style="height:100%;" >
-	<div id="app">
+	<div id="app" v-cloak>
 		<section class='main' style="height:100%;" >
 			<!--登陆 S-->
 			<div class="login" style="height:100%;">

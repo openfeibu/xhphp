@@ -2,7 +2,7 @@
 
 @section('content')
 <body >
-	 <div id="app">
+	 <div id="app" v-cloak>
     <transition name="fade">
       <router-view></router-view>
     </transition>
