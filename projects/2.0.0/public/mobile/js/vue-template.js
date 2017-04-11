@@ -160,16 +160,15 @@ var center =  Vue.extend({
       },
       changeDes:function(){
           var that = this;
-          that.$messagebox.prompt('请输入店铺简介?','校汇').then(function(value,action) {
-            console.log(value)
+          that.$messagebox.prompt('请输入店铺简介?','校汇').then(function(value) {
               var Data = {
-                "description" : value
+                "description" : value.value
               };
               that.$indicator.open("正在修改中"); 
               $.post(that.localhost+'/business/shop/updateShop',Data,function(data){
                   that.$indicator.close(); 
                   if(data.code == 200){
-                    that.shopInfo.description = value;
+                    that.shopInfo.description = value.value;
                     window.localStorage.removeItem("shopInfo");
                   }else{
                     that.$toast({
@@ -1430,16 +1429,16 @@ var classify = Vue.extend({
       methods: {
         updataClassify : function(catId,catName,index){
           var that = this;
-          that.$messagebox.prompt('请输入类名',catName).then(function(value,action) {
+          that.$messagebox.prompt('请输入类名',catName).then(function(value) {
             var classData = {
-              "cat_name" : value,
+              "cat_name" : value.value,
               "cat_id" : catId
             };
             that.$indicator.open("正在修改中"); 
             $.post(that.localhost+'/business/goods/updateCat/',classData,function(data){
                 that.$indicator.close(); 
                 if(data.code == 200){
-                  that.productClassAll[index].cat_name = value;
+                  that.productClassAll[index].cat_name = value.value;
                 }else{
                   that.$toast({
                     message: data.detail,
@@ -1486,9 +1485,9 @@ var classify = Vue.extend({
 
         addClassify :function(){
            var that = this;
-          that.$messagebox.prompt('输入新类名','校汇').then(function(value,action) {
+          that.$messagebox.prompt('输入新类名','校汇').then(function(value) {
             var classData = {
-              "cat_name" : value
+              "cat_name" : value.value
             };
             that.$indicator.open("正在添加中"); 
             $.post(that.localhost+'/business/goods/addCat',classData,function(data){
