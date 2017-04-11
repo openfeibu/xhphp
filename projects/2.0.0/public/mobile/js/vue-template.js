@@ -1197,6 +1197,7 @@ var productDe = Vue.extend({
           fordata.append('uploadfile',pic[0]); //添加字段
           
           if(pic.length == 0) return;
+          console.log(pic[0].size)
           if(pic[0].size/1024>maxSize) {  
              that.$toast({
                   message: '图片不能超过'+maxSize+'kb',
