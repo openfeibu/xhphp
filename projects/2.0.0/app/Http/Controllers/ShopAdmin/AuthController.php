@@ -19,6 +19,7 @@ class AuthController extends Controller
     protected $guard = 'business';
     protected $loginView = 'business.login';
     protected $registerView = 'business.register';
+    protected $redirectPath =  '/business';
 
     public function __construct()
     {

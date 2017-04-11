@@ -19,6 +19,7 @@ class AuthController extends Controller
     protected $guard = 'business';
     protected $loginView = 'business.mobile.login';
     protected $registerView = 'business.mobile.register';
+    protected $redirectPath =  '/mbusiness';
 
     public function __construct()
     {
@@ -40,7 +41,7 @@ class AuthController extends Controller
         if(Auth::guard('business')->user()){
             Auth::guard('business')->logout();
         }
-          return Redirect::to('mbusiness/login');
+        return Redirect::to('mbusiness/login');
      }
     protected function create(array $data)
     {
