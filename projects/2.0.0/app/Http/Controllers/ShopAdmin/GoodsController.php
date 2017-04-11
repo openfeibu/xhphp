@@ -127,7 +127,7 @@ class GoodsController extends Controller
 	public function update (Request $request)
     {
     	$rules = [
-        	'cat_id'		=> 'required|integer',
+        	'cat_id'		=> 'sometimes|required|exists:goods_category,cat_id',
         	'goods_id'		=> 'required|integer',
 	        'goods_name'   	=> 'sometimes|required|string|between:2,10',
 	        'goods_img'    	=> 'sometimes|required|string',
