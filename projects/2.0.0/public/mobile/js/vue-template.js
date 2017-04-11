@@ -46,6 +46,7 @@ var home =  Vue.extend({
                     });
               }
             }).error(function(){
+               that.$indicator.close();
                that.wloading = true;
                   that.$toast({
                       message: '服务器出小差',
@@ -94,6 +95,7 @@ var center =  Vue.extend({
           that.$indicator.open();
           $.getJSON(this.localhost+'/business/user/getUser',function(data){
                that.$indicator.close();
+               if(data.code == 200){
                     that.shopInfo = data.shop;
                     window.localStorage.userInfo =JSON.stringify(that.userInfo);
                     window.localStorage.shopInfo =JSON.stringify(data.shop);
@@ -102,8 +104,23 @@ var center =  Vue.extend({
                     }else{
                       that.shopStatus = false;
                     }
+               }else{
+                that.wloading = true;
+                  that.$toast({
+                      message: data.detail,
+                      position: 'bottom',
+                      duration: 3000
+                    });
+                }
+                    
             }).error(function(){
-                that.$message.error('服务器开小差了');
+                 that.$indicator.close();
+                that.wloading = true;
+                  that.$toast({
+                      message: '服务器出小差',
+                      position: 'bottom',
+                      duration: 3000
+                    });
             })
     
       },
@@ -144,6 +161,7 @@ var center =  Vue.extend({
       changeDes:function(){
           var that = this;
           that.$messagebox.prompt('请输入店铺简介?','校汇').then(function(value,action) {
+            console.log(value)
               var Data = {
                 "description" : value
               };
