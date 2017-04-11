@@ -9,8 +9,7 @@
   </div>
   <!-- 商品列表 -->
   <template id="product">
-    123
-    <div style="min-height:100%;" class="bgf5">
+    <div style="height:100px;" class="bgf5">
     <div class="main pt boxSizing " style="height:100%;">
       <mt-header title="我的宝贝" :fixed="true">
         <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
