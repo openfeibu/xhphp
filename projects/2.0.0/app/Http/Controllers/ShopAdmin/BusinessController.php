@@ -19,5 +19,4 @@ class BusinessController extends CommonController
     {
         return view('business.index');
     }
-
 }

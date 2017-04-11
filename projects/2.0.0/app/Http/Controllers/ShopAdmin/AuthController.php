@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ShopAdmin;
 use App\ShopAdmin;
 use Validator;
 use Auth;
+use View;
 use Redirect;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -33,7 +34,6 @@ class AuthController extends Controller
         ]);
 
     }
-    
 	  // 登出
      public function getLogout()
      {

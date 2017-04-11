@@ -12,7 +12,7 @@ class BusinessAuthenticate
     {
         if (Auth::guard('business')->guest()) {
             if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
+                return response('未登录', 401);
             } else {
                 return redirect()->guest('business/login');
             }
