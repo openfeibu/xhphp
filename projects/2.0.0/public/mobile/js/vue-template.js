@@ -266,9 +266,9 @@ var wfh = Vue.extend({
               $.getJSON(this.localhost+'/business/orderInfo/orderInfos?page='+ that.wpage+'&type=beship',function(data){
                 that.$indicator.close();
                 if(data.code == 200){
+                  that.$refs.loadmore.onTopLoaded();
                   if(flag){
                       that.wlist = [];
-                      $(".mint-loadmore-content").css({"transform":"matrix(1, 0, 0, 1, 0, 0)","-webkit-transform":"matrix(1, 0, 0, 1, 0, 0)","-o-transform":"matrix(1, 0, 0, 1, 0, 0)","-moz-transform":"matrix(1, 0, 0, 1, 0, 0)","-ms-transform":"matrix(1, 0, 0, 1, 0, 0)"})
                   };
                   that.wloading = false;
                   that.wload = 1;
@@ -366,9 +366,10 @@ var yfh = Vue.extend({
               $.getJSON(this.localhost+'/business/orderInfo/orderInfos?page='+ that.ypage+'&type=shipping',function(data){
                 that.$indicator.close();
                 if(data.code == 200){
+                  that.$refs.loadmore.onTopLoaded();
                   if(flag){
                       that.ylist = [];
-                      $(".mint-loadmore-content").css({"transform":"matrix(1, 0, 0, 1, 0, 0)","-webkit-transform":"matrix(1, 0, 0, 1, 0, 0)","-o-transform":"matrix(1, 0, 0, 1, 0, 0)","-moz-transform":"matrix(1, 0, 0, 1, 0, 0)","-ms-transform":"matrix(1, 0, 0, 1, 0, 0)"})
+                     
                   };
                   that.yloading = false;
                   that.yload = 1;
@@ -467,9 +468,10 @@ var ywc = Vue.extend({
               $.getJSON(this.localhost+'/business/orderInfo/orderInfos?page='+ that.cpage+'&type=succ',function(data){
                   that.$indicator.close();
                 if(data.code == 200){
+                  that.$refs.loadmore.onTopLoaded();
                   if(flag){
                       that.clist = [];
-                      $(".mint-loadmore-content").css({"transform":"matrix(1, 0, 0, 1, 0, 0)","-webkit-transform":"matrix(1, 0, 0, 1, 0, 0)","-o-transform":"matrix(1, 0, 0, 1, 0, 0)","-moz-transform":"matrix(1, 0, 0, 1, 0, 0)","-ms-transform":"matrix(1, 0, 0, 1, 0, 0)"})
+                      
                   };
                   that.cloading = false;
                   that.cload = 1;
@@ -565,10 +567,10 @@ var thsh = Vue.extend({
               $.getJSON(this.localhost+'/business/orderInfo/orderInfos?page='+ that.tpage+'&type=cancell',function(data){
                   that.$indicator.close();
                 if(data.code == 200){
+                  that.$refs.loadmore.onTopLoaded();
                   if(flag){
                       that.tlist = [];
-                      $(".mint-loadmore-content").css({"transform":"matrix(1, 0, 0, 1, 0, 0)","-webkit-transform":"matrix(1, 0, 0, 1, 0, 0)","-o-transform":"matrix(1, 0, 0, 1, 0, 0)","-moz-transform":"matrix(1, 0, 0, 1, 0, 0)","-ms-transform":"matrix(1, 0, 0, 1, 0, 0)"})
-                  };
+                 };
                   that.tloading = false;
                   that.tload = 1;
                   $.each(data.order_infos,function(a,b){
@@ -952,11 +954,8 @@ var product = Vue.extend({
               }
               $.getJSON(this.localhost+'/business/goods/getGoodses',prodata,function(data){
                 that.$indicator.close();
-                 that.$refs.loadmore.onTopLoaded();
-                console.log(that.$refs)
-                console.log(that.$refs.loadmore)
-                console.log(that.$refs.$loadmore)
-                // this.$refs.loadmore.onBottomLoaded();
+                that.$refs.loadmore.onTopLoaded();
+               
                 if(flag){
                     that.list = [];
                     // $(".mint-loadmore-content").css({"transform":"matrix(1, 0, 0, 1, 0, 0)","-webkit-transform":"matrix(1, 0, 0, 1, 0, 0)","-o-transform":"matrix(1, 0, 0, 1, 0, 0)","-moz-transform":"matrix(1, 0, 0, 1, 0, 0)","-ms-transform":"matrix(1, 0, 0, 1, 0, 0)"})
