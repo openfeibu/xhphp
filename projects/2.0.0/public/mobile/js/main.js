@@ -21,3 +21,11 @@
   win.addEventListener(resizeEvt, recalc, false);
   doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);
+$(function(){
+  $(".web-active").on("touchstart",function(){
+    $(this).addClass("active");
+  })
+  $(".web-active").on("touchend",function(){
+    $(this).removeClass("active");
+  })
+})
