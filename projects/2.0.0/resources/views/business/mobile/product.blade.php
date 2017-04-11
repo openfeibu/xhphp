@@ -9,26 +9,26 @@
   </div>
   <!-- 商品列表 -->
   <template id="product">
-    <div style="height:100px;" class="bgf5">
+    <div style="min-height:100%;" class="bgf5">
     <div class="main pt boxSizing " style="height:100%;">
       <mt-header title="我的宝贝" :fixed="true">
         <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
         </mt-button>
          <mt-button icon="add" slot="right" onclick="window.location.href='#/addProduct'"></mt-button>
       </mt-header>
-      <div class="changeClass">
+      <!-- <div class="changeClass">
         <label for="">已选分类：</label>
         <select name="" id=""  @change="changeClass" v-model="catId">
               <option value="all" >全部分类</option>
               <option v-for="item in productClassAll" :value="item.cat_id" :selected="item.cat_id == catId">@{{item.cat_name}}</option>
         </select>
-      </div>
+      </div> -->
       <!-- 没有订单 -->
       <div class="noOrder" v-if="list.length == 0">
         <span>还没有上传商品</span>
       </div>
       <!-- 没有订单 -->
-      <mt-loadmore :top-method="tloadTop" @top-status-change="thandleTopChange">
+      <!-- <mt-loadmore :top-method="tloadTop" @top-status-change="thandleTopChange">
                   <ul
                   v-infinite-scroll="tloadMore"
                   infinite-scroll-disabled="loading"
@@ -84,7 +84,7 @@
                 <span v-show="ttopStatus !== 'loading'" :class="{ 'rotate': ttopStatus === 'drop' }">↓</span>
                 <span v-show="ttopStatus === 'loading'">正在加载中...</span>
               </div>
-      </mt-loadmore>
+      </mt-loadmore> -->
     </div>
     </div>
   </template>
