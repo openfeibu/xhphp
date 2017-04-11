@@ -145,7 +145,10 @@ class GoodsController extends Controller
 			$this->helpService->validateData(trim($request->goods_name),"商品名称");
 		}
 
-		$isExistsCat = $this->goodsCategoryService->isExistsCat(['shop_id' => $this->shop->shop_id,'cat_id' => $request->cat_id]);
+		if(isset($request->cat_id))
+		{
+			$isExistsCat = $this->goodsCategoryService->isExistsCat(['shop_id' => $this->shop->shop_id,'cat_id' => $request->cat_id]);
+		}
 
 	    $update = [
 			'goods_name' 	=> isset($request->goods_name) ? $request->goods_name : $goods->goods_name,
