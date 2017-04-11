@@ -1190,14 +1190,21 @@ var productDe = Vue.extend({
        change : function(){
           var that = this;
           var field=new upField($('#bookpic'));
-          var maxSize=10240; //kb
+          var maxSize=51200; //kb
           var name=$('#bookpic').attr('name');
           var pic = $('#bookpic').prop('files');
           var fordata=new FormData();
-                    console.log(pic)
           fordata.append('uploadfile',pic[0]); //添加字段
-
+          
           if(pic.length == 0) return;
+          if(pic[0].size/1024>maxSize) {  
+             that.$toast({
+                  message: '图片不能超过'+maxSize+'kb',
+                  position: 'bottom',
+                  duration: 3000
+                });
+            return false; 
+          }
             that.$indicator.open("开始上传");
        
           $.ajax({
@@ -1350,14 +1357,21 @@ var addProduct = Vue.extend({
        change : function(){
           var that = this;
           var field=new upField($('#bookpic'));
-          var maxSize=10240; //kb
+          var maxSize=51200; //kb
           var name=$('#bookpic').attr('name');
           var pic = $('#bookpic').prop('files');
           var fordata=new FormData();
-                    console.log(pic)
           fordata.append('uploadfile',pic[0]); //添加字段
 
           if(pic.length == 0) return;
+          if(pic[0].size/1024>maxSize) {  
+             that.$toast({
+                  message: '图片不能超过'+maxSize+'kb',
+                  position: 'bottom',
+                  duration: 3000
+                });
+            return false; 
+          }
             that.$indicator.open("开始上传");
        
           $.ajax({
