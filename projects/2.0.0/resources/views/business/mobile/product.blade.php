@@ -28,7 +28,7 @@
         <span>还没有上传商品</span>
       </div>
       <!-- 没有订单 -->
-      <mt-loadmore :top-method="tloadTop" @top-status-change="thandleTopChange">
+      <mt-loadmore :top-method="tloadTop" @top-status-change="thandleTopChange" ref="loadmore">
                   <ul
                   v-infinite-scroll="tloadMore"
                   infinite-scroll-disabled="loading"
