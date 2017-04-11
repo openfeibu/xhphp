@@ -23,7 +23,7 @@
         <span>没有该类型的订单</span>
       </div>
       <!-- 没有订单 -->
-      <mt-loadmore :top-method="wloadTop" @top-status-change="whandleTopChange">
+      <mt-loadmore :top-method="wloadTop" @top-status-change="whandleTopChange" ref="loadmore">
                   <ul
                   v-infinite-scroll="wloadMore"
                   infinite-scroll-disabled="wloading"
@@ -156,7 +156,7 @@
         <span>没有该类型的订单</span>
       </div>
       <!-- 没有订单 -->
-      <mt-loadmore :top-method="yloadTop" @top-status-change="yhandleTopChange">
+      <mt-loadmore :top-method="yloadTop" @top-status-change="yhandleTopChange"  ref="loadmore">
                   <ul
                   v-infinite-scroll="yloadMore"
                   infinite-scroll-disabled="yloading"
@@ -295,7 +295,7 @@
         <span>没有该类型的订单</span>
       </div>
       <!-- 没有订单 -->
-      <mt-loadmore :top-method="cloadTop" @top-status-change="chandleTopChange">
+      <mt-loadmore :top-method="cloadTop" @top-status-change="chandleTopChange"  ref="loadmore">
                   <ul
                   v-infinite-scroll="cloadMore"
                   infinite-scroll-disabled="cloading"
@@ -434,7 +434,7 @@
         <span>没有该类型的订单</span>
       </div>
       <!-- 没有订单 -->
-      <mt-loadmore :top-method="tloadTop" @top-status-change="thandleTopChange">
+      <mt-loadmore :top-method="tloadTop" @top-status-change="thandleTopChange"  ref="loadmore">
                   <ul
                   v-infinite-scroll="tloadMore"
                   infinite-scroll-disabled="tloading"
