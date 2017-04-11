@@ -32,7 +32,9 @@
   <script src="{{ asset('/mobile/js/vue-router.js') }}"></script>
   <script src="{{ asset('/mobile/js/vue-template.js') }}"></script>
   <script src="{{ asset('/mobile/js/routes.js') }}"></script>
-  <script src="{{ asset('https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js') }}"></script>
+  <script src="{{ asset('/mobile/js/upload.js') }}"></script>
+ <!--  <script src="{{ asset('https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js') }}"></script> -->
+
 
 </head>
     @yield('content')
