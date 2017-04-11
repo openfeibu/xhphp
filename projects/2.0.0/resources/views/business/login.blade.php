@@ -50,7 +50,7 @@
 		  	//获取列表
 
 		  },
-		 data() {
+		 data:function() {
 		 	 var validateA = (rule, value, callback) => {
 		        if (value === '') {
 		          callback(new Error('请输入校汇账号'));
@@ -82,7 +82,7 @@
 	      }
 	  }
 	var Ctor = Vue.extend(Main);
-	new Ctor({router}).$mount('#app');
+	new Ctor({router:router}).$mount('#app');
 
   </script>
 @stop
