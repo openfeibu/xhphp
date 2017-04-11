@@ -6,16 +6,16 @@
     <transition name="fade">
       <router-view></router-view>
     </transition>
-      <mt-tabbar v-model="selected" :fixed="true">
-        <mt-tab-item id="1" href="#/home" >
-          <img slot="icon" :src="selected == 1 ? 'http://web.feibu.info/images/footer03h.png' : 'http://web.feibu.info/images/footer03.png' ">
-            工作台
-        </mt-tab-item>
-        <mt-tab-item id="2" href="#/center">
-          <img slot="icon" :src="selected == 2 ? 'http://web.feibu.info/images/footer04h.png' : 'http://web.feibu.info/images/footer04.png' ">
-          店铺
-        </mt-tab-item>
-      </mt-tabbar>
+    <mt-tabbar v-model="selected" :fixed="true" v-cloak>
+      <mt-tab-item id="1" href="#/home" >
+        <img slot="icon" :src="selected == 1 ? 'http://web.feibu.info/images/footer03h.png' : 'http://web.feibu.info/images/footer03.png' ">
+          工作台
+      </mt-tab-item>
+      <mt-tab-item id="2" href="#/center">
+        <img slot="icon" :src="selected == 2 ? 'http://web.feibu.info/images/footer04h.png' : 'http://web.feibu.info/images/footer04.png' ">
+        店铺
+      </mt-tab-item>
+    </mt-tabbar>
   </div>
   <!-- 首页 -->
   <template id="home" >
