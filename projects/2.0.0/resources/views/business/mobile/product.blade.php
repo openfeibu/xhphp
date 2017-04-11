@@ -10,8 +10,7 @@
   <!-- 商品列表 -->
   <template id="product">
     <div style="min-height:100%;" class="bgf5">
-    123
-    <section class="main pt boxSizing " style="height:100%;">
+    <div class="main pt boxSizing " style="height:100%;">
       <mt-header title="我的宝贝" :fixed="true">
         <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
         </mt-button>
@@ -86,7 +85,7 @@
                 <span v-show="ttopStatus === 'loading'">正在加载中...</span>
               </div>
       </mt-loadmore>
-    </section>
+    </div>
     </div>
   </template>
   <!-- 商品列表 -->
