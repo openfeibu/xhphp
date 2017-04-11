@@ -115,7 +115,7 @@ trait AuthenticatesUsers
             return $this->authenticated($request, Auth::guard($this->getGuard())->user());
         }
 
-        return redirect()->intended($this->redirectPath());
+        return redirect()->to($this->redirectPath());
     }
 
     /**
