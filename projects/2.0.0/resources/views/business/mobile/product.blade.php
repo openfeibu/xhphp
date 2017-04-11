@@ -28,7 +28,7 @@
         <span>还没有上传商品</span>
       </div>
       <!-- 没有订单 -->
-      <!-- <mt-loadmore :top-method="tloadTop" @top-status-change="thandleTopChange">
+      <mt-loadmore :top-method="tloadTop" @top-status-change="thandleTopChange">
                   <ul
                   v-infinite-scroll="tloadMore"
                   infinite-scroll-disabled="loading"
@@ -84,7 +84,7 @@
                 <span v-show="ttopStatus !== 'loading'" :class="{ 'rotate': ttopStatus === 'drop' }">↓</span>
                 <span v-show="ttopStatus === 'loading'">正在加载中...</span>
               </div>
-      </mt-loadmore> -->
+      </mt-loadmore>
     </div>
     </div>
   </template>
