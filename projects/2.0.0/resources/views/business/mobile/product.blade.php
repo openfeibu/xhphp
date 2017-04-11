@@ -1,13 +1,13 @@
 @extends('layouts.mobile_business.common')
 
 @section('content')
+<script>alert(product)</script>
 <body >
 	 <div id="app" v-cloak>
     <transition name="fade">
       <router-view></router-view>
     </transition>
   </div>
-
   <!-- 商品列表 -->
   <template id="product">
     <div style="min-height:100%;" class="bgf5">
