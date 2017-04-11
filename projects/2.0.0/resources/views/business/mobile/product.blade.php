@@ -16,13 +16,13 @@
         </mt-button>
          <mt-button icon="add" slot="right" onclick="window.location.href='#/addProduct'"></mt-button>
       </mt-header>
-      <!-- <div class="changeClass">
+      <div class="changeClass">
         <label for="">已选分类：</label>
         <select name="" id=""  @change="changeClass" v-model="catId">
               <option value="all" >全部分类</option>
               <option v-for="item in productClassAll" :value="item.cat_id" :selected="item.cat_id == catId">@{{item.cat_name}}</option>
         </select>
-      </div> -->
+      </div>
       <!-- 没有订单 -->
       <div class="noOrder" v-if="list.length == 0">
         <span>还没有上传商品</span>
@@ -39,11 +39,11 @@
                           {
                             content: '上架',
                             style: { background: '#ccc', color: '#fff', lineHeight:'82px' },
-                            handler: () => change_is_on_sale(item.goods_id,1,index)
+                            handler: function(){change_is_on_sale(item.goods_id,1,index)} 
                           },{
                             content: '删除',
                             style: { background: '#FF4949', color: '#fff', lineHeight:'82px' },
-                            handler: () => deletePro(item.goods_id,index)
+                            handler:  function(){deletePro(item.goods_id,index)}
                           }
                         ]">
                         <a :href="'#/productDe/'+item.goods_id" >
@@ -60,11 +60,11 @@
                           {
                             content: '下架',
                             style: { background: '#ccc', color: '#fff', lineHeight:'1.8rem' },
-                            handler: () => change_is_on_sale(item.goods_id,0,index)
+                            handler:  function(){change_is_on_sale(item.goods_id,0,index)}
                           },{
                             content: '删除',
                             style: { background: '#FF4949', color: '#fff', lineHeight:'1.8rem' },
-                            handler: () => deletePro(item.goods_id,index)
+                            handler: function(){deletePro(item.goods_id,index)}
                           }
                         ]">
                           <a :href="'#/productDe/'+item.goods_id" >
@@ -201,11 +201,11 @@
                           {
                             content: '修改',
                             style: { background: '#ccc', color: '#fff',},
-                            handler: () => updataClassify(item.cat_id,item.cat_name,index)
+                            handler:  function(){ updataClassify(item.cat_id,item.cat_name,index)}
                           },{
                             content: '删除',
                             style: { background: '#FF4949', color: '#fff' },
-                            handler: () => deleteClassify(item.cat_id,item.cat_name,index)
+                            handler:  function(){deleteClassify(item.cat_id,item.cat_name,index)}
                           }
                         ]" :title="item.cat_name"></mt-cell-swipe>
         </li>
