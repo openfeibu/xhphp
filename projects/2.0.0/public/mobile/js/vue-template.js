@@ -952,6 +952,7 @@ var product = Vue.extend({
               }
               $.getJSON(this.localhost+'/business/goods/getGoodses',prodata,function(data){
                 that.$indicator.close();
+                that.$refs.loadmore.onBottomLoaded()
                 // console.log(this.$refs)
                 // console.log(this.$refs.$loadmore)
                 // this.$refs.loadmore.onBottomLoaded();
