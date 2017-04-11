@@ -4,7 +4,7 @@
 <body >
 	 <div id="app" v-cloak>
     <transition name="fade">
-      <router-view></router-view>
+      <router-view>123</router-view>
     </transition>
   </div>
   <!-- 商品列表 -->
