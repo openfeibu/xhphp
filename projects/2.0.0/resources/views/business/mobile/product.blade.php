@@ -4,11 +4,12 @@
 <body >
 	 <div id="app" v-cloak>
     <transition name="fade">
-      <router-view>123</router-view>
+      <router-view></router-view>
     </transition>
   </div>
   <!-- 商品列表 -->
   <template id="product">
+    123
     <div style="min-height:100%;" class="bgf5">
     <div class="main pt boxSizing " style="height:100%;">
       <mt-header title="我的宝贝" :fixed="true">
