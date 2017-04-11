@@ -1190,7 +1190,7 @@ var productDe = Vue.extend({
        change : function(){
           var that = this;
           var field=new upField($('#bookpic'));
-          var maxSize=51200; //kb
+          var maxSize=20480; //kb
           var name=$('#bookpic').attr('name');
           var pic = $('#bookpic').prop('files');
           var fordata=new FormData();
@@ -1357,12 +1357,11 @@ var addProduct = Vue.extend({
        change : function(){
           var that = this;
           var field=new upField($('#bookpic'));
-          var maxSize=51200; //kb
+          var maxSize=20480; //kb
           var name=$('#bookpic').attr('name');
           var pic = $('#bookpic').prop('files');
           var fordata=new FormData();
           fordata.append('uploadfile',pic[0]); //添加字段
-
           if(pic.length == 0) return;
           if(pic[0].size/1024>maxSize) {  
              that.$toast({
