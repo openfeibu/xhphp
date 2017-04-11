@@ -144,14 +144,13 @@
       watch: {
             // '$route': 'fetchData'
         },
-     data() {
+      data:function() {
           return {
-            selected:"1"
-
+            selected:""
           }
         }
     }
   var Ctor = Vue.extend(Main);
-  new Ctor({router}).$mount('#app');
+  new Ctor({router:router}).$mount('#app');
   </script>
 @stop
