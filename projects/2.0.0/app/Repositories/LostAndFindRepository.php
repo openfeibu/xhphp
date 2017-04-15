@@ -33,8 +33,8 @@ class LostAndFindRepository
         return Loss::select(DB::raw('loss.college_id,loss.uid,loss.content,loss.mobile,loss.type,loss.img,loss.thumb,loss.created_at,loss.loss_id,loss_category.cat_name,loss_category.cat_id,user.nickname,user.avatar_url'))
                            ->where($where)
                            ->orderBy('loss.loss_id','desc')
-                           ->rightJoin('user','user.uid','=','loss.uid')
-                           ->rightJoin('loss_category','loss_category.cat_id','=','loss.cat_id')
+                           ->join('user','user.uid','=','loss.uid')
+                           ->join('loss_category','loss_category.cat_id','=','loss.cat_id')
                            ->skip(20 * $this->request->page - 20)
                            ->take(20)
                            ->get();
@@ -48,8 +48,17 @@ class LostAndFindRepository
          return Loss::select(DB::raw('loss.college_id,loss.uid,loss.content,loss.mobile,loss.type,loss.img,loss.thumb,loss.created_at,loss.loss_id,loss_category.cat_name,loss_category.cat_id,user.nickname,user.avatar_url'))
                            ->where($where)
                            ->orderBy('loss.loss_id','desc')
-                           ->rightJoin('user','user.uid','=','loss.uid')
-                           ->rightJoin('loss_category','loss_category.cat_id','=','loss.cat_id')
+                           ->join('user','user.uid','=','loss.uid')
+                           ->join('loss_category','loss_category.cat_id','=','loss.cat_id')
                            ->first();
     }
+	public function getUsers($where)
+	{
+		return Loss::join('device_token' ,'device_token.uid','=','Loss.uid')
+					->where(['device_token.deleted_at' => NULL])
+					->where('device_token','<>',0)
+					->where($where)
+					->distinct()
+					->lists('device_token.device_token');
+	}
 }

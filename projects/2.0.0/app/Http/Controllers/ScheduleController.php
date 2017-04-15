@@ -41,7 +41,7 @@ class ScheduleController extends Controller
     protected $tradeAccountService;
 
     protected $gameService;
-	
+
 	protected $orderInfoService;
 
     function __construct(OrderService $orderService,
@@ -90,9 +90,9 @@ class ScheduleController extends Controller
 
 	        $courier = $this->userService->getUserByUserID($order->courier_id);
 	        $owner = $this->userService->getUserByUserID($order->owner_id);
-	        
+
 			$this->gameService->freeOrder($owner,$order);
-			
+
 	        //纸条通知接单人
 	        $this->messageService->SystemMessage2SingleOne($order->courier_id, '您好，发单人已结算你完成的任务，赶紧去看看吧。');
 
@@ -108,8 +108,8 @@ class ScheduleController extends Controller
 				],
 			];
 			$this->pushService->PushUserTokenDevice('校汇任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id,2,$data);
-			
-	      
+
+
 			Log::debug('courier:'.$courier);
 			Log::debug('owner:'.$owner);
 	        //积分更新(给发单人加分)
@@ -161,7 +161,7 @@ class ScheduleController extends Controller
     	Log::debug('电信订单:'.$orders);
     	foreach( $orders as $key => $order )
     	{
-    		$fields = array(			
+    		$fields = array(
 				'phone' => $order->telecom_phone,
 				'iccid' => $order->telecom_iccid,
 				'outOrderNumber' => $order->telecom_outOrderNumber,
@@ -186,6 +186,7 @@ class ScheduleController extends Controller
 	{
 		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid'))
 								->where('shipping_status',1)
+                                ->where('notice',0)
 								->where('shipping_time','<=',DB::raw('(select date_sub(now(), interval 24 HOUR))'))
 								->get();
 		$data = [
@@ -201,7 +202,9 @@ class ScheduleController extends Controller
 		foreach($order_infos as $key => $order_info)
 		{
 			$data['data']['url'] = config('app.web_url').'/shop/shop-orderDetail.html?device=android&order_id='.$order_info->order_id;
+            $this->messageService->SystemMessage2SingleOne($order_info->uid, $data['data']['content']);
 			$ret = $this->pushService->PushUserTokenDevice($data['data']['title'], $data['data']['content'], $order_info->uid,2,$data);
+            $this->orderInfoService->updateOrderInfoById($order_info->order_id,['notice' => 1]);
 		}
 	}
 	/*  48小时后自动收货 */
@@ -213,14 +216,25 @@ class ScheduleController extends Controller
 								->where('order_info.shipping_status',1)
 								->where('order_info.shipping_time','<=',DB::raw('(select date_sub(now(), interval 48 HOUR))'))
 								->get();
-		foreach($order_infos as $key => $order_info)
+        foreach($order_infos as $key => $order_info)
 		{
 			$shop = (object)array();
 			$shop->shop_id = $order_info->shop_id;
 			$shop->uid = $order_info->shop_uid;
 			$shop->service_rate = $order_info->service_rate;
 			$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
+			$data = [
+				'refresh' => 1,
+				'target' => '',
+				'open' => 'order_info',
+				'data' => [
+					'url' => '',
+					'title' => '订单通知',
+					'content' => '您的订单已经发货超过48小时已自动收货，如未收到货物请联系管理员',
+				],
+			];
+			$this->messageService->SystemMessage2SingleOne($order_info->uid, '您的订单已经发货超过48小时已自动收货，如未收到货物请联系管理员');
+			$ret = $this->pushService->PushUserTokenDevice($data['data']['title'], $data['data']['content'], $order_info->uid,2,$data);
 		}
 	}
 }
-

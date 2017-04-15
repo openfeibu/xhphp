@@ -54,5 +54,8 @@ class LostAndFindService{
     {
         return $this->lostAndFindRepository->delete($where);
     }
-
+    public function getUsers($where)
+    {
+        return $this->lostAndFindRepository->getUsers($where);
+    }
 }

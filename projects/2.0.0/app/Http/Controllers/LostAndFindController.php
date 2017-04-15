@@ -8,6 +8,7 @@ use Input;
 use App\Http\Requests;
 use App\Services\HelpService;
 use App\Services\UserService;
+use App\Services\PushService;
 use App\Services\ImageService;
 use App\Services\LostAndFindService;
 use App\Http\Controllers\Controller;
@@ -20,11 +21,14 @@ class LostAndFindController extends Controller
 
 	protected $helpService;
 
+    protected $pushService;
+
     protected $lostAndFindService;
 
 	public function __construct (UserService $userService,
                                 ImageService $imageService,
 								HelpService $helpService,
+                                PushService $pushService,
                                 LostAndFindService $lostAndFindService)
 	{
 		parent::__construct();
@@ -33,6 +37,7 @@ class LostAndFindController extends Controller
 		$this->helpService = $helpService;
         $this->userService = $userService;
         $this->imageService = $imageService;
+        $this->pushService = $pushService;
         $this->lostAndFindService = $lostAndFindService;
 	}
 
@@ -72,6 +77,20 @@ class LostAndFindController extends Controller
             $where = ['loss.loss_id' => $loss->loss_id];
             $loss = $this->lostAndFindService->getLoss($where);
             $loss->url = config('app.web_url');
+            if($request->type == 'found')
+            {
+                $device_tokens = $this->lostAndFindService->getUsers(['loss.cat_id' => $loss->cat_id]);
+                $data = [
+                    'refresh' => 1,
+        			'target' => 'loss',
+        			'open' => '',
+        			'data' => [
+        				'title' => '失物招领',
+        				'content' => '失物招领',
+        			],
+                ];
+                $ret = $this->pushService->PushUserTokenDeviceList($data['data']['title'], $data['data']['content'], $device_tokens ,2,'xiaomi',$data);
+            }
         }
         return [
             'code'      => 200,
@@ -115,9 +134,8 @@ class LostAndFindController extends Controller
         $rule = [
             'loss_id' => 'required|exists:loss,loss_id'
         ];
-        $user = $this->userService->getUser();
-        $where = ['loss_id' => $request->loss_id,'uid' => $user->uid];
-        $data = $this->lostAndFindService->getLoss(['loss_id' => $request->loss_id,]);
+        $where = ['loss_id' => $request->loss_id];
+        $data = $this->lostAndFindService->getLoss($where);
         return [
             'code' => 200,
             'data' => $data

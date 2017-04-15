@@ -42,11 +42,11 @@ class OrderInfoRepository
 	}
 	public function getOrderInfos($where,$type,$num = 20)
 	{
-		
+
 		$order_infos = OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.*'))
 							->leftJoin('shop', 'shop.shop_id', '=', 'order_info.shop_id')
 							->where($where);
-							
+
         if($type == 'waitpay'){
 	        $order_infos = $order_infos->where('order_info.pay_status',0);
 		}else{
@@ -57,13 +57,13 @@ class OrderInfoRepository
 					break;
 				case 'beship':
 					$order_infos = $order_infos->where('order_info.shipping_status',0)->where('order_info.order_status',1);
-					break;	
+					break;
 				case 'shipping':
 					$order_infos = $order_infos->where('order_info.shipping_status',1)->where('order_info.order_status',1);
-					break;	
+					break;
 				case 'succ':
 					$order_infos = $order_infos->where('order_info.shipping_status',2)->where('order_info.order_status',2);
-					break;		
+					break;
 				default:
 					$order_infos = $order_infos->whereIn('order_info.order_status',['3','4']);
 					break;
