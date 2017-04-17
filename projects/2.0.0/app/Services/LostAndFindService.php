@@ -38,7 +38,7 @@ class LostAndFindService{
     {
         $losses = $this->lostAndFindRepository->getList($where);
         foreach ($losses as $key => $loss) {
-            $loss->url = config('app.web_url').'/LostAndFound/Lf-detail.html?loss_id='.$loss->loss_id';
+            $loss->url = config('app.web_url').'/LostAndFound/Lf-detail.html?loss_id='.$loss->loss_id;
         }
         return $losses;
     }
