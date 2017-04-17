@@ -161,7 +161,7 @@ class OrderInfoController extends Controller
     	$shop = $this->shopService->getShop(['shop_id' => $request->shop_id],['min_goods_amount','shipping_fee','shop_name','shop_img','shop_type']);
 		$total_fee = $goods_amount = $carts['shop_total'];
 		$shipping_fee = 0;
-		if($shop_type == 1)
+		if($shop->shop_type == 1)
 		{
 			if($goods_amount < $shop->min_goods_amount){
 				$total_fee = $goods_amount + $shop->shipping_fee;
