@@ -12,10 +12,9 @@
   <!-- 未发货 -->
   <template id="wfh">
     <div style="min-height:100%;" class="bgf5">
-
     <section class="main pt boxSizing" style="height:100%;" >
       <mt-header title="待发货" :fixed="true">
-        <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+        <mt-button  onclick="winClose()" icon="back" slot="left">
         </mt-button>
       </mt-header>
       <!-- 没有订单 -->
@@ -74,7 +73,7 @@
     <div>
       <section id="worder_de" class="pd">
           <mt-header title="订单详情" :fixed="true">
-            <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+            <mt-button onclick="winClose()" icon="back" slot="left">
             </mt-button>
           </mt-header>
           <div class="checkMap" >
@@ -148,7 +147,7 @@
     <div style="min-height:100%;" class="bgf5">
     <section class="main pt boxSizing " style="height:100%;">
       <mt-header title="已发货" :fixed="true">
-        <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+        <mt-button onclick="winClose()" icon="back" slot="left">
         </mt-button>
       </mt-header>
       <!-- 没有订单 -->
@@ -207,7 +206,7 @@
     <div>
       <section id="worder_de" class="pd">
           <mt-header title="订单详情" :fixed="true">
-            <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+            <mt-button onclick="winClose()" icon="back" slot="left">
             </mt-button>
           </mt-header>
           <div class="checkMap" >
@@ -287,7 +286,7 @@
     <div style="min-height:100%;" class="bgf5">
     <section class="main pt boxSizing " style="height:100%;">
       <mt-header title="已完成" :fixed="true">
-        <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+        <mt-button onclick="winClose()" icon="back" slot="left">
         </mt-button>
       </mt-header>
       <!-- 没有订单 -->
@@ -346,7 +345,7 @@
     <div>
       <section id="worder_de" class="pd">
           <mt-header title="订单详情" :fixed="true">
-            <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+            <mt-button onclick="winClose()" icon="back" slot="left">
             </mt-button>
           </mt-header>
           <div class="checkMap" >
@@ -426,7 +425,7 @@
     <div style="min-height:100%;" class="bgf5">
     <section class="main pt boxSizing " style="height:100%;">
       <mt-header title="退货与售后" :fixed="true">
-        <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+        <mt-button onclick="winClose()" icon="back" slot="left">
         </mt-button>
       </mt-header>
       <!-- 没有订单 -->
@@ -485,7 +484,7 @@
     <div>
       <section id="worder_de" class="pd">
           <mt-header title="订单详情" :fixed="true">
-            <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+            <mt-button onclick="winClose()" icon="back" slot="left">
             </mt-button>
           </mt-header>
           <div class="checkMap" >

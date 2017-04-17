@@ -12,7 +12,7 @@
     <div style="min-height:100%;" class="bgf5">
     <div class="main pt boxSizing " style="height:100%;">
       <mt-header title="我的宝贝" :fixed="true">
-        <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+        <mt-button  onclick="winClose()" icon="back" slot="left">
         </mt-button>
          <mt-button icon="add" slot="right" onclick="window.location.href='#/addProduct'"></mt-button>
       </mt-header>
@@ -39,7 +39,7 @@
                           {
                             content: '上架',
                             style: { background: '#ccc', color: '#fff', lineHeight:'82px' },
-                            handler: function(){change_is_on_sale(item.goods_id,1,index)} 
+                            handler: function(){change_is_on_sale(item.goods_id,1,index)}
                           },{
                             content: '删除',
                             style: { background: '#FF4949', color: '#fff', lineHeight:'82px' },
@@ -94,7 +94,7 @@
     <div style="min-height:100%;" class="bgf">
     <section class="main pd boxSizing" style="height:100%">
       <mt-header title="宝贝详情" :fixed="true">
-        <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+        <mt-button onclick="winClose()" icon="back" slot="left">
         </mt-button>
       </mt-header>
       <div class="productImg">
@@ -142,7 +142,7 @@
     <div style="min-height:100%;" class="bgf">
     <section class="main pd boxSizing" style="height:100%;">
       <mt-header title="上传宝贝" :fixed="true">
-        <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+        <mt-button onclick="winClose()" icon="back" slot="left">
         </mt-button>
       </mt-header>
       <div class="productImg">
@@ -191,7 +191,7 @@
     <div style="min-height:100%;" class="bgf">
     <section class="main pd boxSizing" style="height:100%;">
       <mt-header title="分类管理" :fixed="true">
-        <mt-button onclick="window.history.go(-1)" icon="back" slot="left">
+        <mt-button onclick="winClose()" icon="back" slot="left">
         </mt-button>
          <mt-button icon="add" slot="right" @click="addClassify"></mt-button>
       </mt-header>

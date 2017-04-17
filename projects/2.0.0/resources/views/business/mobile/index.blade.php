@@ -44,25 +44,25 @@
         <div class="power-title">订单管理</div>
         <ul>
           <li  class="power03 web-active">
-           <a href="{{ url('/mbusiness/order') }}#/wfh">未发货</a>
+           <a  onclick="winGo('{{ url('/mbusiness/order') }}#/wfh')">未发货</a>
           </li>
           <li class="power04 web-active">
-            <a href="{{ url('/mbusiness/order') }}#/yfh">已发货</a>
+            <a  onclick="winGo('{{ url('/mbusiness/order') }}#/yfh')">已发货</a>
           </li>
           <li class="power05 web-active">
-            <a href="{{ url('/mbusiness/order') }}#/ywc">已完成</a>
+            <a  onclick="winGo('{{ url('/mbusiness/order') }}#/ywc')">已完成</a>
           </li>
           <li class="power06 web-active">
-            <a href="{{ url('/mbusiness/order') }}#/thsh">退货与售后</a>
+            <a  onclick="winGo('{{ url('/mbusiness/order') }}#/thsh')">退货与售后</a>
           </li>
         </ul>
          <div class="power-title">商品管理</div>
         <ul>
           <li class="power01 web-active">
-            <a href="{{ url('/mbusiness/product') }}#/product">我的宝贝</a>
+            <a onclick="winGo('{{ url('/mbusiness/product') }}#/product')">我的宝贝</a>
           </li>
           <li class="power01 web-active">
-            <a href="{{ url('/mbusiness/product') }}#/classify">分类管理</a>
+            <a onclick="winGo('{{ url('/mbusiness/product') }}#/classify')">分类管理</a>
           </li>
          <!--  <li class="power02">
             <a href="">数据统计</a>
