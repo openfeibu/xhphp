@@ -7,7 +7,7 @@
     if (!clientWidth)
     {
       return;
-    } 
+    }
     else if(clientWidth>750){
       docEl.style.fontSize = 100 + 'px';
     }
@@ -16,7 +16,7 @@
       docEl.style.fontSize = (clientWidth / 7.5) + 'px';
     }
   };
- 
+
   if (!doc.addEventListener) return;
   win.addEventListener(resizeEvt, recalc, false);
   doc.addEventListener('DOMContentLoaded', recalc, false);
@@ -29,3 +29,26 @@ $(function(){
     $(this).removeClass("active");
   })
 })
+//兼容APP链接跳转
+function winGo(str){
+  try {
+      if (typeof(eval(JavaScriptInterface))) {
+          JavaScriptInterface.openWindow(str)
+      }
+  } catch(e) {
+      window.location.href=str;
+  }
+}
+
+
+function winClose(){
+
+  try {
+      if (typeof(eval(JavaScriptInterface))) {
+          JavaScriptInterface.closeWindow()
+      }
+  } catch(e) {
+      window.history.go(-1)
+  }
+
+}
