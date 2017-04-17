@@ -2,7 +2,7 @@
 Vue.component('a-logo', {
   template: '<div class="logo"><a href="index.html"></a></div>'
 })
-Vue.prototype.localhost = "http://localhost:8085";
+Vue.prototype.localhost = "http://xh.flyexp.cn";
 var table = Vue.extend({
 	template: '#table',
 	 methods: {
@@ -15,7 +15,7 @@ var table = Vue.extend({
 			    //弹出修改商品层
 			  PThandleEdit(index, row) {
 			  	this.dialogFormVisible = true;
-			  	this.form = { 
+			  	this.form = {
 			  		"goods_index":index,
 				  	"goods_name":row.goods_name,
 		  			"goods_price":row.goods_price,
@@ -75,8 +75,8 @@ var table = Vue.extend({
 				          	that.updataloading = false;
 				          	that.$message.error(data.detail);
 				          }
-				          
-				        	
+
+
 				          }).error(function(){
 				          	that.updataloading = false;
 				             that.$message.error('服务器开小差了');
@@ -115,8 +115,8 @@ var table = Vue.extend({
 				          	that.storeloading = false;
 				          	that.$message.error(data.detail);
 				          }
-				          
-				        	
+
+
 				          }).error(function(){
 				          	that.storeloading = false;
 				             that.$message.error('服务器开小差了');
@@ -170,14 +170,14 @@ var table = Vue.extend({
 					            message: data.detail
 					         });
 				     }
-			          
+
 
 			        console.log(that.tableData)
 			          }).error(function(){
 			             that.loading = false;
 				        that.$message.error('服务器开小差了');
 			          })
-					
+
 				},
 			    PThandleDelete(index, row) {
 			        var that = this;
@@ -187,12 +187,12 @@ var table = Vue.extend({
 			          type: 'warning'
 			        }).then(() => {
 						that.deleGoods(index,row.goods_id)
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消删除'
-			          });          
+			          });
 			        });
 			    },
 		      //更改页数
@@ -258,9 +258,9 @@ var table = Vue.extend({
 		          		that.filters.push(categories);
 		          })
 		          // that.$data.tableData3=
-		        	
+
 		          }).error(function(){
-		            
+
 		          })
 		},
 	data: function() {
@@ -318,7 +318,7 @@ var classify = Vue.extend({
 			//弹出修改分类层
 			PThandleEdit(index, row) {
 			  	this.dialogFormVisible = true;
-			  	this.form = { 
+			  	this.form = {
 			  		"index":index,
 			  		"cat_name":row.cat_name,
 		  			"cat_id":row.cat_id,
@@ -355,7 +355,7 @@ var classify = Vue.extend({
 				          }else{
 				          	that.updataloading = false;
 				          	that.$message.error(data.detail);
-				          }     
+				          }
 				          }).error(function(){
 				          	 that.updataloading = false;
 				             that.$message.error('服务器开小差了');
@@ -426,13 +426,13 @@ var classify = Vue.extend({
 					            type: 'error',
 					            message: data.detail
 					         });
-				        } 
+				        }
 
 			          }).error(function(){
 			          	that.loading = false;
 			            that.$message.error('服务器开小差了');
 			          })
-					
+
 				},
 			    PThandleDelete(index, row) {
 			        var that = this;
@@ -442,12 +442,12 @@ var classify = Vue.extend({
 			          type: 'warning'
 			        }).then(() => {
 						that.deleclassify(index,row.cat_id)
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消删除'
-			          });          
+			          });
 			        });
 			    },
 		      //更改页数
@@ -516,7 +516,7 @@ var notShipped = Vue.extend({
 				//弹出详情
 				PThandleEdit(index, b) {
 				  	this.dialogFormVisible = true;
-				  	this.form = { 
+				  	this.form = {
 				  		"address":b.address,
 	          			"consignee":b.consignee,
 	          			"created_at":b.created_at,
@@ -585,12 +585,12 @@ var notShipped = Vue.extend({
 					            type: 'error',
 					            message: data.detail
 					         });
-				        } 
+				        }
 			          }).error(function(){
 			          	that.loading = false;
 			            that.$message.error('服务器开小差了');
 			          })
-					
+
 				},
 			    delivery(index, row) {
 			        var that = this;
@@ -600,12 +600,12 @@ var notShipped = Vue.extend({
 			          type: 'success'
 			        }).then(() => {
 						that.deliveryGoods(index,row.order_id)
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消发货'
-			          });          
+			          });
 			        });
 			    },
 		      //更改页数
@@ -671,7 +671,7 @@ var shipped = Vue.extend({
 				//弹出详情
 				PThandleEdit(index, b) {
 				  	this.dialogFormVisible = true;
-				  	this.form = { 
+				  	this.form = {
 				  		"address":b.address,
 	          			"consignee":b.consignee,
 	          			"created_at":b.created_at,
@@ -742,12 +742,12 @@ var shipped = Vue.extend({
 					            type: 'error',
 					            message: data.detail
 					         });
-				        } 
+				        }
 			          }).error(function(){
 			          	that.loading = false;
 			            that.$message.error('服务器开小差了');
 			          })
-					
+
 				},
 			    delivery(index, row) {
 			        var that = this;
@@ -757,12 +757,12 @@ var shipped = Vue.extend({
 			          type: 'success'
 			        }).then(() => {
 						that.deliveryGoods(index,row.order_id)
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消发货'
-			          });          
+			          });
 			        });
 			    },
 		      //更改页数
@@ -829,7 +829,7 @@ var succ = Vue.extend({
 				//弹出详情
 				PThandleEdit(index, b) {
 				  	this.dialogFormVisible = true;
-				  	this.form = { 
+				  	this.form = {
 				  		"address":b.address,
 	          			"consignee":b.consignee,
 	          			"created_at":b.created_at,
@@ -884,7 +884,7 @@ var succ = Vue.extend({
 				            that.$message.error('服务器开小差了');
 				          })
 				},
-				
+
 		      //更改页数
 			    handleCurrentChange(val) {
 			        this.currentPage = val;
@@ -949,7 +949,7 @@ var cancell = Vue.extend({
 				//弹出详情
 				PThandleEdit(index, b) {
 				  	this.dialogFormVisible = true;
-				  	this.form = { 
+				  	this.form = {
 				  		"address":b.address,
 	          			"consignee":b.consignee,
 	          			"created_at":b.created_at,
@@ -1027,11 +1027,11 @@ var cancell = Vue.extend({
 					            type: 'error',
 					            message: data.detail
 					         });
-				        } 
+				        }
 			          }).error(function(){
 			          	that.loading = false;
 			            that.$message.error('服务器开小差了');
-			          })	
+			          })
 				},
 			    refund(index, row) {
 			        var that = this;
@@ -1041,12 +1041,12 @@ var cancell = Vue.extend({
 			          type: 'success'
 			        }).then(() => {
 						that.refundGoods(index,row.order_id)
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消退款'
-			          });          
+			          });
 			        });
 			    },
 		      //更改页数
@@ -1119,7 +1119,7 @@ var setting = Vue.extend({
 			  		that.loading = true;
 			  		that.shopInfo.shop_status = that.shopInfo.shop_status_flag ? 1 : 3;
 		            $.post(this.localhost+'/business/shop/updateShop',that.shopInfo,function(data){
-			  				if(data.code == 200){	
+			  				if(data.code == 200){
 			  					that.loading = false;
 				            	that.$message.success('修改成功');
 			  				}else{
@@ -1130,7 +1130,7 @@ var setting = Vue.extend({
 				          })
 		          } else {
 				    that.$message.error('你的店铺资料有误，请检查');
-		            
+
 		            return false;
 		          }
 		        });
