@@ -88,7 +88,7 @@ class UserRepository
 	 */
 	public function getUserByToken($token = '')
 	{
-	  	self::$user = $user = User::where('token', $token)->first();
+	  	$user = $user = User::where('token', $token)->first();
 
 		if($user){
 			$user->last_visit = dtime();
