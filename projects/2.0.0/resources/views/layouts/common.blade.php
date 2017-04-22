@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <!-- 引入样式 -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+  <link rel="stylesheet" href="{{ asset('/css/index.css') }}">
   <link rel="stylesheet" href="{{ asset('/css/reset.css') }}">
   <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
 	  <!-- 先引入 Vue -->
