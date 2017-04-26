@@ -54,7 +54,6 @@
   		<div class="snav">
   			<el-breadcrumb separator="/">
 	  		  <el-breadcrumb-item v-for="snav in snavs" :key="snav.id" :to="{ path: snav.path }" >@{{snav.value}}</el-breadcrumb-item>
-			 
 			</el-breadcrumb>
   		</div>
   		<router-view></router-view>		
