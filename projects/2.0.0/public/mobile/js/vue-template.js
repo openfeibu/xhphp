@@ -124,6 +124,16 @@ var center =  Vue.extend({
             })
     
       },
+      call:function(tell){
+            try {
+                if (typeof(eval(JavaScriptInterface))) {
+                    JavaScriptInterface.callPhone(tell)
+                }
+            } catch(e) {
+                window.location.href="tel:"+tell;
+            }
+
+        }
      openPicker:function() {
         this.$refs.open.open();
       },
