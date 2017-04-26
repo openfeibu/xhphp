@@ -171,8 +171,6 @@ var table = Vue.extend({
 					         });
 				     }
 
-
-			        console.log(that.tableData)
 			          }).error(function(){
 			             that.loading = false;
 				        that.$message.error('服务器开小差了');
@@ -532,7 +530,6 @@ var notShipped = Vue.extend({
 	          			"total_fee":b.total_fee,
 	          			"order_goodses":b.order_goodses
 				      }
-				      console.log(this.form.order_goodses)
 			    },
 				  //分页获取数据
 				getData(page){
@@ -1130,7 +1127,6 @@ var setting = Vue.extend({
 				          })
 		          } else {
 				    that.$message.error('你的店铺资料有误，请检查');
-
 		            return false;
 		          }
 		        });

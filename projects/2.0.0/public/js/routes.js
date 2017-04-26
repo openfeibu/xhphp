@@ -1,5 +1,5 @@
 
-const routes = [
+var routes = [
   { path: '/classify', component: classify,meta: { msg: [{"value":"首页","path":"/"},{"value":"分类管理","path":""}],index:"2-2" }
 },
   { path: '/table', component: table ,meta: { msg: [{"value":"首页","path":"/"},{"value":"商品管理","path":""}],index:"2-1" }
@@ -15,6 +15,6 @@ const routes = [
  { path: '/setting', component: setting ,meta: { msg: [{"value":"首页","path":"/"},{"value":"店铺设置","path":""}],index:"4" }
 },
 ]
-const router = new VueRouter({
-  routes // （缩写）相当于 routes: routes
+var router = new VueRouter({
+  routes :routes// （缩写）相当于 routes: routes
 })
