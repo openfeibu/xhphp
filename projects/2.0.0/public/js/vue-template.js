@@ -185,10 +185,10 @@ var table = Vue.extend({
 			          confirmButtonText: '确定',
 			          cancelButtonText: '取消',
 			          type: 'warning'
-			        }).then(() => {
+			        }).then(function() {
 						that.deleGoods(index,row.goods_id)
 
-			        }).catch(() => {
+			        }).catch(function() {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消删除'
@@ -440,10 +440,10 @@ var classify = Vue.extend({
 			          confirmButtonText: '确定',
 			          cancelButtonText: '取消',
 			          type: 'warning'
-			        }).then(() => {
+			        }).then(function() {
 						that.deleclassify(index,row.cat_id)
 
-			        }).catch(() => {
+			        }).catch(function() {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消删除'
@@ -598,10 +598,10 @@ var notShipped = Vue.extend({
 			          confirmButtonText: '确定',
 			          cancelButtonText: '取消',
 			          type: 'success'
-			        }).then(() => {
+			        }).then(function() {
 						that.deliveryGoods(index,row.order_id)
 
-			        }).catch(() => {
+			        }).catch(function() {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消发货'
@@ -755,10 +755,10 @@ var shipped = Vue.extend({
 			          confirmButtonText: '确定',
 			          cancelButtonText: '取消',
 			          type: 'success'
-			        }).then(() => {
+			        }).then(function() {
 						that.deliveryGoods(index,row.order_id)
 
-			        }).catch(() => {
+			        }).catch(function() {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消发货'
@@ -1039,10 +1039,10 @@ var cancell = Vue.extend({
 			          confirmButtonText: '确定',
 			          cancelButtonText: '取消',
 			          type: 'success'
-			        }).then(() => {
+			        }).then(function() {
 						that.refundGoods(index,row.order_id)
 
-			        }).catch(() => {
+			        }).catch(function() {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消退款'
@@ -1114,7 +1114,7 @@ var setting = Vue.extend({
 			     },
 			  submitForm(formName){
 			  	var that = this;
-			  	this.$refs[formName].validate((valid) => {
+			  	this.$refs[formName].validate(function(valid){
 		          if (valid) {
 			  		that.loading = true;
 			  		that.shopInfo.shop_status = that.shopInfo.shop_status_flag ? 1 : 3;
@@ -1163,14 +1163,14 @@ var setting = Vue.extend({
 				          })
 					},
 				data: function() {
-					      var validateMGA = (rule, value, callback) => {
+					      var validateMGA = function(rule, value, callback) {
 					        if (value === '') {
 					          callback(new Error('请输入最低购买价格'));
 					        }else {
 					          callback();
 					        }
 					      };
-					      var validateSF = (rule, value, callback) => {
+					      var validateSF = function(rule, value, callback) {
 					        if (value === '') {
 					          callback(new Error('请输入最低购买价格'));
 					        }else {
