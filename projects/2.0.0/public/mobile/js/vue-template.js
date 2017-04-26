@@ -133,7 +133,7 @@ var center =  Vue.extend({
                 window.location.href="tel:"+tell;
             }
 
-        }
+        },
      openPicker:function() {
         this.$refs.open.open();
       },
