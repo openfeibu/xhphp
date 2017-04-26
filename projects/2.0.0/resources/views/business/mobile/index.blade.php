@@ -80,7 +80,7 @@
           <div class="img"><img :src="shopInfo.shop_img" alt=""></div>
         </mt-cell>
 
-        <mt-cell  title="店铺电话"  class="mt01">
+        <mt-cell  title="店铺电话"  class="mt01"  v-on:click="call(shopInfo.mobile_no)">
           @{{shopInfo.mobile_no}}
         </mt-cell>
         <mt-cell  title="店铺地址"  >
@@ -99,7 +99,7 @@
         <mt-cell  title="是否开店"  >
             <mt-switch :value.sync="shopStatus" v-model="shopStatus" @change="changeStatus"></mt-switch>
         </mt-cell>
-        <mt-cell  title="联系客服" to="tel:020-32168995" is-link class="mt01">
+        <mt-cell  title="联系客服" is-link class="mt01" v-on:click="call('020-32168995')">
          020-32168995
         </mt-cell>
         <mt-button style="margin-top:0.5rem" size="large" type="danger" onclick="window.location.href='{{ url('mbusiness/logout') }}'">注销</mt-button>
