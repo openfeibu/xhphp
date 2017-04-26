@@ -89,7 +89,7 @@ var center =  Vue.extend({
           hour:"12"
     }
     },
-  methods: {
+    methods: {
     getUser:function(){
       var that = this;
           that.$indicator.open();
@@ -697,8 +697,17 @@ var worderDe = Vue.extend({
                       duration: 3000
                     });
                 })
-          
         },
+        call:function(tell){
+            try {
+                if (typeof(eval(JavaScriptInterface))) {
+                    JavaScriptInterface.callPhone(tell)
+                }
+            } catch(e) {
+                window.location.href="tel:"+tell;
+            }
+
+        }
       },
        watch:{
 
@@ -748,6 +757,16 @@ var yorderDe = Vue.extend({
               
         //   });
         // }
+        call:function(tell){
+            try {
+                if (typeof(eval(JavaScriptInterface))) {
+                    JavaScriptInterface.callPhone(tell)
+                }
+            } catch(e) {
+                window.location.href="tel:"+tell;
+            }
+
+        }
       },
 
 
@@ -789,12 +808,16 @@ var corderDe = Vue.extend({
         }
       },
       methods: {
-        // delivery:function(){
-        //   var that = this;
-        //   that.$messagebox.confirm('货物已打包,确定发货？').then(function(action){
-              
-        //   });
-        // }
+        call:function(tell){
+            try {
+                if (typeof(eval(JavaScriptInterface))) {
+                    JavaScriptInterface.callPhone(tell)
+                }
+            } catch(e) {
+                window.location.href="tel:"+tell;
+            }
+
+        }
       },
 
 
@@ -873,7 +896,16 @@ var torderDe = Vue.extend({
                 })  
         },
       },
+      call:function(tell){
+            try {
+                if (typeof(eval(JavaScriptInterface))) {
+                    JavaScriptInterface.callPhone(tell)
+                }
+            } catch(e) {
+                window.location.href="tel:"+tell;
+            }
 
+        }
 
 });
 // 退货与售后
