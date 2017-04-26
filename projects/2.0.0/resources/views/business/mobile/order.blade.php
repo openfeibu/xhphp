@@ -80,7 +80,7 @@
                   <div class="usermap">
                     <div class="li_header">
                       <span class="fl">收货人：@{{nowwlist.consignee}}</span>
-                      <span class="fr"><a :href="'tel:'+nowwlist.mobile">@{{nowwlist.mobile}}</a></span>
+                      <span class="fr"><a v-on:click="call(nowwlist.mobile)" >@{{nowwlist.mobile}}</a></span>
                     </div>
                     <div class="li_bottom">
                       @{{nowwlist.address}}
@@ -213,18 +213,18 @@
                   <div class="usermap">
                     <div class="li_header">
                       <span class="fl">收货人：@{{nowylist.consignee}}</span>
-                      <span class="fr"><a :href="'tel:'+nowylist.mobile">@{{nowylist.mobile}}</a></span>
+                      <span class="fr"><a v-on:click="call(nowwlist.mobile)">@{{nowylist.mobile}}</a></span>
                     </div>
                     <div class="li_bottom">
                       @{{nowylist.address}}
                     </div>
                   </div>
           </div>
-          <div class="checkMap" >
+          <div class="checkMap" v-if="nowtlist.task">
                   <div class="usermap">
                     <div class="li_header">
                       <span class="fl">接单人：@{{nowylist.consignee}}</span>
-                      <span class="fr"><a :href="'tel:'+nowylist.mobile">@{{nowylist.mobile}}</a></span>
+                      <span class="fr"><a v-on:click="call(nowwlist.mobile)">@{{nowylist.mobile}}</a></span>
                     </div>
                     <div class="li_bottom">
                       @{{nowylist.address}}
@@ -352,18 +352,18 @@
                   <div class="usermap">
                     <div class="li_header">
                       <span class="fl">收货人：@{{nowclist.consignee}}</span>
-                      <span class="fr"><a :href="'tel:'+nowclist.mobile">@{{nowclist.mobile}}</a></span>
+                      <span class="fr"><a v-on:click="call(nowwlist.mobile)">@{{nowclist.mobile}}</a></span>
                     </div>
                     <div class="li_bottom">
                       @{{nowclist.address}}
                     </div>
                   </div>
           </div>
-          <div class="checkMap" >
+          <div class="checkMap" v-if="nowtlist.task">
                   <div class="usermap">
                     <div class="li_header">
                       <span class="fl">接单人：@{{nowclist.consignee}}</span>
-                      <span class="fr"><a :href="'tel:'+nowclist.mobile">@{{nowclist.mobile}}</a></span>
+                      <span class="fr"><a v-on:click="call(nowwlist.mobile)">@{{nowclist.mobile}}</a></span>
                     </div>
                     <div class="li_bottom">
                       @{{nowclist.address}}
@@ -491,18 +491,18 @@
                   <div class="usermap">
                     <div class="li_header">
                       <span class="fl">收货人：@{{nowtlist.consignee}}</span>
-                      <span class="fr"><a :href="'tel:'+nowtlist.mobile">@{{nowtlist.mobile}}</a></span>
+                      <span class="fr"><a v-on:click="call(nowwlist.mobile)">@{{nowtlist.mobile}}</a></span>
                     </div>
                     <div class="li_bottom">
                       @{{nowtlist.address}}
                     </div>
                   </div>
           </div>
-          <div class="checkMap" >
+          <div class="checkMap" v-if="nowtlist.task">
                   <div class="usermap">
                     <div class="li_header">
                       <span class="fl">接单人：@{{nowtlist.consignee}}</span>
-                      <span class="fr"><a :href="'tel:'+nowtlist.mobile">@{{nowtlist.mobile}}</a></span>
+                      <span class="fr"><a v-on:click="call(nowwlist.mobile)">@{{nowtlist.mobile}}</a></span>
                     </div>
                     <div class="li_bottom">
                       @{{nowtlist.address}}

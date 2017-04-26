@@ -139,6 +139,8 @@
         }else if(window.location.hash.indexOf("center") != -1){
           that.selected = 2
 
+        }else{
+          that.selected = 1
         }
       },
       watch: {
