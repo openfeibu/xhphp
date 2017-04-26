@@ -963,7 +963,7 @@
 		    watch: {
 		        '$route': 'fetchData'
 		    },
-		 data() {
+		 data:function() {
 	        return {
 	          snavs:[{"value":"首页","path":""},{"value":"商品管理","path":""}],
 		  	  defaultActive:"1-1",
