@@ -96,7 +96,7 @@
             @{{shopInfo.open_time}} - @{{shopInfo.close_time}}
         </mt-cell>
         </div>
-        <mt-cell  title="是否开店"  >
+        <mt-cell  title="是否开店">
             <mt-switch :value.sync="shopStatus" v-model="shopStatus" @change="changeStatus"></mt-switch>
         </mt-cell>
         <mt-cell  title="联系客服"  is-link class="mt01">
