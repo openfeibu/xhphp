@@ -35,7 +35,7 @@
   	var Main = {
 	    methods: {
 		     submit:function(formName){
-		     	this.$refs[formName].validate((valid) => {
+		     	this.$refs[formName].validate(function(valid){
 		          if (valid) {
 			  		$(".login").submit();
 		          } else {
@@ -51,14 +51,14 @@
 
 		  },
 		 data:function() {
-		 	 var validateA = (rule, value, callback) => {
+		 	 var validateA = function(rule, value, callback){
 		        if (value === '') {
 		          callback(new Error('请输入校汇账号'));
 		        }else {
 		          callback();
 		        }
 		      };
-		      var validateP = (rule, value, callback) => {
+		      var validateP = function(rule, value, callback) {
 		        if (value === '') {
 		          callback(new Error('请输入校汇密码'));
 		        }else {
