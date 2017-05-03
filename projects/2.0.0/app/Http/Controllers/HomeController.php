@@ -17,7 +17,7 @@ class HomeController extends Controller
 	public function __construct ()
 	{
 		parent::__construct();
-		
+
 	}
 	public function index ()
 	{
@@ -36,7 +36,7 @@ class HomeController extends Controller
             'data' =>  $ad
         ];
     }
-	
+
     public function getExtra(Request $request)
     {
         $orderArr = Order::select(DB::raw('order.fee, order.status, order.updated_at, owner_user.nickname as owner_nickname,
@@ -53,17 +53,17 @@ class HomeController extends Controller
         $order = array();
         foreach( $orderArr as $key => $value )
         {
-        	//$order[$key] = $value; 
-        	//$order[$key]['status'] = trans("common.task_status.$value[status]");  
+        	//$order[$key] = $value;
+        	//$order[$key]['status'] = trans("common.task_status.$value[status]");
         	if($value['status'] == 'new'){
-	        	$order[$key]['extra'] = $value['owner_nickname']."发布了一个新任务" ;  
+	        	$order[$key]['extra'] = $value['owner_nickname']."发布了一个新任务" ;
         	}else if($value['status'] == 'accepted'){
-	        	$order[$key]['extra'] = $value['courier_nickname']."接了一个任务" ; 
+	        	$order[$key]['extra'] = $value['courier_nickname']."接了一个任务" ;
         	}else if($value['status'] == 'completed'){
-	        	$order[$key]['extra'] = $value['courier_nickname']."完成了任务"; 
+	        	$order[$key]['extra'] = $value['courier_nickname']."完成了任务";
         	}
-        	 	
-        }             
+
+        }
         return [
             'code' => 200,
             'detail' => '请求成功',

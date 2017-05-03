@@ -383,7 +383,7 @@ class UserController extends Controller
             'mobile_no' => 'required|unique:user,mobile_no,NULL',
         ];
         $this->helpService->validateParameter($rule);
-		
+
         //发送短信
         $this->smsService->sendSMS2Phone($request->mobile_no, 'reg');
 

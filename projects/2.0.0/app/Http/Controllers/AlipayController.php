@@ -201,7 +201,7 @@ class AlipayController extends Controller
 						'pay_id' => 1,
 						'description' => '校汇商店订单',
 		    		);
-		    		
+
 	    		}
 		    	$this->tradeAccountService->addThradeAccount($trade);
     		}
@@ -270,7 +270,7 @@ class AlipayController extends Controller
 			    	);
 	    		}
 		    	$this->tradeAccountService->addThradeAccount($trade);
-				
+
 
     		}
 		    Log::debug('Alipay notify get data verification success.', [

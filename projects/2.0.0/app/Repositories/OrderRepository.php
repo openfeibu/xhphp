@@ -52,7 +52,7 @@ class OrderRepository
 	public function getSingleOrder($order_id)
 	{
 		return Order::join('user', 'order.owner_id', '=', 'user.uid')
-                    ->select(DB::raw('order.oid,order.owner_id, order.order_sn,user.openid,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
+                    ->select(DB::raw('order.oid,order.owner_id, order.order_sn,user.openid,user.mobile_no,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
                     				  order.description, order.fee, order.status, order.created_at,order.service_fee,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where('oid', $order_id)
@@ -242,7 +242,7 @@ class OrderRepository
 		$orderHistory = OrderHistory::select(DB::raw('created_at as status_change_at,new_status'))
 								->where('oid',$order->oid)
 								->get();
-								
+
 		$order->new_time = $order->created_at;
 		$order->accepted_time = "";
 		$order->finish_time = "";
@@ -264,7 +264,7 @@ class OrderRepository
 			if($v['new_status']=='cancelled'){
 				$order->cancelled_time = $v['status_change_at'];
 			}
-		}	
+		}
 		return $order;
 	}
 	/**

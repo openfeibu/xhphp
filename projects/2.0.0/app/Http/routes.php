@@ -249,6 +249,8 @@ Route::post('business/shop/updateShop', 'ShopAdmin\UserController@updateShop');
 Route::post('business/shop/uploadShopImage','ShopAdmin\UserController@uploadShopImage');
 
 Route::get('schedule/auto', 'ScheduleController@auto');
+
+Route::post('illegal_task','TestController@illegal_task');
 });
 
 

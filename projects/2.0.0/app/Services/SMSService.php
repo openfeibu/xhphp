@@ -71,7 +71,7 @@ class SMSService
 
 		$random = rand(1000, 9999);
 		//发送短信
-        $result = $this->sendSMS($mobile_no, $random, config('sms.'.$usage));
+        $result = $this->sendSMS($mobile_no, 'verify',['code' => $random,'sms_template_code' => config('sms.'.$usage)]);
 
         //将手机及其对应的短信验证码保存到数据库
         $this->saveVerifyCode($mobile_no, $random, $usage, $result);
@@ -97,6 +97,7 @@ class SMSService
 	/**
 	 * 发送短信验证码
 	 */
+	 /*
 	public function sendSMS($mobile_no, $code, $sms_template_code)
 	{
 		require app_path() . '\Helper\alidayu\TopSdk.php';
@@ -114,10 +115,11 @@ class SMSService
 			Log::error('----------------------------------------------------------------');
 		}
 		return true;
-	}
+	}*/
 	/**
 	 * 发送短信验证码
 	 */
+
 	public function sendCommonSMS($mobile_no, $sms_template_code)
 	{
 		require app_path() . '\Helper\alidayu\TopSdk.php';
@@ -128,6 +130,42 @@ class SMSService
 		$req->setSmsParam("{\"product\":\"校汇\"}");
 		$req->setRecNum($mobile_no);
 		$req->setSmsTemplateCode($sms_template_code);
+		$resp = $c->execute($req);
+		if (!isset($resp->result->err_code) or $resp->result->err_code !== '0') {
+			Log::error('----------------------------------------------------------------');
+			Log::error('短信发送故障，收到阿里大于的错误信息：' . serialize($resp));
+			Log::error('----------------------------------------------------------------');
+		}
+		return true;
+	}
+	public function sendSMS($mobile_no,$type = 'verify',$data = [])
+	{
+		require app_path() . DIRECTORY_SEPARATOR.'Helper'.DIRECTORY_SEPARATOR.'alidayu'.DIRECTORY_SEPARATOR.'TopSdk.php';
+		$c = new TopClient;
+		$req = new AlibabaAliqinFcSmsNumSendRequest;
+		$req->setSmsType("normal");
+		$req->setSmsFreeSignName(config('sms.signName'));
+		$req->setRecNum($mobile_no);
+		switch ($type) {
+			case 'verify':
+				$req->setSmsTemplateCode($data['sms_template_code']);
+				$code = $data['code'];
+				$req->setSmsParam("{\"code\":\"$code\",\"product\":\"校汇\"}");
+				break;
+			case 'order_info':
+				$req->setSmsTemplateCode($data['sms_template_code']);
+				$req->setSmsParam("{\"product\":\"校汇\"}");
+				break;
+			case 'illegal_task':
+				$req->setSmsTemplateCode($data['sms_template_code']);
+				$name = $data['name'];
+				$title = $data['title'];
+				$req->setSmsParam("{\"product\":\"校汇\",\"name\":\"$name\",\"title\":\"$title\"}");
+				break;
+			default:
+				// code...
+				break;
+		}
 		$resp = $c->execute($req);
 		if (!isset($resp->result->err_code) or $resp->result->err_code !== '0') {
 			Log::error('----------------------------------------------------------------');
