@@ -1379,7 +1379,7 @@ var addProduct = Vue.extend({
                 position: 'bottom',
                 duration: 3000
               });
-              // window.history.go(-1);
+              window.history.go(-1);
             }else{
               that.$toast({
                 message: data.detail,
