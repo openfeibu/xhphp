@@ -1,0 +1,37 @@
+html { font-family:"Microsoft Yahei", Helvetica, STHeiTi, Arial, sans-serif; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; font-size:40px; }
+body { margin: 0; overflow-x: hidden; -webkit-overflow-scrolling: touch;font-size:14px;margin:0 auto; position: relative;background: #f5f5f5;}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
+a { background: transparent; text-decoration: none; color: #333;display:block; }
+a:active { outline: 0;vertical-align:  }
+b, strong { font-weight: bold; }
+dfn { font-style:normal;}
+img { border: 0; vertical-align: middle; }
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent; /* For some Androids */
+    outline: none;
+}
+input,textarea,button,p{ border: 0; margin: 0; padding: 0; }
+input {-webkit-appearance:none; /*去除input默认样式*/border-radius: 0;}
+textarea { resize: none;}
+table { border-collapse: collapse; border-spacing: 0;}
+td, th { padding: 0; }
+h1, h2, h3, h4, h5, h6, figure, form, blockquote { margin: 0; font-weight: normal;font-size: .3rem;}
+ul, ol, li, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+input::-moz-placeholder, textarea::-moz-placeholder { color: #ccc; }
+input:-ms-input-placeholder, textarea:-ms-input-placeholder { color: #ccc; }
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #ccc; }
+.w1200{width: 1200px;margin:0 auto;}
+.clearfix:after { content:" "; display:block; height:0; clear:both; visibility:hidden;}
+.fl{float: left;}
+.fr{float: right;}
+.pt1{padding-top: 1rem !important}
+.pt2{padding-top: 1.8rem !important}
+.pt0{padding-top: 0rem !important}
+.overflow{overflow: hidden;}
+
+/*::-webkit-scrollbar {
+    width:0px;
+}
+*/
