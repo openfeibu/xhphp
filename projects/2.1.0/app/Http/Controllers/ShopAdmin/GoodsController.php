@@ -75,9 +75,6 @@ class GoodsController extends Controller
     		case 2:
 		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺 '.$this->shop->shop_name.' 审核不通过不能添加商品，请重新申请开店');
     			break;
-    		case 3:
-		        throw new \App\Exceptions\Custom\OutputServerMessageException('店铺 '.$this->shop->shop_name.' 已关闭不能添加商品');
-    			break;
 		}
 		/*
     	$existShopGoods = $this->goodsService->existShopGoods($this->shop->shop_id,$request->goods_name);
