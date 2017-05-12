@@ -52,6 +52,10 @@ class CartService
 		foreach( $carts as $k => $cart )
 		{
 			$goods = $this->goodsService->existGoods($cart->goods_id);
+			if(!$goods){
+				$this->removeCartGoods([$cart->cart_id],$uid);
+				return $this->getShopCarts($shop_id,$uid);
+			}
 			$goods_total = $cart->goods_price * $cart->goods_number;
 			$goods_weight = $goods->weight * $cart->goods_number;
 			$cart->goods_thumb = $goods->goods_thumb;
@@ -69,7 +73,7 @@ class CartService
 	public function checkGoodsNumber($shop_id,$uid)
 	{
 		$carts = $this->cartRepository->getShopCarts($shop_id,$uid);
-		$shop_total = 0;
+		$shop_total = $weight = 0;
 		$str = "";
 		foreach( $carts as $k => $cart )
 		{
@@ -84,12 +88,15 @@ class CartService
 			$cart->goods_img = $goods->goods_img;
 			$cart->goods_total = $goods_total;
 			$shop_total += $goods_total;
+			$goods_weight = $goods->weight * $cart->goods_number;
+			$weight += $goods_weight;
 		}
 		if($str){
 			throw new \App\Exceptions\Custom\OutputServerMessageException($str);
 		}
 		return [
 			'carts' => $carts,
+			'weight' => $weight,
 			'shop_total' => $shop_total,
 		];
 	}

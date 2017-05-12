@@ -167,9 +167,11 @@ class OrderInfoController extends Controller
 				$total_fee = $goods_amount + $shop->shipping_fee;
 				$shipping_fee = $shop->shipping_fee;
 			}
-		}else
+		}
+		else
 		{
-			//$shipping_fee = 
+			$shipping_fee = $this->helpService->getBuyerShippingFee($carts['weight'],$total_fee);
+			$total_fee += $shipping_fee;
 		}
 
 		$count = $this->cartService->getCount(['uid' => $this->user->uid,'shop_id' => $request->shop_id]);
@@ -181,6 +183,7 @@ class OrderInfoController extends Controller
         	'carts' => $carts['carts'],
         	'total_fee' => $total_fee,
         	'shipping_fee' => $shipping_fee,
+			'weight' => $carts['weight'],
         	'goods_count' => $count
         ];
 	}
@@ -226,9 +229,17 @@ class OrderInfoController extends Controller
 		$shop_user = $this->userService->getUserByUserID($shop->uid);
 		buyerHandle($shop);
 		$shipping_fee = 0;
-		if($goods_amount < $shop->min_goods_amount){
-			$total_fee = $goods_amount + $shop->shipping_fee;
-			$shipping_fee = $shop->shipping_fee;
+		if($shop->shop_type == 1)
+		{
+			if($goods_amount < $shop->min_goods_amount){
+				$total_fee = $goods_amount + $shop->shipping_fee;
+				$shipping_fee = $shop->shipping_fee;
+			}
+		}
+		else
+		{
+			$shipping_fee = $this->helpService->getBuyerShippingFee($carts['weight'],$goods_amount);
+			$total_fee += $shipping_fee;
 		}
         if($request->pay_id == 3){
 	       	if (!password_verify($request->pay_password, $this->user->pay_password)) {
@@ -243,6 +254,8 @@ class OrderInfoController extends Controller
 	        }
         }
 
+		$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
+
         $order_info = $this->orderInfoService->create([
         											'order_sn' => $order_sn,
         											'uid' => $this->user->uid,
@@ -255,7 +268,8 @@ class OrderInfoController extends Controller
         											'pay_name' => trans('common.pay_name.'.$request->pay_id),
         											'goods_amount' => $goods_amount,
         											'total_fee' => $total_fee,
-        											'shipping_fee' => $shipping_fee
+        											'shipping_fee' => $shipping_fee,
+													'seller_shipping_fee' => $seller_shipping_fee,
         										]);
         $pay_platform = isset($request->platform) ? $request->platform : 'web';
         $data = [
@@ -446,8 +460,12 @@ class OrderInfoController extends Controller
 		if($shop->shop_type == 2){
 			//创建新任务
 			$order_sn = $this->helpService->buildOrderSn('RT');
-			$total_fee = $order_info->shipping_fee;
+			$total_fee = $order_info->shipping_fee + $order_info->seller_shipping_fee;
 			$service_fee = $this->helpService->serviceFee($total_fee) ;
+			//提货码
+			$pick_code = $this->orderInfoService->get_pick_code();
+			$this->orderInfoService->updateOrderInfo($order_info->order_sn,['pick_code' => $pick_code]);
+			//生成任务
         	$order = $this->orderService->createOrder(['destination' => $order_info->address,
                                              'description' => $shop->shop_name,
                                              'fee' => $total_fee,
@@ -488,4 +506,29 @@ class OrderInfoController extends Controller
 
     	throw new \App\Exceptions\Custom\RequestSuccessException('确认成功');
     }
+	public function check_pick_code(Request $request)
+	{
+		$rules = [
+        	'token' 	=> 'required',
+			'pick_code'  => 'required',
+    	];
+    	$this->helpService->validateParameter($rules);
+		$shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
+		$order_info = $this->orderInfoService->isExistsOrderInfo(['shop_id' => $shop->shop_id,'pick_code' => $request->pick_code],['order_id']);
+		if(!$order_info)
+		{
+			return [
+				'code' => 201,
+				'detail' => '订单不存在',
+				'data' => [],
+			];
+		}else{
+			$order_info = $this->orderInfoService->getOrderInfo($order_info->order_id,'seller');
+			return [
+				'code' => 200,
+				'detail' => '订单存在',
+				'data' => $order_info,
+			];
+		}
+	}
 }

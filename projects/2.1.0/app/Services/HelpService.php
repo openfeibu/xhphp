@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Validator;
+use DB;
 use App\TradeAccount;
 use App\ShippingConfig;
 use Illuminate\Http\Request;
@@ -248,8 +249,41 @@ class HelpService
 	{
 		return $fee * $rate;
 	}
-	public function getShippingFee()
+	/*
+		获取买家应该担负的任务费
+	*/
+	public function getBuyerShippingFee($weight,$fee)
 	{
-		
+		$shipping_fee = 0;
+
+		$shipping_config = DB::table('shipping_config')->where('min','<',$fee)->where('max','>',$fee)->first();
+		if($shipping_config)
+		{
+			if($shipping_config->payer == 'buyer')
+			{
+				$shipping_fee += $shipping_config->shipping_fee;
+			}
+			if($weight > $shipping_config->weight)
+			{
+				$out_weight = $weight - $shipping_config->weight;
+				$out_weight_fee = ceil($out_weight) * $shipping_config->outweight;
+				$shipping_fee = $out_weight_fee + $shipping_fee;
+			}
+		}
+		return $shipping_fee;
+	}
+	public function getSellerShippingFee($weight,$fee)
+	{
+		$shipping_fee = 0;
+
+		$shipping_config = DB::table('shipping_config')->where('min','<',$fee)->where('max','>',$fee)->first();
+		if($shipping_config)
+		{
+			if($shipping_config->payer == 'seller')
+			{
+				$shipping_fee += $shipping_config->shipping_fee;
+			}
+		}
+		return $shipping_fee;
 	}
 }

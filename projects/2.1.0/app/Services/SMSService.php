@@ -122,7 +122,8 @@ class SMSService
 
 	public function sendCommonSMS($mobile_no, $sms_template_code)
 	{
-		require app_path() . '\Helper\alidayu\TopSdk.php';
+		/*
+		require app_path() . DIRECTORY_SEPARATOR.'Helper'.DIRECTORY_SEPARATOR.'alidayu'.DIRECTORY_SEPARATOR.'TopSdk.php';
 		$c = new TopClient;
 		$req = new AlibabaAliqinFcSmsNumSendRequest;
 		$req->setSmsType("normal");
@@ -135,7 +136,7 @@ class SMSService
 			Log::error('----------------------------------------------------------------');
 			Log::error('短信发送故障，收到阿里大于的错误信息：' . serialize($resp));
 			Log::error('----------------------------------------------------------------');
-		}
+		}*/
 		return true;
 	}
 	public function sendSMS($mobile_no,$type = 'verify',$data = [])

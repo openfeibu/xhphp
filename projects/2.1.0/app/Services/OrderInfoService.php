@@ -48,9 +48,9 @@ class OrderInfoService
 	public function getOrderInfos($uid = '',$type)
 	{
 		$where = ['order_info.uid' => $uid];
-		
+
 		$order_infos = $this->orderInfoRepository->getOrderInfos($where,$type);
-		
+
 		foreach( $order_infos as $key => $order_info )
 		{
 			$order_goodses =  $this->getOrderGoodses($order_info->order_id);
@@ -78,9 +78,9 @@ class OrderInfoService
 				}
 			}
 			$result = check_refund_order_info($order_info->pay_status,$order_info->shipping_status,$order_info->order_status);
-			$order_info->can_cancel = 1; 
+			$order_info->can_cancel = 1;
 			if(!$result){
-				$order_info->can_cancel = 0; 
+				$order_info->can_cancel = 0;
 			}
 		}
 		return $order_infos;
@@ -88,9 +88,9 @@ class OrderInfoService
 	public function getShopOrderInfos ($shop_id,$type,$num = 20)
 	{
 		$where = ['order_info.shop_id' => $shop_id];
-		
+
 		$order_infos = $this->orderInfoRepository->getOrderInfos($where,$type,$num);
-		
+
 		foreach( $order_infos as $key => $order_info )
 		{
 			$order_goodses =  $this->getOrderGoodses($order_info->order_id);
@@ -106,7 +106,7 @@ class OrderInfoService
 				}
 			}
 			$order_info->order_goodses = $order_goodses;
-			
+
 			$order_info->status_desc = trans('common.pay_status.'.$order_info->pay_status);
 			if($order_info->pay_status == 1){
 				$order_info->status_desc = trans('common.order_status.seller.'.$order_info->order_status);
@@ -146,7 +146,7 @@ class OrderInfoService
 		$order_info->shop = $shop;
 		return $order_info;
 	}
-	
+
 	public function getOrderGoodses ($order_id,$columns = ['*'])
 	{
 		return $this->orderInfoRepository->getOrderGoodses($order_id,$columns);
@@ -222,7 +222,7 @@ class OrderInfoService
 		foreach( $goodses as $key => $goods )
 		{
 			$this->goodsRepository->inGoodsSale(['goods_id' => $goods->goods_id],$goods->goods_number);
-			$this->shopRepository->inSale(['shop_id' => $shop_id],$goods->goods_number);	
+			$this->shopRepository->inSale(['shop_id' => $shop_id],$goods->goods_number);
 		}
 		return true;
 	}*/
@@ -269,7 +269,7 @@ class OrderInfoService
 		foreach( $goodses as $key => $goods )
 		{
 			$this->goodsRepository->inGoodsSale(['goods_id' => $goods->goods_id],$goods->goods_number);
-			$this->shopRepository->inSale(['shop_id' => $shop->shop_id],$goods->goods_number);	
+			$this->shopRepository->inSale(['shop_id' => $shop->shop_id],$goods->goods_number);
 		}
 		$this->shopRepository->inIncome(['shop_id' => $shop->shop_id],$fee);
 		return true;
@@ -299,5 +299,15 @@ class OrderInfoService
 	public function getAllOrderInfos($where)
 	{
 		return $this->orderInfoRepository->getAllOrderInfos($where);
+	}
+	public function get_pick_code()
+	{
+		$pick_code = get_pick_code();
+		$order_info = $this->orderInfoRepository->isExistsOrderInfo(['pick_code' => $pick_code,'shipping_status' => 1],['order_id']);
+		if($order_info)
+		{
+			return $this->get_pick_code();
+		}
+		return $pick_code;
 	}
 }

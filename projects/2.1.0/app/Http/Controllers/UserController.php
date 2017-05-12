@@ -72,8 +72,8 @@ class UserController extends Controller
             'mobile_no' => 'required|unique:user,mobile_no,NULL',
             'password' => 'required|alpha_dash',
             'sms_code' => 'required',
-            'nickname' => 'required|alpha_dash|unique:user,nickname',
-            'gender' => 'required|in:0,1,2',
+            'nickname' => 'sometimes|alpha_dash|unique:user,nickname',
+            'gender' => 'sometimes|in:0,1,2',
             'enrollment_year' => 'sometimes|required|after:2000|before:' . (date('Y')+1),
             'avatar_url' => 'sometimes|required|string',
         ];
@@ -89,8 +89,8 @@ class UserController extends Controller
         $user = [
             'mobile_no' => $request->mobile_no,
             'password' => $request->password,
-            'nickname' => $request->nickname,
-            'gender' => $request->gender,
+            'nickname' => isset($request->nickname) ? $request->nickname : get_nickname(),
+            'gender' => isset($request->gender) ? $request->gender : 0,
             'enrollment_year' => isset($request->enrollment_year) ? $request->enrollment_year : '2016',
             'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : config('app.url').'/uploads/system/avatar.png' ,
         ];

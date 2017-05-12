@@ -9,7 +9,7 @@ class ShippingConfig extends Model
 {
     protected $table = 'shipping_config';
 
-    protected $primaryKey = 'sconfig_id';
+    protected $primaryKey = 'cid';
 
     protected $fillable = [
     	'min',

@@ -338,7 +338,7 @@ class OrderController extends Controller
 
         $order_owner_id = $this->orderService->getSingleOrderAllInfo($request->order_id)->owner_id;
         //发送纸条给发单者
-        $this->messageService->SystemMessage2SingleOne($order_owner_id, '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。');
+        $this->messageService->SystemMessage2SingleOne($order_owner_id, trans('order.order_be_accepted'));
 
         //推送给发单者
 
@@ -349,10 +349,10 @@ class OrderController extends Controller
 			'data' => [
 				'id' => $request->order_id,
 				'title' => '校汇任务',
-				'content' => '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。',
+				'content' => trans('order.order_be_accepted'),
 			],
 		];
-        $this->pushService->PushUserTokenDevice('校汇任务', '您好，您发布的任务已被使者接入囊中，赶紧与ta取得联系。', $order_owner_id,2,$data);
+        $this->pushService->PushUserTokenDevice('校汇任务', trans('order.order_be_accepted'), $order_owner_id,2,$data);
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
