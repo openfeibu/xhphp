@@ -572,7 +572,6 @@ var thsh = Vue.extend({
                 
               }
               that.$indicator.open();
-              that.tpage++;
               //获取列表
               $.getJSON(this.localhost+'/business/orderInfo/orderInfos?page='+ that.tpage+'&type=cancell',function(data){
                   that.$indicator.close();
