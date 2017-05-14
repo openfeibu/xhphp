@@ -15,8 +15,10 @@ class CreateTableUserCoupon extends Migration
         Schema::create('user_coupon',function(Blueprint $table){
 			$table->increments('user_coupon_id');
 			$table->integer('uid')->comment('用户ID') ;
-            $table->integer('coupon_id')->comment('优惠券ID') ;
-            $table->timestamp('overdue')->comment('过期时间');
+            $table->date('receive')->comment('领取时间');
+            $table->date('overdue')->comment('过期时间');
+            $table->integer('price')->comment('价格') ;
+            $table->integer('min_price')->comment('最低使用价格') ;
             $table->enum('status',['used','unused'])->comment('使用状态');
             $table->timestamps();
             $table->index('uid');

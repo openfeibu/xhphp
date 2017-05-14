@@ -101,6 +101,7 @@ class CreateTableShops extends Migration
 			$table->decimal('insure_fee',10,2)->comment('保价费用');
             $table->decimal('total_fee',10,2)->comment('应付费用');
 			$table->string('to_buyer')->comment('商家给买家留言');
+            $table->integral('user_coupon_id')->comment('使用的优惠券');
 			$table->timestamp('shipping_time');
 			$table->timestamp('cancelling_time');
 			$table->timestamp('cancelled_time');
