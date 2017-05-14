@@ -39,7 +39,8 @@ class TopicService
 	 */
 	public function getTopicByTopicID(array $param)
 	{
-		$user = $this->userRepository->getUserByToken();
+		$token = isset($this->request->token) ? $this->request->token : '';
+		$user = $this->userRepository->getUserByToken($token);
 		if ($user) {
 			$param['user_id'] = $user->uid;
 		}
