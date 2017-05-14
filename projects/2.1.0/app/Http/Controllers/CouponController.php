@@ -60,6 +60,6 @@ class CouponController extends Controller
 	public function couponLottery(Request $request)
 	{
 		$user = $this->userService->getUser();
-		$game = 
+	
 	}
 }
