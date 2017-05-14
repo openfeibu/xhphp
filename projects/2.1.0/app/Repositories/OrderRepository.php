@@ -52,20 +52,24 @@ class OrderRepository
 	public function getSingleOrder($order_id)
 	{
 		return Order::join('user', 'order.owner_id', '=', 'user.uid')
-                    ->select(DB::raw('order.oid,order.owner_id, order.order_sn,user.openid,user.mobile_no,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
+                    ->select(DB::raw('order.oid,order.owner_id, order.type, order.order_id,order.order_sn,user.openid,user.mobile_no,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
                     				  order.description, order.fee, order.status, order.created_at,order.service_fee,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where('oid', $order_id)
                     ->first();
 	}
-
+	public function getOrderColumn($where,$columns)
+	{
+		$order = Order::where($where)->first($columns);
+		return $order;
+	}
 	/**
 	 * 获取指定任务ID可公开信息
 	 */
 	public function getSingleOrderByToken($order_id)
 	{
 		$order = Order::join('user', 'order.owner_id', '=', 'user.uid')
-                    ->select(DB::raw('order.oid,order.owner_id, order.type,order.order_sn,user.openid,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
+                    ->select(DB::raw('order.oid,order.owner_id, order.type,order.order_id,order.order_sn,user.openid,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
                     				  order.description, order.fee, order.status, order.created_at,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where('oid', $order_id)
@@ -119,7 +123,7 @@ class OrderRepository
 	public function getSingleOrderAllInfo($order_id)
 	{
 		return Order::select(DB::raw('order.oid, order.owner_id, order.courier_id,order.pay_id, order.fee, order.service_fee,order.total_fee,order.alt_phone, order.description,
-									  order.destination, order.status, order.created_at,order.order_sn,
+									  order.destination, order.status, order.created_at,order.order_sn,order.type,order.order_id,
 									  owner.uid as owner_id, owner.mobile_no as owner_mobile_no, owner.nickname as owner_nickname,
 									  owner.avatar_url as owner_avatar_url, owner.today_integral as owner_today_integral,
 									  courier.uid as courier_id, courier.mobile_no as courier_mobile_no, courier.nickname as courier_nickname,
@@ -192,6 +196,7 @@ class OrderRepository
 			self::$order->order_sn = $order_info['order_sn'];
 			self::$order->pay_id = $order_info['pay_id'];
 			self::$order->type = $order_info['type'];
+			self::$order->order_id = $order_info['order_id'];
 			self::$order->status = $order_info['status'] ? $order_info['status'] : 'new';
 			self::$order->save();
 
@@ -472,5 +477,9 @@ class OrderRepository
 	public function getOrderCount ($where)
 	{
 		return Order::where($where)->count();
+	}
+	public function delete($where)
+	{
+		return Order::where($where)->delete();
 	}
 }

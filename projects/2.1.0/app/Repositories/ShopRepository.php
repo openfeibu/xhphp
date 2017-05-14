@@ -27,11 +27,11 @@ class ShopRepository
 		$shop = new Shop;
 		$shop->setConnection('write');
 		$shop->uid = $user->uid;
-		$shop->shop_name = trim($this->request->shop_name);                
+		$shop->shop_name = trim($this->request->shop_name);
 		$shop->shop_img = $this->request->shop_img;
 		$shop->description = trim($this->request->description);
 		$shop->created_at = date('Y-m-d H:i:s');
-		$shop->save();		
+		$shop->save();
 	}
 	public function update ($where,$data)
 	{
@@ -47,7 +47,7 @@ class ShopRepository
 						->orderBy('shop_status','asc')
 						->orderBy('top', 'desc')
 						->orderBy('shop_favorite_count','desc')
-						->orderBy('shop_click_count','desc')	
+						->orderBy('shop_click_count','desc')
 						->orderBy('shop_id', 'desc')
                         ->take(20)
                         ->get();
@@ -55,7 +55,7 @@ class ShopRepository
 	}
 	public function existShop ()
 	{
-		$shop = Shop::where('shop_name',trim($this->request->shop_name))->first();		
+		$shop = Shop::where('shop_name',trim($this->request->shop_name))->first();
 		if($shop){
 			return true;
 		}else{
@@ -69,7 +69,7 @@ class ShopRepository
 			$user = User::where('uid',$shop->uid)->first(['mobile_no']);
 			$shop->mobile_no = $user->mobile_no;
 		}
-		return 	$shop;			
+		return 	$shop;
 	}
 	public function collect ($shop_id,$uid)
 	{
@@ -111,5 +111,5 @@ class ShopRepository
 	{
 		return Shop::where($where)->increment('income',$number);
 	}
-	
+
 }

@@ -19,6 +19,7 @@ use App\Services\OrderInfoService;
 use App\Services\UserAddressService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
+use App\Services\CouponService;
 
 class OrderInfoController extends Controller
 {
@@ -48,7 +49,8 @@ class OrderInfoController extends Controller
 								WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
 								PayService $payService,
-								OrderInfoService $orderInfoService)
+								OrderInfoService $orderInfoService,
+								CouponService $couponService)
 	{
 		parent::__construct();
 		$this->middleware('auth');
@@ -63,6 +65,7 @@ class OrderInfoController extends Controller
 	 	$this->userAddressService = $userAddressService;
 	 	$this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
+		$this->couponService = $couponService;
 	 	$this->user = $this->userService->getUser();
 	}
 
@@ -173,6 +176,7 @@ class OrderInfoController extends Controller
 			$shipping_fee = $this->helpService->getBuyerShippingFee($carts['weight'],$total_fee);
 			$total_fee += $shipping_fee;
 		}
+		$coupons = $this->couponService->getOrderInfoCoupons(['user_coupon.uid' => $this->user->uid],$goods_amount);
 
 		$count = $this->cartService->getCount(['uid' => $this->user->uid,'shop_id' => $request->shop_id]);
 		return [
@@ -184,7 +188,8 @@ class OrderInfoController extends Controller
         	'total_fee' => $total_fee,
         	'shipping_fee' => $shipping_fee,
 			'weight' => $carts['weight'],
-        	'goods_count' => $count
+        	'goods_count' => $count,
+			'coupons' => $coupons
         ];
 	}
     /**
@@ -200,6 +205,7 @@ class OrderInfoController extends Controller
         	'shop_id'  => 'required|integer',
         	'pay_id' 	=> "required|integer|in:1,3",
         	'pay_password' => 'sometimes|required|string',
+			'coupon_id' => 'sometimes|integer|string',
         	'address_id' => 'required|integer',
     	];
     	$this->helpService->validateParameter($rules);
@@ -228,6 +234,11 @@ class OrderInfoController extends Controller
 		$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);
 		$shop_user = $this->userService->getUserByUserID($shop->uid);
 		buyerHandle($shop);
+
+		if($request->coupon_id)
+		{
+
+		}
 		$shipping_fee = 0;
 		if($shop->shop_type == 1)
 		{
@@ -463,7 +474,7 @@ class OrderInfoController extends Controller
 			$total_fee = $order_info->shipping_fee + $order_info->seller_shipping_fee;
 			$service_fee = $this->helpService->serviceFee($total_fee) ;
 			//提货码
-			$pick_code = $this->orderInfoService->get_pick_code();
+			$pick_code = $this->orderInfoService->getPickCode();
 			$this->orderInfoService->updateOrderInfo($order_info->order_sn,['pick_code' => $pick_code]);
 			//生成任务
         	$order = $this->orderService->createOrder(['destination' => $order_info->address,
@@ -484,6 +495,34 @@ class OrderInfoController extends Controller
 
 		throw new \App\Exceptions\Custom\RequestSuccessException('操作成功');
     }
+	public function revokeShipping(Request $request)
+	{
+		$rule = [
+            'order_id' => 'required|integer',
+        ];
+        $this->helpService->validateParameter($rule);
+
+		$this->user = $this->userService->getUser();
+
+		$shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
+
+		$order_info = $this->orderInfoService->isExistsOrderInfo(['shop_id' => $shop->shop_id,'order_id' => $request->order_id],['order_id']);
+
+		$order = $this->orderService->isExistsOrderColumn(['order_id' => $order_info->order_id,'type' => 'business','owner_id' => $this->user->uid]);
+
+        if ($order->status != 'new') {
+            throw new \App\Exceptions\Custom\OutputServerMessageException('当前任务状态不允许取消');
+        }
+
+        $this->orderService->delete(['oid' => $order->oid]);
+        //更新订单状态
+        $this->orderInfoService->updateOrderInfoById($order->order_id,['shipping_status' => 0]);
+        return [
+            'code' => 200,
+            'detail' => '取消任务成功，请重新发货',
+        ];
+
+	}
     public function confirm (Request $request)
     {
     	$rules = [

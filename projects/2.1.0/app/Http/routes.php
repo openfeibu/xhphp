@@ -171,7 +171,8 @@ Route::post('orderInfo/confirm','OrderInfoController@confirm');
 Route::post('orderInfo/agreeCancel','OrderInfoController@agreeCancel');
 Route::post('orderInfo/shipping','OrderInfoController@shipping');
 Route::get('orderInfo/orders','OrderInfoController@orders')->name('shop_OrderInfos');
-
+Route::post('orderInfo/checkPickCode','OrderInfoController@checkPickCode');
+Route::post('orderInfo/revokeShipping','OrderInfoController@revokeShipping');
 Route::get('userAddress/index','UserAddressController@index');
 Route::get('userAddress/show','UserAddressController@show');
 Route::get('userAddress/getDefault','UserAddressController@getDefault');
@@ -227,6 +228,8 @@ Route::post('lostAndFind/uploadImage', 'LostAndFindController@uploadImage');
 Route::post('lostAndFind/delete', 'LostAndFindController@delete');
 Route::get('lostAndFind/getLoss','LostAndFindController@getLoss');
 
+Route::get('coupon/getUserCoupons','CouponController@getUserCoupons');
+
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');
 Route::post('business/goods/store','ShopAdmin\GoodsController@store');
@@ -241,7 +244,8 @@ Route::get('business/orderInfo/show','ShopAdmin\OrderInfoController@show');
 Route::post('business/orderInfo/shipping','ShopAdmin\OrderInfoController@shipping');
 Route::post('business/orderInfo/agreeCancel','ShopAdmin\OrderInfoController@agreeCancel');
 //Route::get('business/goods/getCats','ShopAdmin\GoodsController@getCats');
-
+Route::post('business/orderInfo/checkPickCode','OrderInfoController@checkPickCode');
+Route::post('business/orderInfo/revokeShipping','OrderInfoController@revokeShipping');
 Route::get('business/user/getUser', 'ShopAdmin\UserController@getUser');
 Route::get('business/user/getShop', 'ShopAdmin\UserController@getShop');
 Route::post('business/shop/updateShop', 'ShopAdmin\UserController@updateShop');

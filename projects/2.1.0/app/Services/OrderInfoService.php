@@ -229,9 +229,13 @@ class OrderInfoService
 	public function confirm ($order_info,$shop,$walletService,$tradeAccountService)
 	{
         $shop_user = $this->userRepository->getUserByUserID($shop->uid);
+		//应得款
 
-		$service_fee = $this->helpService->shopServiceFee($order_info->goods_amount,$shop->service_rate) ;
-		$fee = $order_info->total_fee - $service_fee;
+		$receivable = get_receivable($shop->shop_type,$order_info);
+		//服务费
+		$service_fee = $this->helpService->shopServiceFee($receivable,$shop->service_rate) ;
+
+		$fee = $receivable - $service_fee;
 
         $wallet = $shop_user->wallet + $fee;
         //商家加物品费用
@@ -300,14 +304,29 @@ class OrderInfoService
 	{
 		return $this->orderInfoRepository->getAllOrderInfos($where);
 	}
-	public function get_pick_code()
+	public function getPickCode()
 	{
 		$pick_code = get_pick_code();
 		$order_info = $this->orderInfoRepository->isExistsOrderInfo(['pick_code' => $pick_code,'shipping_status' => 1],['order_id']);
 		if($order_info)
 		{
-			return $this->get_pick_code();
+			return $this->getPickCode();
 		}
 		return $pick_code;
+	}
+	public function getOrderInfoCustom($where,$customs = ['*']){
+		return $this->orderInfoRepository->isExistsOrderInfo($where,$customs);
+	}
+	public function uploadPickCode($where,$old_pick_code = '')
+	{
+		$pick_code = get_pick_code();
+		if(!$old_pick_code)
+		{
+			$order_info = $this->orderInfoRepository->isExistsOrderInfo($where,['pick_code']);
+		}
+		if($old_pick_code == $order_info->pick_code)
+		{
+			return $this->uploadPickCode($where);
+		}
 	}
 }

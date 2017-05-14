@@ -147,21 +147,23 @@ class SMSService
 		$req->setSmsType("normal");
 		$req->setSmsFreeSignName(config('sms.signName'));
 		$req->setRecNum($mobile_no);
+		$req->setSmsTemplateCode($data['sms_template_code']);
 		switch ($type) {
 			case 'verify':
-				$req->setSmsTemplateCode($data['sms_template_code']);
 				$code = $data['code'];
 				$req->setSmsParam("{\"code\":\"$code\",\"product\":\"校汇\"}");
 				break;
 			case 'order_info':
-				$req->setSmsTemplateCode($data['sms_template_code']);
 				$req->setSmsParam("{\"product\":\"校汇\"}");
 				break;
 			case 'illegal_task':
-				$req->setSmsTemplateCode($data['sms_template_code']);
 				$name = $data['name'];
 				$title = $data['title'];
 				$req->setSmsParam("{\"product\":\"校汇\",\"name\":\"$name\",\"title\":\"$title\"}");
+				break;
+			case 'pick_code':
+				$code = $data['code'];
+				$req->setSmsParam("{\"pick_code\":\"$code\",\"product\":\"校汇\"}");
 				break;
 			default:
 				// code...

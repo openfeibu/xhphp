@@ -9,6 +9,7 @@ use Log;
 use Event;
 use App\TradeAccount;
 use App\Http\Requests;
+use App\Services\SMSService;
 use App\Services\HelpService;
 use App\Services\UserService;
 use App\Services\OrderService;
@@ -38,6 +39,8 @@ class OrderController extends Controller
 
     protected $pushService;
 
+    protected $smsService;
+
     function __construct(OrderService $orderService,
                          UserService $userService,
                          HelpService $helpService,
@@ -47,12 +50,14 @@ class OrderController extends Controller
                          TradeAccountService $tradeAccountService,
                          PushService $pushService,
                          ShopService $shopService,
+                         SMSService $smsService,
                          OrderInfoService $orderInfoService)
     {
 	    parent::__construct();
         $this->middleware('auth', ['except' => ['getOrderList', 'orderAgreement', 'getOrder','alipayAppReturn','alipayWapNotify','alipayAppNotify','getRecommendOrders','getOrderDetail']]);
 
         $this->orderService = $orderService;
+        $this->smsService = $smsService;
         $this->userService = $userService;
         $this->helpService = $helpService;
         $this->gameService = $gameService;
@@ -334,11 +339,12 @@ class OrderController extends Controller
         $this->orderService->checkScalping($request->order_id);
 
         //接受任务
-        $order = $this->orderService->claimOrder(['order_id' => $request->order_id]);
+        $this->orderService->claimOrder(['order_id' => $request->order_id]);
 
-        $order_owner_id = $this->orderService->getSingleOrderAllInfo($request->order_id)->owner_id;
+        $order = $this->orderService->getSingleOrderAllInfo($request->order_id);
+
         //发送纸条给发单者
-        $this->messageService->SystemMessage2SingleOne($order_owner_id, trans('order.order_be_accepted'));
+        $this->messageService->SystemMessage2SingleOne($order->owner_id, trans('task.task_be_accepted'));
 
         //推送给发单者
 
@@ -349,11 +355,18 @@ class OrderController extends Controller
 			'data' => [
 				'id' => $request->order_id,
 				'title' => '校汇任务',
-				'content' => trans('order.order_be_accepted'),
+				'content' => trans('task.task_be_accepted'),
 			],
 		];
-        $this->pushService->PushUserTokenDevice('校汇任务', trans('order.order_be_accepted'), $order_owner_id,2,$data);
+        $this->pushService->PushUserTokenDevice('校汇任务', trans('task.task_be_accepted'), $order->owner_id,2,$data);
 
+        /*
+        if($order->type == 'business' && $order->order_id)
+        {
+            $order_info = $this->orderInfoService->getOrderInfoCustom(['order_id' => $order->order_id],['pick_code']);
+            $rst = $this->smsService->sendSMS($order->courier_mobile_no,$type = 'pick_code',$data = ['sms_template_code' => config('sms.pick_code'),'code' => $order_info->pick_code]);
+        }
+        */
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
 
@@ -429,7 +442,14 @@ class OrderController extends Controller
 	            'status' => 'new',
 	            'courier_cancel' => true
 	        ];
+            //重新生成取款码
+            if($order->type == 'business')
+            {
+                $this->orderInfoService->uploadPickCode(['order_id' => $order->order_id]);
+            }
+
 	        $this->orderService->updateOrderStatus($param);
+
 	        throw new \App\Exceptions\Custom\RequestSuccessException();
     	}
 
@@ -443,52 +463,67 @@ class OrderController extends Controller
 	            'only_in_status' => ['new'],
 	        ];
 
-
-			if($order->pay_id == 3){
-				$walletData = array(
-					'uid' => $this->user->uid,
-					'wallet' => $this->user->wallet + $order->fee,
-					'fee'	=> $order->fee,
-					'service_fee' => 0,
-					'out_trade_no' => $order->order_sn,
-					'pay_id' => $order->pay_id,
-					'wallet_type' => 1,
-					'trade_type' => 'CancelTask',
-					'description' => '取消任务',
-		        );
-		        $this->walletService->store($walletData);
-				$tradeData = array(
-					'wallet_type' => 1,
-					'trade_type' => 'CancelTask',
-					'description' => '取消任务',
-					'trade_status' => 'refunded',
-				);
-				$param['status'] = 'cancelled';
-				$this->walletService->updateWallet($order->owner_id,$this->user->wallet + $order->fee);
-				$this->tradeAccountService->updateTradeAccount($order->order_sn,$tradeData);
-				//取消任务
-	        	$this->orderService->updateOrderStatus($param);
-	        	return [
-					'code' => 200,
-					'detail' => '取消任务成功，任务费用已返回您的钱包，请查收',
-	        	];
-			}
-	   		else{
-		   		$tradeData = array(
-					'wallet_type' => 1,
-					'trade_type' => 'CancelTask',
-					'trade_status' => 'refunding',
-					'description' => '取消任务',
-				);
-				$param['status'] = 'cancelling';
-				$this->tradeAccountService->updateTradeAccount($order->order_sn,$tradeData);
-				//取消任务
-	        	$this->orderService->updateOrderStatus($param);
-	        	return [
-					'code' => 200,
-					'detail' => '取消任务成功，等待管理员审核',
-	        	];
-	   		}
+            if($order->type == 'business')
+            {
+                //商家任务取消
+                $param['status'] = 'cancelled';
+                $this->orderService->delete(['oid' => $request->order_id ]);
+                //更新订单状态
+                $this->orderInfoService->updateOrderInfoById($order->order_id,['shipping_status' => 0]);
+                return [
+                    'code' => 200,
+                    'detail' => '取消任务成功，请重新发货',
+                ];
+            }
+            else
+            {
+                //个人任务取消
+    			if($order->pay_id == 3){
+    				$walletData = array(
+    					'uid' => $this->user->uid,
+    					'wallet' => $this->user->wallet + $order->fee,
+    					'fee'	=> $order->fee,
+    					'service_fee' => 0,
+    					'out_trade_no' => $order->order_sn,
+    					'pay_id' => $order->pay_id,
+    					'wallet_type' => 1,
+    					'trade_type' => 'CancelTask',
+    					'description' => '取消任务',
+    		        );
+    		        $this->walletService->store($walletData);
+    				$tradeData = array(
+    					'wallet_type' => 1,
+    					'trade_type' => 'CancelTask',
+    					'description' => '取消任务',
+    					'trade_status' => 'refunded',
+    				);
+    				$param['status'] = 'cancelled';
+    				$this->walletService->updateWallet($order->owner_id,$this->user->wallet + $order->fee);
+    				$this->tradeAccountService->updateTradeAccount($order->order_sn,$tradeData);
+    				//取消任务
+    	        	$this->orderService->updateOrderStatus($param);
+    	        	return [
+    					'code' => 200,
+    					'detail' => '取消任务成功，任务费用已返回您的钱包，请查收',
+    	        	];
+    			}
+    	   		else{
+    		   		$tradeData = array(
+    					'wallet_type' => 1,
+    					'trade_type' => 'CancelTask',
+    					'trade_status' => 'refunding',
+    					'description' => '取消任务',
+    				);
+    				$param['status'] = 'cancelling';
+    				$this->tradeAccountService->updateTradeAccount($order->order_sn,$tradeData);
+    				//取消任务
+    	        	$this->orderService->updateOrderStatus($param);
+    	        	return [
+    					'code' => 200,
+    					'detail' => '取消任务成功，等待管理员审核',
+    	        	];
+    	   		}
+            }
 		}
 		throw new \App\Exceptions\Custom\OutputServerMessageException('没有取消该任务的权限');
         //如果需要另一方同意，则这里需要发送纸条给另一方
@@ -547,7 +582,7 @@ class OrderController extends Controller
 
         //纸条通知发单人
         $owner_id = $this->orderService->getSingleOrderAllInfo($request->order_id)->owner_id;
-        $this->messageService->SystemMessage2SingleOne($owner_id, '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。');
+        $this->messageService->SystemMessage2SingleOne($owner_id, trans('task.task_be_finished'));
 
         //推送给发单人
 		$data = [
@@ -557,10 +592,10 @@ class OrderController extends Controller
 			'data' => [
 				'id' => $request->order_id,
 				'title' => '校汇任务',
-				'content' => '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。',
+				'content' => trans('task.task_be_finished'),
 			],
 		];
-        $this->pushService->PushUserTokenDevice('校汇任务', '您好，接单人已完成你交付的任务，赶紧去看看。如果满意，请给任务结算吧。', $owner_id,2,$data);
+        $this->pushService->PushUserTokenDevice('校汇任务', trans('task.task_be_finished'), $owner_id,2,$data);
 
 
         throw new \App\Exceptions\Custom\RequestSuccessException();

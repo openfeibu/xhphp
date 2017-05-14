@@ -101,6 +101,21 @@ if(!function_exists('get_pick_code'))
 		return rand(100000,999999);
 	}
 }
+if(!function_exists('get_receivable'))
+{
+	function get_receivable($type,$order_info)
+	{
+		if($type == 2)
+		{
+			//商家
+			$receivable = $order_info->total_fee - $order_info->seller_shipping_fee - $order_info->shipping_fee;
+		}else{
+			//学生店铺
+			$receivable = $order_info->total_fee;
+		}
+		return $receivable;
+	}
+}
 if(!function_exists('get_nickname'))
 {
 	function get_nickname()

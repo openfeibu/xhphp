@@ -48,7 +48,7 @@ class OrderService
 			if($order->courier_id){
 				$user = $this->userRepository->getUserByUserID($order->courier_id,'openid');
 				$order->courier_openid = $user->openid;
-			}			
+			}
 		}
 		return $orders;
 	}
@@ -60,6 +60,20 @@ class OrderService
 	{
 		$order = $this->orderRepository->getSingleOrder($order_id);
 		$order->order_status = trans('common.task_status.'.$order['status']);
+		return $order;
+	}
+	public function getOrderColumn($where,$columns = ['*'])
+	{
+		$order = $this->orderRepository->getOrderColumn($where,$columns);
+		return $order;
+	}
+	public function isExistsOrderColumn($where,$columns = ['*'])
+	{
+		$order = $this->orderRepository->getOrderColumn($where,$columns);
+		if(!$order)
+		{
+			throw new \App\Exceptions\Custom\FoundNothingException();
+		}
 		return $order;
 	}
 	public function getSingleOrderByToken($order_id)
@@ -134,7 +148,7 @@ class OrderService
         $order['uid'] = $user->uid;
         $order['phone'] = $order['phone'] ?: $user->mobile_no;
 		$order['type'] = isset($order['type']) ? $order['type'] : 'personal';
-
+		$order['order_id'] = isset($order['order_id']) ? $order['order_id'] : 0;
 		$order_id = $this->orderRepository->createOrder($order)->oid;
 
 		//记录发单时间
@@ -199,7 +213,7 @@ class OrderService
 		}
 		return $orders;
 	}
-	
+
 	/**
 	 * 获取我的工作列表
 	 */
@@ -337,5 +351,9 @@ class OrderService
         Event::fire(new Integrals('发布任务'));
         //积分更新(给接单人加分)
         Event::fire(new Integrals('完成任务', $courier));
+	}
+	public function delete($where)
+	{
+		return $this->orderRepository->delete($where);
 	}
 }
