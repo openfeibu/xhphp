@@ -50,6 +50,7 @@ class CreateTableShops extends Migration
 			$table->text('goods_desc')->comment('商品描述');
 			$table->string('goods_img')->comment('商品图片');
 			$table->string('goods_thumb')->comment('商品图片');
+            $table->float('weight',10,6)->comment('重量');
 			$table->tinyInteger('sort')->default('50')->unsigned()->comment('在售');
 			$table->tinyInteger('is_on_sale')->default('1')->unsigned()->comment('在售');
 			$table->tinyInteger('top')->default(0)->comment('是否置顶');
@@ -93,9 +94,12 @@ class CreateTableShops extends Migration
 			$table->string('pay_name',60)->comment('支付名称');
 			$table->timestamp('pay_time')->comment('支付时间');
 			$table->decimal('goods_amount',10,2)->comment('商品总金额');
-			$table->decimal('shipping_fee',10,0)->comment('买家出配送费用');
+			$table->decimal('shipping_fee',10,2)->comment('买家出配送费用');
+            $table->decimal('seller_shipping_fee',10,2)->comment('卖家出配送费用');
 			$table->decimal('task_fee',10,0)->comment('任务费');
+            $table->char('pick_code', 10)->comment('取货码');
 			$table->decimal('insure_fee',10,2)->comment('保价费用');
+            $table->decimal('total_fee',10,2)->comment('应付费用');
 			$table->string('to_buyer')->comment('商家给买家留言');
 			$table->timestamp('shipping_time');
 			$table->timestamp('cancelling_time');
