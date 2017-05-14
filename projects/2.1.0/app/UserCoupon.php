@@ -15,6 +15,8 @@ class UserCoupon extends Model
 		'coupon_id',
 		'overdue',
         'receive',
-        'status'
+        'status',
+        'min_price',
+        'price',
     ];
 }

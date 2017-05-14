@@ -209,7 +209,7 @@ class OrderInfoController extends Controller
         	'address_id' => 'required|integer',
     	];
     	$this->helpService->validateParameter($rules);
-
+		$$this->user = $this->userService->getUserTokenAuth();
 		$user_address = $this->userAddressService->getUserAddress(['address_id' => $request->address_id,'uid' => $this->user->uid]);
 		if(!$user_address){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('收货地址不存在');
@@ -235,13 +235,19 @@ class OrderInfoController extends Controller
 		$shop_user = $this->userService->getUserByUserID($shop->uid);
 		buyerHandle($shop);
 
+		//使用优惠券
+		$coupon_id = isset($request->coupon_id) ? $request->coupon_id: 0;
+		$coupon = [];
 		if($request->coupon_id)
 		{
-
+			$coupon = $this->couponService->getOrderInfoCoupon(['user_coupon.uid' => $this->user->uid],$goods_amount);
+			$total_fee = $coupon ? $total_fee - $coupon->price : $total_fee;
 		}
+
 		$shipping_fee = 0;
 		if($shop->shop_type == 1)
 		{
+			//学生店铺
 			if($goods_amount < $shop->min_goods_amount){
 				$total_fee = $goods_amount + $shop->shipping_fee;
 				$shipping_fee = $shop->shipping_fee;
@@ -249,6 +255,7 @@ class OrderInfoController extends Controller
 		}
 		else
 		{
+			//外面商家
 			$shipping_fee = $this->helpService->getBuyerShippingFee($carts['weight'],$goods_amount);
 			$total_fee += $shipping_fee;
 		}
@@ -281,6 +288,7 @@ class OrderInfoController extends Controller
         											'total_fee' => $total_fee,
         											'shipping_fee' => $shipping_fee,
 													'seller_shipping_fee' => $seller_shipping_fee,
+													'user_coupon_id' => $user_coupon_id,
         										]);
         $pay_platform = isset($request->platform) ? $request->platform : 'web';
         $data = [

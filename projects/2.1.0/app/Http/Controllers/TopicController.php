@@ -66,9 +66,9 @@ class TopicController extends Controller
         $param = [
             'topic_id' => $request->topic_id,
         ];
-		
+
 		$this->topicService->incrementViewCount([$request->topic_id]);
-		
+
         //获取话题信息
         $topic = $this->topicService->getTopicByTopicID($param);
 

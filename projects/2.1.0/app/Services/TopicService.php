@@ -39,7 +39,8 @@ class TopicService
 	 */
 	public function getTopicByTopicID(array $param)
 	{
-		$user = $this->userRepository->getUserByToken();
+		$token = isset($this->request->token) ? $this->request->token : '';
+		$user = $this->userRepository->getUserByToken($token);
 		if ($user) {
 			$param['user_id'] = $user->uid;
 		}
@@ -128,11 +129,11 @@ class TopicService
 
 		//增加阅读量
 		$this->topicRepository->incrementViewCount($topics, $topicList_tag);
-		
+
 		$topicList_tag = array_unique(array_merge($topics, $topicList_tag));
 		//记录Session
 		Session::put('topicList_tag', $topicList_tag);
-	
+
 	}
 
 	/**

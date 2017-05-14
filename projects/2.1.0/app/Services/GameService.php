@@ -22,7 +22,7 @@ class GameService
     protected $messageRepository;
 
     protected $userRepository;
-	
+
 	protected $messageService;
 
 	protected $gameRepository;
@@ -92,5 +92,17 @@ class GameService
 			return $game;
 		}
 		return false;
+	}
+	public function checkGame($where){
+		$game = $this->gameRepository->getGame($where);
+		$time = time();
+		if($game->status !=1 || $time < strtotime($game->starttime))
+		{
+			 throw new \App\Exceptions\Custom\OutputServerMessageException('活动未开始');
+		}
+		if($time > strtotime($game->endtime))
+		{
+			
+		}
 	}
 }

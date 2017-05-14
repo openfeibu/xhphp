@@ -28,10 +28,22 @@ class CouponService
 	}
     public function getUserCoupons($where,$type,$num =20)
     {
-        return $this->couponRepository->getUserCoupons($where,$type,$num);
+        $coupons = $this->couponRepository->getUserCoupons($where,$type,$num);
+		foreach ($coupons as $key => $coupon) {
+			if(strtotime($coupon->overdue) < strtotime(date('Y-m-d')) && $coupon->status == 'unused')
+			{
+				$coupon->status = 'overdue'	;
+			}
+			$coupon->status_desc = trans('coupon.status.'.$coupon->status);
+		}
+		return $coupons;
     }
 	public function getOrderInfoCoupons($where,$min_price)
 	{
 		return $this->couponRepository->getOrderInfoCoupons($where,$min_price);
+	}
+	public function getOrderInfoCoupon($where,$min_price)
+	{
+		return $this->couponRepository->getOrderInfoCoupon($where,$min_price);
 	}
 }

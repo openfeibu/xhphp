@@ -54,4 +54,12 @@ class CouponController extends Controller
 	{
 
 	}
+	/*
+ 	优惠券抽奖
+	*/
+	public function couponLottery(Request $request)
+	{
+		$user = $this->userService->getUser();
+		$game = 
+	}
 }
