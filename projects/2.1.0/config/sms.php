@@ -24,4 +24,8 @@ return [
 	'resetPayPassword' => 'SMS_13525034',
 
 	'order' => 'SMS_35445001',
+
+    'pick_code' => 'SMS_66920211',
+
+    'reg_verify' => 'SMS_14900048',
 ];
