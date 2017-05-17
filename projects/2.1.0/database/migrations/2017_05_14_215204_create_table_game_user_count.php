@@ -18,6 +18,7 @@ class CreateTableGameUserCount extends Migration
             $table->integer('game_id')->comment('活动ID');
             $table->integer('num')->comment('参与次数');
             $table->integer('count')->comment('总参与次数');
+            $table->tinyInteger('share')->comment('总参与次数');
             $table->timestamp('lasttime')->comment('上次参与时间');
             $table->timestamps();
 		});
