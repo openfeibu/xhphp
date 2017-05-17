@@ -75,7 +75,14 @@ class UserRepository
 		self::$user = $this->tokenAuth($this->request->token);
 		return self::$user;
 	}
-
+	/**
+	 * 获得当前用户信息
+	 */
+	public function getUserByVerify($where)
+	{
+		self::$user = User::where($where)->first();
+		return self::$user;
+	}
 	/**
 	 * 根据用户ID获取该用户信息
 	 */
@@ -148,9 +155,10 @@ class UserRepository
 			$u->college_id = '1';
 	        $u->avatar_url = $avatar_url;
 	        $u->created_ip = $this->request->ip();
+			$u->token = DB::raw('(select UUID())');
 	        $u->save();
 
-	        self::$user = $u = User::where('mobile_no', $mobile_no)->first();
+	        self::$user = $u = User::where('uid', $u->uid)->first();
 
 	        $userInfo = new UserInfo;
 	        $userInfo->setConnection('write');
@@ -160,12 +168,18 @@ class UserRepository
 	        $userInfo->save();
 
 	        DB::commit();
+
+			return $u;
 		} catch (Exception $e) {
 			DB::rollback();
 			throw new \App\Exceptions\Custom\RequestFailedException();
 		}
 	}
 
+	public function updateUser($where,$user)
+	{
+		return User::where($whre)->update($user);
+	}
 	/**
 	 * 检验账号密码是否一致
 	 */

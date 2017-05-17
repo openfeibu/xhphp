@@ -10,9 +10,8 @@ class UserCoupon extends Model
 
     protected $primaryKey = 'user_coupon_id';
 
-    protected $fillables = [
+    protected $fillable = [
 		'uid',
-		'coupon_id',
 		'overdue',
         'receive',
         'status',

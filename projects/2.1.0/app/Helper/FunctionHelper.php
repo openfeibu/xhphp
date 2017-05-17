@@ -1,4 +1,5 @@
 <?php
+use App\User;
 
 if (!function_exists('escape_content')) {
 	function escape_content($content)
@@ -101,6 +102,9 @@ if(!function_exists('get_pick_code'))
 		return rand(100000,999999);
 	}
 }
+/*
+获取店铺应得价格
+*/
 if(!function_exists('get_receivable'))
 {
 	function get_receivable($type,$order_info)
@@ -116,6 +120,33 @@ if(!function_exists('get_receivable'))
 		return $receivable;
 	}
 }
+/*
+抽奖概率
+*/
+if(!function_exists('get_rand'))
+{
+	function get_rand($proArr) {
+	    $result = '';
+
+	    //概率数组的总概率精度
+	    $proSum = array_sum($proArr);
+
+	    //概率数组循环
+	    foreach ($proArr as $key => $proCur) {
+	        $randNum = mt_rand(1, $proSum);
+	        if ($randNum <= $proCur) {
+	            $result = $key;
+	            break;
+	        } else {
+	            $proSum -= $proCur;
+	        }
+	    }
+	    unset ($proArr);
+
+	    return $result;
+	}
+}
+
 if(!function_exists('get_nickname'))
 {
 	function get_nickname()
@@ -128,9 +159,17 @@ if(!function_exists('get_nickname'))
 
 		$wei_num=rand(0,325);
 
-		$nicheng=$nicheng_tou[$tou_num].$nicheng_wei[$wei_num];
+		$nickname = $nicheng_tou[$tou_num].$nicheng_wei[$wei_num];
 
-		return $nicheng; //输出生成的昵称
+		$user = User::where(['nickname' => $nickname])->first(['uid']);
+
+		if($user)
+		{
+			$user_last_uid = User::orderBy('uid','desc')->value('uid');
+			$uid = $user_last_uid + 1;
+			$nickname = $nickname.$uid;
+		}
+		return $nickname; //输出生成的昵称
 
 
 	}

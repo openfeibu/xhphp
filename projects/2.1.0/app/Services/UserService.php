@@ -46,6 +46,13 @@ class UserService
     {
         return $this->userRepository->getUser();
     }
+    /**
+     * 获取当前用户信息(通过验证登录)
+     */
+    public function getUserByVerify($where)
+    {
+        return $this->userRepository->getUserByVerify($where);
+    }
 
 	/**
      * 根据用户token获取该用户信息
@@ -109,6 +116,11 @@ class UserService
         }
         return false;
     }
+    public function findMobileNo($mobile_no)
+    {
+        $user = $this->userRepository->findMobileNo($mobile_no);
+        return $user;
+    }
 
     /**
      * 检验用户昵称是否可用
@@ -127,15 +139,18 @@ class UserService
      */
     public function createUser(array $user)
     {
-        $this->userRepository->createUser($user['mobile_no'],
+        $user = $this->userRepository->createUser($user['mobile_no'],
                                           $user['password'],
                                           $user['nickname'],
                                           $user['gender'],
                                           $user['enrollment_year'],
                                           $user['avatar_url']);
-        return true;
+        return $user;
     }
-
+    public function updateUser($where = [],array $user)
+    {
+        return $this->userRepository->updateUser($where,$user);
+    }
     /**
      * 检验账号密码是否一致
      */

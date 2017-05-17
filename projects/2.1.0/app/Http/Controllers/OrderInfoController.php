@@ -205,7 +205,7 @@ class OrderInfoController extends Controller
         	'shop_id'  => 'required|integer',
         	'pay_id' 	=> "required|integer|in:1,3",
         	'pay_password' => 'sometimes|required|string',
-			'coupon_id' => 'sometimes|integer|string',
+			'user_coupon_id' => 'sometimes|integer|string',
         	'address_id' => 'required|integer',
     	];
     	$this->helpService->validateParameter($rules);
@@ -236,11 +236,11 @@ class OrderInfoController extends Controller
 		buyerHandle($shop);
 
 		//使用优惠券
-		$coupon_id = isset($request->coupon_id) ? $request->coupon_id: 0;
+		$coupon_id = isset($request->user_coupon_id) ? intval($request->user_coupon_id): 0;
 		$coupon = [];
-		if($request->coupon_id)
+		if($coupon_id)
 		{
-			$coupon = $this->couponService->getOrderInfoCoupon(['user_coupon.uid' => $this->user->uid],$goods_amount);
+			$coupon = $this->couponService->getOrderInfoCoupon(['user_coupon.uid' => $this->user->uid,'user_coupon_id' => $coupon_id],$goods_amount);
 			$total_fee = $coupon ? $total_fee - $coupon->price : $total_fee;
 		}
 

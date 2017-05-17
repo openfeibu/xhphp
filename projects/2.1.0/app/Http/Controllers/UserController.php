@@ -21,6 +21,7 @@ use App\Http\Controllers\Controller;
 use App\Services\RealnameAuthService;
 use App\Services\WalletService;
 use App\Services\TradeAccountService;
+use App\Services\CouponService;
 
 class UserController extends Controller
 {
@@ -50,10 +51,11 @@ class UserController extends Controller
                          RealnameAuthService $realnameAuthService,
                          MessageService $messageService,
                          WalletService $walletService,
+                         CouponService $couponService,
                          TradeAccountService $tradeAccountService)
     {
 	    parent::__construct();
-        $this->middleware('auth', ['except' => ['register', 'isMobileExist', 'login', 'resetPassword', 'getOthersInfo', 'sendRegisterSMS', 'sendResetPasswordSMS','getVerifyImageURL','pushToUsers','uploadImage','pay']]);
+        $this->middleware('auth', ['except' => ['register', 'isMobileExist', 'login', 'resetPassword', 'getOthersInfo', 'sendRegisterSMS', 'sendResetPasswordSMS','getVerifyImageURL','pushToUsers','uploadImage','pay','registerVerify']]);
         $this->smsService = $smsService;
         $this->userService = $userService;
         $this->verifyCodeService = $verifyCodeService;
@@ -63,13 +65,14 @@ class UserController extends Controller
         $this->messageService = $messageService;
         $this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
+        $this->couponService = $couponService;
     }
 
     public function register(Request $request)
     {
         //检验请求参数
         $rule = [
-            'mobile_no' => 'required|unique:user,mobile_no,NULL',
+            'mobile_no' => 'required',
             'password' => 'required|alpha_dash',
             'sms_code' => 'required',
             'nickname' => 'sometimes|alpha_dash|unique:user,nickname',
@@ -80,23 +83,82 @@ class UserController extends Controller
         $this->helpService->validateParameter($rule);
 
         //检验用户名是否保留
-        $this->userService->checkNickname($request->nickname);
-
+        if(isset($request->nickname))
+        {
+            $this->userService->checkNickname($request->nickname);
+        }
         //检验短信验证码
-        $this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg');
+        //$this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg');
 
-        //创建用户
-        $user = [
-            'mobile_no' => $request->mobile_no,
-            'password' => $request->password,
-            'nickname' => isset($request->nickname) ? $request->nickname : get_nickname(),
-            'gender' => isset($request->gender) ? $request->gender : 0,
-            'enrollment_year' => isset($request->enrollment_year) ? $request->enrollment_year : '2016',
-            'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : config('app.url').'/uploads/system/avatar.png' ,
-        ];
-        $this->userService->createUser($user);
+        $user = $this->userService->getUserByVerify(['mobile_no' => $request->mobile_no]);
+
+        if($user)
+        {
+            //更新用户
+            $user = [
+                'password' => $request->password,
+                'nickname' => isset($request->nickname) ? $request->nickname : $user->nickname,
+                'gender' => isset($request->gender) ? $request->gender : $user->gender,
+                'enrollment_year' => isset($request->enrollment_year) ? $request->enrollment_year : $user->enrollment_year,
+                'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : $user->avatar_url ,
+            ];
+            $this->userService->updateUser(['uid' => $user->uid],$user);
+        }
+        else{
+            //创建用户
+            $user = [
+                'mobile_no' => $request->mobile_no,
+                'password' => $request->password,
+                'nickname' => isset($request->nickname) ? $request->nickname : get_nickname(),
+                'gender' => isset($request->gender) ? $request->gender : 0,
+                'enrollment_year' => isset($request->enrollment_year) ? $request->enrollment_year : '2016',
+                'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : config('app.url').'/uploads/system/avatar.png' ,
+            ];
+            $user = $this->userService->createUser($user);
+            $this->couponService->createUserRegisterCoupon($user->uid);
+        }
+
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
+    }
+    public function registerVerify(Request $request)
+    {
+        $rule = [
+            'mobile_no' => 'required',
+            'sms_code' => 'required',
+        ];
+        $this->helpService->validateParameter($rule);
+
+        //检验短信验证码
+        //$this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg_verify');
+
+        $user = $this->userService->getUserByVerify(['mobile_no' => $request->mobile_no]);
+        if($user)
+        {
+            $token = $this->userService->updateLoginStatus();
+        }
+        else{
+            //创建用户
+            $user = [
+                'mobile_no' => $request->mobile_no,
+                'password' => '',
+                'nickname' => get_nickname(),
+                'gender' => isset($request->gender) ? $request->gender : 0,
+                'enrollment_year' => isset($request->enrollment_year) ? $request->enrollment_year : '2016',
+                'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : config('app.url').'/uploads/system/avatar.png' ,
+            ];
+
+            $user = $this->userService->createUser($user);
+            $token = $user->token;
+            $this->couponService->createUserRegisterCoupon($user->uid);
+        }
+
+
+        return [
+            'code' => '200',
+            'detail' => '请求成功',
+            'token' => $token,
+        ];
     }
 	/**
      * 上传话题图片
@@ -390,6 +452,19 @@ class UserController extends Controller
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
 
+    public function sendRegisterVerifySMS(Request $request)
+    {
+        //检验请求参数
+        $rule = [
+            'mobile_no' => 'required',
+        ];
+        $this->helpService->validateParameter($rule);
+
+        //发送短信
+        $this->smsService->sendSMS2Phone($request->mobile_no, 'reg_verify');
+
+        throw new \App\Exceptions\Custom\RequestSuccessException();
+    }
     public function sendResetPasswordSMS(Request $request)
     {
         //检验请求参数

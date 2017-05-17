@@ -102,7 +102,43 @@ class GameService
 		}
 		if($time > strtotime($game->endtime))
 		{
-			
+			throw new \App\Exceptions\Custom\OutputServerMessageException('活动已结束');
 		}
+		return $game;
+	}
+	public function getGameUserCount($where)
+	{
+		return $this->gameRepository->getGameUserCount($where);
+	}
+	/*获取所有奖项*/
+	public function getCouponPrizes()
+	{
+		$prizes = $this->gameRepository->getCouponPrizes();
+		foreach ($prizes as $key => $prize) {
+			$prize->price_desc = '满'.$prize->min_price.'减'.$prize->price;
+		}
+		return $prizes;
+	}
+	/*获取用户获得奖项*/
+	public function getUserPrizes($where)
+	{
+		$prizes = $this->gameRepository->getUserPrizes($where);
+		return $prizes;
+	}
+	public function getCouponPrize($where)
+	{
+		$prize = $this->gameRepository->getCouponPrize($where);
+
+		$prize->price_desc = '满'.$prize->min_price.'减'.$prize->price;
+
+		return $prize;
+	}
+	public function createGameUserCount($data)
+	{
+		return $this->gameRepository->createGameUserCount($data);
+	}
+	public function createUserPrize($data)
+	{
+		return $this->gameRepository->createUserPrize($data);
 	}
 }

@@ -46,4 +46,19 @@ class CouponService
 	{
 		return $this->couponRepository->getOrderInfoCoupon($where,$min_price);
 	}
+	public function createUserCoupon($data)
+	{
+		return $this->couponRepository->createUserCoupon($data);
+	}
+	public function createUserRegisterCoupon($uid)
+	{
+		$this->couponRepository->createUserCoupon([
+			'uid' => $uid,
+			'overdue' => date("Y-m-d H:i:s",strtotime("+1week",time())) ,
+			'receive' => dtime(),
+			'status' => 'unused',
+			'min_price' => '10',
+			'price' => '5',
+		]);
+	}
 }

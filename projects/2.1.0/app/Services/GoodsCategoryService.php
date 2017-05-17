@@ -13,7 +13,7 @@ class GoodsCategoryService
 	protected $request;
 
 	protected $goodsCategoryRepository;
-	
+
 	function __construct(Request $request,
 						 GoodsRepository $goodsRepository,
 						 UserRepository $userRepository,

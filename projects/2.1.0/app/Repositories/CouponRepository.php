@@ -58,4 +58,10 @@ class CouponRepository
 								->where('overdue','>',date('Y-m-d'))
 								->first();
 	}
+	public function createUserCoupon($data)
+	{
+		config(['database.default' => 'write']);
+		$coupon = UserCoupon::create($data);
+		return $coupon;
+	}
 }

@@ -34,8 +34,9 @@ class SMSService
 	public function sendSMS2Phone($mobile_no, $usage)
 	{
         //todo 频率限制
-		if (Session::get($mobile_no.'SMSLimit') and (time() - Session::get($mobile_no.'SMSLimit')) <= 180) {
-			throw new \App\Exceptions\Custom\RequestTooFrequentException();
+		$se_time = time() - Session::get($mobile_no.'SMSLimit');
+		if (Session::get($mobile_no.'SMSLimit') and ($se_time <= 60)) {
+			throw new \App\Exceptions\Custom\RequestTooFrequentException((60-$se_time).'秒');
 		}
 
 		switch ($usage) {
@@ -45,7 +46,9 @@ class SMSService
       			    throw new \App\Exceptions\Custom\PhoneNumRegisteredException();
 				}
 				break;
-
+			case 'reg_verify':
+				$user = $this->userRepository->findMobileNo($mobile_no);
+				break;
 			case 'reset':
 				$user = $this->userRepository->findMobileNo($mobile_no);
 				if (!$user) {

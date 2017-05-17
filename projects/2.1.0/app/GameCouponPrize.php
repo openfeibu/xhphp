@@ -12,8 +12,8 @@ class GameCouponPrize extends Model
 
     protected $primaryKey = 'prize_id';
 
-    protected $fillables = [
-		'price',
+    protected $fillable = [
+		'price_id',
 		'coupon_id',
         'prize_value',
     ];

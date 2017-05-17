@@ -98,7 +98,7 @@ class Handler extends ExceptionHandler
             case ($e instanceof \App\Exceptions\Custom\RequestTooFrequentException):
                 $resposeJson = [
                     'code' => 1002,
-                    'detail' => sprintf(config('error.1002'), $e->getMessage() ?: ''),
+                    'detail' => sprintf(config('error.1002'), $e->getMessage() ?: '稍'),
                 ];
                 break;
 

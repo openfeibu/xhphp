@@ -15,7 +15,7 @@ class Game extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillables = [
+    protected $fillable = [
 		'name',
 		'title',
 		'status',

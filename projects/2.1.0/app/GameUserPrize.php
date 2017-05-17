@@ -4,18 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GameUserCount extends Model
+class GameUserPrize extends Model
 {
-    protected $table = 'game_user_count';
+    protected $table = 'game_user_prize';
 
     protected $primaryKey = 'guc_id';
 
     protected $fillable = [
 		'uid',
 		'game_id',
-        'num',
-        'count',
-        'lasttime',
-        'share_num',
+        'prize_name',
+        'created_at',
+        'updated_at',
     ];
 }

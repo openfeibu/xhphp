@@ -26,6 +26,7 @@ Route::get('user/getMyInfo', 'UserController@getMyInfo')->name('user_getMyInfo')
 Route::get('user/getOthersInfo', 'UserController@getOthersInfo')->name('user_getOthersInfo');
 Route::post('user/uploadAvatarFile', 'UserController@uploadAvatarFile')->name('user_uploadAvatarFile');
 Route::post('user/sendRegisterSMS', 'UserController@sendRegisterSMS')->name('user_sendRegisterSMS');
+Route::post('user/sendRegisterVerifySMS', 'UserController@sendRegisterVerifySMS');
 Route::post('user/sendResetPasswordSMS', 'UserController@sendResetPasswordSMS')->name('user_sendResetPasswordSMS');
 Route::get('user/getWallet','UserController@getWallet')->name('user_getWallet');
 Route::get('user/getAlipayInfo','UserController@getAlipayInfo')->name('user_getAlipayInfo');
@@ -44,6 +45,7 @@ Route::post('user/h5RealNameAuth','UserController@h5RealNameAuth');
 Route::get('user/getMobileBytoken','UserController@getMobileBytoken');
 Route::post('user/uploadImage','UserController@uploadImage');
 Route::get('pay','UserController@pay');
+Route::post('user/registerVerify','UserController@registerVerify');
 
 Route::get('order/getOrderList', 'OrderController@getOrderList')->name('order_getOrderList');
 Route::get('order/getOrder', 'OrderController@getOrder')->name('order_getOrder');
@@ -229,6 +231,9 @@ Route::post('lostAndFind/delete', 'LostAndFindController@delete');
 Route::get('lostAndFind/getLoss','LostAndFindController@getLoss');
 
 Route::get('coupon/getUserCoupons','CouponController@getUserCoupons');
+Route::get('coupon/getCouponPrizes','CouponController@getCouponPrizes');
+Route::post('coupon/couponLottery','CouponController@couponLottery');
+Route::get('coupon/getUserPrizes','CouponController@getUserPrizes');
 
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');
