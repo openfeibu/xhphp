@@ -209,7 +209,7 @@ class OrderInfoController extends Controller
         	'address_id' => 'required|integer',
     	];
     	$this->helpService->validateParameter($rules);
-		$$this->user = $this->userService->getUserTokenAuth();
+		$this->user = $this->userService->getUser();
 		$user_address = $this->userAddressService->getUserAddress(['address_id' => $request->address_id,'uid' => $this->user->uid]);
 		if(!$user_address){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('收货地址不存在');
@@ -236,11 +236,11 @@ class OrderInfoController extends Controller
 		buyerHandle($shop);
 
 		//使用优惠券
-		$coupon_id = isset($request->user_coupon_id) ? intval($request->user_coupon_id): 0;
+		$user_coupon_id = isset($request->user_coupon_id) ? intval($request->user_coupon_id): 0;
 		$coupon = [];
-		if($coupon_id)
+		if($user_coupon_id)
 		{
-			$coupon = $this->couponService->getOrderInfoCoupon(['user_coupon.uid' => $this->user->uid,'user_coupon_id' => $coupon_id],$goods_amount);
+			$coupon = $this->couponService->getOrderInfoCoupon(['user_coupon.uid' => $this->user->uid,'user_coupon_id' => $user_coupon_id],$goods_amount);
 			$total_fee = $coupon ? $total_fee - $coupon->price : $total_fee;
 		}
 
@@ -290,6 +290,7 @@ class OrderInfoController extends Controller
 													'seller_shipping_fee' => $seller_shipping_fee,
 													'user_coupon_id' => $user_coupon_id,
         										]);
+		$this->couponService->updateUserCoupon(['uid' => $this->user->uid,'user_coupon_id' => $user_coupon_id],['status' => 'used']);
         $pay_platform = isset($request->platform) ? $request->platform : 'web';
         $data = [
         	'return_url' => config('common.order_info_return_url').'?order_id='. $order_info->order_id,
@@ -454,14 +455,18 @@ class OrderInfoController extends Controller
 			'trade_status' => 'income',
 		);
 
-		$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
+		$update = $this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
 
-		$this->orderInfoService->inGoodsNumber($order_info->order_id);
+		if($update)
+		{
+			$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
+			$this->orderInfoService->inGoodsNumber($order_info->order_id);
+			$this->couponService->updateUserCoupon(['uid' => $this->user->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
+			throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
+		}
 
-		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
+		throw new \App\Exceptions\Custom\OutputServerMessageException('操作失败');
 
-
-    	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
     }
     public function shipping (Request $request)
     {

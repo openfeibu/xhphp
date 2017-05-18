@@ -9,6 +9,7 @@ use App\Repositories\UserRepository;
 use App\Repositories\ShopRepository;
 use App\Repositories\GoodsRepository;
 use App\Repositories\OrderInfoRepository;
+use App\Repositories\CouponRepository;
 
 class OrderInfoService
 {
@@ -23,7 +24,8 @@ class OrderInfoService
 						 GoodsRepository $goodsRepository,
 						 ShopRepository $shopRepository,
 						 OrderInfoRepository $orderInfoRepository,
-						 UserRepository $userRepository)
+						 UserRepository $userRepository,
+						 CouponRepository $couponRepository)
 	{
 		$this->request = $request;
 		$this->helpService = $helpService;
@@ -31,6 +33,7 @@ class OrderInfoService
         $this->userRepository = $userRepository;
         $this->goodsRepository = $goodsRepository;
         $this->shopRepository = $shopRepository;
+		$this->couponRepository = $couponRepository;
 	}
 	public function create($order_info)
 	{
@@ -142,6 +145,12 @@ class OrderInfoService
 			}
 		}
 		$order_info->order_goodses = $order_goodses;
+		$order_info->coupon = [];
+		if($order_info->user_coupon_id)
+		{
+			$coupon = $this->couponRepository->getUserCoupon(['user_coupon_id' => $order_info->user_coupon_id]);
+			$order_info->coupon = $coupon;
+		}
 		$shop = $this->shopRepository->getShop(['shop_id' => $order_info->shop_id],['*']);
 		$order_info->shop = $shop;
 		return $order_info;

@@ -15,13 +15,13 @@ use App\Services\SMSService;
 class PayService
 {
 	protected $helpService;
-	
+
 	protected $userService;
 
 	protected $orderInfoService;
 
 	protected $user;
-	
+
 	public function __construct (UserService $userService,
 								HelpService $helpService,
 								SMSService $smsService,
@@ -35,28 +35,28 @@ class PayService
         $this->tradeAccountService = $tradeAccountService;
 	 	$this->orderInfoService = $orderInfoService;
 	 	$this->smsService = $smsService;
-	 	$this->user = $this->userService->getUser(); 
+	 	$this->user = $this->userService->getUser();
 	}
 	/**
 		* 支付处理
-		* 
+		*
 		* @access public
-		* 
+		*
 	*/
-	/** 
+	/**
 	* 支付处理
-	* 
-	* @access public 
+	*
+	* @access public
 	* @param mixed $pay_id 支付方式：1.支付宝 。2.微信支付（待接入）。3.余额支付
-	* @param mixed $pay_platform 请求平台：web(网页)  其他为and ，ios 
+	* @param mixed $pay_platform 请求平台：web(网页)  其他为and ，ios
 	* @param mixed $pay_form 使用场合 : shop ，task
-	* @since 1.0 
-	* @return array 
+	* @since 1.0
+	* @return array
 	*/
 	public function payHandle($pay_id,$pay_platform,$pay_form,$data)
 	{
-		$this->user = $this->userService->getUserByUserID($this->user->uid); 
-		
+		$this->user = $this->userService->getUserByUserID($this->user->uid);
+
 		switch($pay_id)
 		{
 			case 1:
@@ -147,13 +147,13 @@ class PayService
 						$this->orderInfoService->updateOrderInfo($data['order_sn'],['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
 						$this->orderInfoService->deGoodsNumber($data['order_id']);
 						$this->smsService->sendCommonSMS($data['mobile_no'], config('sms.order'));
-						break;		
+						break;
 					default:
 						break;
 				}
-				
-				return '支付成功过';
-				break;			
+
+				return '支付成功';
+				break;
 			default:
 				throw new \App\Exceptions\Custom\OutputServerMessageException('未存在该支付方式');
 				break;

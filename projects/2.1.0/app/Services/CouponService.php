@@ -50,6 +50,10 @@ class CouponService
 	{
 		return $this->couponRepository->createUserCoupon($data);
 	}
+	public function updateUserCoupon($where,$data)
+	{
+		return $this->couponRepository->updateUserCoupon($where,$data);
+	}
 	public function createUserRegisterCoupon($uid)
 	{
 		$this->couponRepository->createUserCoupon([

@@ -37,6 +37,12 @@ class CouponRepository
                             ->get();
         return $coupons;
     }
+	public function getUserCoupon($where = [])
+    {
+        $coupon = UserCoupon::select(DB::raw('*'))->where($where)->get();
+
+        return $coupon;
+    }
 	public function getOrderInfoCoupons($where,$min_price)
 	{
 		$coupons = UserCoupon::select(DB::raw('*'))
@@ -63,5 +69,9 @@ class CouponRepository
 		config(['database.default' => 'write']);
 		$coupon = UserCoupon::create($data);
 		return $coupon;
+	}
+	public function updateUserCoupon($where,$data)
+	{
+		return UserCoupon::where($where)->update($data);
 	}
 }
