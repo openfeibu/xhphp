@@ -88,7 +88,7 @@ class UserController extends Controller
             $this->userService->checkNickname($request->nickname);
         }
         //检验短信验证码
-        //$this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg');
+        $this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg');
 
         $user = $this->userService->getUserByVerify(['mobile_no' => $request->mobile_no]);
 
@@ -130,7 +130,7 @@ class UserController extends Controller
         $this->helpService->validateParameter($rule);
 
         //检验短信验证码
-        //$this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg_verify');
+        $this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg_verify');
 
         $user = $this->userService->getUserByVerify(['mobile_no' => $request->mobile_no]);
         if($user)
