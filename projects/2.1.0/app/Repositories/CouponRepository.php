@@ -57,7 +57,7 @@ class CouponRepository
 	}
 	public function getOrderInfoCoupon($where,$min_price)
 	{
-		$coupon = UserCoupon::select(DB::raw('user_coupon.*'))
+		return UserCoupon::select(DB::raw('user_coupon.*'))
 								->where($where)
 								->where('min_price','<=', $min_price)
 								->where('status','unused')
