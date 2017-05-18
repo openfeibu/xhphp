@@ -27,5 +27,5 @@ return [
 
     'pick_code' => 'SMS_66920211',
 
-    'reg_verify' => 'SMS_14900048',
+    'reg_verify' => 'SMS_67265988',
 ];
