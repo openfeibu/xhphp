@@ -68,6 +68,7 @@ class OrderRepository
                     				  order.description, order.fee, order.status, order.created_at,order.service_fee,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where($where)
+					->where('courier_id','>','0')
                     ->first();
 	}
 	public function getOrderColumn($where,$columns)

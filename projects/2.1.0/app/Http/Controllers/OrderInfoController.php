@@ -496,7 +496,7 @@ class OrderInfoController extends Controller
                                              'goods_fee' => 0 ,
                                              'total_fee' => $total_fee,
                                              'service_fee' => $service_fee,
-                                             'phone' => $order_info->consignee ? $order_info->consignee : $this->user->mobile_no,
+                                             'phone' => $order_info->mobile ? $order_info->mobile : $this->user->mobile_no,
                                              'order_sn' => $order_sn,
                                              'status' => 'new',
                                              'pay_id' => $order_info->pay_id,

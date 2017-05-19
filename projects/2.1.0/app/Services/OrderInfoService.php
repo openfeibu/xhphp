@@ -175,7 +175,7 @@ class OrderInfoService
 			$coupon = $this->couponRepository->getUserCoupon(['user_coupon_id' => $order_info->user_coupon_id]);
 		}
 		$order_info->coupon = $coupon;
-		
+
 		return $order_info;
 	}
 
