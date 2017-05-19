@@ -174,7 +174,7 @@ class SMSService
 		}
 		$resp = $c->execute($req);
 		if (!isset($resp->result->err_code) or $resp->result->err_code !== '0') {
-			return false;
+			throw new \App\Exceptions\Custom\RequestFailedException('短信发送失败');
 			Log::error('----------------------------------------------------------------');
 			Log::error('短信发送故障，收到阿里大于的错误信息：' . serialize($resp));
 			Log::error('----------------------------------------------------------------');
