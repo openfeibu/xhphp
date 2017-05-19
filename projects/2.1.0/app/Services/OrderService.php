@@ -168,7 +168,7 @@ class OrderService
 		$orderInfo['courier_id'] = $user->uid;
 
 		//检验接单人跟发单人是否为同一人
-		//$this->isCourierOwner($user->uid, $order->owner_id);
+		$this->isCourierOwner($user->uid, $order->owner_id);
 		// if ($order->status == 'new' and $order->created_at > date('Y-m-d H:i:s',strtotime("-1 day"))) {
 		if ($order->status == 'new') {
 

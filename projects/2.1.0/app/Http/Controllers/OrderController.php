@@ -336,7 +336,7 @@ class OrderController extends Controller
         $this->userService->isRealnameAuth();
 
         //次数限制
-        $this->orderService->checkScalping($request->order_id);
+        //$this->orderService->checkScalping($request->order_id);
 
         //接受任务
         $this->orderService->claimOrder(['order_id' => $request->order_id]);
