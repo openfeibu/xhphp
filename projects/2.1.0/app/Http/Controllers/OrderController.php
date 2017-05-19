@@ -214,10 +214,11 @@ class OrderController extends Controller
                                              'goods_fee' => 0 ,
                                              'total_fee' => $total_fee,
                                              'service_fee' => $service_fee,
-                                             'phone' => $request->phone,
+                                             'phone' => $request->phone ? $request->phone : $this->user->mobile_no,
                                              'order_sn' => $order_sn,
                                              'status' => 'waitpay',
                                              'pay_id' => $request->pay_id,
+                                             'uid' => $this->user->uid
                                             ]);
 		if($request->pay_id ==1){
 			if($request->wap){

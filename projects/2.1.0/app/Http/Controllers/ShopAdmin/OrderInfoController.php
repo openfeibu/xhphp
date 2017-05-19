@@ -13,6 +13,7 @@ use App\Services\UserService;
 use App\Services\GoodsService;
 use App\Services\ShopService;
 use App\Services\HelpService;
+use App\Services\OrderService;
 use App\Services\OrderInfoService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
@@ -29,6 +30,8 @@ class OrderInfoController extends Controller
 
 	protected $cartService;
 
+	protected $orderService;
+
 	protected $orderInfoService;
 
 	protected $payService;
@@ -41,6 +44,7 @@ class OrderInfoController extends Controller
 								HelpService $helpService,
 								WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
+								OrderService $orderService,
 								OrderInfoService $orderInfoService)
 	{
 		parent::__construct($shopService);
@@ -51,7 +55,7 @@ class OrderInfoController extends Controller
 	 	$this->orderInfoService = $orderInfoService;
 	 	$this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
-
+		$this->orderService = $orderService ;
 	}
 	public function orderInfos (Request $request)
 	{
@@ -104,18 +108,20 @@ class OrderInfoController extends Controller
 			$pick_code = $this->orderInfoService->getPickCode();
 			$this->orderInfoService->updateOrderInfo($order_info->order_sn,['pick_code' => $pick_code]);
 			//生成任务
+
         	$order = $this->orderService->createOrder(['destination' => $order_info->address,
                                              'description' => $this->shop->shop_name,
                                              'fee' => $total_fee,
                                              'goods_fee' => 0 ,
                                              'total_fee' => $total_fee,
                                              'service_fee' => $service_fee,
-                                             'phone' => $order_info->consignee,
+                                             'phone' => $order_info->consignee ? $order_info->consignee : $this->user->mobile_no,
                                              'order_sn' => $order_sn,
                                              'status' => 'new',
                                              'pay_id' => $order_info->pay_id,
                                              'type' => 'business',
-                                             'order_id' => $order_info->order_id
+                                             'order_id' => $order_info->order_id,
+											 'uid' => $this->user->uid
                                             ]);
 		}
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);

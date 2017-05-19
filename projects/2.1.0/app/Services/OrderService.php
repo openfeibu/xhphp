@@ -143,17 +143,17 @@ class OrderService
 	public function createOrder(array $order)
 	{
         //获得当前用户信息
-        $user = $this->userRepository->getUser();
 
-        $order['uid'] = $user->uid;
-        $order['phone'] = $order['phone'] ?: $user->mobile_no;
+        $order['uid'] = $order['uid'];
+        $order['phone'] = $order['phone'] ;
 		$order['type'] = isset($order['type']) ? $order['type'] : 'personal';
 		$order['order_id'] = isset($order['order_id']) ? $order['order_id'] : 0;
 		$order_id = $this->orderRepository->createOrder($order)->oid;
 
 		//记录发单时间
-		$this->orderRepository->logOrderstatusChg($user->uid, $order_id, 'new');
+		$this->orderRepository->logOrderstatusChg($order['uid'], $order_id, 'new');
 	}
+
 
 	/**
 	 * 接受任务
