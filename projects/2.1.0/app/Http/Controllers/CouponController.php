@@ -89,10 +89,10 @@ class CouponController extends Controller
 		$user = $this->userService->getUser();
 		$game = $this->gameService->checkGame(['name' => 'coupon']);
 		$game_user_count = $this->gameService->getGameUserCount(['uid' => $user->uid,'game_id' => $game->id]);
-		// if(isset($game_user_count) && $game_user_count->count >= 1)
-		// {
-		// 	throw new \App\Exceptions\Custom\OutputServerMessageException('已参加过活动');
-		// }
+		if(isset($game_user_count) && $game_user_count->count >= 1)
+		{
+			throw new \App\Exceptions\Custom\OutputServerMessageException('已参加过活动');
+		}
 		$prizes = $this->gameService->getCouponPrizes();
 
 		foreach ($prizes as $key => $val) {
