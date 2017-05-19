@@ -2,7 +2,7 @@
 Vue.component('a-logo', {
   template: '<div class="logo"><a href="index.html"></a></div>'
 })
-Vue.prototype.localhost = "http://xh.flyexp.cn";
+Vue.prototype.localhost = "http://xhplus210.feibu.info";
 var table = Vue.extend({
 	template: '#table',
 	 methods: {
@@ -1115,7 +1115,7 @@ var setting = Vue.extend({
 		          if (valid) {
 			  		that.loading = true;
 			  		that.shopInfo.shop_status = that.shopInfo.shop_status_flag ? 1 : 3;
-		            $.post(this.localhost+'/business/shop/updateShop',that.shopInfo,function(data){
+		            $.post(that.localhost+'/business/shop/updateShop',that.shopInfo,function(data){
 			  				if(data.code == 200){
 			  					that.loading = false;
 				            	that.$message.success('修改成功');
