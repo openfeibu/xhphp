@@ -88,6 +88,16 @@ class OrderInfoService
 			if(!$result){
 				$order_info->can_cancel = 0;
 			}
+			$task = $this->orderRepository->getSingleOrderByCoutoms(['order.order_id' => $order_info->order_id]);
+
+			$order_info->task = $task;
+			$coupon = [];
+			if($order_info->user_coupon_id)
+			{
+				$coupon = $this->couponRepository->getUserCoupon(['user_coupon_id' => $order_info->user_coupon_id]);
+			}
+			//$order_info->coupon = $coupon;
+			$order_info->coupon_price = $coupon ? $coupon->price : 0;
 		}
 		return $order_infos;
 	}
