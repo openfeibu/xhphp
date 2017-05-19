@@ -129,7 +129,8 @@ class OrderInfoService
 			{
 				$coupon = $this->couponRepository->getUserCoupon(['user_coupon_id' => $order_info->user_coupon_id]);
 			}
-			$order_info->coupon = $coupon;
+			//$order_info->coupon = $coupon;
+			$order_info->coupon_price = $coupon ? $coupon->price : 0;
 		}
 		return $order_infos;
 	}
@@ -174,8 +175,8 @@ class OrderInfoService
 		{
 			$coupon = $this->couponRepository->getUserCoupon(['user_coupon_id' => $order_info->user_coupon_id]);
 		}
-		$order_info->coupon = $coupon;
-
+		//$order_info->coupon = $coupon;
+		$order_info->coupon_price = $coupon ? $coupon->price : 0;
 		return $order_info;
 	}
 
