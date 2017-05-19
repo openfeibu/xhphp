@@ -52,3 +52,10 @@ function winClose(){
   }
 
 }
+function returnUp(){
+
+
+      window.history.go(-1)
+
+
+}
