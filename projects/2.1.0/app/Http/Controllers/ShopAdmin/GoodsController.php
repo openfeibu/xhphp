@@ -67,6 +67,10 @@ class GoodsController extends Controller
 
     	$this->helpService->validateData(trim($request->goods_name),"商品名称");
 
+		if($this->shop->shop_type == 2 && !isset($request->weight) && !$request->weight)
+		{
+			 throw new \App\Exceptions\Custom\OutputServerMessageException('重量不能为空');
+		}
     	switch ($this->shop->shop_status)
     	{
     		case 0:
@@ -97,7 +101,7 @@ class GoodsController extends Controller
 	public function goodses(Request $request)
 	{
 		$rules = [
-			'page' => 'required|integer',
+			'page' => 'required|integer',weight
 			'cat_id' => 'sometimes|required',
 	    ];
 	    $this->helpService->validateParameter($rules);
@@ -136,6 +140,11 @@ class GoodsController extends Controller
 	    ];
 	    $this->helpService->validateParameter($rules);
 
+		if($this->shop->shop_type == 2 && !isset($request->weight) && !$request->weight)
+		{
+			 throw new \App\Exceptions\Custom\OutputServerMessageException('重量不能为空');
+		}
+
 	    $goods =  $this->goodsService->isExistsGoods(['goods_id' => intval($request->goods_id),'shop_id' => $this->shop->shop_id]);
 
 		if(isset($request->goods_name)){
@@ -156,6 +165,7 @@ class GoodsController extends Controller
 	        'goods_number' 	=> isset($request->goods_number) ? $request->goods_number : $goods->goods_number,
 	        'is_on_sale'	=> isset($request->is_on_sale) ? $request->is_on_sale : $goods->is_on_sale,
 	        'cat_id'		=> isset($request->cat_id) ? $request->cat_id : $goods->cat_id,
+			'weight' 		=> isset($request->weight) ? $request->weight : $goods->weight,
 	    ];
 
 		$this->goodsService->update(['goods_id' => intval($request->goods_id),'shop_id' => $this->shop->shop_id],$update);

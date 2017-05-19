@@ -30,6 +30,7 @@ class GoodsRepository
 		$goods->goods_number = $this->request->goods_number;
 		$goods->goods_price = $this->request->goods_price;
 		$goods->is_on_sale = $this->request->is_on_sale;
+		$goods->weight = $this->request->weight;
 		$goods->created_at = date('Y-m-d H:i:s');
 		$goods->save();
 		return $goods;
