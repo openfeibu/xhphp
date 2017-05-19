@@ -19,7 +19,7 @@ class AssociationService
     protected $messageRepository;
 
     protected $userRepository;
-	
+
 	protected $messageService;
 
 	function __construct(Request $request,
@@ -43,7 +43,7 @@ class AssociationService
 	{
 		return $this->associationRepository->getActivitiesList($page, $num);
 	}
-	
+
 	/**
 	 * 获得单个社团所有活动
 	 */
@@ -259,7 +259,8 @@ class AssociationService
 	public function getAssociations($page)
 	{
 		$associations = $this->associationRepository->getAssociations($page);
-		$user = $this->userRepository->getUser();
+		$token = isset($this->request->token) ? $this->request->token : '';
+		$user = $this->userRepository->getUserByToken($token);
 		$uid = isset($user->uid) ? $user->uid : 0;
 		foreach( $associations as $key => $association )
 		{
@@ -267,18 +268,18 @@ class AssociationService
 		}
 		return $associations;
 	}
-	
+
 	/* 获得所有社团总数 */
 	public function getAssociationNum()
 	{
-		return $this->associationRepository->getAssociationNum();	
+		return $this->associationRepository->getAssociationNum();
 	}
 	/* 获得所有社团活动总数 */
 	public function getActivityNum()
 	{
 		return $this->associationRepository->getActivityNum();
 	}
-	
+
 	/*获取社团详情*/
 	public function getAssociationsDetails($aid,$token)
 	{
@@ -299,7 +300,7 @@ class AssociationService
 		if(!isSet($associationsDetail->association_level)){
 			$associationsDetail->association_level = "";
 		}
-		
+
 		return $associationsDetail;
 	}
 
@@ -320,24 +321,24 @@ class AssociationService
 
 		return $myAssociations;
 	}
-	
+
 	/*获取我加入的社团的公告*/
 	public function getAssociationNotice($aid)
 	{
 		$uid = $this->userRepository->getUser()->uid;
 		return $this->associationRepository->getAssociationNotice($aid,$uid);
 	}
-	
+
 	public function checkNewNotice($aid){
 		$uid = $this->userRepository->getUser()->uid;
 		return $this->associationRepository->checkNewNotice($uid,$aid);
 	}
-	
+
 	public function checkNewMember($aid){
 		$uid = $this->userRepository->getUser()->uid;
 		return $this->associationRepository->checkNewMember($uid,$aid);
 	}
-	
+
 	/*获取社团的成员*/
 	public function getAssociationMember($aid,$page)
 	{
@@ -369,24 +370,24 @@ class AssociationService
 		$token_uid = $this->userRepository->getUser()->uid;
 		return $this->associationRepository->deleteMember($aid,$uid,$token_uid );
 	}
-	
+
 	public function releaseNotice($aid,$notice){
 		$uid = $this->userRepository->getUser()->uid;
 		return $this->associationRepository->releaseNotice($aid,$notice,$uid);
 	}
-	
+
 	public function quitAssociation($aid){
 		$uid = $this->userRepository->getUser()->uid;
 		return $this->associationRepository->quitAssociation($aid,$uid);
 	}
-	
+
 	public function checkMemberList($aid){
 		$uid = $this->userRepository->getUser()->uid;
 		return $this->associationRepository->checkMemberList($aid,$uid);
 	}
-	
+
 	public function checkMember($aid,$uid,$status){
-		
+
 		$checkMember = $this->associationRepository->checkMember($aid,$uid,$status);
 		if($checkMember == 200){
 			$association = Association::select(DB::raw('aname'))
@@ -403,7 +404,7 @@ class AssociationService
 		}
 		return $checkMember;
 	}
-	
+
 	public function deleteActivity($actid,$aid){
 		$uid = $this->userRepository->getUser()->uid;
 		return $this->associationRepository->deleteActivity($actid,$uid,$aid);
