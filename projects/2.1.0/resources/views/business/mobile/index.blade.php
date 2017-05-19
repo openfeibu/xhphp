@@ -64,6 +64,10 @@
           <li class="power01 web-active">
             <a onclick="winGo('{{ url('/mbusiness/product') }}#/classify')">分类管理</a>
           </li>
+          <li class="power01 web-active">
+            <a @click="veriCode">验证提货码</a>
+          </li>
+
          <!--  <li class="power02">
             <a href="">数据统计</a>
           </li> -->

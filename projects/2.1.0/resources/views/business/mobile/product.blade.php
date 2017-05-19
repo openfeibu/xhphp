@@ -94,7 +94,7 @@
     <div style="min-height:100%;" class="bgf">
     <section class="main pd boxSizing" style="height:100%">
       <mt-header title="宝贝详情" :fixed="true">
-        <mt-button onclick="winClose()" icon="back" slot="left">
+        <mt-button onclick="returnUp()" icon="back" slot="left">
         </mt-button>
       </mt-header>
       <div class="productImg">
@@ -113,6 +113,10 @@
         <div class="productName input-item" >
           <label >商品库存:</label>
           <input type="number"  v-model="productDeList.goods_number"/>
+        </div>
+        <div class="productName input-item" >
+          <label style="font-size: 0.2rem">商品重量(kg):</label>
+          <input type="number"  v-model="productDeList.weight" />
         </div>
         <div class="productName input-item" >
           <label >商品分类:</label>
@@ -142,7 +146,7 @@
     <div style="min-height:100%;" class="bgf">
     <section class="main pd boxSizing" style="height:100%;">
       <mt-header title="上传宝贝" :fixed="true">
-        <mt-button onclick="winClose()" icon="back" slot="left">
+        <mt-button onclick="returnUp()" icon="back" slot="left">
         </mt-button>
       </mt-header>
       <div class="productImg">
@@ -163,11 +167,14 @@
           <input type="number"  v-model="productDeList.goods_number"placeholder="点击输入商品库存"/>
         </div>
         <div class="productName input-item" >
+          <label style="font-size: 0.2rem">商品重量(kg):</label>
+          <input type="number"  v-model="productDeList.weight"placeholder="点击输入商品重量"/>
+        </div>
+        <div class="productName input-item" >
           <label >商品分类:</label>
           <select name="" id=""  v-model="productDeList.cat_id">
             <option v-for="item in productClassAll" :value="item.cat_id" >@{{item.cat_name}}</option>
           </select>
-
         </div>
         <div class="productName input-item" >
           <label >是否上架:</label>

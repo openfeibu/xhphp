@@ -32,7 +32,8 @@
 	        <el-menu-item-group>
 		        <el-menu-item index="2-1" ><router-link to="table">商品列表</router-link></el-menu-item>
 		        <el-menu-item index="2-2" ><router-link to="classify">分类管理</router-link></el-menu-item>
-		        
+
+
 	        </el-menu-item-group>
 	      </el-submenu>
 	      <!-- <el-submenu index="3">
@@ -47,7 +48,7 @@
 			<p>钱包：<span>@{{userInfo.wallet}}</span>元</p>
 			<p>店铺销售量：<span>@{{userInfo.sale_count}}</span>单</p>
 			<p>店铺总收入：<span>@{{userInfo.income}}</span>元</p>
-	    	
+
 	    </div>
 	 </el-col>
   	<div id="main">
@@ -56,10 +57,10 @@
 	  		  <el-breadcrumb-item v-for="snav in snavs" :key="snav.id" :to="{ path: snav.path }" >@{{snav.value}}</el-breadcrumb-item>
 			</el-breadcrumb>
   		</div>
-  		<router-view></router-view>		
+  		<router-view></router-view>
   	</div>
   	<footer>
-  			
+
   		<div class="copy">飞步信息科技有限公司 版权所有</div>
   	</footer>
   </div>
@@ -883,7 +884,7 @@
 		    <template>
 		    	 <img width="100px" v-if="shopInfo.shop_img" :src="shopInfo.shop_img" class="avatar">
 		    </template>
-		  </el-form-item>   
+		  </el-form-item>
 		  <el-form-item label="店铺简介" prop="text">
 		    <el-input type="textarea" v-model.number="shopInfo.description"></el-input>
 		  </el-form-item>
@@ -952,7 +953,7 @@
 				            that.$message.error('服务器开小差了');
 				          })
 		        }
-		
+
 		  },
 		  created:function(){
 		  	//获取列表
@@ -978,6 +979,6 @@
 	  }
 	var Ctor = Vue.extend(Main);
 	new Ctor({router:router}).$mount('#app');
-	
+
   </script>
 @stop
