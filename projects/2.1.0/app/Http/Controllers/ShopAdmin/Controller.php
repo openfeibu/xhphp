@@ -21,8 +21,8 @@ class Controller extends CommonController
    {
 	   	$this->middleware('business:business');
 	   	$this->shopService = $shopService ;
-	//	$this->user = User::where('uid','85')->first();
-   		$this->user = Auth::guard('business')->user();
+		$this->user = User::where('uid','85')->first();
+   		//$this->user = Auth::guard('business')->user();
 
    		$this->shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
         $t = time();
