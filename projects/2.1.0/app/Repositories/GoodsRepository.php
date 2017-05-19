@@ -54,7 +54,7 @@ class GoodsRepository
 	}
 	public function getShopGoodses ($where)
 	{
-		$ShopGoodsesList = Goods::select(DB::raw('goods_id,shop_id,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,goods_thumb,created_at,is_on_sale,CASE goods_number WHEN 0 THEN 0 ELSE 1 END AS is_goods_number'))
+		$ShopGoodsesList = Goods::select(DB::raw('goods_id,shop_id,goods.weight,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,goods_thumb,created_at,is_on_sale,CASE goods_number WHEN 0 THEN 0 ELSE 1 END AS is_goods_number'))
 								->where('is_on_sale', 1)
 								->where($where)
 								->orderBy('is_goods_number','desc')
@@ -66,7 +66,7 @@ class GoodsRepository
 	}
 	public function getBusinessGoodses ($where)
 	{
-		$ShopGoodsesList = Goods::select(DB::raw('goods.goods_id,goods.shop_id,goods.goods_name,goods.goods_price,goods.goods_click_count,goods.goods_sale_count,goods.goods_number,goods.goods_price,goods.goods_desc,goods.goods_img,goods.goods_thumb,goods.created_at,goods.is_on_sale,goods_category.cat_name,goods_category.cat_id'))
+		$ShopGoodsesList = Goods::select(DB::raw('goods.goods_id,goods.shop_id,goods.weight,goods.goods_name,goods.goods_price,goods.goods_click_count,goods.goods_sale_count,goods.goods_number,goods.goods_price,goods.goods_desc,goods.goods_img,goods.goods_thumb,goods.created_at,goods.is_on_sale,goods_category.cat_name,goods_category.cat_id'))
 								->leftJoin('goods_category','goods.cat_id','=','goods_category.cat_id')
 								->where($where)
 								->orderBy('goods_click_count', 'desc')
@@ -83,7 +83,7 @@ class GoodsRepository
 	}
 	public function getBusinessGoods ($where)
 	{
-		$goods = Goods::select(DB::raw('goods.goods_id,goods.shop_id,goods.goods_name,goods.goods_price,goods.goods_click_count,goods.goods_sale_count,goods.goods_number,goods.goods_price,goods.goods_desc,goods.goods_img,goods.goods_thumb,goods.created_at,goods.is_on_sale,goods_category.cat_name,goods_category.cat_id'))
+		$goods = Goods::select(DB::raw('goods.goods_id,goods.shop_id,goods.weight,goods.goods_name,goods.goods_price,goods.goods_click_count,goods.goods_sale_count,goods.goods_number,goods.goods_price,goods.goods_desc,goods.goods_img,goods.goods_thumb,goods.created_at,goods.is_on_sale,goods_category.cat_name,goods_category.cat_id'))
 								->leftJoin('goods_category','goods.cat_id','=','goods_category.cat_id')
 								->where($where)
                            		->first();
@@ -97,7 +97,7 @@ class GoodsRepository
 	}
 	public function getGoodses ()
 	{
-		$goodses = Goods::select(DB::raw('goods_id,shop_id,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,goods_thumb,created_at,is_on_sale'))
+		$goodses = Goods::select(DB::raw('goods_id,shop_id,goods.weight,goods_name,goods_price,goods_click_count,goods_sale_count,goods_number,goods_price,goods_desc,goods_img,goods_thumb,created_at,is_on_sale'))
 						->where('is_on_sale', 1)
 						->orderBy('top', 'desc')
 						->orderBy('goods_sale_count', 'desc')

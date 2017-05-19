@@ -101,7 +101,7 @@ class GoodsController extends Controller
 	public function goodses(Request $request)
 	{
 		$rules = [
-			'page' => 'required|integer',weight
+			'page' => 'required|integer',
 			'cat_id' => 'sometimes|required',
 	    ];
 	    $this->helpService->validateParameter($rules);
