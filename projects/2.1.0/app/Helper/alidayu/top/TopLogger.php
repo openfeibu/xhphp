@@ -18,6 +18,7 @@ class TopLogger
 			{
 				trigger_error("no log file spcified.");
 			}
+			//var_dump($this->conf["log_file"]);exit;
 			$logDir = dirname($this->conf["log_file"]);
 			if (!is_dir($logDir))
 			{

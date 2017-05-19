@@ -17,7 +17,7 @@ namespace App\Helper\alidayu;
  */
 if (!defined("TOP_SDK_WORK_DIR"))
 {
-	define("TOP_SDK_WORK_DIR", "/tmp/");
+	define("TOP_SDK_WORK_DIR", "D:/UPUPW_K2.1/htdocs/xhprojects/2.1.0/app");
 }
 
 /**
