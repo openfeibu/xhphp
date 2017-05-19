@@ -280,5 +280,17 @@ class GoodsController extends Controller
 		$this->cartService->removeCarts($where);
 		throw new \App\Exceptions\Custom\RequestSuccessException('删除成功');
     }
+	public function getGoods (Request $request)
+	{
+		$rules = [
+        	'goods_id'		=> 'required',
+	    ];
+	    $this->helpService->validateParameter($rules);
+	    $goods = $this->goodsService->isExistsGoods(['goods_id' => intval($request->goods_id)],['goods_id','weight','cat_id','shop_id','goods_name','goods_price','goods_click_count','goods_sale_count','goods_number','goods_price','goods_desc','goods_img','goods_thumb','created_at','is_on_sale']);
+        return [
+            'code' => 200,
+            'data' => $goods
+        ];
 
+	}
 }
