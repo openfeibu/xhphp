@@ -84,6 +84,7 @@ class OrderInfoController extends Controller
         ];
         $is_exists = $this->orderInfoService->isExistsOrderInfo(['order_id' => $request->order_id],$columns = ['order_id']);
         $order_info = $this->orderInfoService->getOrderInfo($request->order_id);
+
         return [
         	'code' => 200,
 			'order_info' => $order_info,

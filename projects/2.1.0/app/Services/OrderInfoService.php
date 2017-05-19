@@ -9,6 +9,7 @@ use App\Repositories\UserRepository;
 use App\Repositories\ShopRepository;
 use App\Repositories\GoodsRepository;
 use App\Repositories\OrderInfoRepository;
+use App\Repositories\OrderRepository;
 use App\Repositories\CouponRepository;
 
 class OrderInfoService
@@ -25,6 +26,7 @@ class OrderInfoService
 						 ShopRepository $shopRepository,
 						 OrderInfoRepository $orderInfoRepository,
 						 UserRepository $userRepository,
+						 OrderRepository $orderRepository,
 						 CouponRepository $couponRepository)
 	{
 		$this->request = $request;
@@ -34,6 +36,7 @@ class OrderInfoService
         $this->goodsRepository = $goodsRepository;
         $this->shopRepository = $shopRepository;
 		$this->couponRepository = $couponRepository;
+		$this->orderRepository = $orderRepository;
 	}
 	public function create($order_info)
 	{
@@ -118,7 +121,15 @@ class OrderInfoService
 					$order_info->status_desc = trans('common.shipping_status.'.$order_info->shipping_status);
 				}
 			}
-			//$tasker = $this->orderRepository->
+			$task = $this->orderRepository->getSingleOrderByCoutoms(['order.order_id' => $order_info->order_id]);
+
+			$order_info->task = $task;
+			$coupon = [];
+			if($order_info->user_coupon_id)
+			{
+				$coupon = $this->couponRepository->getUserCoupon(['user_coupon_id' => $order_info->user_coupon_id]);
+			}
+			$order_info->coupon = $coupon;
 		}
 		return $order_infos;
 	}

@@ -39,7 +39,7 @@ class CouponRepository
     }
 	public function getUserCoupon($where = [])
     {
-        $coupon = UserCoupon::select(DB::raw('*'))->where($where)->get();
+        $coupon = UserCoupon::select(DB::raw('*'))->where($where)->first();
 
         return $coupon;
     }

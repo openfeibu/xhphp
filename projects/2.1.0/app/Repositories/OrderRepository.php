@@ -58,6 +58,18 @@ class OrderRepository
                     ->where('oid', $order_id)
                     ->first();
 	}
+	/**
+	 * 获取指定任务ID可公开信息
+	 */
+	public function getSingleOrderByCoutoms($where =[],$columns=[])
+	{
+		return Order::join('user', 'order.owner_id', '=', 'user.uid')
+                    ->select(DB::raw('order.oid,order.owner_id, order.type, order.order_id,order.order_sn,user.openid,user.mobile_no,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
+                    				  order.description, order.fee, order.status, order.created_at,order.service_fee,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
+                    ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
+                    ->where($where)
+                    ->first();
+	}
 	public function getOrderColumn($where,$columns)
 	{
 		$order = Order::where($where)->first($columns);
