@@ -165,6 +165,17 @@ class OrderInfoService
 		}
 		$shop = $this->shopRepository->getShop(['shop_id' => $order_info->shop_id],['*']);
 		$order_info->shop = $shop;
+
+		$task = $this->orderRepository->getSingleOrderByCoutoms(['order.order_id' => $order_info->order_id]);
+
+		$order_info->task = $task;
+		$coupon = [];
+		if($order_info->user_coupon_id)
+		{
+			$coupon = $this->couponRepository->getUserCoupon(['user_coupon_id' => $order_info->user_coupon_id]);
+		}
+		$order_info->coupon = $coupon;
+		
 		return $order_info;
 	}
 
