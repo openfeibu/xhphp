@@ -23,9 +23,13 @@ return [
 
 	'resetPayPassword' => 'SMS_13525034',
 
-	'order' => 'SMS_35445001',
-
+	'order_info' => 'SMS_35445001',
+    //取货码
     'pick_code' => 'SMS_66920211',
-
+    //短信登录
     'reg_verify' => 'SMS_67265988',
+    //实名通过
+    'real_name_true'  => 'SMS_67146210',
+    //实名不通过
+    'real_name_error' => 'SMS_67151333'
 ];
