@@ -31,6 +31,7 @@ class Controller extends CommonController
         $todayIncome = WalletAccount::select(DB::raw('SUM(fee) as fee'))
                                             ->whereBetween('created_at',[dtime($beginThisToday),dtime($endThisToday)])->where('trade_type','Shopping')->value('fee');
         $this->shop->todayIncome = $todayIncome ? $todayIncome : 0;
+        $this->shop->coupon_total = 0;
         if(in_array($this->shop->shop_status,[0,4]))
         {
             $error = trans('common.shop_status_validator.'.$this->shop->shop_status);
