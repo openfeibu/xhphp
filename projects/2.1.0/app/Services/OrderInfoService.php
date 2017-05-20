@@ -366,10 +366,13 @@ class OrderInfoService
 		if(!$old_pick_code)
 		{
 			$order_info = $this->orderInfoRepository->isExistsOrderInfo($where,['pick_code']);
+			$old_pick_code = $order_info->pick_code;
 		}
-		if($old_pick_code == $order_info->pick_code)
+		if($old_pick_code == $pick_code)
 		{
-			return $this->uploadPickCode($where);
+			return $this->uploadPickCode($where,$old_pick_code);
 		}
+
+		$this->orderInfoRepository->updateOrderInfoByWhere($where,['pick_code' => $pick_code]);
 	}
 }

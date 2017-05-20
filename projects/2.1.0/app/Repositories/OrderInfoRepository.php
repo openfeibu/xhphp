@@ -40,6 +40,11 @@ class OrderInfoRepository
 	{
 		return OrderInfo::where('order_id',$order_id)->update($update);
 	}
+	public function updateOrderInfoByWhere($where,$update)
+	{
+		return OrderInfo::where($where)->update($update);
+	}
+
 	public function getOrderInfos($where,$type,$num = 20)
 	{
 
@@ -111,4 +116,5 @@ class OrderInfoRepository
 							->where($where)
                           	->get();
 	}
+
 }
