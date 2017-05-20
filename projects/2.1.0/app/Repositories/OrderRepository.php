@@ -58,9 +58,7 @@ class OrderRepository
                     ->where('oid', $order_id)
                     ->first();
 	}
-	/**
-	 * 获取指定任务ID可公开信息
-	 */
+	
 	public function getSingleOrderByCoutoms($where =[],$columns=[])
 	{
 		return Order::join('user', 'order.owner_id', '=', 'user.uid')
@@ -71,6 +69,7 @@ class OrderRepository
 					->where('courier_id','>','0')
                     ->first();
 	}
+	
 	public function getOrderColumn($where,$columns)
 	{
 		$order = Order::where($where)->first($columns);
