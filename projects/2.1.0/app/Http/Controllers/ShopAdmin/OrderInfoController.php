@@ -77,7 +77,7 @@ class OrderInfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function getOrderInfo(Request $request)
     {
         $rules = [
         	'order_id' => 'required|integer|exists:order_info,order_id',

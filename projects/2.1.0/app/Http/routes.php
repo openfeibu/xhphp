@@ -246,7 +246,7 @@ Route::post('business/goods/updateCat','ShopAdmin\GoodsController@updateCat');
 Route::post('business/goods/deleteCat','ShopAdmin\GoodsController@deleteCat');
 Route::get('business/goods/getGoods','ShopAdmin\GoodsController@getGoods');
 Route::get('business/orderInfo/orderInfos','ShopAdmin\OrderInfoController@orderInfos');
-Route::get('business/orderInfo/show','ShopAdmin\OrderInfoController@show');
+Route::get('business/orderInfo/getOrderInfo','ShopAdmin\OrderInfoController@getOrderInfo');
 Route::post('business/orderInfo/shipping','ShopAdmin\OrderInfoController@shipping');
 Route::post('business/orderInfo/agreeCancel','ShopAdmin\OrderInfoController@agreeCancel');
 //Route::get('business/goods/getCats','ShopAdmin\GoodsController@getCats');
