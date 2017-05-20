@@ -146,7 +146,7 @@ class PayService
 					case 'shop':
 						$this->orderInfoService->updateOrderInfo($data['order_sn'],['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
 						$this->orderInfoService->deGoodsNumber($data['order_id']);
-						$this->smsService->sendCommonSMS($data['mobile_no'], config('sms.order'));
+						$this->smsService->sendSMS($data['mobile_no'],'order_info',['sms_template_code' => config('sms.order_info')]);
 						break;
 					default:
 						break;
