@@ -461,7 +461,7 @@ class OrderInfoController extends Controller
 		{
 			$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
 			$this->orderInfoService->inGoodsNumber($order_info->order_id);
-			$this->couponService->updateUserCoupon(['uid' => $this->user->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
+			$this->couponService->updateUserCoupon(['uid' => $order_info->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
 			throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
 		}
 

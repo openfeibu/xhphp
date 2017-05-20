@@ -220,12 +220,18 @@ class OrderInfoController extends Controller
 			'trade_status' => 'income',
 		);
 
-		$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
+		$update = $this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
 
-		$this->orderInfoService->inGoodsNumber($order_info->order_id);
+		if($update)
+		{
+			$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
+			$this->orderInfoService->inGoodsNumber($order_info->order_id);
+			$this->couponService->updateUserCoupon(['uid' => $order_info->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
 
-		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
+			throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
+		}
 
+		throw new \App\Exceptions\Custom\OutputServerMessageException('操作失败');
 
     	throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
     }
