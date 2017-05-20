@@ -549,7 +549,7 @@ class OrderInfoController extends Controller
 
 		$shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);
 
-	//	$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
+		$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
 
 		$task = $this->orderService->getOrder(['order_id' => $order_info->order_id],['*'],false);
 		
