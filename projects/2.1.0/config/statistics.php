@@ -22,8 +22,11 @@ return [
 			'changePayPassword' => '修改支付密码',
 			'resetPayPassword' => '重置支付密码',
 			'withdrawalsApply' => '提现申请',
+			'realNameAuthUploadImg' => '实名提交相片',
+			'uploadImage' => '上传相片',
+			'sendRegisterVerifySMS' => '请求短信登录验证码'
 		],
-					
+
 	],
 	'order' =>[
 		'name' => '任务模块',
@@ -37,7 +40,7 @@ return [
 			'askCancel' => '取消任务',
 			'agreeCancel' => '同意取消任务',
 			'finishWork' => '完成任务',
-			'confirmFinishWork' => '结算任务',	
+			'confirmFinishWork' => '结算任务',
 		],
 	],
 	'association'=> [
@@ -54,6 +57,7 @@ return [
 			'getProfile' => '浏览社团信息',
 			'setProfile' => '设置社团信息',
 			'getAssociations' => '浏览社团信息列表',
+			'deleteActivity' => '删除社团活动',
 		],
 	],
 	'topic' => [
@@ -75,7 +79,18 @@ return [
 	'shop' => [
 		'name' => '商城模块',
 		'interface' => [
-			'register' => '',
+			'getShopList' => '浏览店铺列表',
+			'myShop' => '浏览我的店铺',
+			'collect' => '收藏店铺',
+			'userCollects' => '浏览收藏店铺列表',
+			'getShopGoodses' => '浏览商品列表',
+			'getGoods' => '浏览商品详情',
+			'addCat' => '加入购物车',
+			'updateCat' => '更新购物车',
+			'getCats' => '查看购物车',
+			'orderInfos' => '浏览订单',
+			'storeOrderInfo' => '创建订单',
+			'orderInfoshow' => '查看订单详情',
 		],
 	],
 	'telecom' => [
@@ -89,6 +104,16 @@ return [
 			'getTelecomOrdersCount' => '套餐统计'
 		],
 	],
+	'coupon' => [
+		'name' => '抽奖模块',
+		'interface' => [
+			'getUserCoupons' => '浏览优惠券',
+			'getCouponPrizes' => '浏览抽奖界面',
+			'couponLottery' => '参与抽奖',
+			'getUserPrizes' => '浏览奖品',
+		],
+	],
+
 	'other' => [
 		'name' => '其他模块',
 		'interface' => [
