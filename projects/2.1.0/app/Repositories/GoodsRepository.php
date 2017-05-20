@@ -71,8 +71,8 @@ class GoodsRepository
 								->where($where)
 								->orderBy('goods_click_count', 'desc')
 								->orderBy('goods_id', 'desc')
-								->skip(15 * $this->request->page - 15)
-                    			->take(15)
+								->skip(20 * $this->request->page - 20)
+                    			->take(20)
                            		->get();
 
         return $ShopGoodsesList;
