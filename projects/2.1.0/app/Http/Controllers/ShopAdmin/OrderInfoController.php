@@ -47,6 +47,7 @@ class OrderInfoController extends Controller
 								OrderService $orderService,
 								OrderInfoService $orderInfoService)
 	{
+		
 		parent::__construct($shopService);
 		$this->userService = $userService;
 		$this->goodsService = $goodsService ;
