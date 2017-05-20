@@ -17,6 +17,7 @@ use App\Services\OrderService;
 use App\Services\OrderInfoService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
+use App\Services\CouponService;
 
 class OrderInfoController extends Controller
 {
@@ -45,9 +46,10 @@ class OrderInfoController extends Controller
 								WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
 								OrderService $orderService,
-								OrderInfoService $orderInfoService)
+								OrderInfoService $orderInfoService,
+								CouponService $couponService)
 	{
-		
+
 		parent::__construct($shopService);
 		$this->userService = $userService;
 		$this->goodsService = $goodsService ;
@@ -57,6 +59,7 @@ class OrderInfoController extends Controller
 	 	$this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
 		$this->orderService = $orderService ;
+		$this->couponService = $couponService;
 	}
 	public function orderInfos (Request $request)
 	{
