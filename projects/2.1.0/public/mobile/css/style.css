@@ -2008,3 +2008,4 @@ display: inline-block;
 .mintui-success:before { content: "\E602"; }
 .mintui-field-success:before { content: "\E609"; }
 
+.waitwork{line-height: 1rem ;font-size: 0.3rem;text-align: center;color: #26a2ff;}

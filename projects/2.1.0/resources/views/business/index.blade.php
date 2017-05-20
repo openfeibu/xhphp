@@ -43,14 +43,18 @@
 	        </el-menu-item-group>
 	      </el-submenu> -->
 	      <el-menu-item index="4"><router-link to="setting"><i class="el-icon-setting"></i>店铺设置</router-link></el-menu-item>
+	      <el-menu-item index="5"><router-link to="veriCode"><i class="el-icon-setting"></i>验证取货码</router-link></el-menu-item>
+
 	    </el-menu>
 	    <div class="c-userInfo">
 			<p>钱包：<span>@{{userInfo.wallet}}</span>元</p>
-			<p>店铺销售量：<span>@{{userInfo.sale_count}}</span>单</p>
+			<!-- <p>店铺销售量：<span>@{{userInfo.sale_count}}</span>单</p> -->
 			<p>店铺总收入：<span>@{{userInfo.income}}</span>元</p>
+			<p>红包：<span>@{{userInfo.coupon_total}}</span>元</p>
 
 	    </div>
 	 </el-col>
+
   	<div id="main">
   		<div class="snav">
   			<el-breadcrumb separator="/">
@@ -116,6 +120,11 @@
 		      width="100">
 		    </el-table-column>
 		    <el-table-column
+		      prop="weight"
+		      label="重量"
+		      width="100">
+		    </el-table-column>
+		    <el-table-column
 		      prop="goods_number"
 		      label="库存"
 		      width="80">
@@ -175,6 +184,9 @@
 			     <el-form-item label="商品库存(件)" :label-width="formLabelWidth">
 			      <el-input-number v-model="form.goods_number" @change="" :min="0" :max="999"></el-input-number>
 			    </el-form-item>
+			    <el-form-item label="商品重量(kg)" :label-width="formLabelWidth">
+			     <el-input v-model="form.weight" auto-complete="off"></el-input>
+			    </el-form-item>
 			    <el-form-item label="商品简介" :label-width="formLabelWidth">
 			     <el-input
 					  type="textarea"
@@ -227,6 +239,9 @@
 			    </el-form-item>
 			     <el-form-item label="商品库存(件)" :label-width="formLabelWidth">
 			      <el-input-number v-model="storeForm.goods_number" @change="" :min="0" :max="999"></el-input-number>
+			    </el-form-item>
+			    <el-form-item label="商品重量(kg)" :label-width="formLabelWidth">
+			     <el-input v-model="storeForm.weight" auto-complete="off"></el-input>
 			    </el-form-item>
 			    <el-form-item label="商品简介" :label-width="formLabelWidth">
 			     <el-input
@@ -447,6 +462,7 @@
 			    <el-form-item label="" :label-width="formLabelWidth">
 			      <span class="c">商品总价(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.goods_amount}}</label></span>
 			      <span class="c">运费(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.shipping_fee}}</label></span>
+			      <span class="c">红包(元)：<label style="color:#ff4949;padding:0 20px 0 0">-@{{form.coupon_price}}</label></span>
 			      <span class="c">总计(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.total_fee}}</label></span>
 			    </el-form-item>
 			    <el-form-item label="收货人:" :label-width="formLabelWidth">
@@ -498,6 +514,11 @@
 		    <el-table-column
 		      type="selection"
 		      width="50">
+		    </el-table-column>
+		    <el-table-column
+		      prop="task_status"
+		      label="接单状态"
+		      width="140">
 		    </el-table-column>
 		    <el-table-column
 		      prop="order_sn"
@@ -575,7 +596,14 @@
 			    <el-form-item label="" :label-width="formLabelWidth">
 			      <span class="c">商品总价(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.goods_amount}}</label></span>
 			      <span class="c">运费(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.shipping_fee}}</label></span>
+			      <span class="c">红包(元)：<label style="color:#ff4949;padding:0 20px 0 0">-@{{form.coupon_price}}</label></span>
 			      <span class="c">总计(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.total_fee}}</label></span>
+			    </el-form-item>
+			    <el-form-item label="接单人:" :label-width="formLabelWidth">
+			      <span class="c">@{{form.task_courier_nickname}}</span>
+			    </el-form-item>
+			    <el-form-item label="接单人联系方式:" :label-width="formLabelWidth">
+			      <span class="c">@{{form.task_courier_mobile_no}}</span>
 			    </el-form-item>
 			    <el-form-item label="收货人:" :label-width="formLabelWidth">
 			      <span class="c">@{{form.consignee}}</span>
@@ -703,6 +731,7 @@
 			    <el-form-item label="" :label-width="formLabelWidth">
 			      <span class="c">商品总价(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.goods_amount}}</label></span>
 			      <span class="c">运费(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.shipping_fee}}</label></span>
+			      <span class="c">红包(元)：<label style="color:#ff4949;padding:0 20px 0 0">-@{{form.coupon_price}}</label></span>
 			      <span class="c">总计(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.total_fee}}</label></span>
 			    </el-form-item>
 			    <el-form-item label="收货人:" :label-width="formLabelWidth">
@@ -841,6 +870,7 @@
 			    <el-form-item label="" :label-width="formLabelWidth">
 			      <span class="c">商品总价(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.goods_amount}}</label></span>
 			      <span class="c">运费(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.shipping_fee}}</label></span>
+			      <span class="c">红包(元)：<label style="color:#ff4949;padding:0 20px 0 0">-@{{form.coupon_price}}</label></span>
 			      <span class="c">总计(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.total_fee}}</label></span>
 			    </el-form-item>
 			    <el-form-item label="收货人:" :label-width="formLabelWidth">
@@ -928,7 +958,79 @@
 
 	</template>
 	<!-- 店铺设置 -->
+	<!-- 验证取货码 template-->
+	<template id="veriCode">
+		<div class="productTable">
+		<el-input
+		  placeholder="请输入取货码"
+		  icon="search"
+		  v-model="veriCodeVal"
+		  :on-icon-click="handleIconClick"
+		  v-loading.body="loading">
+		</el-input>
 
+		  <!-- 编辑框 -->
+
+			  <el-form :model="form" v-if="dialogForm" style="width:80%;background: #fff;padding:50px 10px;">
+			  	<el-steps :space="200" :active="2" :align-center="true" finish-status="success" style="margin:0 0 20px 100px">
+				  <el-step title="付款成功" :description="form.pay_time" ></el-step>
+				  <el-step title="发货中" :description="form.shipping_time"  ></el-step>
+				  <el-step title="已完成" description=""  icon="circle-check"></el-step>
+				</el-steps>
+			    <el-form-item label="商品列表:" :label-width="formLabelWidth">
+			     <template>
+				    <el-table
+				      :data="form.order_goodses"
+				      style="width: 100%">
+				      <el-table-column
+				        prop="goods_name"
+				        label="商品名称"
+				        width="180">
+				      </el-table-column>
+				      <el-table-column
+				        prop="goods_number"
+				        label="商品数量"
+				        width="180">
+				      </el-table-column>
+				      <el-table-column
+				        prop="goods_price"
+				        label="商品单价">
+				      </el-table-column>
+				    </el-table>
+				  </template>
+			    </el-form-item>
+			    <el-form-item label="" :label-width="formLabelWidth">
+			      <span class="c">商品总价(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.goods_amount}}</label></span>
+			      <span class="c">运费(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.shipping_fee}}</label></span>
+			      <span class="c">红包(元)：<label style="color:#ff4949;padding:0 20px 0 0">-@{{form.coupon_price}}</label></span>
+			      <span class="c">总计(元)：<label style="color:#ff4949;padding:0 20px 0 0">@{{form.total_fee}}</label></span>
+			    </el-form-item>
+			    <el-form-item label="接单人:" :label-width="formLabelWidth">
+			      <span class="c">@{{form.task_courier_nickname}}</span>
+			    </el-form-item>
+			    <el-form-item label="接单人联系方式:" :label-width="formLabelWidth">
+			      <span class="c">@{{form.task_courier_mobile_no}}</span>
+			    </el-form-item>
+			    <el-form-item label="收货人:" :label-width="formLabelWidth">
+			      <span class="c">@{{form.consignee}}</span>
+			    </el-form-item>
+			    <el-form-item label="用户联系方式:" :label-width="formLabelWidth">
+			      <span class="c">@{{form.mobile}}</span>
+			    </el-form-item>
+			    <el-form-item label="用户地址:" :label-width="formLabelWidth">
+			      <span class="c">@{{form.address}}</span>
+			    </el-form-item>
+			    <el-form-item label="留言:" :label-width="formLabelWidth">
+			      <span class="c">@{{form.postscript}}</span>
+			    </el-form-item>
+			  </el-form>
+
+
+
+		  <!-- 编辑框 End-->
+		 </div>
+	</template>
+	<!-- 验证取货码 template-->
   <script>
 
   	var Main = {
@@ -948,6 +1050,7 @@
 					          			"wallet":data.user.wallet,
 					          			"sale_count":data.shop.sale_count,
       									"income":data.shop.income,
+      									"coupon_total":data.shop.coupon_total
 					          		}
 				          }).error(function(){
 				            that.$message.error('服务器开小差了');

@@ -28,14 +28,19 @@
               <p>￥@{{userInfo.todayIncome}}</p>
               <span>今日收益</span>
             </li>
-            <li>
+            <!-- <li>
               <p>@{{userInfo.sale_count}}</p>
               <span>总订单</span>
-            </li>
+            </li> -->
             <li>
               <p>￥@{{userInfo.income}}</p>
               <span>总收益</span>
             </li>
+            <li>
+              <p>￥@{{userInfo.coupon_total}}</p>
+              <span>红包</span>
+            </li>
+
           </ul>
       </div>
       <div class="fb-home-power">
@@ -95,8 +100,13 @@
 
         </mt-cell>
         </div>
+        <!-- <div  @click="changeFee">
+          <mt-cell  title="配送费(仅对学生商家有效)"  class="mt01"  is-link>
+            <div>@{{shopInfo.shipping_fee}}</div>
+          </mt-cell>
+        </div> -->
         <div @click="openPicker">
-        <mt-cell  title="开店时间"  is-link  class="mt01" >
+        <mt-cell  title="开店时间"  is-link  >
             @{{shopInfo.open_time}} - @{{shopInfo.close_time}}
         </mt-cell>
         </div>

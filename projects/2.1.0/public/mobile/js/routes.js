@@ -10,6 +10,8 @@ var routes = [
 },
  { path: '/yorderDe/:id', component: yorderDe,meta: { }
 },
+ { path: '/yorderDeId/:id', component: yorderDeId,meta: { }
+},
  { path: '/corderDe/:id', component: corderDe,meta: { }
 },
  { path: '/torderDe/:id', component: torderDe,meta: { }

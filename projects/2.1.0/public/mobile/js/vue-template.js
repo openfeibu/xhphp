@@ -34,6 +34,7 @@ var home =  Vue.extend({
                       "sale_count":data.shop.sale_count,
                       "income":data.shop.income,
                       "todayIncome":data.shop.todayIncome,
+                      "coupon_total":data.shop.coupon_total
                     }
                     window.localStorage.userInfo =JSON.stringify(that.userInfo);
                     window.localStorage.shopInfo =JSON.stringify(data.shop);
@@ -66,7 +67,8 @@ var home =  Vue.extend({
             $.post(that.localhost+'/business/orderInfo/checkPickCode',codeData,function(data){
                 that.$indicator.close();
                 if(data.code == 200){
-                  // that.productClassAll.push(data.cats)
+    			  // that.$indicator.open("验证成功");
+                  winGo('/mbusiness/order#/yorderDeId/'+data.data.order_id);
                 }else{
                   that.$toast({
                     message: data.detail,
@@ -227,6 +229,38 @@ var center =  Vue.extend({
           },500)
 
         },
+        changeFee:function(){
+          var that = this;
+          that.$messagebox.prompt('请输入配送费(仅对学生商家有效)?','校汇').then(function(value) {
+              var Data = {
+                "shipping_fee" : value.value
+              };
+              that.$indicator.open("正在修改中");
+              $.post(that.localhost+'/business/shop/updateShop',Data,function(data){
+                  that.$indicator.close();
+                  if(data.code == 200){
+                    that.shopInfo.shipping_fee = value.value;
+                    window.localStorage.removeItem("shopInfo");
+                  }else{
+                    that.$toast({
+                      message: data.detail,
+                      position: 'bottom',
+                      duration: 3000
+                    });
+                  }
+                }).error(function(){
+                    that.$toast({
+                      message: '服务器开小差',
+                      position: 'bottom',
+                      duration: 3000
+                    });
+                })
+            });
+          setTimeout(function(){
+            $(".mint-msgbox-input input").val(that.shopInfo.shipping_fee)
+          },500)
+
+        },
       changeStatus:function(){
           var that = this;
           that.$indicator.open("正在修改中");
@@ -282,9 +316,7 @@ var wfh = Vue.extend({
         wloadTop : function(){
           this.wloadMore(true);
         },
-
         wloadMore:function(flag) {
-        	console.log(1)
               var that = this;
               that.wloading = true;
               that.wpage++;
@@ -326,7 +358,8 @@ var wfh = Vue.extend({
                         "shipping_status":b.shipping_status,
                         "total_fee":b.total_fee,
                         "order_goodses":b.order_goodses,
-                        "status_desc":b.status_desc
+                        "status_desc":b.status_desc,
+                        "seller_shipping_fee":b.seller_shipping_fee
                       }
                       that.wlist.push(orderArray);
                   })
@@ -385,7 +418,7 @@ var yfh = Vue.extend({
 
         yloadMore:function(flag) {
               var that = this;
-			  that.yloading = true;
+			         that.yloading = true;
               that.ypage++;
               if(flag){
                 that.ypage = 1;
@@ -396,7 +429,7 @@ var yfh = Vue.extend({
                   return;
               	};
               }
-				that.$indicator.open();
+			       	that.$indicator.open();
               //获取列表
               $.getJSON(this.localhost+'/business/orderInfo/orderInfos?page='+ that.ypage+'&type=shipping',function(data){
                 that.$indicator.close();
@@ -424,7 +457,8 @@ var yfh = Vue.extend({
                         "shipping_status":b.shipping_status,
                         "total_fee":b.total_fee,
                         "order_goodses":b.order_goodses,
-                        "status_desc":b.status_desc
+                        "status_desc":b.status_desc,
+                        "task":b.task
                       }
                       that.ylist.push(orderArray);
                   })
@@ -694,10 +728,10 @@ var worderDe = Vue.extend({
         }
       },
       methods: {
-        delivery:function(order_id){
+        delivery:function(order_id,seller_shipping_fee){
 
           var that = this;
-          that.$messagebox.confirm('货物已打包,确定发货？').then(function(action){
+          that.$messagebox.confirm('货物已打包,任务费用为：'+seller_shipping_fee+'元,确定发货？').then(function(action){
               that.deliveryGoods(order_id)
           });
         },
@@ -777,6 +811,64 @@ var yorderDe = Vue.extend({
                 })
         }
 
+      },
+      data:function(){
+        return {
+          nowylist:[]
+        }
+      },
+      methods: {
+        // delivery:function(){
+        //   var that = this;
+        //   that.$messagebox.confirm('货物已打包,确定发货？').then(function(action){
+
+        //   });
+        // }
+        call:function(tell){
+            try {
+                if (typeof(eval(JavaScriptInterface))) {
+                    JavaScriptInterface.callPhone(tell)
+                }
+            } catch(e) {
+                window.location.href="tel:"+tell;
+            }
+
+        }
+      },
+
+
+});
+// 已发货详情
+// 已发货详情
+var yorderDeId = Vue.extend({
+      template: '#yorderDeId',
+      created:function(){
+        var that = this;
+        var index = that.$route.params.id;
+        $(window).scrollTop(0)
+          var page = index%that.pageNum  == 0 ? index/that.pageNum  : parseInt(index/that.pageNum )+1;
+           that.$indicator.open();
+           	var orderInfo = {
+           		"order_id" : index
+           	}
+            $.getJSON(this.localhost+'/business/orderInfo/getOrderInfo',orderInfo,function(data){
+                  that.$indicator.close();
+                  if(data.code == 200){
+                  	that.nowylist = data.order_info;
+                  }else{
+                  	that.$toast({
+                      message: data.detail,
+                      position: 'bottom',
+                      duration: 3000
+                    });
+                  }
+                }).error(function(){
+                    that.$toast({
+                      message: '服务器开小差',
+                      position: 'bottom',
+                      duration: 3000
+                    });
+                })
       },
       data:function(){
         return {
@@ -1020,11 +1112,9 @@ var product = Vue.extend({
               $.getJSON(this.localhost+'/business/goods/getGoodses',prodata,function(data){
                 that.$indicator.close();
                 that.$refs.loadmore.onTopLoaded();
-
                 if(flag){
                     that.list = [];
-                    // $(".mint-loadmore-content").css({"transform":"matrix(1, 0, 0, 1, 0, 0)","-webkit-transform":"matrix(1, 0, 0, 1, 0, 0)","-o-transform":"matrix(1, 0, 0, 1, 0, 0)","-moz-transform":"matrix(1, 0, 0, 1, 0, 0)","-ms-transform":"matrix(1, 0, 0, 1, 0, 0)"})
-                };
+               };
 
                 that.loading = false;
                 that.tload = 1;
@@ -1043,13 +1133,14 @@ var product = Vue.extend({
 
                 }).error(function(){
                     that.$indicator.close();
-                    that.wloading = true;
+                    that.loading = true;
                     that.$toast({
                       message: '服务器开小差',
                       position: 'bottom',
                       duration: 3000
                     });
                 })
+
         },
         changeClass :function(){
           window.localStorage.catId = this.catId;
@@ -1129,7 +1220,7 @@ var productDe = Vue.extend({
       template: '#productDe',
       created:function(){
         var that = this;
-        var goods_id = that.$route.params.id;0
+        var goods_id = that.$route.params.id;
 
         $(window).scrollTop(0)
         //没有缓存，先获取列表
@@ -1272,8 +1363,7 @@ var productDe = Vue.extend({
                 });
             return false;
           }
-            that.$indicator.open("开始上传");
-
+          that.$indicator.open("开始上传");
           $.ajax({
               url:that.localhost+'/business/goods/uploadGoodsImage',
               type:'POST',
@@ -1311,6 +1401,7 @@ var productDe = Vue.extend({
 
 });
 // 商品详情
+
 // 商品详情
 var addProduct = Vue.extend({
       template: '#addProduct',

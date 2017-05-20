@@ -61,6 +61,7 @@ select {
 .shopOrder-item .order-item-header{height: 0.6rem;line-height: 0.6rem;font-size: 0.24rem;color: #324057;padding: 0 0.25rem;border-bottom: 1px solid #dddddd;margin:0 0 0.1rem 0;}
 .shopOrder-item .order-item-header .shopNum{float: left;}
 .shopOrder-item .order-item-header .order_status{float: right;color: #FF4949;}
+.shopOrder-item .order-item-header .order_status span{color: #222;}
 .shopOrder-item .order-item-bottom{height: 0.6rem;line-height: 0.6rem;font-size: 0.24rem;color: #324057;padding: 0 0.25rem;border-top: 1px solid #dddddd;margin:0 0 0.1rem 0;}
 .shopOrder-item .imgsBox{display: block;}
 .shopOrder-item .img{width: 1.8rem;height: 1.8rem;float: left;margin:0 0.25rem;border-radius: 5px;overflow: hidden;}
@@ -122,6 +123,7 @@ select {
 .shopOrder_info ul li .test .moneyNum span:nth-of-type(2){color: #666666;margin-left: 0.1rem;}
 .order_money{background:#fff;padding:0.1rem 0.25rem;border-bottom: 1px solid #eeeeee;font-size: 0.28rem;line-height: 0.6rem;}
 .order_money p{height: 0.6rem;}
+.order_money p:nth-of-type(5) span{color: #FF4949;}
 .order_money label{color: #999;}
 .order_money span{color: #222;}
 .money_count{background:#fff;padding:0.2rem 0.25rem;text-align: right;font-size: 0.28rem;color: #222;line-height: 0.6rem;}

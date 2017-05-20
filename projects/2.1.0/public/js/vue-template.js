@@ -26,8 +26,10 @@ var table = Vue.extend({
 		  			"cat_name":row.cat_name,
 		  			"cat_id":row.cat_id,
 		  			"goods_id":row.goods_id,
+		  			"weight":row.weight
 			      }
 		      },
+
 		      //弹出增加层
 			  showAdd() {
 			  	this.dialogStore = true;
@@ -41,6 +43,7 @@ var table = Vue.extend({
 			  			"cat_name":'',
 			  			"goods_img":'',
 			  			"cat_id":'',
+		  				"weight":'',
 			        }
 		      },
 		      //确认修改商品
@@ -69,7 +72,9 @@ var table = Vue.extend({
 				          			"is_on_sale":data.goods.is_on_sale,
 				          			"is_on_sale_name":data.goods.is_on_sale_name,
 				          			"cat_name":data.goods.cat_name,
-				          			"cat_id":data.goods.cat_id
+				          			"cat_id":data.goods.cat_id,
+		  							"weight":data.goods.weight,
+
 					        })
 				          }else{
 				          	that.updataloading = false;
@@ -99,7 +104,7 @@ var table = Vue.extend({
 					        });
 					        //更新数据
 				          	data.goods.is_on_sale_name =data.goods.is_on_sale == 1 ? "上架" : "下架";
-					        that.tableData.push({
+					        that.tableData.unshift({
 					        		"goods_id":data.goods.goods_id,
 				          			"goods_name":data.goods.goods_name,
 				          			"goods_price":data.goods.goods_price,
@@ -109,7 +114,8 @@ var table = Vue.extend({
 				          			"is_on_sale":data.goods.is_on_sale,
 				          			"is_on_sale_name":data.goods.is_on_sale_name,
 				          			"cat_name":data.goods.cat_name,
-				          			"cat_id":data.goods.cat_id
+				          			"cat_id":data.goods.cat_id,
+				          			"weight":data.goods.weight,
 					        })
 				          }else{
 				          	that.storeloading = false;
@@ -142,7 +148,8 @@ var table = Vue.extend({
 				          			"goods_thumb":b.goods_thumb,
 				          			"is_on_sale_name":b.is_on_sale_name,
 				          			"cat_name":b.cat_name,
-				          			"cat_id":b.cat_id
+				          			"cat_id":b.cat_id,
+				          			"weight":b.weight,
 				          		}
 				          		that.tableData.push(tableArray);
 				          })
@@ -243,7 +250,9 @@ var table = Vue.extend({
 		          			"goods_thumb":b.goods_thumb,
 		          			"is_on_sale_name":b.is_on_sale_name,
 		          			"cat_name":b.cat_name,
-		          			"cat_id":b.cat_id
+		          			"cat_id":b.cat_id,
+		          			"shipping_fee":b.shipping_fee,
+		          			"weight":b.weight,
 		          		}
 		          		that.tableData.push(tableArray);
 		          })
@@ -282,6 +291,8 @@ var table = Vue.extend({
 	  			"goods_id":'',
 	  			"goods_img":'',
 	  			"cat_id":'',
+	  			"shipping_fee":'',
+	  			"weight":''
 
 	        },
 	        storeloading:false,
@@ -296,7 +307,8 @@ var table = Vue.extend({
 	  			"cat_name":'',
 	  			"goods_img":'',
 	  			"cat_id":'',
-
+	  			"shipping_fee":'',
+	  			"weight":''
 	        },
 	        formLabelWidth: '120px',
 	        updataloading:false,
@@ -528,7 +540,10 @@ var notShipped = Vue.extend({
 	          			"shipping_fee":b.shipping_fee,
 	          			"shipping_status":b.shipping_status,
 	          			"total_fee":b.total_fee,
-	          			"order_goodses":b.order_goodses
+	          			"order_goodses":b.order_goodses,
+	          			"shipping_fee":b.shipping_fee,
+	          			"coupon_price":b.coupon_price,
+	          			"seller_shipping_fee":b.seller_shipping_fee
 				      }
 			    },
 				  //分页获取数据
@@ -555,7 +570,10 @@ var notShipped = Vue.extend({
 					          			"shipping_status":b.shipping_status,
 					          			"total_fee":b.total_fee,
 					          			"order_goodses":b.order_goodses,
-					          			"status_desc":b.status_desc
+					          			"status_desc":b.status_desc,
+					          			"shipping_fee":b.shipping_fee,
+					          			"coupon_price":b.coupon_price,
+					          			"seller_shipping_fee":b.seller_shipping_fee
 					          		}
 					          		that.orderData.push(orderArray);
 					          })
@@ -591,7 +609,8 @@ var notShipped = Vue.extend({
 				},
 			    delivery(index, row) {
 			        var that = this;
-			         this.$confirm('东西已打包，我要发货?', '校汇', {
+			        console.log(row)
+			         this.$confirm('东西已打包，任务费用为：'+row.seller_shipping_fee+'元，我要发货?', '校汇', {
 			          confirmButtonText: '确定',
 			          cancelButtonText: '取消',
 			          type: 'success'
@@ -599,7 +618,7 @@ var notShipped = Vue.extend({
 						that.deliveryGoods(index,row.order_id)
 
 			        }).catch(function() {
-			          this.$message({
+			          that.$message({
 			            type: 'info',
 			            message: '已取消发货'
 			          });
@@ -633,7 +652,10 @@ var notShipped = Vue.extend({
 			          			"shipping_status":b.shipping_status,
 			          			"total_fee":b.total_fee,
 			          			"order_goodses":b.order_goodses,
-			          			"status_desc":b.status_desc
+			          			"status_desc":b.status_desc,
+			          			"coupon_price":b.coupon_price,
+					          	"seller_shipping_fee":b.seller_shipping_fee
+
 			          		}
 			          		that.orderData.push(orderArray);
 
@@ -683,9 +705,14 @@ var shipped = Vue.extend({
 	          			"shipping_status":b.shipping_status,
 	          			"total_fee":b.total_fee,
 	          			"order_goodses":b.order_goodses,
-	          			"shipping_time":b.shipping_time
+	          			"shipping_time":b.shipping_time,
+	          			"coupon_price":b.coupon_price,
 				      }
-				      console.log(this.form.order_goodses)
+				      if(b.task != null){
+				      	//有接单人
+				  		this.form.task_courier_nickname= b.task.courier_nickname;
+				  		this.form.task_courier_mobile_no= b.task.courier_mobile_no;
+				  		}
 			    },
 				  //分页获取数据
 				getData(page){
@@ -712,7 +739,16 @@ var shipped = Vue.extend({
 					          			"total_fee":b.total_fee,
 					          			"order_goodses":b.order_goodses,
 					          			"status_desc":b.status_desc,
-					          			"shipping_time":b.shipping_time
+					          			"shipping_time":b.shipping_time,
+					          			"coupon_price":b.coupon_price,
+					          			"task":b.task
+					          		}
+					          		if(b.task == null){
+					          			// no 未接单
+					          			orderArray.task_status ="等待接单";
+					          		}else{
+					          			orderArray.task_status ="已接单("+b.task.user_consignee_name+")";
+
 					          		}
 					          		that.orderData.push(orderArray);
 					          })
@@ -791,7 +827,17 @@ var shipped = Vue.extend({
 			          			"total_fee":b.total_fee,
 			          			"order_goodses":b.order_goodses,
 			          			"status_desc":b.status_desc,
-			          			"shipping_time":b.shipping_time
+			          			"shipping_time":b.shipping_time,
+			          			"coupon_price":b.coupon_price,
+			          			"task":b.task
+			          		}
+
+			          		if(b.task == null){
+					          			// no 未接单
+			          			orderArray.task_status ="等待接单";
+			          		}else{
+			          			orderArray.task_status ="已接单("+b.task.courier_nickname+")";
+
 			          		}
 			          		that.orderData.push(orderArray);
 
@@ -842,7 +888,8 @@ var succ = Vue.extend({
 	          			"total_fee":b.total_fee,
 	          			"order_goodses":b.order_goodses,
 	          			"shipping_time":b.shipping_time,
-	          			"succ_time":b.succ_time
+	          			"succ_time":b.succ_time,
+	          			"coupon_price":b.coupon_price
 				      }
 				      console.log(this.form.order_goodses)
 			    },
@@ -872,7 +919,8 @@ var succ = Vue.extend({
 					          			"order_goodses":b.order_goodses,
 					          			"status_desc":b.status_desc,
 					          			"shipping_time":b.shipping_time,
-	          							"succ_time":b.succ_time
+	          							"succ_time":b.succ_time,
+	          							"coupon_price":b.coupon_price
 					          		}
 					          		that.orderData.push(orderArray);
 					          })
@@ -912,7 +960,8 @@ var succ = Vue.extend({
 			          			"order_goodses":b.order_goodses,
 			          			"status_desc":b.status_desc,
 			          			"shipping_time":b.shipping_time,
-	          					"succ_time":b.succ_time
+	          					"succ_time":b.succ_time,
+	          					"coupon_price":b.coupon_price
 			          		}
 			          		that.orderData.push(orderArray);
 
@@ -965,6 +1014,7 @@ var cancell = Vue.extend({
 	          			"succ_time":b.succ_time,
 	          			"cancelling_time":b.cancelling_time,
 	          			"cancelled_time":b.cancelled_time,
+	          			"coupon_price":b.coupon_price
 				      }
 			    },
 				  //分页获取数据
@@ -996,6 +1046,7 @@ var cancell = Vue.extend({
 	          							"succ_time":b.succ_time,
 	          							"cancelling_time":b.cancelling_time,
 	          							"cancelled_time":b.cancelled_time,
+	          							"coupon_price":b.coupon_price
 					          		}
 					          		that.orderData.push(orderArray);
 					          })
@@ -1079,6 +1130,7 @@ var cancell = Vue.extend({
 	          					"succ_time":b.succ_time,
 	          					"cancelling_time":b.cancelling_time,
 	          					"cancelled_time":b.cancelled_time,
+	          					"coupon_price":b.coupon_price
 			          		}
 			          		that.orderData.push(orderArray);
 
@@ -1202,3 +1254,51 @@ var setting = Vue.extend({
 });
 
 
+// 验证取货码
+var veriCode = Vue.extend({
+	template: '#veriCode',
+	 methods: {
+			  handleSelectionChange(val) {
+			        this.multipleSelection = val;
+			     },
+
+				handleIconClick(){
+					var that = this;
+
+					var codeData = {
+		              "pick_code" :that.veriCodeVal
+		            };
+		            that.loading = true;
+		            $.post(that.localhost+'/business/orderInfo/checkPickCode',codeData,function(data){
+		            	that.loading = false;
+		                if(data.code == 200){
+		    			  that.$message.success('验证成功');
+		    			  that.dialogForm = true;
+		    			  //接单人信息
+		    			  data.data.task_courier_nickname = data.data.task.courier_nickname;
+		    			  data.data.task_courier_mobile_no = data.data.task.courier_mobile_no;
+		                  that.form = data.data;
+		                }else{
+		    			  that.$message.error(data.detail);
+		                }
+		              }).error(function(){
+		              	that.$message.error('服务器开小差');
+
+		              })
+
+				}
+			 },
+				created:function(){
+
+					},
+				data: function() {
+					return {
+					    loading:false,
+					    shippedPage:0,
+					    dialogForm:false,
+					    form: {},
+				        formLabelWidth: '120px',
+				        veriCodeVal:'',
+					}
+				}
+});

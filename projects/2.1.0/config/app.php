@@ -26,13 +26,13 @@ return [
     |
     */
 
-    'web_url' => 'http://xh.flyexp.cn',
+    'web_url' => 'http://tweb.feibu.info',
 
-    'url' => 'http://xhplus.feibu.info',
+    'url' => 'http://xhplus210.feibu.info',
 
-    'upload_url' => 'http://xhplus.feibu.info/uploads/',
+    'upload_url' => 'http://xhplus210.feibu.info/uploads/',
 
-    'order_share_url' => 'http://xhplus.feibu.info/fb/schoolwork_de.html',
+    'order_share_url' => 'http://tweb.feibu.info/works/schoolwork_de.html',
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -202,6 +202,6 @@ return [
     ],
 
     //是否允许跨域请求
-    'allow_origin' => env('allow_origin', '*'),
+    'allow_origin' => env('allow_origin', 'http://tweb.feibu.info'),
 
 ];
