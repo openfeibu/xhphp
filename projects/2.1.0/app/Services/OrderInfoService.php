@@ -238,6 +238,12 @@ class OrderInfoService
 		if(!$result){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('该订单状态不支持确认收货');
 		}
+
+		$order = $this->orderRepository->getSingleOrderByCoutoms(['order.order_id' => $order_id]);
+		if($order && $order->status != 'finish')
+		{
+			throw new \App\Exceptions\Custom\OutputServerMessageException('该订单状态不支持确认收货');
+		}
 		return $order_info;
 	}
 	public function sellerCheckRefund ($order_id,$shop_id)

@@ -22,6 +22,7 @@ use App\Services\RealnameAuthService;
 use App\Services\WalletService;
 use App\Services\TradeAccountService;
 use App\Services\CouponService;
+use App\Services\GameService;
 
 class UserController extends Controller
 {
@@ -52,6 +53,7 @@ class UserController extends Controller
                          MessageService $messageService,
                          WalletService $walletService,
                          CouponService $couponService,
+                         GameService $gameService,
                          TradeAccountService $tradeAccountService)
     {
 	    parent::__construct();
@@ -66,6 +68,7 @@ class UserController extends Controller
         $this->walletService = $walletService;
         $this->tradeAccountService = $tradeAccountService;
         $this->couponService = $couponService;
+        $this->gameService = $gameService;
     }
 
     public function register(Request $request)
@@ -118,8 +121,16 @@ class UserController extends Controller
             $this->couponService->createUserRegisterCoupon($user->uid);
         }
 
+        $game = $this->gameService->checkStatus('coupon');
 
-        throw new \App\Exceptions\Custom\RequestSuccessException();
+        return [
+            'code' => 200,
+            'token' => $user->token,
+            'detail' => '注册成功',
+            'game_status' => $game ? true : false,
+        ];
+
+
     }
     public function registerVerify(Request $request)
     {

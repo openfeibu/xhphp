@@ -93,6 +93,7 @@ class GameService
 		}
 		return false;
 	}
+
 	public function checkGame($where){
 		$game = $this->gameRepository->getGame($where);
 		$time = time();
