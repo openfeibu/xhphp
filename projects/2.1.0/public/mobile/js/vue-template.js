@@ -57,7 +57,7 @@ var home =  Vue.extend({
             })
 
     },
-     veriCode :function(){
+     veriCode:function(){
            var that = this;
           that.$messagebox.prompt('输入提货码','校汇').then(function(value) {
             var codeData = {
