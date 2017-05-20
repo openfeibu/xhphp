@@ -26,7 +26,7 @@ Route::get('user/getMyInfo', 'UserController@getMyInfo')->name('user_getMyInfo')
 Route::get('user/getOthersInfo', 'UserController@getOthersInfo')->name('user_getOthersInfo');
 Route::post('user/uploadAvatarFile', 'UserController@uploadAvatarFile')->name('user_uploadAvatarFile');
 Route::post('user/sendRegisterSMS', 'UserController@sendRegisterSMS')->name('user_sendRegisterSMS');
-Route::post('user/sendRegisterVerifySMS', 'UserController@sendRegisterVerifySMS');
+Route::post('user/sendRegisterVerifySMS', 'UserController@sendRegisterVerifySMS')->name('user_sendRegisterVerifySMS');
 Route::post('user/sendResetPasswordSMS', 'UserController@sendResetPasswordSMS')->name('user_sendResetPasswordSMS');
 Route::get('user/getWallet','UserController@getWallet')->name('user_getWallet');
 Route::get('user/getAlipayInfo','UserController@getAlipayInfo')->name('user_getAlipayInfo');
@@ -40,12 +40,12 @@ Route::post('user/resetPayPassword','UserController@resetPayPassword')->name('us
 Route::get('user/sendResetPayPasswordSMS','UserController@sendResetPayPasswordSMS')->name('user_sendResetPayPasswordSMS');
 Route::post('user/withdrawalsApply','UserController@withdrawalsApply')->name('user_withdrawalsApply');
 Route::get('user/getVerifyImageURL','UserController@getVerifyImageURL')->name('user_getVerifyImageURL');
-Route::post('user/realNameAuthUploadImg','UserController@realNameAuthUploadImg');
+Route::post('user/realNameAuthUploadImg','UserController@realNameAuthUploadImg')->name('user_realNameAuthUploadImg');
 Route::post('user/h5RealNameAuth','UserController@h5RealNameAuth');
 Route::get('user/getMobileBytoken','UserController@getMobileBytoken');
-Route::post('user/uploadImage','UserController@uploadImage');
+Route::post('user/uploadImage','UserController@uploadImage')->name('user_uploadImage');
 Route::get('pay','UserController@pay');
-Route::post('user/registerVerify','UserController@registerVerify');
+Route::post('user/registerVerify','UserController@registerVerify')->name('user_registerVerify');
 
 Route::get('order/getOrderList', 'OrderController@getOrderList')->name('order_getOrderList');
 Route::get('order/getOrder', 'OrderController@getOrder')->name('order_getOrder');
@@ -100,7 +100,7 @@ Route::get('association/quitAssociation', 'AssociationController@quitAssociation
 Route::get('association/checkMember', 'AssociationController@checkMember')->name('association_checkMember');
 Route::get('association/checkMemberList', 'AssociationController@checkMemberList')->name('association_checkMemberList');
 Route::get('association/checkNewNotice', 'AssociationController@checkNewNotice')->name('association_checkNewNotice');
-Route::get('association/deleteActivity', 'AssociationController@deleteActivity');
+Route::get('association/deleteActivity', 'AssociationController@deleteActivity')->name('association_deleteActivity');
 
 Route::get('message/getMessageList', 'MessageController@getMessageList')->name('other_getMessageList');
 
@@ -148,9 +148,9 @@ Route::get('goods/shopGoodses','GoodsController@getShopGoodses')->name('shop_get
 Route::get('goods/goodses','GoodsController@getGoodses')->name('shop_getGoodses');
 Route::get('goods/getGoods','GoodsController@getGoods')->name('shop_getGoods');
 Route::post('goods/uploadGoodsImage','GoodsController@uploadGoodsImage');
-Route::post('goods/addCat','GoodsController@addCat');
-Route::post('goods/updateCat','GoodsController@updateCat');
-ROute::get('goods/getCats','GoodsController@getCats');
+Route::post('goods/addCat','GoodsController@addCat')->name('shop_addCat');
+Route::post('goods/updateCat','GoodsController@updateCat')->name('shop_updateCat');
+ROute::get('goods/getCats','GoodsController@getCats')->name('shop_getCats');
 
 
 Route::post('cart/store','CartController@store')->name('shop_storeCart');
@@ -161,20 +161,21 @@ Route::post('cart/destroy','CartController@destroy');
 Route::post('cart/destroyAll','CartController@destroyAll');
 Route::get('cart/getTotal','CartController@getTotal')->name('shop_getTotalCart');
 
-Route::get('orderInfo/index','OrderInfoController@index')->name('shop_indexOrderInfoController');
+Route::get('orderInfo/index','OrderInfoController@index')->name('shop_orderInfos');
 Route::get('orderInfo/sellerOrderInfos','OrderInfoController@sellerOrderInfos');
-Route::get('orderInfo/create','OrderInfoController@create');
-Route::get('orderInfo/show','OrderInfoController@show');
+Route::get('orderInfo/create','OrderInfoController@create')->name('shop_orderInfoCreate');
+Route::get('orderInfo/show','OrderInfoController@show')->name('shop_orderInfoshow');
 Route::post('orderInfo/store', 'OrderInfoController@store')->name('shop_storeOrderInfo');
-Route::post('orderInfo/destroy','OrderInfoController@destroy');
+Route::post('orderInfo/destroy','OrderInfoController@destroy')->name('shop_orderInfoDestroy');
 Route::post('orderInfo/pay','OrderInfoController@pay');
-Route::post('orderInfo/refund','OrderInfoController@refund');
-Route::post('orderInfo/confirm','OrderInfoController@confirm');
+Route::post('orderInfo/refund','OrderInfoController@refund')->name('shop_orderInfoRefund');
+Route::post('orderInfo/confirm','OrderInfoController@confirm')->name('shop_orderInfoConfirm');
 Route::post('orderInfo/agreeCancel','OrderInfoController@agreeCancel');
-Route::post('orderInfo/shipping','OrderInfoController@shipping');
+Route::post('orderInfo/shipping','OrderInfoController@shipping')->name('shop_orderInfoShipping');
 Route::get('orderInfo/orders','OrderInfoController@orders')->name('shop_OrderInfos');
 Route::post('orderInfo/checkPickCode','OrderInfoController@checkPickCode');
 Route::post('orderInfo/revokeShipping','OrderInfoController@revokeShipping');
+
 Route::get('userAddress/index','UserAddressController@index');
 Route::get('userAddress/show','UserAddressController@show');
 Route::get('userAddress/getDefault','UserAddressController@getDefault');
@@ -230,10 +231,10 @@ Route::post('lostAndFind/uploadImage', 'LostAndFindController@uploadImage');
 Route::post('lostAndFind/delete', 'LostAndFindController@delete');
 Route::get('lostAndFind/getLoss','LostAndFindController@getLoss');
 
-Route::get('coupon/getUserCoupons','CouponController@getUserCoupons');
-Route::get('coupon/getCouponPrizes','CouponController@getCouponPrizes');
-Route::post('coupon/couponLottery','CouponController@couponLottery');
-Route::get('coupon/getUserPrizes','CouponController@getUserPrizes');
+Route::get('coupon/getUserCoupons','CouponController@getUserCoupons')->name('coupon_getUserCoupons');
+Route::get('coupon/getCouponPrizes','CouponController@getCouponPrizes')->name('coupon_getCouponPrizes');
+Route::post('coupon/couponLottery','CouponController@couponLottery')->name('coupon_couponLottery');
+Route::get('coupon/getUserPrizes','CouponController@getUserPrizes')->name('coupon_getUserPrizes');
 
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');
