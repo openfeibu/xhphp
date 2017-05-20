@@ -554,7 +554,7 @@ class OrderInfoController extends Controller
 		$task = $this->orderService->getOrder(['order_id' => $order_info->order_id],['*'],false);
 
 		if($task) {
-			$this->orderService->confirmFinishWork($task);
+			$this->orderService->confirmFinishWork($task,$this->walletService,$tradeAccountService);
 		}
 
     	throw new \App\Exceptions\Custom\RequestSuccessException('确认成功');
