@@ -239,8 +239,8 @@ class OrderInfoService
 			throw new \App\Exceptions\Custom\OutputServerMessageException('该订单状态不支持确认收货');
 		}
 
-		$order = $this->orderRepository->getOrderColumn(['order_id' => $order_id],['oid']);
-		
+		$order = $this->orderRepository->getOrderColumn(['order_id' => $order_id],['oid','status']);
+
 		if($order && $order->status != 'finish')
 		{
 			throw new \App\Exceptions\Custom\OutputServerMessageException('该订单状态不支持确认收货');
