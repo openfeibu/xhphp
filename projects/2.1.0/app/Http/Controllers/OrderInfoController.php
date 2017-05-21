@@ -230,6 +230,9 @@ class OrderInfoController extends Controller
 		}
 		//$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
 		$carts = $this->cartService->checkGoodsNumber($request->shop_id,$this->user->uid);
+		//描述
+		$description = sprintf(trans('task.task_decription'), $carts['goods_count'] ,$carts['weight']);
+
 		$total_fee = $goods_amount = $carts['shop_total'];
 		$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);
 		$shop_user = $this->userService->getUserByUserID($shop->uid);
@@ -289,6 +292,7 @@ class OrderInfoController extends Controller
         											'shipping_fee' => $shipping_fee,
 													'seller_shipping_fee' => $seller_shipping_fee,
 													'user_coupon_id' => $user_coupon_id,
+													'description' => $description,
         										]);
 		$this->couponService->updateUserCoupon(['uid' => $this->user->uid,'user_coupon_id' => $user_coupon_id],['status' => 'used']);
         $pay_platform = isset($request->platform) ? $request->platform : 'web';
@@ -490,8 +494,9 @@ class OrderInfoController extends Controller
 			$pick_code = $this->orderInfoService->getPickCode();
 			$this->orderInfoService->updateOrderInfo($order_info->order_sn,['pick_code' => $pick_code]);
 			//生成任务
+			//$decimal =
         	$order = $this->orderService->createOrder(['destination' => $order_info->address,
-                                             'description' => $shop->shop_name,
+                                             'description' => $order_info->description,
                                              'fee' => $total_fee,
                                              'goods_fee' => 0 ,
                                              'total_fee' => $total_fee,
