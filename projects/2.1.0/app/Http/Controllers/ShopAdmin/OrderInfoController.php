@@ -115,7 +115,7 @@ class OrderInfoController extends Controller
 			//生成任务
 
         	$order = $this->orderService->createOrder(['destination' => $order_info->address,
-                                             'description' => $this->shop->shop_name,
+                                             'description' => $order_info->description,
                                              'fee' => $total_fee,
                                              'goods_fee' => 0 ,
                                              'total_fee' => $total_fee,
