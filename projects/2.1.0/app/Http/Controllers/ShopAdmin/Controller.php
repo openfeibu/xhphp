@@ -43,7 +43,7 @@ class Controller extends CommonController
                         ->first();
 
         $this->shop->coupon_total =  $coupon->price_count;
-        
+
         if(in_array($this->shop->shop_status,[0,4]))
         {
             $error = trans('common.shop_status_validator.'.$this->shop->shop_status);

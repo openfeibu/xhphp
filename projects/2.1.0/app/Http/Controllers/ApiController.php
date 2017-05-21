@@ -18,10 +18,10 @@ class ApiController extends Controller
 {
 
     protected $helpService;
-	
+
     public function __construct(HelpService $helpService)
     {
-	    parent::__construct();	    
+	    parent::__construct();
         $this->helpService = $helpService;
 	}
 	public function getApi (Request $request)
