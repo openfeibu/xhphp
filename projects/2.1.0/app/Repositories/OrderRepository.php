@@ -58,7 +58,7 @@ class OrderRepository
                     ->where('oid', $order_id)
                     ->first();
 	}
-	
+
 	public function getSingleOrderByCoutoms($where =[],$columns=[])
 	{
 		return Order::join('user', 'order.owner_id', '=', 'user.uid')
@@ -69,7 +69,7 @@ class OrderRepository
 					->where('courier_id','>','0')
                     ->first();
 	}
-	
+
 	public function getOrderColumn($where,$columns)
 	{
 		$order = Order::where($where)->first($columns);

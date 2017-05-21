@@ -5,6 +5,7 @@ namespace App\Services;
 use Log;
 use Session;
 use Illuminate\Http\Request;
+use App\Services\MessageService;
 use App\Repositories\UserRepository;
 use App\Repositories\VerifyCodeRepository;
 use App\Helper\alidayu\top\TopClient as TopClient;
@@ -21,11 +22,13 @@ class SMSService
 
 	function __construct(Request $request,
 						 VerifyCodeRepository $verifyCodeRepository,
-						 UserRepository $userRepository)
+						 UserRepository $userRepository,
+						 MessageService $messageService)
 	{
 		$this->request = $request;
 		$this->verifyCodeRepository = $verifyCodeRepository;
 		$this->userRepository = $userRepository;
+		$this->messageService = $messageService;
 	}
 
 	/**
@@ -158,6 +161,8 @@ class SMSService
 				break;
 			case 'order_info':
 				$req->setSmsParam("{\"product\":\"校汇\"}");
+				$content = trans('common.sms.'.$type) ;
+				$this->messageService->SystemMessage2SingleOne($data['uid'], $content, $push = false, $type = '新订单提醒', $name = '新订单提醒');
 				break;
 			case 'illegal_task':
 				$name = $data['name'];
@@ -167,6 +172,8 @@ class SMSService
 			case 'pick_code':
 				$code = $data['code'];
 				$req->setSmsParam("{\"pick_code\":\"$code\",\"product\":\"校汇\"}");
+				$content = sprintf(trans('common.sms.'.$type),$code) ;
+				$this->messageService->SystemMessage2SingleOne($data['uid'], $content, $push = false, $type = '取货码', $name = '取货码');
 				break;
 			default:
 				// code...
