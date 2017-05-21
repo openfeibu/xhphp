@@ -232,7 +232,7 @@ class OrderInfoController extends Controller
 		$carts = $this->cartService->checkGoodsNumber($request->shop_id,$this->user->uid);
 		//描述
 		$description = sprintf(trans('task.task_decription'), $carts['goods_count'] ,$carts['weight']);
-
+	
 		$total_fee = $goods_amount = $carts['shop_total'];
 		$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);
 		$shop_user = $this->userService->getUserByUserID($shop->uid);
