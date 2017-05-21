@@ -33,7 +33,7 @@ $(function(){
 function winGo(str){
   try {
       if (typeof(eval(JavaScriptInterface))) {
-          JavaScriptInterface.openWindow(str)
+        JavaScriptInterface.openWindow(str)
       }
   } catch(e) {
       window.location.href=str;
@@ -53,9 +53,5 @@ function winClose(){
 
 }
 function returnUp(){
-
-
       window.history.go(-1)
-
-
 }
