@@ -64,7 +64,8 @@ class ShopRepository
 	}
 	public function getShop ($where,$columns)
 	{
-		$shop = Shop::where($where)->first();
+		$shop = Shop::select(DB::raw('shop.*,college.cid,college.name as college_name'))
+						->leftJoin('college', 'college.cid', '=', 'shop.college_id')->where($where)->first();
 		if($shop){
 			$user = User::where('uid',$shop->uid)->first(['mobile_no']);
 			$shop->mobile_no = $user->mobile_no;
