@@ -17,7 +17,7 @@ class VersionController extends Controller
 	public function __construct (HelpService $helpService)
 	{
 		parent::__construct();
-		$this->helpService = $helpService; 
+		$this->helpService = $helpService;
 	}
     /**
      * Display a listing of the resource.
@@ -30,12 +30,12 @@ class VersionController extends Controller
 			'platform' => 'required|string',
 	    ];
 	    $this->helpService->validateParameter($rules);
-        $version = Version::select(DB::raw('id,code,name,detail,download,compulsion'))->where('platform',$require->platform)->orderBy('id','DESC')->first();
+        $version = Version::select(DB::raw('id,code,name,detail,download,new_download,compulsion'))->where('platform',$require->platform)->orderBy('id','DESC')->first();
         return [
 			'code' => 200,
 			'data' => $version ? $version : []
         ];
     }
 
-   
+
 }
