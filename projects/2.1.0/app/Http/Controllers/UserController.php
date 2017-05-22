@@ -98,14 +98,17 @@ class UserController extends Controller
         if($user)
         {
             //更新用户
-            $user = [
+            $user_data = [
                 'password' => $request->password,
                 'nickname' => isset($request->nickname) ? $request->nickname : $user->nickname,
-                'gender' => isset($request->gender) ? $request->gender : $user->gender,
-                'enrollment_year' => isset($request->enrollment_year) ? $request->enrollment_year : $user->enrollment_year,
+                
                 'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : $user->avatar_url ,
             ];
-            $this->userService->updateUser(['uid' => $user->uid],$user);
+			$user_info_data = [
+				'gender' => isset($request->gender) ? $request->gender : $user->gender,
+                'enrollment_year' => isset($request->enrollment_year) ? $request->enrollment_year : $user->enrollment_year,
+			];
+            $this->userService->updateUser(['uid' => $user->uid],$user_data,$user_info_data);
         }
         else{
             //创建用户
@@ -188,7 +191,7 @@ class UserController extends Controller
     {
         //检验请求参数
         $rule = [
-            'mobile_no' => 'required|unique:user,mobile_no,NULL',
+            'mobile_no' => 'required',
         ];
         $this->helpService->validateParameter($rule);
 
@@ -453,7 +456,7 @@ class UserController extends Controller
     {
         //检验请求参数
         $rule = [
-            'mobile_no' => 'required|unique:user,mobile_no,NULL',
+            'mobile_no' => 'required',
         ];
         $this->helpService->validateParameter($rule);
 

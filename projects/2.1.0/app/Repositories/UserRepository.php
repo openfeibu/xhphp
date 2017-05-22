@@ -176,9 +176,10 @@ class UserRepository
 		}
 	}
 
-	public function updateUser($where,$user)
+	public function updateUser($where,$user,$user_info)
 	{
-		return User::where($whre)->update($user);
+		User::where($where)->update($user);
+		UserInfo::where($where)->update($user_info); 
 	}
 	/**
 	 * 检验账号密码是否一致

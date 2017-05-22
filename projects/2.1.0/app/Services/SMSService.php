@@ -45,7 +45,7 @@ class SMSService
 		switch ($usage) {
 			case 'reg':
 				$user = $this->userRepository->findMobileNo($mobile_no);
-				if ($user) {
+				if ($user && $user->password) {
       			    throw new \App\Exceptions\Custom\PhoneNumRegisteredException();
 				}
 				break;

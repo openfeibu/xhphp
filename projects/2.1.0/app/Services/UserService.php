@@ -147,9 +147,9 @@ class UserService
                                           $user['avatar_url']);
         return $user;
     }
-    public function updateUser($where = [],array $user)
+    public function updateUser($where = [],array $user ,array $user_info)
     {
-        return $this->userRepository->updateUser($where,$user);
+        return $this->userRepository->updateUser($where,$user,$user_info);
     }
     /**
      * 检验账号密码是否一致

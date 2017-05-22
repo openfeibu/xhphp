@@ -25,6 +25,7 @@ use App\Events\Integral\Integrals;
 use App\Http\Controllers\Controller;
 use App\Services\TelecomService;
 use App\Services\PushService;
+use App\Services\OrderService;
 
 class ScheduleController extends Controller
 {
@@ -54,6 +55,7 @@ class ScheduleController extends Controller
                          PushService $pushService,
                          GameService $gameService,
 						 OrderInfoService $orderInfoService,
+						 OrderService $orderService,
 						 ShopService $shopService)
     {
         $this->orderService = $orderService;
@@ -66,6 +68,7 @@ class ScheduleController extends Controller
         $this->pushService = $pushService;
         $this->gameService = $gameService;
 		$this->shopService = $shopService;
+		$this->orderService = $orderService;
 		$this->orderInfoService = $orderInfoService;
     }
     public function  autoFinishWork()
@@ -223,6 +226,12 @@ class ScheduleController extends Controller
 			$shop->uid = $order_info->shop_uid;
 			$shop->service_rate = $order_info->service_rate;
 			$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
+			$task = $this->orderService->getOrder(['order_id' => $order_info->order_id],['*'],false);
+
+			if($task) {
+				$task->uid = $shop->uid;
+				$this->orderService->confirmFinishWork($task,$this->walletService,$this->tradeAccountService);
+			}
 			$data = [
 				'refresh' => 1,
 				'target' => '',
