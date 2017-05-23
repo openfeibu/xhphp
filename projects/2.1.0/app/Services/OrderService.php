@@ -304,7 +304,7 @@ class OrderService
             'status' => 'completed',
         ];
         $courier = $this->userRepository->getUserByUserID($order->courier_id);
-		
+
 		if($order->uid)
 		{
 			$param['uid'] = $order->uid;
@@ -322,7 +322,7 @@ class OrderService
 			'trade_type' => 'AcceptTask',
 			'description' => '接任务',
         );
-		
+
         $trade_no = 'wallet'.$this->helpService->buildOrderSn('XH');
 		$trade = array(
     		'uid' => $courier->uid,
@@ -337,14 +337,14 @@ class OrderService
 			'trade_type' => 'AcceptTask',
 			'description' => '接任务' ,
 		);
-		
+
 		$this->updateOrderStatus($param);
-		
+
 		$walletService->updateWallet($courier->uid,$wallet);
 		$walletService->store($walletData);
 		$tradeAccountService->addThradeAccount($trade);
 		//纸条通知接单人
-		
+
         $order = $this->getSingleOrderAllInfo($order->oid);
         $this->messageService->SystemMessage2SingleOne($order->courier_id, '您好，发单人已结算你完成的任务，赶紧去看看吧。');
 
@@ -359,6 +359,67 @@ class OrderService
         Event::fire(new Integrals('发布任务'));
         //积分更新(给接单人加分)
         Event::fire(new Integrals('完成任务', $courier));
+	}
+	public function autoConfirmFinishWork($order,$walletService,$tradeAccountService)
+	{
+		if ($order->status != 'finish') {
+            throw new \App\Exceptions\Custom\OutputServerMessageException('当前任务状态不允许结算任务');
+        }
+        $param = [
+            'order_id' => $order->oid,
+            'status' => 'completed',
+        ];
+        $courier = $this->userRepository->getUserByUserID($order->courier_id);
+
+		if($order->uid)
+		{
+			$param['uid'] = $order->uid;
+		}
+        $wallet = $courier->wallet + $order->fee - $order->service_fee;
+        $fee = $order->fee - $order->service_fee;
+		$walletData = array(
+			'uid' => $courier->uid,
+			'out_trade_no' => $order->order_sn,
+			'wallet' => $wallet ,
+			'fee'	=> $fee,
+			'service_fee' => $order->service_fee,
+			'pay_id' => $order->pay_id,
+			'wallet_type' => 1,
+			'trade_type' => 'AcceptTask',
+			'description' => '接任务',
+        );
+
+        $trade_no = 'wallet'.$this->helpService->buildOrderSn('XH');
+		$trade = array(
+    		'uid' => $courier->uid,
+			'out_trade_no' => $order->order_sn,
+			'trade_no' => $trade_no,
+			'fee' => $fee,
+			'service_fee' => $order->service_fee,
+			'pay_id' => $order->pay_id,
+			'wallet_type' => 1,
+			'trade_status' => 'income',
+			'from' => 'order',
+			'trade_type' => 'AcceptTask',
+			'description' => '接任务' ,
+		);
+
+		$this->schedluUpdateOrderStatus($param);
+
+		$walletService->updateWallet($courier->uid,$wallet);
+		$walletService->store($walletData);
+		$tradeAccountService->addThradeAccount($trade);
+		//纸条通知接单人
+
+        $order = $this->getSingleOrderAllInfo($order->oid);
+        $this->messageService->SystemMessage2SingleOne($order->courier_id, '您好，发单人已结算你完成的任务，赶紧去看看吧。');
+
+        //推送通知给接单人
+        $custom = [
+			'open' => 'mytask',
+			'data' => $order->description,
+		];
+        $this->pushService->PushUserTokenDevice('校汇任务', '您好，发单人已结算你完成的任务，赶紧去看看吧。', $order->courier_id,1,$custom);
 	}
 	public function delete($where)
 	{

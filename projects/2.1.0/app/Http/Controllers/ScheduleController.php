@@ -25,7 +25,6 @@ use App\Events\Integral\Integrals;
 use App\Http\Controllers\Controller;
 use App\Services\TelecomService;
 use App\Services\PushService;
-use App\Services\OrderService;
 
 class ScheduleController extends Controller
 {
@@ -55,7 +54,6 @@ class ScheduleController extends Controller
                          PushService $pushService,
                          GameService $gameService,
 						 OrderInfoService $orderInfoService,
-						 OrderService $orderService,
 						 ShopService $shopService)
     {
         $this->orderService = $orderService;
@@ -68,13 +66,12 @@ class ScheduleController extends Controller
         $this->pushService = $pushService;
         $this->gameService = $gameService;
 		$this->shopService = $shopService;
-		$this->orderService = $orderService;
 		$this->orderInfoService = $orderInfoService;
     }
     public function  autoFinishWork()
     {
 	    set_time_limit(0);
-    	$orders = Order::select('oid','courier_id','owner_id','order_sn','updated_at','total_fee','service_fee','fee','pay_id')->where('status','finish')->where('updated_at','<=',DB::raw('(select date_sub(now(), interval 24 HOUR))'))->orderBy('oid','DESC')->get();
+    	$orders = Order::select('oid','courier_id','owner_id','order_sn','updated_at','total_fee','service_fee','fee','pay_id')->where('status','finish')->where('updated_at','<=',DB::raw('(select date_sub(now(), interval 24 HOUR))'))->where('order_id','=','0')->orderBy('oid','DESC')->get();
    // 	if($_SERVER['SERVER_NAME']!='127.0.0.1'){
 			//return [
 			//	'code' => '404',
@@ -187,8 +184,9 @@ class ScheduleController extends Controller
 	/*  24小时后通知收货 */
 	private function shipping()
 	{
-		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid'))
-								->where('shipping_status',1)
+		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid,order_info.total_fee,order_info.order_sn,shop.shop_id,shop.uid as shop_uid,shop.service_rate,shop.shop_type'))
+                                ->Join('shop','shop.shop_id','=','order_info.shop_id')
+								->where('shipping_status','<>',2)
                                 ->where('notice',0)
 								->where('shipping_time','<=',DB::raw('(select date_sub(now(), interval 24 HOUR))'))
 								->get();
@@ -202,35 +200,47 @@ class ScheduleController extends Controller
 				'content' => '您的订单已经发货超过24小时，如果已收到货物请及时确认收货。24小时后将自动收货，如未收到货物请联系管理员',
 			],
 		];
+        //var_dump($order_infos);exit;
 		foreach($order_infos as $key => $order_info)
 		{
-			$data['data']['url'] = config('app.web_url').'/shop/shop-orderDetail.html?device=android&order_id='.$order_info->order_id;
-            $this->messageService->SystemMessage2SingleOne($order_info->uid, $data['data']['content']);
-			$ret = $this->pushService->PushUserTokenDevice($data['data']['title'], $data['data']['content'], $order_info->uid,2,$data);
-            $this->orderInfoService->updateOrderInfoById($order_info->order_id,['notice' => 1]);
+            $task = $this->orderService->getOrder(['order_id' => $order_info->order_id],['*'],false);
+
+            if($order_info->shop_type == 1 || ($task && $task->status == 'finish'))
+            {
+    			$data['data']['url'] = config('app.web_url').'/shop/shop-orderDetail.html?device=android&order_id='.$order_info->order_id;
+                $this->messageService->SystemMessage2SingleOne($order_info->uid, $data['data']['content']);
+    			$ret = $this->pushService->PushUserTokenDevice($data['data']['title'], $data['data']['content'], $order_info->uid,2,$data);
+                $this->orderInfoService->updateOrderInfoById($order_info->order_id,['notice' => 1]);
+            }
 		}
 	}
 	/*  48小时后自动收货 */
 	private function shipped()
 	{
-		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid,order_info.total_fee,order_info.order_sn,shop.shop_id,shop.uid as shop_uid,shop.service_rate'))
-								->rightJoin('shop','shop.shop_id','=','order_info.shop_id')
-								->rightJoin('user','user.uid','=','shop.uid')
-								->where('order_info.shipping_status',1)
+		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid,order_info.total_fee,order_info.order_sn,shop.shop_id,shop.uid as shop_uid,shop.service_rate,shop.shop_type'))
+								->Join('shop','shop.shop_id','=','order_info.shop_id')
+								->Join('user','user.uid','=','shop.uid')
+								->where('order_info.shipping_status','<>',2)
 								->where('order_info.shipping_time','<=',DB::raw('(select date_sub(now(), interval 48 HOUR))'))
+                                ->orderBy('order_info.order_id','desc')
 								->get();
+
         foreach($order_infos as $key => $order_info)
 		{
 			$shop = (object)array();
 			$shop->shop_id = $order_info->shop_id;
 			$shop->uid = $order_info->shop_uid;
 			$shop->service_rate = $order_info->service_rate;
-			$this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
+            $shop->shop_type = $order_info->shop_type;
+            if($shop->shop_type == 1)
+            {
+                $this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
+            }
 			$task = $this->orderService->getOrder(['order_id' => $order_info->order_id],['*'],false);
-
-			if($task) {
-				$task->uid = $shop->uid;
-				$this->orderService->confirmFinishWork($task,$this->walletService,$this->tradeAccountService);
+			if($task && $task->status == 'finish') {
+                $this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
+				$task->uid = $order_info->shop_uid;
+				$this->orderService->autoConfirmFinishWork($task,$this->walletService,$this->tradeAccountService);
 			}
 			$data = [
 				'refresh' => 1,
