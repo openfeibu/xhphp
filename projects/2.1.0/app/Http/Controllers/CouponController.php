@@ -86,48 +86,60 @@ class CouponController extends Controller
 	*/
 	public function couponLottery(Request $request)
 	{
-		$user = $this->userService->getUser();
-		$game = $this->gameService->checkGame(['name' => 'coupon']);
-		$game_user_count = $this->gameService->getGameUserCount(['uid' => $user->uid,'game_id' => $game->id]);
-		if(isset($game_user_count) && $game_user_count->count >= 1)
-		{
-			throw new \App\Exceptions\Custom\OutputServerMessageException('已参加过活动');
-		}
-		$prizes = $this->gameService->getCouponPrizes();
+		$fp = fopen("lock.txt", "w+");
+		if (flock($fp, LOCK_NB | LOCK_EX)) {
+			@flock($fp, LOCK_UN);
+			$user = $this->userService->getUser();
+			$game = $this->gameService->checkGame(['name' => 'coupon']);
+			$game_user_count = $this->gameService->getGameUserCount(['uid' => $user->uid,'game_id' => $game->id]);
+			if(isset($game_user_count) && $game_user_count->count >= 1)
+			{
+				throw new \App\Exceptions\Custom\OutputServerMessageException('已参加过活动');
+			}
+			$prizes = $this->gameService->getCouponPrizes();
 
-		foreach ($prizes as $key => $val) {
-		    $arr[$val['prize_id']] = $val->prize_value;
-		}
-		$rid = get_rand($arr); //根据概率获取奖项id
-		$prize = $this->gameService->getCouponPrize(['prize_id' => $rid]);
+			foreach ($prizes as $key => $val) {
+			    $arr[$val['prize_id']] = $val->prize_value;
+			}
+			$rid = get_rand($arr); //根据概率获取奖项id
+			$prize = $this->gameService->getCouponPrize(['prize_id' => $rid]);
 
-		$this->couponService->createUserCoupon([
-			'uid' => $user->uid,
-			'overdue' => date("Y-m-d H:i:s",strtotime("+1week",time())) ,
-	        'receive' => dtime(),
-			'status' => 'unused',
-	        'min_price' => $prize->min_price,
-	        'price' => $prize->price,
-		]);
-		$this->gameService->createUserPrize([
-			'uid' => $user->uid,
-			'prize_name' => $prize->price_desc,
-			'game_id' => 2
-		]);
-		if(!$game_user_count){
-			$this->gameService->createGameUserCount([
+			$this->couponService->createUserCoupon([
 				'uid' => $user->uid,
-				'game_id' => $game->id,
-		        'num' => 1,
-		        'count' => 1,
-		        'lasttime' => dtime(),
-		        'share_num' => 0,
+				'overdue' => date("Y-m-d H:i:s",strtotime("+1week",time())) ,
+		        'receive' => dtime(),
+				'status' => 'unused',
+		        'min_price' => $prize->min_price,
+		        'price' => $prize->price,
 			]);
+			$this->gameService->createUserPrize([
+				'uid' => $user->uid,
+				'prize_name' => $prize->price_desc,
+				'game_id' => 2
+			]);
+			if(!$game_user_count){
+				$this->gameService->createGameUserCount([
+					'uid' => $user->uid,
+					'game_id' => $game->id,
+			        'num' => 1,
+			        'count' => 1,
+			        'lasttime' => dtime(),
+			        'share_num' => 0,
+				]);
+			}
+			return [
+				'code' => 200,
+				'data' => $prize
+			];
+
 		}
-		return [
-			'code' => 200,
-			'data' => $prize
-		];
+		else {
+			return [
+				'code' => 200,
+				'detail' => '系统繁忙'
+			];
+		}
+		@fclose($fp);
 	}
 
 }
