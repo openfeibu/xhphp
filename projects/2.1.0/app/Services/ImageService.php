@@ -246,7 +246,7 @@ class ImageService
             File::makeDirectory($directory, 0755, true);
             File::makeDirectory($thumb_directory, 0755, true);
         }
-		
+
 		//保存图片文件到服务器
 		$i = 0;
 		foreach ($files['uploadfile'] as $file) {

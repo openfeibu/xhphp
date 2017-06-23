@@ -101,7 +101,7 @@ class UserController extends Controller
             $user_data = [
                 'password' => $request->password,
                 'nickname' => isset($request->nickname) ? $request->nickname : $user->nickname,
-                
+
                 'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : $user->avatar_url ,
             ];
 			$user_info_data = [
@@ -440,6 +440,11 @@ class UserController extends Controller
     public function uploadAvatarFile(Request $request)
     {
         //上传头像文件
+        $rule = [
+            'token' => 'required',
+        ];
+        $this->helpService->validateParameter($rule);
+
         $images_url = $this->imageService->uploadImages(Input::all(), 'avatar');
 
         //更新用户头像链接
