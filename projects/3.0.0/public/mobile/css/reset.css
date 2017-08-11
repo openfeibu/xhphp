@@ -1,0 +1,177 @@
+/*公用默认*/
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{padding:0;margin:0;-webkit-tap-highlight-color:rgba(255,255,255,0);}
+section,article,aside,header,footer,nav,dialog,figure{display:block;}
+ol,ul{list-style:none;}
+h1,h2,h3,h4,h5,h6{font-size:100%; font-weight:normal;}
+img{border:0;vertical-align:middle;}
+input{vertical-align:middle;}
+table{border-collapse:collapse;border-spacing:0;}
+address,caption,cite,code,dfn,em,th,var,i{font-weight:normal;font-style:normal;}
+input[type="radio"], input[type="checkbox"], input[type="submit"], input[type="rest"], input[type="button"], button, select {cursor:pointer;-webkit-appearance : none ;outline:none }
+input[type="text"], input[type="number"], input[type="tel"], input[type="password"], input[type="submit"], input[type="rest"], input[type="button"], button, textarea {/*-webkit-border-radius:0;*/-webkit-appearance:none;-moz-appearance:none;outline:none}
+a{color:#333333;text-decoration:none;}
+a,img{border:0;}
+html,body{height:100%;font-size:14px/1.5em;/*font-family:Arial,Helvetica,sans-serif;font-family:"Microsoft YaHei";*/font-family: Microsoft YaHei,Helvetica Neue,Helvetica,Roboto,Heiti SC,STHeiTi,Arial,sans-serif;}
+.clearfix:after{display:block;clear:both;height:0;visibility:hidden;font-size:0;line-height:0;content:''}
+.clearfix{zoom:1}
+.red{color:#f85b4d}
+.blue{color:#5079d5}
+.fl{float: left;}
+.fr{float: right;}
+body{margin:0 auto;font-size: 16px;}
+select {
+  /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+  border-right: solid 1px #000;
+  border-radius: 0;
+  /*很关键：将默认的select选择框样式清除*/
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+
+  /*在选择框的最右侧中间显示小箭头图片*/
+  background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll 95% center transparent;
+
+
+  /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+  padding-right: 0.14rem;
+}
+
+#app{height: 100%;}
+.bgf5{background:#f5f5f5;}
+.pd{padding-top: 48px;padding-bottom: 55px;}
+.pt{padding-top: 48px;}
+.pb01{padding-bottom: 55px;}
+.mt01{margin-top:10px;}
+.mint-indicator-mask{z-index: 999}
+.boxSizing{
+  box-sizing:border-box;
+-moz-box-sizing:border-box; /* Firefox */
+-webkit-box-sizing:border-box; /* Safari */
+}
+.h2rem{height: 2rem;}
+.login{background: url("../images/bg.jpg")}
+.login .logo{}
+.login .logo img{padding:1rem 0;display: block;margin:0 auto;}
+.login .login_form{padding: 0 1rem;}
+.login .login_form input[type="text"],.login .login_form input[type="password"]{text-indent: 1em;width: 100%;height: 0.8rem;border:none;background: #fff;border-radius: 5px;margin-bottom: 0.3rem;}
+.login .login_form input[type="submit"]{font-size: 0.32rem;width: 100%;height: 0.8rem;border:none;background: #324057;color: #fff;border-radius: 5px;margin-top: 0.5rem;}
+.login .login_form input[type="submit"]:active{opacity: 0.8}
+.shopOrder-item{min-height: 1.8rem;padding:0 0 0 0;border-bottom: 1px solid #eeeeee;background: #fff;margin:0.2rem 0;}
+.shopOrder-item .order-item-header{height: 0.6rem;line-height: 0.6rem;font-size: 0.24rem;color: #324057;padding: 0 0.25rem;border-bottom: 1px solid #dddddd;margin:0 0 0.1rem 0;}
+.shopOrder-item .order-item-header .shopNum{float: left;}
+.shopOrder-item .order-item-header .order_status{float: right;color: #FF4949;}
+.shopOrder-item .order-item-header .order_status span{color: #222;}
+.shopOrder-item .order-item-bottom{height: 0.6rem;line-height: 0.6rem;font-size: 0.24rem;color: #324057;padding: 0 0.25rem;border-top: 1px solid #dddddd;margin:0 0 0.1rem 0;}
+.shopOrder-item .imgsBox{display: block;}
+.shopOrder-item .img{width: 1.8rem;height: 1.8rem;float: left;margin:0 0.25rem;border-radius: 5px;overflow: hidden;}
+.shopOrder-item .img img{width: 1.8rem;height: 1.8rem;}
+.shopOrder-item .test{margin-left: 2.3rem;font-size: 0.28rem;color: #666;line-height: 0.45rem;}
+.shopOrder-item .test2{border-top: 1px solid #eeeeee;font-size: 0.28rem;color: #666;line-height: 0.45rem;padding:0 0.25rem;margin:0.1rem 0;}
+.shopOrder-item .shopName{font-size: 0.24rem;color: #324057;line-height: 0.45rem;overflow: hidden;padding-right: 0.2rem;}
+.shopOrder-item .status_desc{font-size: 0.24rem;color: #324057;line-height: 0.45rem;overflow: hidden;padding-right: 0.2rem;}
+.shopOrder-item .count{font-size: 0.28rem;color:#FF4949;line-height: 0.55rem;}
+.shopOrder-item .order_count{font-size: 0.28rem;color:#FF4949;line-height: 0.55rem;}
+.fb-home-header{position: relative;height: 5rem;width: 100%;background: url("../images/bg.jpg") no-repeat top center;overflow: hidden;}
+.fb-home-img{width: 1.5rem;height: 1.5rem;border-radius: 50%;overflow: hidden;margin:0.8rem auto 0 auto;}
+.fb-home-img img{width: 100%;height: 100%;}
+.fb-home-name{text-align: center;color: #fff;line-height:1rem;}
+.fb-home-header ul{position: absolute;bottom: 0;height: 1.45rem;border-top: 1px solid #fff;width: 100%;text-align: center;}
+.fb-home-header ul li{display:inline-block;*display:inline;*zoom:1;width: 32%;padding-top: 0.22rem;}
+.fb-home-header ul li p{font-size: 0.32rem;color: #fff;line-height: 0.5rem;}
+.fb-home-header ul li span{font-size: 0.28rem;color: #fff;line-height: 0.5rem;}
+.fb-home-power{}
+.fb-home-power .home-power-title{height: 1.2rem;line-height: 1.2rem;text-align: center;color: #54a4ef;font-size: 0.32rem;position: relative;}
+.fb-home-power .home-power-title:before{content: "";position: absolute;top:50%;left:1rem;width: 2rem;height: 2px;background: #54a4ef;}
+.fb-home-power .home-power-title:after{content: "";position: absolute;top:50%;right:1rem;width: 2rem;height: 2px;background: #54a4ef;}
+.fb-home-power ul{height: 1.8rem;text-align: left;padding: 0.3rem 0;}
+.fb-home-power ul li{text-align: center;width: 23%;height: 1.8rem;display: inline-block;*display:inline;*zoom:1;vertical-align: top;}
+.fb-home-power ul li.power01{background: url("../images/power01.png") no-repeat center top;background-size: 1.1rem auto;}
+.fb-home-power ul li.power02{background: url("../images/power02.png") no-repeat center top;background-size: 1.1rem auto;}
+.fb-home-power ul li.power03{background: url("../images/power03.png") no-repeat center top;background-size: 1.1rem auto;}
+.fb-home-power ul li.power04{background: url("../images/power04.png") no-repeat center top;background-size: 1.1rem auto;}
+.fb-home-power ul li.power05{background: url("../images/power05.png") no-repeat center top;background-size: 1.1rem auto;}
+.fb-home-power ul li.power06{background: url("../images/power06.png") no-repeat center top;background-size: 1.1rem auto;}
+.fb-home-power ul li a{padding-top: 1.1rem;display: block;line-height: 0.7rem;color: #000;font-size: 0.3rem;}
+.fb-home-power ul li:active{background-color: #eee;}
+.power-title{height: 0.4rem;line-height: 0.4rem;border-left: 5px solid #54a4ef;text-indent: 5px;font-size: 0.32rem;color: #000;}
+.mint-cell-value .img{width: 1.2rem;height: 1.2rem;border-radius: 50%;border:1px solid #eee;overflow: hidden;margin:0.2rem 0;}
+.mint-cell-value .img img{width: 100%;height: 100%;}
+.mint-cell-value .proimg{width: 1.8rem;height: 1.8rem;}
+.mint-cell-value .proimg img{width: 1.8rem;height: 1.8rem;}
+
+
+.mint-tab-item a{display: block;}
+.mint-tabbar > .mint-tab-item.is-selected{background: #fff !important}
+#worder_de{background:#f5f5f5;width: 100%;height: 100%;}
+.checkMap{padding: 0 0.25rem 0.1rem 0.25rem;min-height: 1rem;background: #fff url("http://web.feibu.info/images/map_bg.jpg") repeat-x bottom;background-size:auto 0.1rem;}
+.usermap {padding: 0.15rem 0.25rem;background: url("../images/icon01.png") no-repeat right center;background-size: auto 0.3rem}
+.usermap  .li_header{width: 100%;line-height: 0.6rem;height: 0.6rem;font-size: 0.32rem;color: #666666;}
+.usermap  .li_bottom{width: 100%;line-height: 0.6rem;height: 0.6rem;font-size: 0.32rem;color: #666666;}
+.usermap  .li_bottom span{color: #ef7272;}
+.shopOrder_info{background:#fff;}
+.shopOrder_info .shopName{height: 0.7rem;background: #fafafa;line-height: 0.7rem;padding: 0 0.25rem;}
+.shopOrder_info ul{}
+.shopOrder_info ul li{padding: 0.3rem 0.25rem;height: 1.5rem;border-bottom: 1px solid #eeeeee;}
+.shopOrder_info ul li .img{width: 1.5rem;height: 1.5rem;float: left;}
+.shopOrder_info ul li .img img{width: 1.5rem;height: 1.5rem;}
+.shopOrder_info ul li .test{height: 1.5rem;margin-left: 1.8rem;}
+.shopOrder_info ul li .test .proName{font-size: 0.32rem;color: #000;line-height: 0.45rem;height: 0.45rem;overflow: hidden;}
+.shopOrder_info ul li .test .goods_desc{font-size: 0.28rem;color: #999;line-height: 0.45rem;height: 0.45rem;overflow: hidden;}
+.shopOrder_info ul li .test .moneyNum{font-size: 0.36rem;color: #000;line-height: 0.45rem;padding-top: .1rem;}
+.shopOrder_info ul li .test .moneyNum span:nth-of-type(1){color: #FF4949;}
+.shopOrder_info ul li .test .moneyNum span:nth-of-type(2){color: #666666;margin-left: 0.1rem;}
+.order_money{background:#fff;padding:0.1rem 0.25rem;border-bottom: 1px solid #eeeeee;font-size: 0.28rem;line-height: 0.6rem;}
+.order_money p{height: 0.6rem;}
+.order_money p:nth-of-type(5) span{color: #FF4949;}
+.order_money label{color: #999;}
+.order_money span{color: #222;}
+.money_count{background:#fff;padding:0.2rem 0.25rem;text-align: right;font-size: 0.28rem;color: #222;line-height: 0.6rem;}
+.money_count span{color: #FF4949;}
+#worder_de .order_info{background: #fff;margin-top: 0.2rem;padding: 0.25rem;}
+#worder_de .order_info p{line-height: 0.6rem;font-size: 0.28rem;color: #222;}
+#worder_de .submitButton{position: fixed;bottom:0;left:0;width: 100%;}
+#worder_de .delivery,.returnMoney,.closeOrder,.takeGood,.refund,.gopay{height: 0.9rem;line-height: 0.9rem;text-align: center;background: #80b995;color: #fff;font-size: .32rem;float: left;}
+#worder_de .closeOrder{background: #999;}
+#worder_de .order_smark{padding: 0.2rem 0.25rem;font-size: 0.28rem;line-height: 0.35rem;color: #222;border-bottom: 1px solid #eee;}
+.mint-popup{background: rgba(255,255,255,1);height: 0.8rem;line-height: 0.8rem;width: 100%;text-align: center;left:0;}
+.icon-success{background: url(http://web.feibu.info/images/loginReg/icon_login_headpor.png) no-repeat center;height: 0.8rem;background-size:auto 100%;}
+.noOrder{background: url("../images/noOrder.png") no-repeat 55% 3rem;height: 100%;background-size:2rem auto;}
+.noOrder span{padding: 5.2rem 0 0 0;display: block;text-align: center;font-size: 0.3rem;color: #222}
+.product-item .proimg{float: left;}
+.product-item .proName {
+    display:block;width: 100%;margin: 0 0 0 2.05rem;line-height: 0.5rem;color: #222;
+
+}
+.product-item .proDec {
+    display:block;margin: 0 0 0 2.05rem;line-height: 0.5rem;color: #999;font-size: 0.28rem;
+
+}
+.product-item .money{display: block;margin: 0 0 0 2.05rem;line-height: 0.5rem;}
+.product-item .mint-cell-value{align-items:flex-start !important;display:block;width: 100%;}
+.product-item{min-height: 1.8rem;padding:0.2rem 0;border-bottom: 1px solid #eeeeee;background: #fff;margin:0.2rem 0;}
+.product-item .mint-cell:last-child{background-image:none;}
+.product-item .noBg:before{content: "";position: absolute;width: 1.8rem;height: 1.8rem;background:rgba(255,255,255,0.5) url("http://web.feibu.info/images/no_kucun_image.png") no-repeat center;background-size:cover;}
+.product-item .mint-cell-wrapper{background-image: none}
+.productImg{width: 100%;max-height:4rem;position: relative;}
+.productImg img{max-width: 100%;max-height:4rem;display: block;margin:0 auto;}
+.proForm .input-item{padding: 0 0.25rem;min-height: 1rem;line-height: 1rem;font-size: 0.3rem;border-bottom:2px solid #f5f5f5}
+.proForm .input-item label{width: 25%;float: left;text-align: left;}
+.proForm .input-item input{width: 73%;float: left;border:none;height: 1rem;font-size: 0.3rem;}
+.proForm .input-item select{width: 73%;float: left;border:none;height: 1rem;font-size: 0.3rem;}
+.proForm .input-item textarea{width: 100%;border:1px solid #f5f5f5;height: 2rem;font-size: 0.3rem;line-height: 0.5rem;resize:none;}
+.pro-updata-submit{height: 41px;width: 100%;line-height: 41px;text-align: center;font-size: 0.32rem;color: #fff;position: fixed;bottom:0;left:0;}
+#bookpic{position: absolute;top:0;left:0;width: 100%;height: 100%;opacity: 0}
+.changeClass {width: 100%;height: 0.8rem;background: #fff;text-align: left;}
+.changeClass label{margin-left:0.25rem;height: 0.8rem;line-height: 0.8rem;display: inline-block;*display: inline;*zoom:1;font-size: 0.3rem;text-align: right;}
+.changeClass select{border:none;width: 30%;height: 0.8rem;line-height: 0.8rem;display: inline-block;*display: inline;*zoom:1;font-size: 0.3rem;}
+.mintui-add:before{content: "";display:block;width: 40px;height: 40px;background: url("http://web.feibu.info/images/postTopic.png") no-repeat right center;background-size:20px auto;}
+.fade-enter-active, .fade-leave-active {
+  transition: all .3s;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+.mint-datetime{height: 293px;}
+.el-form-item__error{text-align: center;font-size: 0.3rem;color: #FF4949;line-height: 1rem;}
+.proForm{background: #fff;}
