@@ -46,6 +46,10 @@ Route::get('user/getMobileBytoken','UserController@getMobileBytoken');
 Route::post('user/uploadImage','UserController@uploadImage')->name('user_uploadImage');
 Route::get('pay','UserController@pay');
 Route::post('user/registerVerify','UserController@registerVerify')->name('user_registerVerify');
+Route::post('user/zhimaInitialize','UserController@zhimaInitialize')->name('user_zhimaInitialize');
+Route::post('user/zhimaCertify','UserController@zhimaCertify')->name('user_zhimaCertify');
+Route::post('user/zhimaQuery','UserController@zhimaQuery')->name('user_zhimaQuery');
+Route::post('user/zhimaReal','UserController@zhimaReal')->name('user_zhimaReal');
 
 Route::get('order/getOrderList', 'OrderController@getOrderList')->name('order_getOrderList');
 Route::get('order/getOrder', 'OrderController@getOrder')->name('order_getOrder');

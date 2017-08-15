@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Validator;
 use DB;
+use Log;
 use App\TradeAccount;
 use App\ShippingConfig;
 use Illuminate\Http\Request;
@@ -286,4 +287,109 @@ class HelpService
 		}
 		return $shipping_fee;
 	}
+	/*初始化*/
+	public function zhima_initialize($bodys)
+	{
+		$host = config('zhima.host');
+		$path = config('zhima.initialize_path');
+		$method = "POST";
+		$appcode = config('zhima.appcode');
+		$headers = array();
+		array_push($headers, "Authorization:APPCODE " . $appcode);
+		//根据API的要求，定义相对应的Content-Type
+		array_push($headers, "Content-Type".":"."application/x-www-form-urlencoded; charset=UTF-8");
+		$querys = "";
+		$bodys = http_build_query($bodys);
+		$url = $host . $path;
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_FAILONERROR, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		if (1 == strpos("$".$host, "https://"))
+		{
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		}
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);
+		$data = curl_exec($curl);
+		Log::debug($data);
+		$data = json_decode($data,true);
+        if(!$data['success'])
+        {
+			throw new \App\Exceptions\Custom\OutputServerMessageException($data['message']);
+        }
+		return $data;
+	}
+	/*认证*/
+	public function zhima_certify($bodys)
+	{
+		$host = config('zhima.host');
+		$path = config('zhima.certify_path');
+		$method = "POST";
+		$appcode = config('zhima.appcode');
+		$headers = array();
+		array_push($headers, "Authorization:APPCODE " . $appcode);
+		//根据API的要求，定义相对应的Content-Type
+		array_push($headers, "Content-Type".":"."application/x-www-form-urlencoded; charset=UTF-8");
+		$querys = "";
+		$bodys = http_build_query($bodys);
+		$url = $host . $path;
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_FAILONERROR, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		if (1 == strpos("$".$host, "https://"))
+		{
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		}
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);
+		$data = curl_exec($curl);
+		Log::debug($data);
+		$data = json_decode($data,true);
+        if(!$data['success'])
+        {
+			throw new \App\Exceptions\Custom\OutputServerMessageException($data['message']);
+        }
+		return $data;
+	}
+	public function zhima_query($bodys)
+	{
+		$host = config('zhima.host');
+		$path = config('zhima.query_path');
+	    $method = "POST";
+	   	$appcode = config('zhima.appcode');
+	    $headers = array();
+	    array_push($headers, "Authorization:APPCODE " . $appcode);
+	    //根据API的要求，定义相对应的Content-Type
+	    array_push($headers, "Content-Type".":"."application/x-www-form-urlencoded; charset=UTF-8");
+	    $querys = "";
+	    $bodys = http_build_query($bodys);
+	    $url = $host . $path;
+
+	    $curl = curl_init();
+	    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+	    curl_setopt($curl, CURLOPT_URL, $url);
+	    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+	    curl_setopt($curl, CURLOPT_FAILONERROR, false);
+	    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	    curl_setopt($curl, CURLOPT_HEADER, false);
+	    if (1 == strpos("$".$host, "https://"))
+	    {
+	        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+	    }
+	    curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);
+		$data = curl_exec($curl);
+		return $data;
+	}
+
 }

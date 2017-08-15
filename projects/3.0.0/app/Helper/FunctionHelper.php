@@ -176,3 +176,26 @@ if(!function_exists('get_nickname'))
 
 	}
 }
+if(!function_exists('get_device_type'))
+{
+	function get_device_type()
+	{
+		//全部变成小写字母
+		$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+		if(strpos($agent,'iphone') || strpos($agent,'ipad'))
+		{
+			$type ='ios';
+		}
+		else if(strpos($agent,'android'))
+		{
+			$type ='and';
+		}
+		else if (strpos($agent,'MicroMessenger')) {
+			$type = 'wechat';
+		}
+		else{
+			$type = 'web';
+		}
+		return type;
+	}
+}

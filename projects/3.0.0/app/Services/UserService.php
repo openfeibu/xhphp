@@ -219,7 +219,7 @@ class UserService
     /**
      * 更新Token和登陆IP
      */
-    public function updateLoginStatus($logout = 0)
+    public function updateLoginStatus($logout = 0,$user = [])
     {
         try {
             return $this->userRepository->updateLoginStatus($logout);

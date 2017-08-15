@@ -85,7 +85,7 @@ return [
     'timezone' => ':attribute 必须是个有效的区域。',
     'unique'   => ':attribute 已经被占用',
     'url'      => ':attribute 的格式无效',
-
+    'identitycards' => '身份证号错误！',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -212,15 +212,17 @@ return [
         'telecom_phone' => '电信手机号码',
 		'telecom_iccid' => 'iccid',
 		'telecom_outOrderNumber' => '常用号码',
-		'package_id' => '套餐',  		
-		'idcard' => '身份证号码', 
-		'name' => '姓名',  		  
+		'package_id' => '套餐',
+		'idcard' => '身份证号码',
+		'name' => '姓名',
 		'major' => '专业',
 		'dormitory_no' => '宿舍号',
-		'student_id' => '学号',	
+		'student_id' => '学号',
 		'transactor' => '办理人',
 		'consignee' => "收货人姓名",
         'address' => "收货地址",
+        'cert_name' => '姓名',
+        'cert_no' => '身份证'
     ],
 
 ];

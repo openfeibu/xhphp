@@ -16,9 +16,9 @@ class TelecomController extends Controller
 	protected $userService;
 
 	protected $helpService;
-	
+
 	protected $telecomService;
-	
+
 	public function __construct (UserService $userService,
 								 TelecomService $telecomService,
 								 HelpService $helpService)
@@ -33,40 +33,40 @@ class TelecomController extends Controller
 	}
     public function queryRealName (Request $request)
     {
-	    
+
 	    $user = $this->userService->getUser();
-		
+
 	    $ordersCount = $this->telecomService->getUserTelecomOrdersCount($user->uid);
 
 		if($ordersCount>=3){
 			throw new \App\Exceptions\Custom\OutputServerMessageException("抱歉，一个用户最多只能办理三次套餐");
 		}
-		
+
 	    $rules = [
 			'phone' => 'required|regex:/^1[34578][0-9]{9}$/',
 			'iccid' => 'required|digits:6',
 			'outOrderNumber' => 'required|regex:/^1[34578][0-9]{9}$/'
 	    ];
-	    
+
 	    $this->helpService->validateParameter($rules);
 
-		
+
 		/*
 	    $real = $this->telecomService->getRealByPhone($request->phone);
 
 	    if($real&&$real->uid==$user->uid){
 		    return [
 		    	'code' => 200,
-		    	'detail' => '已实名', 
+		    	'detail' => '已实名',
 		    ];
 	    }
 	    else if($real&&$real->uid!=$user->uid){
 		    return [
 		    	'code' => 8403,
-		    	'detail' => '该手机号码已被其他人绑定', 
+		    	'detail' => '该手机号码已被其他人绑定',
 		    ];
 	    }*/
-	    $fields = array(			
+	    $fields = array(
 			'phone' => $request->phone,
 			'iccid' => $request->iccid,
 			'outOrderNumber' => $request->outOrderNumber,
@@ -79,17 +79,17 @@ class TelecomController extends Controller
 		}
 
 		$telecomOrder = $this->telecomService->hasTelecomOrder($request->phone);
-		
+
     	if($telecomOrder){
 	    	throw new \App\Exceptions\Custom\OutputServerMessageException('该手机号码已办理过套餐，不能再办理');
     	}
-    	
+
 		throw new \App\Exceptions\Custom\RequestSuccessException();
-		
+
     }
     public function  telecomPackage	(Request $request)
     {
-	    
+
     	$package = $this->telecomService->getPackageList();
     	return [
     		'code' => 200,
@@ -101,31 +101,31 @@ class TelecomController extends Controller
     }
     public function telecomPackageStore (Request $request)
     {
-	    
+
 	    $user = $this->userService->getUser();
-	    
+
 	    $ordersCount = $this->telecomService->getUserTelecomOrdersCount($user->uid);
 
 		if($ordersCount>=3){
 			throw new \App\Exceptions\Custom\OutputServerMessageException("抱歉，一个用户最多只能办理三次套餐");
 		}
-			   	
+
     	$rules = [
     		'telecom_phone' => 'required|string',
 			'telecom_iccid' => 'required|digits:6',
 			'telecom_outOrderNumber' => 'required|regex:/^1[34578][0-9]{9}$/',
-    		'package_id' => 'required|exists:telecom_package,package_id',  		
-    		'idcard' => 'required|string|size:18', 
-    		'name' => 'required|string',  		  
+    		'package_id' => 'required|exists:telecom_package,package_id',
+    		'idcard' => 'required|string|size:18',
+    		'name' => 'required|string',
     		'major' => 'required|string',
     		'dormitory_no' => 'required|string',
-    		'student_id' => 'required|string',	
+    		'student_id' => 'required|string',
     		'transactor' => 'sometimes|required|digits:3',
     	];
     	$this->helpService->validateParameter($rules);
 
-		
-		
+
+
     	$telecomOrder = $this->telecomService->hasTelecomOrder($request->telecom_phone);
     	if($telecomOrder){
 	    	throw new \App\Exceptions\Custom\OutputServerMessageException('该手机号码已办理过套餐，不能再办理');
@@ -140,10 +140,10 @@ class TelecomController extends Controller
 			'telecom_phone' => $request->telecom_phone,
 			'telecom_iccid' => $request->telecom_iccid,
 			'telecom_outOrderNumber' => $request->telecom_outOrderNumber,
-    		'idcard' => $request->idcard,   		  
+    		'idcard' => $request->idcard,
     		'major' => $request->major,
     		'dormitory_no' => $request->dormitory_no,
-    		'student_id' => $request->student_id,	
+    		'student_id' => $request->student_id,
     		'name' => $request->name,
     		'fee' => $telecomPackage->package_price,
     		'package_id' => $telecomPackage->package_id,
@@ -170,7 +170,7 @@ class TelecomController extends Controller
 			"show_url"		=> config('common.telecom_show_url'),
 			"app_pay"	=> "Y",//启用此参数能唤起钱包APP支付宝
 		);
-		
+
     	$this->telecomService->storeTelecomOrderTemStore($telecomOrderData);
     	$html_text = $alipay->buildRequestForm($parameter,"get", "确认");
 		return [
@@ -199,9 +199,9 @@ class TelecomController extends Controller
     }
     public function getTransactorTelecomOrders ()
     {
-	    
+
     	$user = $this->userService->getUser();
-		
+
     	if(!$user->transactor){
 	    	throw new \App\Exceptions\Custom\OutputServerMessageException('您没有该权限');
     	}
@@ -228,7 +228,7 @@ class TelecomController extends Controller
     	if(!$user->transactor||$user->transactor!='000'){
 	    	throw new \App\Exceptions\Custom\OutputServerMessageException('您没有该权限');
     	}
-    	
+
     	$count_data = $this->telecomService->getTelecomOrdersCount();
     }
 }

@@ -10,15 +10,14 @@ return [
     | 阿里大于提供的短信模板
     |
     */
-   
 	'1' => [
 		'pay_name' => 'alipay',
 		'description' => '支付宝'
 	],
-	//'2' => [
-	//	'pay_name' => 'weixin',
-	//	'description' => '微信'
-	//],
+	'2' => [
+		'pay_name' => 'wechat',
+		'description' => '微信'
+	],
 	'3' => [
 		'pay_name' => 'wallet',
 		'description' => '余额'

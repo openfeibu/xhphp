@@ -179,7 +179,7 @@ class UserRepository
 	public function updateUser($where,$user,$user_info)
 	{
 		User::where($where)->update($user);
-		UserInfo::where($where)->update($user_info); 
+		UserInfo::where($where)->update($user_info);
 	}
 	/**
 	 * 检验账号密码是否一致

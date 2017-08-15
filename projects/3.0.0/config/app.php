@@ -151,6 +151,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 		//Latrell\Alipay\AlipayServiceProvider::class,
 		App\Providers\AlipayServiceProvider::class,
+
+        Overtrue\LaravelWechat\ServiceProvider::class,
     ],
 
     /*
@@ -198,10 +200,11 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        'Wechat'    => Overtrue\LaravelWechat\Facade::class
 
     ],
 
     //是否允许跨域请求
-    'allow_origin' => env('allow_origin', 'http://web.feibu.info'),
-
+    //'allow_origin' => env('allow_origin', 'http://web.feibu.info'),
+    'allow_origin' => env('allow_origin', 'http://192.168.3.33:33'),
 ];

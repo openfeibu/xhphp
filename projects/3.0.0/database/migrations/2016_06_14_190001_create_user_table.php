@@ -27,6 +27,7 @@ class CreateUserTable extends Migration
             $table->integer('integral')->default(0)->comment('用户的总积分');
             $table->integer('today_integral')->default(0)->comment('用户今日的积分');
             $table->decimal('wallet',10,2)->default(0)->comment('钱包');
+            $table->string('wxopenid', 255)->comment('微信openid');
             $table->timestamp('last_login');
             $table->timestamps();
 

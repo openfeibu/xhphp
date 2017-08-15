@@ -11,6 +11,8 @@ use App\Services\TradeAccountService;
 use App\Services\WalletService;
 use App\Services\OrderInfoService;
 use App\Services\SMSService;
+use EasyWeChat\Foundation\Application;
+use EasyWeChat\Payment\Order;
 
 class PayService
 {
@@ -106,6 +108,63 @@ class PayService
 						$data = $data.'&sign='.'"'.$rsa_sign.'"'.'&sign_type='.'"'.$alipay_config['sign_type'].'"';
 				        return $data;
 				}
+				break;
+			case 2:
+				$attributes = [
+					'body'             => 'iPad mini 16G 白色',
+					'detail'           => 'iPad mini 16G 白色',
+					'out_trade_no'     => '1217752501201407033233368018',
+					'total_fee'        => 5388, // 单位：分
+					'notify_url'       => 'http://xxx.com/order-notify',
+				];
+				switch($pay_platform)
+				{
+					case 'web':
+						$options = [
+							'app_id' => config('wechat.app_id'),
+							'payment' => [
+								'merchant_id'        => config('wechat.payment.merchant_id'),
+								'key'                => config('wechat.payment.key'),
+							],
+							'oauth' => [
+						        'only_wechat_browser' => false,
+						        'callback' => 'http://www.feibu.info/user/oauthCallback?order_id='.$data['order_id'],
+						    ],
+						];
+						$app = new Application($options);
+						$oauth = $app->oauth;
+						$response = $app->oauth->scopes(['snsapi_base'])->redirect();
+						var_dump($response->getTargetUrl());exit;
+						$payment = $app->payment;
+						$attributes['trade_type'] = 'JSAPI';
+						$attributes['openid'] = '';
+						$order = new Order($attributes);
+						$result = $payment->prepare($order);
+						if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
+						    $prepayId = $result->prepay_id;
+						}
+						$data = $payment->configForPayment($prepayId,false);
+						break;
+					default:
+						$options = [
+							'app_id' => config('wechat.app_payment.app_id'),
+							'payment' => [
+								'merchant_id'        => config('wechat.app_payment.merchant_id'),
+								'key'                => config('wechat.app_payment.key'),
+							],
+						];
+						$app = new Application($options);
+						$payment = $app->payment;
+						$attributes['trade_type'] = 'APP';
+						$order = new Order($attributes);
+						$result = $payment->prepare($order);
+						if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
+						    $prepayId = $result->prepay_id;
+						}
+						$data = $payment->configForAppPayment($prepayId);
+						break;
+				}
+				return $data;
 				break;
 			case 3:
 				$fee = 	$this->user->wallet - $data['total_fee'];

@@ -23,6 +23,7 @@ use App\Services\WalletService;
 use App\Services\TradeAccountService;
 use App\Services\CouponService;
 use App\Services\GameService;
+use EasyWeChat\Foundation\Application;
 
 class UserController extends Controller
 {
@@ -57,7 +58,7 @@ class UserController extends Controller
                          TradeAccountService $tradeAccountService)
     {
 	    parent::__construct();
-        $this->middleware('auth', ['except' => ['register', 'isMobileExist', 'login', 'resetPassword', 'getOthersInfo', 'sendRegisterSMS', 'sendResetPasswordSMS','getVerifyImageURL','pushToUsers','uploadImage','pay','registerVerify']]);
+        $this->middleware('auth', ['except' => ['register', 'isMobileExist', 'login', 'resetPassword', 'getOthersInfo', 'sendRegisterSMS', 'sendResetPasswordSMS','getVerifyImageURL','pushToUsers','uploadImage','pay','registerVerify','zhimaInitialize','zhimaCertify']]);
         $this->smsService = $smsService;
         $this->userService = $userService;
         $this->verifyCodeService = $verifyCodeService;
@@ -101,7 +102,7 @@ class UserController extends Controller
             $user_data = [
                 'password' => $request->password,
                 'nickname' => isset($request->nickname) ? $request->nickname : $user->nickname,
-                
+
                 'avatar_url' => isset($request->avatar_url) ? $request->avatar_url : $user->avatar_url ,
             ];
 			$user_info_data = [
@@ -238,7 +239,25 @@ class UserController extends Controller
         ];
         //绑定用户跟device_token
         $this->userService->bindDeviceToken($param);
-
+        $redirect_url = '';
+        if($request->platform == 'wechat')
+        {
+            $options = [
+                'app_id' => config('wechat.app_id'),
+                'payment' => [
+                    'merchant_id'        => config('wechat.payment.merchant_id'),
+                    'key'                => config('wechat.payment.key'),
+                ],
+                'oauth' => [
+                    'only_wechat_browser' => false,
+                    'callback' => config('app.url').'/user/oauthCallback?token='.$token,
+                ],
+            ];
+            $app = new Application($options);
+            $oauth = $app->oauth;
+            $response = $app->oauth->scopes(['snsapi_base'])->redirect();
+            $redirect_url = $response->getTargetUrl();
+        }
         //积分更新
         Event::fire(new Integrals('每日登录签到'));
 
@@ -246,9 +265,30 @@ class UserController extends Controller
             'code' => 200,
             'detail' => '请求成功',
             'token' => $token,
+            'redirect_url' => $redirect_url,
         ];
     }
-
+    public function oauthCallback(Request $request)
+    {
+        $options = [
+            'app_id' => config('wechat.app_id'),
+            'payment' => [
+                'merchant_id'        => config('wechat.payment.merchant_id'),
+                'key'                => config('wechat.payment.key'),
+            ],
+            'oauth' => [
+                'only_wechat_browser' => false,
+                'callback' => config('app.url').'/user/oauthCallback',
+            ],
+        ];
+        $app = new Application($config);
+        $oauth = $app->oauth;
+        // 获取 OAuth 授权结果用户信息
+        $user = $oauth->user();
+        $wxopenid = $user->getId();
+        $this->userService->updateUser(['token' => $request->token],['wxopenid' => $wxopenid]);
+        header('Location:http://web.feibu.info');
+    }
     public function logout()
     {
         //检验请求参数
@@ -778,4 +818,44 @@ class UserController extends Controller
 		$pay = config('pay');
 		return $pay;
 	}
+    public function zhimaReal(Request $request)
+    {
+        $rule = [
+            'cert_name' => 'required',
+            'cert_no' => 'required|identitycards'
+        ];
+        $this->helpService->validateParameter($rule);
+
+        $identityParam = [
+            'identity_type' => 'CERT_INFO',
+            'cert_type' => 'IDENTITY_CARD',
+            'cert_name' => $request->cert_name,
+            'cert_no' => $request->cert_no,
+        ];
+        $bodys = [
+            'bizCode' => 'FACE',
+            'identityParam' => json_encode($identityParam),
+        ];
+        $initialize_data = $this->helpService->zhima_initialize($bodys);
+
+        $bodys = [
+            'bizNo' => $initialize_data['data']['bizNo'],
+            'returnUrl' => config('web_url'),
+        ];
+        $certify_data = $this->helpService->zhima_certify($bodys);
+        return [
+            'code' => 200,
+            'detail' => '操作成功',
+            'url' => $certify_data['data']
+        ];
+    }
+
+    public function zhimaQuery()
+    {
+        $bodys = [
+            'bizNo' => 'ZM201708123000000121200565120148',
+        ];
+        $data = $this->helpService->zhima_query($bodys);
+        return $data;
+    }
 }

@@ -18,7 +18,7 @@ class AlipayServiceProvider extends ServiceProvider
 
 	public function register()
 	{
-		
+
 		$this->app->bind('alipay.mobile', function ($app)
 		{
 			$alipay_config = array_merge($app->config->get('alipay-mobile'),$app->config->get('alipay'));

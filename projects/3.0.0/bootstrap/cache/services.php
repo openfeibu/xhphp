@@ -28,6 +28,7 @@
     24 => 'App\\Providers\\EventServiceProvider',
     25 => 'App\\Providers\\RouteServiceProvider',
     26 => 'App\\Providers\\AlipayServiceProvider',
+    27 => 'Overtrue\\LaravelWechat\\ServiceProvider',
   ),
   'eager' => 
   array (
@@ -45,6 +46,7 @@
     11 => 'App\\Providers\\EventServiceProvider',
     12 => 'App\\Providers\\RouteServiceProvider',
     13 => 'App\\Providers\\AlipayServiceProvider',
+    14 => 'Overtrue\\LaravelWechat\\ServiceProvider',
   ),
   'deferred' => 
   array (

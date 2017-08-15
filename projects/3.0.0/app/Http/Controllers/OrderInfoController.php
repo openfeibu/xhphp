@@ -203,7 +203,7 @@ class OrderInfoController extends Controller
         $rules = [
         	'token' 	=> 'required',
         	'shop_id'  => 'required|integer',
-        	'pay_id' 	=> "required|integer|in:1,3",
+        	'pay_id' 	=> "required|integer|in:1,2,3",
         	'pay_password' => 'sometimes|required|string',
 			'user_coupon_id' => 'sometimes|integer|string',
         	'address_id' => 'required|integer',

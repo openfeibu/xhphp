@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "predis/predis": "^1.1",
         "latrell/alipay": "dev-master",
-        "gregwar/captcha": "1.*"
+        "gregwar/captcha": "1.*",
+        "overtrue/laravel-wechat": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
