@@ -74,27 +74,7 @@ class AlipayController extends Controller
 
 	    		}
 	    		else if (Input::get('trade_status') == 'TRADE_SUCCESS') {
-					$type = substr($out_trade_no,0,2);
-					if($type == 'RT'){
-						Log::debug("android支付宝支付回调 RT");
-
-						$this->orderService->updateOrderStatusNew($out_trade_no);
-						$order = $this->orderService->getOrderBysn($out_trade_no);
-			    		$trade = array(
-				    		'uid' => $order->owner_id,
-							'out_trade_no' => $out_trade_no,
-							'trade_no' => $trade_no,
-							'trade_status' => 'success',
-							'from' => 'order',
-							'trade_type' => 'ReleaseTask',
-							'wallet_type' => -1,
-							'fee' => $order->total_fee,
-							'service_fee'=> 0,
-							'pay_id' => 1,
-							'description' => '发布任务' ,
-			    		);
-		    		}
-					$this->tradeAccountService->addThradeAccount($trade);
+					$this->handleNotify($out_trade_no,$trade_no);
 	    		}
 
 				Log::debug("android支付宝支付回调 success");
@@ -147,63 +127,7 @@ class AlipayController extends Controller
 
     		}
     		else if (Input::get('trade_status') == 'TRADE_SUCCESS') {
-	    		$type = substr($out_trade_no,0,2);
-				if($type == 'RT'){
-		    		$this->orderService->updateOrderStatusNew($out_trade_no);
-					$order = $this->orderService->getOrderBysn($out_trade_no);
-		    		$trade = array(
-			    		'uid' => $order->owner_id,
-						'out_trade_no' => $out_trade_no,
-						'trade_no' => $trade_no,
-						'from' => 'order',
-						'fee' => $order->total_fee,
-						'service_fee'=> 0,
-						'pay_id' => 1,
-						'trade_type' => 'ReleaseTask',
-						'wallet_type' => -1,
-						'trade_status' => 'success',
-						'description' => '发布任务' ,
-		    		);
-	    		}else if($type == 'TP'){
-		    		$this->telecomService->updateTelecomTemOrder($out_trade_no,array('pay_status'=>1,'trade_no'=>$trade_no));
-		    		$telecomOrder = $this->telecomService->getTelecomOrderByNo($out_trade_no);
-					$trade = array(
-				        	'uid' => $telecomOrder->uid,
-							'out_trade_no' => $out_trade_no,
-							'trade_no' => $trade_no,
-							'trade_status' => 'success',
-							'wallet_type' => -1,
-							'from' => 'telecom_order',
-							'trade_type' => 'TelecomOrder',
-							'fee' => $telecomOrder->fee,
-							'service_fee' => 0,
-							'wallet_type' => -1,
-							'pay_id' => 1,
-							'description' => '电信套餐',
-			    	);
-	    		}else if($type == 'SP'){
-		    		$this->orderInfoService->updateOrderInfo($out_trade_no,['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
-		    		$order_info = $this->orderInfoService->isExistsOrderInfo(['order_sn' => $out_trade_no]);
-		    		$shop = $this->shopService->getShop(['shop_id' =>$order_info->shop_id],['uid']) ;
-		    		$user = $this->userService->getUserByUserID($shop->uid);
-		    		$this->orderInfoService->deGoodsNumber($order_info->order_id);
-					$this->smsService->sendSMS($user->mobile_no,'order_info',['sms_template_code' => config('sms.order_info'),'uid' => $shop->uid]);
-			    	$trade = array(
-			        	'uid' => $order_info->uid,
-						'out_trade_no' => $out_trade_no,
-						'trade_no' => $trade_no,
-						'trade_status' => 'success',
-						'wallet_type' => -1,
-						'from' => 'shop',
-						'trade_type' => 'Shop',
-						'fee' => $order_info->total_fee,
-						'service_fee' => 0,
-						'pay_id' => 1,
-						'description' => '校汇商店订单',
-		    		);
-
-	    		}
-		    	$this->tradeAccountService->addThradeAccount($trade);
+	    		$this->handleNotify($out_trade_no,$trade_no);
     		}
 		    Log::debug('Alipay notify get data verification success.', [
             	'out_trade_no' => Input::get('out_trade_no'),
@@ -286,4 +210,94 @@ class AlipayController extends Controller
 		    echo "fail";
 		}
     }
+	public function wechatNotify()
+	{
+		$options = [
+			'app_id' => config('wechat.app_id'),
+			'payment' => [
+				'merchant_id'        => config('wechat.payment.merchant_id'),
+				'key'                => config('wechat.payment.key'),
+			],
+		];
+		$app = new Application($options);
+		$response = $app->payment->handleNotify(function($notify, $successful){
+		    if ($successful) {
+				$out_trade_no = $notify->out_trade_no;
+				$trade_no = $notify->transaction_id;
+				Log::debug("wechat_out_trade_no:".$out_trade_no);
+				Log::debug("wechat_trade_no:".$trade_no);
+				return $this->handleNotify($out_trade_no,$trade_no);
+			}
+			return true;
+		});
+		return $response;
+	}
+	private function handleNotify($out_trade_no,$trade_no)
+	{
+		$type = substr($out_trade_no,0,2);
+		if($type == 'RT'){
+			$this->orderService->updateOrderStatusNew($out_trade_no);
+			$order = $this->orderService->getOrderBysn($out_trade_no);
+			$trade = array(
+				'uid' => $order->owner_id,
+				'out_trade_no' => $out_trade_no,
+				'trade_no' => $trade_no,
+				'from' => 'order',
+				'fee' => $order->total_fee,
+				'service_fee'=> 0,
+				'pay_id' => 1,
+				'trade_type' => 'ReleaseTask',
+				'wallet_type' => -1,
+				'trade_status' => 'success',
+				'description' => '发布任务' ,
+			);
+		}else if($type == 'TP'){
+			$this->telecomService->updateTelecomTemOrder($out_trade_no,array('pay_status'=>1,'trade_no'=>$trade_no));
+			$telecomOrder = $this->telecomService->getTelecomOrderByNo($out_trade_no);
+			$trade = array(
+					'uid' => $telecomOrder->uid,
+					'out_trade_no' => $out_trade_no,
+					'trade_no' => $trade_no,
+					'trade_status' => 'success',
+					'wallet_type' => -1,
+					'from' => 'telecom_order',
+					'trade_type' => 'TelecomOrder',
+					'fee' => $telecomOrder->fee,
+					'service_fee' => 0,
+					'wallet_type' => -1,
+					'pay_id' => 1,
+					'description' => '电信套餐',
+			);
+		}else if($type == 'SP'){
+			$order_info = $this->orderInfoService->getOrderInfoCustom(['order_sn' => $out_trade_no]);
+			if (!$order_info) {
+				return 'Order not exist.';
+			}
+			if ($order->pay_time) {
+			   return true;
+			}
+			$this->orderInfoService->updateOrderInfo($out_trade_no,['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
+
+			$shop = $this->shopService->getShop(['shop_id' =>$order_info->shop_id],['uid']) ;
+			$user = $this->userService->getUserByUserID($shop->uid);
+			$this->orderInfoService->deGoodsNumber($order_info->order_id);
+			$this->smsService->sendSMS($user->mobile_no,'order_info',['sms_template_code' => config('sms.order_info'),'uid' => $shop->uid]);
+			$trade = array(
+				'uid' => $order_info->uid,
+				'out_trade_no' => $out_trade_no,
+				'trade_no' => $trade_no,
+				'trade_status' => 'success',
+				'wallet_type' => -1,
+				'from' => 'shop',
+				'trade_type' => 'Shop',
+				'fee' => $order_info->total_fee,
+				'service_fee' => 0,
+				'pay_id' => 1,
+				'description' => '校汇商店订单',
+			);
+
+		}
+		$this->tradeAccountService->addThradeAccount($trade);
+		return true;
+	}
 }

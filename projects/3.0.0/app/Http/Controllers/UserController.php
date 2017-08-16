@@ -250,7 +250,7 @@ class UserController extends Controller
                 ],
                 'oauth' => [
                     'only_wechat_browser' => false,
-                    'callback' => config('app.url').'/user/oauthCallback?token='.$token,
+                    'callback' => config('app.turl').'/user/oauthCallback?token='.$token,
                 ],
             ];
             $app = new Application($options);
@@ -265,7 +265,7 @@ class UserController extends Controller
             'code' => 200,
             'detail' => '请求成功',
             'token' => $token,
-            'redirect_url' => $redirect_url,
+            'url' => $redirect_url,
         ];
     }
     public function oauthCallback(Request $request)
@@ -287,7 +287,7 @@ class UserController extends Controller
         $user = $oauth->user();
         $wxopenid = $user->getId();
         $this->userService->updateUser(['token' => $request->token],['wxopenid' => $wxopenid]);
-        header('Location:http://web.feibu.info');
+        header('location:http://tweb.feibu.info');
     }
     public function logout()
     {
