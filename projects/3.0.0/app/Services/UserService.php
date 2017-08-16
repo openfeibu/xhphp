@@ -147,7 +147,7 @@ class UserService
                                           $user['avatar_url']);
         return $user;
     }
-    public function updateUser($where = [],array $user ,array $user_info)
+    public function updateUser($where = [],$user = [] ,$user_info = [])
     {
         return $this->userRepository->updateUser($where,$user,$user_info);
     }

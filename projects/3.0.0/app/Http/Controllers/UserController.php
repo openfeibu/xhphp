@@ -206,7 +206,7 @@ class UserController extends Controller
             'mobile_no' => 'required|string|exists:user,mobile_no',
             'password' => 'required|alpha_dash',
             'verify_code' => 'sometimes|required',
-            'platform' => 'required|in:and,ios,web',
+            'platform' => 'required|in:and,ios,web,wechat',
             'device_token' => 'required_if:platform,and,ios',
             'push_server' => 'sometimes|required|in:xinge,xiaomi',
         ];
@@ -272,6 +272,7 @@ class UserController extends Controller
     {
         $options = [
             'app_id' => config('wechat.app_id'),
+			'secret' => config('wechat.secret'),
             'payment' => [
                 'merchant_id'        => config('wechat.payment.merchant_id'),
                 'key'                => config('wechat.payment.key'),
@@ -281,7 +282,7 @@ class UserController extends Controller
                 'callback' => config('app.url').'/user/oauthCallback',
             ],
         ];
-        $app = new Application($config);
+        $app = new Application($options);
         $oauth = $app->oauth;
         // 获取 OAuth 授权结果用户信息
         $user = $oauth->user();
