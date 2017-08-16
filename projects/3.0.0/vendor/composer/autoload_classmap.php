@@ -103,7 +103,7 @@ return array(
     'App\\Http\\Controllers\\CouponController' => $baseDir . '/app/Http/Controllers/CouponController.php',
     'App\\Http\\Controllers\\FeedbackController' => $baseDir . '/app/Http/Controllers/FeedbackController.php',
     'App\\Http\\Controllers\\GetWebUrlController' => $baseDir . '/app/Http/Controllers/GetWebUrlController.php',
-    'App\\Http\\Controllers\\GoodsController' => $baseDir . '/app/Http/Controllers/UploadController.php',
+    'App\\Http\\Controllers\\GoodsController' => $baseDir . '/app/Http/Controllers/GoodsController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\IntegralController' => $baseDir . '/app/Http/Controllers/IntegralController.php',
     'App\\Http\\Controllers\\LostAndFindController' => $baseDir . '/app/Http/Controllers/LostAndFindController.php',
