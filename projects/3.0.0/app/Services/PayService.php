@@ -119,7 +119,7 @@ class PayService
 				];
 				switch($pay_platform)
 				{
-					case 'web':
+					case 'wechat':
 						$options = [
 							'app_id' => config('wechat.app_id'),
 							'payment' => [
@@ -136,7 +136,7 @@ class PayService
 						if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
 						    $prepayId = $result->prepay_id;
 						}
-						$data = $payment->configForPayment($prepayId,false);
+						$data = $payment->configForPayment($prepayId);
 						break;
 					default:
 						$options = [
