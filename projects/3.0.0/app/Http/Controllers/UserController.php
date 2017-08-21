@@ -180,7 +180,7 @@ class UserController extends Controller
      */
     public function uploadImage(Request $request)
     {
-        $images_url = $this->imageService->uploadImages(Input::all(), 'avatar');
+        $images_url = $this->imageService->uploadImages(Input::all(), 'avatar',0);
 
         return [
             'code' => 200,
@@ -206,7 +206,7 @@ class UserController extends Controller
             'mobile_no' => 'required|string|exists:user,mobile_no',
             'password' => 'required|alpha_dash',
             'verify_code' => 'sometimes|required',
-            'platform' => 'required|in:and,ios,web,wechat',
+            'platform' => 'required|in:and,ios,wap,wechat',
             'device_token' => 'required_if:platform,and,ios',
             'push_server' => 'sometimes|required|in:xinge,xiaomi',
         ];
@@ -395,7 +395,7 @@ class UserController extends Controller
         $imgs['id_number'] = $request->id_number;
 
         //上传实名凭证图片
-        $images_url = $this->imageService->uploadImages(Input::all(), 'realname_auth');
+        $images_url = $this->imageService->uploadImages(Input::all(), 'realname_auth',0);
 
         // $imgs = [];
         list($imgs['pic1'], $imgs['pic2']) = explode(',', $images_url);
@@ -413,7 +413,7 @@ class UserController extends Controller
         $this->userService->isCurrentUserRealNameAuth();
 
         //上传实名凭证图片
-        $images_url = $this->imageService->uploadImages(Input::all(), 'realname_auth');
+        $images_url = $this->imageService->uploadImages(Input::all(), 'realname_auth',0);
 
         return [
             'code' => 200,
@@ -481,7 +481,7 @@ class UserController extends Controller
     public function uploadAvatarFile(Request $request)
     {
         //上传头像文件
-        $images_url = $this->imageService->uploadImages(Input::all(), 'avatar');
+        $images_url = $this->imageService->uploadImages(Input::all(), 'avatar',0);
 
         //更新用户头像链接
         $img_url = $this->userService->updateAvatar($images_url);
@@ -817,7 +817,10 @@ class UserController extends Controller
 	public function pay ()
 	{
 		$pay = config('pay');
-		return $pay;
+        return [
+			'code' => 200,
+			'data' => $pay,
+    	];
 	}
     public function zhimaReal(Request $request)
     {
