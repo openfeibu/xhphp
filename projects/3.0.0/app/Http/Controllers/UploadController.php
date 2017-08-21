@@ -7,7 +7,7 @@ use Validator;
 use App\Services\HelpService;
 use App\Services\FileUploadService;
 
-class GoodsController extends Controller
+class UploadController extends Controller
 {
    	protected $helpService;
 
@@ -20,17 +20,17 @@ class GoodsController extends Controller
 	protected $userService;
 
 	protected $goodsCategoryService;
-	
+
 	public function __construct (HelpService $helpService ,
 								 FileUploadService $fileUploadService)
 	{
 		parent::__construct();
 		$this->middleware('auth',['only' => ['store']]);
-		$this->helpService = $helpService; 
+		$this->helpService = $helpService;
 		$this->fileUploadService = $fileUploadService;
 	}
-	
+
 	public function upload (Request $request)
-    {	  
+    {
 	}
 }

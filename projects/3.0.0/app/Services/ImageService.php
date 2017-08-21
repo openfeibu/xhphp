@@ -11,6 +11,7 @@ use Gregwar\Captcha\CaptchaBuilder;
 use App\Repositories\UserRepository;
 use App\Repositories\ImageRepository;
 use App\Services\HelpService;
+use App\Services\QiniuService;
 
 class ImageService
 {
@@ -26,12 +27,14 @@ class ImageService
 	function __construct(Request $request,
 						 HelpService $helpService ,
 						 UserRepository $userRepository,
-						 ImageRepository $imageRepository)
+						 ImageRepository $imageRepository,
+						 QiniuService $qiniuService)
 	{
 		$this->request = $request;
 		$this->userRepository = $userRepository;
 		$this->imageRepository = $imageRepository;
 		$this->helpService = $helpService;
+		$this->qiniuService = $qiniuService;
 	}
 
 	/**
@@ -82,158 +85,76 @@ class ImageService
 	 *
 	 * @return array        图片链接
 	 */
-	public function uploadThumbImages($files, $usage)
+	public function uploadImages($files, $usage,$thumb = 1,$id = 0)
+	{
+		if(is_array($files['uploadfile']))
+		{
+			$all_files = $files['uploadfile'];
+		}
+		else{
+			$all_files[] = $files['uploadfile'];
+		}
+		$this->helpService->isVaildImage($all_files);
+		//return $this->uploadImagesHandle($all_files,$usage,$id,$thumb);
+		return $this->qiniuService->uploadImages($all_files, $usage,$id,$thumb);
+	}
+
+	private function uploadImagesHandle($files, $usage,$id = 0,$thumb = 1)
 	{
 		//获取用户信息
 		$user = $this->userRepository->getUserByToken($this->request->token);
-
 		//如果文件夹不存在，则创建文件夹
-		$directory = public_path('uploads') . DIRECTORY_SEPARATOR . $usage;
-        $thumb_directory = $directory . DIRECTORY_SEPARATOR . 'thumb';
-
+		$directory = $id ? public_path('uploads') . DIRECTORY_SEPARATOR . $usage. DIRECTORY_SEPARATOR .$id : public_path('uploads') . DIRECTORY_SEPARATOR . $usage;
+		$url = $id ?  '/uploads/'.$usage.'/'.$id : '/uploads/'.$usage;
+        $thumb_url = $url.'/thumb';
         if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
-            File::makeDirectory($thumb_directory, 0755, true);
+			if($thumb)
+			{
+				$thumb_directory = $directory . DIRECTORY_SEPARATOR . 'thumb';
+				File::makeDirectory($thumb_directory, 0755, true);
+			}
         }
 
 		//保存图片文件到服务器
 		$i = 0;
-		foreach ($files['uploadfile'] as $file) {
+		foreach ($files as $file) {
 		    $extension = $file->getClientOriginalExtension();
-		    $imageName = md5($user->token.time().rand()) . '.' . $extension;
-		    $img_url = '/uploads/'.$usage.'/'.$imageName;
-			$thumb_url = public_path().'/uploads/'.$usage.'/thumb/'.$imageName;
-		    #todo 图片压缩：分别上传图片缩略图及其原图
-		    Storage::put($img_url, file_get_contents($file->getRealPath()));
+		    $imageName = time().rand(100000, 999999) . '.' . $extension;
+			$img = $url.'/'.$imageName;
+		   	$thumb = $thumb_url.'/'.$imageName;
 
-		    $images_url[$i]['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/'. $img_url;
-		    $images_url[$i]['uid'] = $user->uid;
+		    #todo 图片压缩：分别上传图片缩略图及其原图
+		    Storage::put($img, file_get_contents($file->getRealPath()));
+
+		    $images_url[$i]['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() . $img;
+		    $images_url[$i]['uid'] = isset($user) ? $user->uid : 0;
 		    $images_url[$i]['usage'] = $usage;
 		    $images_url[$i]['created_at'] = date("Y-m-d H:i:s");
 
 		    $imgs_url[$i] = $images_url[$i]['img_url'];
-		    $thumbs_url[$i] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/uploads/'.$usage.'/thumb/'.$imageName;
-		    $this->helpService->image_png_size_add(public_path().$img_url,$thumb_url);
+			if($thumb)
+			{
+			    $thumbs_url[$i] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .$thumb;
+			    $this->helpService->image_png_size_add(public_path().$img,public_path().$thumb);
+			}
 		    $i++;
-		}
-		if ($i === 0) {
-			$extension = $files['uploadfile']->getClientOriginalExtension();
-			$imageName = md5($user->token.time().rand()) . '.' . $extension;
-			$img_url = '/uploads/'.$usage.'/'.$imageName;
-			$thumb_url = public_path().'/uploads/'.$usage.'/thumb/'.$imageName;
-
-		    Storage::put($img_url, file_get_contents($files['uploadfile']->getRealPath()));
-
-		    $images_url['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/'. $img_url;
-		    $images_url['uid'] = $user->uid;
-		    $images_url['usage'] = $usage;
-		    $images_url['created_at'] = date("Y-m-d H:i:s");
-
-		    $imgs_url[] = $images_url['img_url'];
-		    $thumbs_url[] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() .'/uploads/'.$usage.'/thumb/'.$imageName;
-		    $this->helpService->image_png_size_add(public_path().$img_url,$thumb_url);
 		}
 
 		//保存图片信息到数据库
 	    $this->imageRepository->saveImages($images_url);
 
-	    //保存图片链接到Session
-	    // $this->saveImagesUrl2Session($imgs_url);
-
-	    //将数组转成以逗号隔开的字符串
-	    $image_url = $thumb_img_url = '';
-	    $count = count($imgs_url) - 1;
-	    if ($count > 0) {
-		    for ($i=0; $i < $count; $i++) {
-		    	$image_url .= $imgs_url[$i] . ',';
-		    	$thumb_img_url .= $thumbs_url[$i] . ',';
-		    }
-		    $image_url .= $imgs_url[$i];
-		    $thumb_img_url .= $thumbs_url[$i];
-	    } else {
-	    	$image_url = $imgs_url[0];
-	    	$thumb_img_url .= $thumbs_url[0];
-	    }
-
-	    return [
-			'image_url' => $image_url,
-			'thumb_img_url'=> $thumb_img_url,
-	    ];
-	}
-	/**
-	 * 上传图片
-	 * 注意：用户必须是已登录状态
-	 *
-	 * @param  file $files  要上传的图片文件
-	 * @param  string $usage 图片的用途，并将上传的图片文件存放到public/uploads/$usage中
-	 *
-	 * @return array        图片链接
-	 */
-	public function uploadImages($files, $usage)
-	{
-		//获取用户信息
-		$user = $this->userRepository->getUserByToken($this->request->token);
-
-		//如果文件夹不存在，则创建文件夹
-        $directory = public_path('uploads') . DIRECTORY_SEPARATOR . $usage;
-        if (!File::isDirectory($directory)) {
-            File::makeDirectory($directory, 0755, true);
+		$image_url = implode(',',$imgs_url);
+		if($thumb)
+        {
+			$thumb_img_url = implode(',',$thumbs_url);
+            return [
+                'image_url' => $image_url,
+                'thumb_img_url'=> $thumb_img_url,
+            ];
         }
-
-		//保存图片文件到服务器
-		$i = 0;
-		foreach ($files['uploadfile'] as $file) {
-		    $extension = $file->getClientOriginalExtension();
-		    $imageName = isset($user->token) ? md5($user->token.time().rand()) . '.' . $extension : md5(time().rand()) . '.' . $extension ;
-		    $img_url = '/uploads/'.$usage.'/'.$imageName;
-
-		    #todo 图片压缩：分别上传图片缩略图及其原图
-		    Storage::put($img_url, file_get_contents($file->getRealPath()));
-
-		    $images_url[$i]['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() . $img_url;
-		    $images_url[$i]['uid'] = isset($user->uid) ? $user->uid : 0;
-		    $images_url[$i]['usage'] = $usage;
-		    $images_url[$i]['created_at'] = date("Y-m-d H:i:s");
-
-		    $imgs_url[$i] = $images_url[$i]['img_url'];
-		    $i++;
-		}
-		if ($i === 0) {
-			$extension = $files['uploadfile']->getClientOriginalExtension();
-			$imageName = isset($user->token) ? md5($user->token.time().rand()) . '.' . $extension : md5(time().rand()) . '.' . $extension ;
-			$img_url = '/uploads/'.$usage.'/'.$imageName;
-
-		    Storage::put($img_url, file_get_contents($files['uploadfile']->getRealPath()));
-
-		    $images_url['img_url'] = $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() . $img_url;
-		    $images_url['uid'] = isset($user->uid) ? $user->uid : 0 ;
-		    $images_url['usage'] = $usage;
-		    $images_url['created_at'] = date("Y-m-d H:i:s");
-
-		    $imgs_url[] = $images_url['img_url'];
-		}
-
-		//保存图片信息到数据库
-	    $this->imageRepository->saveImages($images_url);
-
-	    //保存图片链接到Session
-	    // $this->saveImagesUrl2Session($imgs_url);
-
-	    //将数组转成以逗号隔开的字符串
-	    $image_url = '';
-	    $count = count($imgs_url) - 1;
-	    if ($count > 0) {
-		    for ($i=0; $i < $count; $i++) {
-		    	$image_url .= $imgs_url[$i] . ',';
-		    }
-		    $image_url .= $imgs_url[$i];
-	    } else {
-	    	$image_url = $imgs_url[0];
-	    }
-
-	    return $image_url;
+        return $image_url;
 	}
-
 	/*  后台上传图片 */
 	public function uploadAdminImages ($files, $usage,$id = 0)
 	{
@@ -246,7 +167,7 @@ class ImageService
             File::makeDirectory($directory, 0755, true);
             File::makeDirectory($thumb_directory, 0755, true);
         }
-		
+
 		//保存图片文件到服务器
 		$i = 0;
 		foreach ($files['uploadfile'] as $file) {

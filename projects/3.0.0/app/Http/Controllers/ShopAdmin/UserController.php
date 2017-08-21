@@ -74,7 +74,7 @@ class UserController extends Controller
 	public function uploadShopImage (Request $request)
     {
          //上传商品图片
-        $images_url = $this->imageService->uploadAdminImages(Input::all(), 'shop');
+        $images_url = $this->imageService->uploadImages(Input::all(), 'shop');
 
         return [
             'code' => 200,

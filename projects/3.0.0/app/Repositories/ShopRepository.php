@@ -42,8 +42,12 @@ class ShopRepository
 	{
 		$shopList = Shop::select(DB::raw('shop.*,college.cid,college.name as college_name'))
 						->leftJoin('college', 'college.cid', '=', 'shop.college_id')
-						->whereIn('shop_status', [1,3])
-						->skip(20 * $this->request->page - 20)
+						->whereIn('shop_status', [1,3]);
+		if(isset($this->request->type))
+		{
+			$shopList = $shopList->where('shop_type',$this->request->type);
+		}
+		$shopList = $shopList->skip(20 * $this->request->page - 20)
 						->orderBy('shop_status','asc')
 						->orderBy('top', 'desc')
 						->orderBy('shop_favorite_count','desc')

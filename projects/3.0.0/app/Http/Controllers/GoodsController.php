@@ -217,7 +217,7 @@ class GoodsController extends Controller
 
         $shop = $this->shopService->isExistsShop(['uid' => $user->uid]);
 
-        $images_url = $this->imageService->uploadAdminImages(Input::all(), 'goods',$shop->shop_id);
+        $images_url = $this->imageService->uploadImages(Input::all(), 'goods',1,$shop->shop_id);
 
         return [
             'code' => 200,

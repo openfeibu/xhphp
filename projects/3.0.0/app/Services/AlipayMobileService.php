@@ -5,7 +5,7 @@ use Log;
 use Illuminate\Http\Request;
 
 class AlipayMobileService{
-	
+
 
 	var $alipay_config;
 
@@ -50,16 +50,16 @@ class AlipayMobileService{
 	private $transport;
 
 	private $cacert;
-	
+
 	function __construct($alipay_config){
 		$this->alipay_config = $alipay_config;
 		$this->cacert = getcwd() . DIRECTORY_SEPARATOR .'cacert.pem';
 	}
-	
+
     function AlipayNotify($alipay_config) {
     	$this->__construct($alipay_config);
     }
-	
+
     /**
      * 获取返回时的签名验证结果
      * @param $para_temp 通知返回来的参数数组
@@ -69,13 +69,13 @@ class AlipayMobileService{
 	function getSignVeryfy($para_temp, $sign) {
 		//除去待签名参数数组中的空值和签名参数
 		$para_filter = $this->paraFilter($para_temp);
-		
+
 		//对待签名参数数组排序
 		$para_sort = $this->argSort($para_filter);
 
 		//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
 		$prestr = $this->createLinkstring($para_sort);
-		
+
 		$isSgin = false;
 		switch (strtoupper(trim($this->alipay_config['sign_type']))) {
 			case "RSA" :
@@ -84,7 +84,7 @@ class AlipayMobileService{
 			default :
 				$isSgin = false;
 		}
-		
+
 		return $isSgin;
 	}
 
@@ -93,7 +93,7 @@ class AlipayMobileService{
      * @param $notify_id 通知校验ID
      * @return 服务器ATN结果
      * 验证结果集：
-     * invalid命令参数不对 出现这个错误，请检测返回处理中partner和key是否为空 
+     * invalid命令参数不对 出现这个错误，请检测返回处理中partner和key是否为空
      * true 返回正确信息
      * false 请检查防火墙或者是服务器阻止端口问题以及验证时间是否超过一分钟
      */
@@ -109,7 +109,7 @@ class AlipayMobileService{
 		}
 		$veryfy_url = $veryfy_url."partner=" . $partner . "&notify_id=" . $notify_id;
 		$responseTxt = $this->getHttpResponseGET($veryfy_url, $this->alipay_config['cacert']);
-		
+
 		return $responseTxt;
 	}
 
@@ -126,10 +126,10 @@ class AlipayMobileService{
 		}
 		//去掉最后一个&字符
 		$arg = substr($arg,0,count($arg)-2);
-		
+
 		//如果存在转义字符，那么去掉转义
 		if(get_magic_quotes_gpc()){$arg = stripslashes($arg);}
-		
+
 		return $arg;
 	}
 
@@ -161,13 +161,13 @@ class AlipayMobileService{
 
 	function query_timestamp() {
 			$url = $this->alipay_gateway_new."service=query_timestamp&partner=".trim(strtolower($this->alipay_config['partner']))."&_input_charset=".trim(strtolower($this->alipay_config['input_charset']));
-			$encrypt_key = "";		
+			$encrypt_key = "";
 
 			$doc = new DOMDocument();
 			$doc->load($url);
 			$itemEncrypt_key = $doc->getElementsByTagName( "encrypt_key" );
 			$encrypt_key = $itemEncrypt_key->item(0)->nodeValue;
-			
+
 			return $encrypt_key;
 		}
 	/**
@@ -211,7 +211,7 @@ class AlipayMobileService{
 		$responseText = curl_exec($curl);
 		//var_dump( curl_error($curl) );//如果执行curl过程中出现异常，可打开此开关，以便查看异常内容
 		curl_close($curl);
-		
+
 		return $responseText;
 	}
 
@@ -234,7 +234,7 @@ class AlipayMobileService{
 		$responseText = curl_exec($curl);
 		//var_dump( curl_error($curl) );//如果执行curl过程中出现异常，可打开此开关，以便查看异常内容
 		curl_close($curl);
-		
+
 		return $responseText;
 	}
 
@@ -277,7 +277,7 @@ class AlipayMobileService{
 		return $output;
 	}
 
-	
+
 	/**
 	 * RSA签名
 	 * @param $data 待签名数据
@@ -331,7 +331,7 @@ class AlipayMobileService{
 	        echo "您的支付宝公钥格式不正确!"."<br/>"."The format of your alipay_public_key is incorrect!";
 	        exit();
 	    }
-	    openssl_free_key($res);    
+	    openssl_free_key($res);
 	    return $result;
 	}
 }

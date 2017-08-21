@@ -12,6 +12,7 @@ use App\Services\HelpService;
 use App\Services\UserService;
 use App\Services\TopicService;
 use App\Services\ImageService;
+use App\Services\QiniuService;
 use App\Services\PushService;
 use App\Services\MessageService;
 use App\Services\NotificationService;
@@ -40,7 +41,8 @@ class TopicController extends Controller
                          NotificationService $notificationService,
                          MessageService $messageService,
                          ImageService $imageService,
-                         PushService $pushService)
+                         PushService $pushService,
+                         QiniuService $qiniuService)
     {
 	    parent::__construct();
         $this->middleware('auth', ['except' => ['getTopic', 'getTopicList', 'getTopics','getTopicCommentsList', 'search']]);
@@ -48,6 +50,7 @@ class TopicController extends Controller
         $this->userService = $userService;
         $this->topicService = $topicService;
         $this->imageService = $imageService;
+        $this->qiniuService = $qiniuService;
         $this->pushService = $pushService;
         $this->messageService = $messageService;
         $this->notificationService = $notificationService;
@@ -245,8 +248,8 @@ class TopicController extends Controller
 
 
         //上传资讯图片文件
-        $images_url = $this->imageService->uploadThumbImages(Input::all(), 'topic');
-
+        $images_url = $this->imageService->uploadImages(Input::all(), 'topic');
+    //    $images_url = $this->qiniuService->uploadImages(Input::all(), 'topic');
         return [
             'code' => 200,
             'detail' => '请求成功',

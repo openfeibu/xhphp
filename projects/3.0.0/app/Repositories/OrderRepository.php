@@ -34,14 +34,14 @@ class OrderRepository
                     ->take(10)
                     ->get();*/
         $orders = Order::join('user', 'order.owner_id', '=', 'user.uid')
-                    ->select(DB::raw('order.oid,order.owner_id,order.courier_id, user.openid, user.nickname, user.avatar_url, order.type,order.destination, order.description, order.fee, order.created_at , CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num,CASE order.status WHEN "new" THEN "可接单" WHEN "accepted" THEN "已接单" WHEN "finish" THEN "已接单" WHEN "completed" THEN "已完成" END as order_status,order.status as status'))
+                    ->select(DB::raw('order.oid,order.owner_id,order.courier_id, user.openid, user.nickname, user.avatar_url, order.type,order.destination, order.description, order.fee, order.created_at ,order.status, CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num'))
                     ->whereIn('order.status', ['new','accepted','finish','completed']);
         if(!empty($type) && $type != 'all'){
 	        $orders = $orders->where('type',$type);
 	    }
 	    return $orders->orderBy('order.created_at', 'desc')
-                    ->skip(10 * $page - 10)
-                    ->take(10)
+                    ->skip(20 * $page - 20)
+                    ->take(20)
                     ->get();
 	}
 

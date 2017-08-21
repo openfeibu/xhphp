@@ -22,6 +22,7 @@ use App\Services\ShopService;
 use App\Services\OrderInfoService;
 use App\Events\Integral\Integrals;
 use App\Http\Controllers\Controller;
+use App\Services\PayService;
 
 class OrderController extends Controller
 {
@@ -51,7 +52,8 @@ class OrderController extends Controller
                          PushService $pushService,
                          ShopService $shopService,
                          SMSService $smsService,
-                         OrderInfoService $orderInfoService)
+                         OrderInfoService $orderInfoService,
+                         PayService $payService)
     {
 	    parent::__construct();
         $this->middleware('auth', ['except' => ['getOrderList', 'orderAgreement', 'getOrder','alipayAppReturn','alipayWapNotify','alipayAppNotify','getRecommendOrders','getOrderDetail']]);
@@ -67,6 +69,7 @@ class OrderController extends Controller
         $this->pushService = $pushService;
         $this->shopService = $shopService ;
         $this->orderInfoService = $orderInfoService;
+        $this->payService = $payService;
     }
 
 
@@ -165,8 +168,9 @@ class OrderController extends Controller
             'description' => 'required',
             'fee' => 'required|numeric|min:2',
             'goods_fee' => 'sometimes|required|numeric|min:0',
-            'pay_id' => "required|integer|between:1,3",
+            'pay_id' => "required|integer|in:1,2,3",
             'pay_password' => 'sometimes|required|string',
+            'platform' => 'sometimes|in:and,ios,wap,wechat',
         ];
         $this->helpService->validateParameter($rule);
 
@@ -220,104 +224,23 @@ class OrderController extends Controller
                                              'pay_id' => $request->pay_id,
                                              'uid' => $this->user->uid
                                             ]);
-		if($request->pay_id ==1){
-			if($request->wap){
-				$alipay_config = array_merge(config('alipay-wap'),config('alipay'));
-				$alipay = app('alipay.wap');
-				//构造要请求的参数数组，无需改动
-				$parameter = array(
-						"service"       => $alipay_config['service'],
-						"partner"       => $alipay_config['partner'],
-						"seller_id"  	=> $alipay_config['seller'],
-						"payment_type"	=> $alipay_config['payment_type'],
-						"_input_charset"=> $alipay_config['input_charset'],
-						'notify_url' 	=> config("app.url")."/alipay/alipayWapNotify",
-						'return_url'	=> config('common.order_return_url'),
-						"out_trade_no"	=> $order_sn,
-						"subject"		=> $this->user->nickname." 发布任务 ",
-						"body"			=> $request->description,
-						"total_fee"		=> $total_fee,
-						"show_url"		=> config("app.url"),
-						"app_pay"	=> "Y",//启用此参数能唤起钱包APP支付宝
-				);
-				$html_text = $alipay->buildRequestForm($parameter,"get", "确认");
-				return [
-		            'code' => 200,
-		            'data' => $html_text,
-		        ];
-			}else{
-				// throw new \App\Exceptions\Custom\RequestSuccessException();
-		        $alipay = app('alipay.mobile');
-				date_default_timezone_set("PRC");
-				$alipay_config = array_merge(config('alipay-mobile'),config('alipay'));
-				$parameter = array(
-					'partner' => "\"".$alipay_config['partner']."\"",
-					'service' => "\"".$alipay_config['service']."\"",
-					'seller_id' =>  "\"".$alipay_config['seller']."\"",
-					'payment_type' =>   "\"".$alipay_config['payment_type']."\"",
-					'_input_charset' =>  "\"".$alipay_config['input_charset']."\"",
-					'out_trade_no' => "\"".$order_sn."\"",
-					'notify_url' =>  "\"".config("app.url")."/alipay/alipayAppNotify"."\"",
-					'return_url' =>  "\"".config("app.url")."/alipay/alipayAppReturn"."\"",
-					'subject' => "\"".$this->user->nickname." 发布任务 \"",
-					'body' =>  "\"".$request->description."\"",
-					'total_fee' =>  "\"".$total_fee."\"",
+        $pay_platform = isset($request->platform) ? $request->platform : 'and';
+        $data = [
+        	'return_url' => config('common.order_return_url'),
+        	'order_sn' => $order_sn,
+        	'subject' => $this->user->nickname." 发布任务 ",
+        	'body' => $request->description,
+        	'total_fee' => $total_fee,
+        	'trade_type' => 'ReleaseTask',
 
-				);
-				$data = $alipay->createLinkstring($parameter);
-				$rsa_sign=urlencode($alipay->rsaSign($data, $alipay_config['private_key']));
-				$data = $data.'&sign='.'"'.$rsa_sign.'"'.'&sign_type='.'"'.$alipay_config['sign_type'].'"';
-		        return [
-		            'code' => 200,
-		            'data' => $data,
-		        ];
-
-			}
-        }
-        else if($request->pay_id==3){
-	        $fee = 	$this->user->wallet - $total_fee;
-	        $updateWallet = $this->walletService->updateWallet($this->user->uid,$fee);
-	        if($updateWallet){
-		       	$walletData = array(
-					'uid' => $this->user->uid,
-					'wallet' => $this->user->wallet - $total_fee,
-					'fee'	=> $total_fee,
-					'service_fee' => 0,
-					'out_trade_no' => $order_sn,
-					'pay_id' => 3,
-					'wallet_type' => -1,
-					'trade_type' => 'ReleaseTask',
-					'description' => '发布任务',
-		        );
-		        $this->walletService->store($walletData);
-				$trade_no = 'wallet'.$order_sn;
-		        $trade = array(
-		        	'uid' => $this->user->uid,
-					'out_trade_no' => $order_sn,
-					'trade_no' => $trade_no,
-					'trade_status' => 'success',
-					'wallet_type' => -1,
-					'from' => 'order',
-					'trade_type' => 'ReleaseTask',
-					'fee' => $total_fee,
-					'service_fee' => 0,
-					'pay_id' => 3,
-					'description' => '发布任务',
-	    		);
-				$this->tradeAccountService->addThradeAccount($trade);
-				$this->orderService->updateOrderStatusNew($order_sn);
-				return [
-		            'code' => 200,
-		            'detail' => "支付成功",
-		            'data' => ''
-		        ];
-	        }else{
-	        	throw new \App\Exceptions\Custom\OutputServerMessageException('支付失败');
-	        }
-        }
+			'pay_id' => $request->pay_id,
+            'pay_from' => 'order',
+			'pay_platform' => $pay_platform,
+        ];
+        $data = $this->payService->payHandle($data);
         return [
-            'code' => 110,
-            'detail' => "未找到支付方式",
+			'code' => 200,
+			'data' => $data
         ];
     }
 

@@ -183,7 +183,30 @@ class HelpService
 	  fclose($fp);
 	  return true;
 	}
+	public function isVaildImage($files)
+	{
+		$error = '';
 
+		foreach($files as $key => $file)
+		{
+			$name = $file->getClientOriginalName();
+			if(!$file->isValid())
+			{
+				$error.= $name.$file->getErrorMessage().';';
+			}
+			if(!in_array( strtolower($file->extension()),config('common.img_type'))){
+				$error.= $name."类型错误;";
+			}
+			if($file->getClientSize() > config('common.img_size')){
+				$img_size = config('common.img_size')/1024;
+				$error.= $name.'超过'.$img_size.'M';
+			}
+		}
+		if($error)
+		{
+			throw new \App\Exceptions\Custom\OutputServerMessageException($error);
+		}
+	}
 	public function telecomCheckReal ($fields)
 	{
 		$ch = curl_init();

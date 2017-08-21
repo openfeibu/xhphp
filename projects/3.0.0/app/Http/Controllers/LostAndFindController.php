@@ -100,7 +100,7 @@ class LostAndFindController extends Controller
     }
     public function uploadImage(Request $request)
     {
-        $images_url = $this->imageService->uploadThumbImages(Input::all(), 'loss');
+        $images_url = $this->imageService->uploadImages(Input::all(), 'loss');
         return [
             'code' => 200,
             'detail' => '请求成功',

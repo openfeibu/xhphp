@@ -4,6 +4,7 @@ namespace App\Services;
 
 use DB;
 use Session;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
 use App\Repositories\TopicRepository;
@@ -57,6 +58,7 @@ class TopicService
 		$topics =  $this->topicRepository->getUserTopic($param);
 		foreach($topics as $k=>$topic){
 			$topic['content'] = escape_content($topic['content']);
+			$topic->created_at_desc = friendlyDate($topic->created_at->format('Y-m-d H:i:s'));
 			$topics[$k]['nickname'] = $user->nickname;
 			$topics[$k]['avatar_url'] = $user->avatar_url;
 			$topicComments = $this->getTopicAllCommentsList(['topic_id'=> $topic->tid]  );
@@ -74,6 +76,7 @@ class TopicService
 		$topics =  $this->topicRepository->getUserTopic($param);
 		foreach($topics as $k=>$topic){
 			$topic['content'] = escape_content($topic['content']);
+			$topic->created_at_desc = friendlyDate($topic->created_at->format('Y-m-d H:i:s'));
 			$topics[$k]['nickname'] = $user->nickname;
 			$topics[$k]['avatar_url'] = $user->avatar_url;
 			$topics[$k]['openid'] = $user->openid;
@@ -101,10 +104,12 @@ class TopicService
 		}
 		$topics = $this->topicRepository->getTopicList($param);
 		foreach($topics as $k=>$topic){
-			$topic['content'] = escape_content($topic['content']);
-			$topicComments = $this->getTopicAllCommentsList(['topic_id'=> $topic->tid]  );
+			$topic->content = escape_content($topic->content);
+			$topic->created_at_desc = friendlyDate($topic->created_at->format('Y-m-d H:i:s'));
+			$topicComments = $this->getTopicAllCommentsList(['topic_id'=> $topic->tid]);
 			$topics[$k]['comment'] = $topicComments;
 		}
+		//var_dump($topics);exit;
 		return $topics;
 	}
 	public function getTopics (array $param,$where = [])
@@ -116,6 +121,7 @@ class TopicService
 		$topics = $this->topicRepository->getTopicList($param,$where);
 		foreach($topics as $k=>$topic){
 			$topic['content'] = escape_content($topic['content']);
+			$topic->created_at_desc = friendlyDate($topic->created_at->format('Y-m-d H:i:s'));
 		}
 		return $topics;
 	}
@@ -167,6 +173,8 @@ class TopicService
 		$topicComments =  $this->topicRepository->getTopicCommentsList($param);
 		foreach($topicComments as $key=>$topicComment){
 			$topicComment['content'] = escape_content($topicComment['content']);
+			$created_at = $topicComment->created_at->format('Y-m-d H:i:s');
+			$topicComment->created_at_desc = friendlyDate($created_at);
 		}
 		return $topicComments;
 	}
@@ -178,6 +186,8 @@ class TopicService
 		$topicComments =  $this->topicRepository->getTopicAllCommentsList($param);
 		foreach($topicComments as $key=>$topicComment){
 			$topicComment['content'] = escape_content($topicComment['content']);
+			$created_at = $topicComment->created_at->format('Y-m-d H:i:s');
+			$topicComment->created_at_desc = friendlyDate($created_at);
 		}
 		return $topicComments;
 	}

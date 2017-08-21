@@ -4,8 +4,8 @@ namespace App\Services;
 use Log;
 use Illuminate\Http\Request;
 
-class AlipayWapService{
-	
+class AlipayWapSdkService{
+
 	private $__gateway_new = 'https://mapi.alipay.com/gateway.do?';
 
 	private $__https_verify_url = 'https://mapi.alipay.com/gateway.do?service=notify_verify&';

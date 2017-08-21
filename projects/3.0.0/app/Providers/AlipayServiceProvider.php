@@ -22,7 +22,7 @@ class AlipayServiceProvider extends ServiceProvider
 		$this->app->bind('alipay.mobile', function ($app)
 		{
 			$alipay_config = array_merge($app->config->get('alipay-mobile'),$app->config->get('alipay'));
-			$alipay = new \App\services\AlipayMobileService($alipay_config);
+			$alipay = new \App\Services\AlipayMobileService($alipay_config);
 
 			//$alipay->setPartner($app->config->get('alipay.partner_id'))
 			//	->setSellerId($app->config->get('alipay.seller_id'))
@@ -36,7 +36,7 @@ class AlipayServiceProvider extends ServiceProvider
 
 		$this->app->bind('alipay.web', function ($app)
 		{
-			$alipay = new \App\services\AlipayWebService;
+			$alipay = new \App\Services\AlipayWebService;
 
 			$alipay->setPartner($app->config->get('alipay.partner'))
 				->setSellerId($app->config->get('alipay.seller'))
@@ -52,7 +52,7 @@ class AlipayServiceProvider extends ServiceProvider
 		$this->app->bind('alipay.wap', function ($app)
 		{
 			$alipay_config = array_merge($app->config->get('alipay-wap'),$app->config->get('alipay'));
-			$alipay = new \App\services\AlipayWapService($alipay_config);
+			$alipay = new \App\Services\AlipayWapService($alipay_config);
 
 			return $alipay;
 		});

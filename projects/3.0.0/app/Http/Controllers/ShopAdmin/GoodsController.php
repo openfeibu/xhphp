@@ -260,7 +260,7 @@ class GoodsController extends Controller
 	public function uploadGoodsImage (Request $request)
     {
          //上传商品图片
-        $images_url = $this->imageService->uploadAdminImages(Input::all(), 'goods',$this->shop->shop_id);
+        $images_url = $this->imageService->uploadImages(Input::all(), 'goods',1,$this->shop->shop_id);
 
         return [
             'code' => 200,

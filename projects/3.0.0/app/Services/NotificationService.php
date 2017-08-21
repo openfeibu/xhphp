@@ -50,8 +50,8 @@ class NotificationService
 						'content' => $comment ? escape_content($comment->content) : '评论已删除',
 						'object_content' => $topic ? escape_content($topic->content) : '话题已删除',
 					];
-					
-					break;	
+
+					break;
 				case 'comment_comment':
 					$comment = \App\TopicComment::where('tcid',$notification->new_id)->first(['content']);
 					$user = \App\User::where('uid',$notification->new_uid)->first(['avatar_url','nickname','openid','uid']);
@@ -66,13 +66,13 @@ class NotificationService
 						'content' => $comment ? escape_content($comment->content) : '评论已删除',
 						'object_content' => $object_comment ? escape_content($object_comment->content) : '话题已删除',
 					];
-					break;	
+					break;
 				default:
 					break;
 			}
 			$data['id'] = $notification->id;
 			$data['created_at'] = $notification->created_at->format('Y-m-d H:i:s');
-			$datas[] = $data;			
+			$datas[] = $data;
 		}
 		$this->notificationRepository->changeRead($where);
 		return $datas;

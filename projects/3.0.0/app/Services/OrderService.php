@@ -49,6 +49,7 @@ class OrderService
 				$user = $this->userRepository->getUserByUserID($order->courier_id,'openid');
 				$order->courier_openid = $user->openid;
 			}
+			$order->order_status = trans('common.task_status.'.$order->status);
 		}
 		return $orders;
 	}

@@ -207,6 +207,7 @@ class OrderInfoController extends Controller
         	'pay_password' => 'sometimes|required|string',
 			'user_coupon_id' => 'sometimes|integer|string',
         	'address_id' => 'required|integer',
+			'platform' => 'required|in:and,ios,wap,wechat',
     	];
     	$this->helpService->validateParameter($rules);
 		$this->user = $this->userService->getUser();
@@ -277,6 +278,7 @@ class OrderInfoController extends Controller
 
 		$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
 
+		//$is_show = $shop->shop_type == 'canteer' ? 0 : 1;
         $order_info = $this->orderInfoService->create([
         											'order_sn' => $order_sn,
         											'uid' => $this->user->uid,
@@ -293,9 +295,11 @@ class OrderInfoController extends Controller
 													'seller_shipping_fee' => $seller_shipping_fee,
 													'user_coupon_id' => $user_coupon_id,
 													'description' => $description,
+													//'is_show' => $is_show,
         										]);
+
 		$this->couponService->updateUserCoupon(['uid' => $this->user->uid,'user_coupon_id' => $user_coupon_id],['status' => 'used']);
-        $pay_platform = isset($request->platform) ? $request->platform : 'web';
+        $pay_platform = isset($request->platform) ? $request->platform : 'wap';
         $data = [
         	'return_url' => config('common.order_info_return_url').'?order_id='. $order_info->order_id,
         	'order_sn' => $order_sn,
@@ -305,9 +309,13 @@ class OrderInfoController extends Controller
         	'total_fee' => $total_fee,
         	'trade_type' => 'Shopping',
         	'mobile_no' => $shop_user->mobile_no,
-			'shop_uid' => $shop->uid,
+			'pay_id' => $request->pay_id,
+			'shop' => $shop,
+			'pay_from' => 'shop',
+			'pay_platform' => $pay_platform,
         ];
-        $data = $this->payService->payHandle($request->pay_id,$pay_platform,'shop',$data);
+
+        $data = $this->payService->payHandle($data);
         return [
 			'code' => 200,
 			'order_id' => $order_info->order_id,
