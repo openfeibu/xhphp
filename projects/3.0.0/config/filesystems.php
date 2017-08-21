@@ -79,7 +79,18 @@ return [
             'region'    => 'IAD',
             'url_type'  => 'publicURL',
         ],
-
+        'qiniu' => [
+            'driver'  => 'qiniu',
+            'domains' => [
+                'default'   => 'img.feibu.info', //你的七牛域名
+                'https'     => 'dn-laravelacademy.qbox.me',         //你的HTTPS域名
+                'custom'    => 'img.feibu.info',     //你的自定义域名
+             ],
+            'access_key'=> 'Swn1wmBXSZuAHLSnXwHzw5sBFvYDJS58v6nz98zD',  //AccessKey
+            'secret_key'=> '8HPG6eJK6jLNbsNd7fZn65_Qrd_W7QwOHTz8pcbr',  //SecretKey
+            'bucket'    => 'xiaohui',  //Bucket名字
+            'notify_url'=> '',  //持久化处理回调地址
+        ],
     ],
 
 ];

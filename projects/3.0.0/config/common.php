@@ -8,8 +8,9 @@ return [
 	'order_info_return_url' => config("app.web_url").'/shop/shop-paysucc.html',
 	'order_show_url'	=> config('app.url'),
 	'img_type' => [
-		"jpg","gif","bmp","jpeg","png"
+		'jpeg','jpg','gif','gpeg','png'
 	],
+	'img_size' => 1024 * 1024 * 10,
 	'shop_fee' => 0,
 	'no_goods_img' => config('app.url').'/uploads/system/no_goods_image.png',
 ];
