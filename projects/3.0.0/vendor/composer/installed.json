@@ -4184,5 +4184,157 @@
             "wechat",
             "weixin"
         ]
+    },
+    {
+        "name": "qiniu/php-sdk",
+        "version": "v7.1.3",
+        "version_normalized": "7.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/qiniu/php-sdk.git",
+            "reference": "b91653485e36b4797d7a302cc86c49695e47a642"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/qiniu/php-sdk/b91653485e36b4797d7a302cc86c49695e47a642.zip",
+            "reference": "b91653485e36b4797d7a302cc86c49695e47a642",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0",
+            "squizlabs/php_codesniffer": "~2.3"
+        },
+        "time": "2016-11-18 02:57:31",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Qiniu\\": "src/Qiniu"
+            },
+            "files": [
+                "src/Qiniu/functions.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Qiniu",
+                "email": "sdk@qiniu.com",
+                "homepage": "http://www.qiniu.com"
+            }
+        ],
+        "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
+        "homepage": "http://developer.qiniu.com/",
+        "keywords": [
+            "cloud",
+            "qiniu",
+            "sdk",
+            "storage"
+        ]
+    },
+    {
+        "name": "zgldh/qiniu-laravel-storage",
+        "version": "v0.8.0",
+        "version_normalized": "0.8.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zgldh/qiniu-laravel-storage.git",
+            "reference": "4640e4b869c3c42f2606f2c8cddbaef5d796197c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/zgldh/qiniu-laravel-storage/4640e4b869c3c42f2606f2c8cddbaef5d796197c.zip",
+            "reference": "4640e4b869c3c42f2606f2c8cddbaef5d796197c",
+            "shasum": ""
+        },
+        "require": {
+            "league/flysystem": "^1.0",
+            "php": ">=5.3.3",
+            "qiniu/php-sdk": "^7.0"
+        },
+        "time": "2017-08-09 06:18:15",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "zgldh\\QiniuStorage\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "zgldh",
+                "email": "zgldh@hotmail.com",
+                "role": "Original Developer"
+            },
+            {
+                "name": "abcsun",
+                "email": "chenglongsun_nj@163.com",
+                "homepage": "http://github.com/abcsun",
+                "role": "Developer"
+            }
+        ],
+        "description": "Qiniu Resource (Cloud) Storage SDK for Laravel 5",
+        "keywords": [
+            "cloud",
+            "laravel",
+            "qiniu",
+            "sdk",
+            "storage"
+        ]
+    },
+    {
+        "name": "jpush/jpush",
+        "version": "v3.5.0",
+        "version_normalized": "3.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jpush/jpush-api-php-client.git",
+            "reference": "3fea757d549f08d01e453e9b67fe54948bcc9b5b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/jpush/jpush-api-php-client/3fea757d549f08d01e453e9b67fe54948bcc9b5b.zip",
+            "reference": "3fea757d549f08d01e453e9b67fe54948bcc9b5b",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "time": "2016-07-27 09:02:26",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "JPush\\": "src/JPush/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "JPush",
+                "email": "support@jpush.cn",
+                "homepage": "https://www.jpush.cn/",
+                "role": "Developer"
+            }
+        ],
+        "description": "JPush API PHP Client",
+        "homepage": "https://github.com/jpush/jpush-api-php-client"
     }
 ]
