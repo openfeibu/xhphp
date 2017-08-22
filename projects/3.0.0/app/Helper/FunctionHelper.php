@@ -32,15 +32,6 @@ if (!function_exists('round_route')) {
 		];
 	}
 }
-if (!function_exists('check_refund_order_info')) {
-	function check_refund_order_info($pay_status,$shipping_status,$order_status)
-	{
-		if($pay_status !=1 || $shipping_status !=0 || $order_status >=2 ){
-			return false;
-		}
-		return true;
-	}
-}
 if (!function_exists('dtime')) {
 	function dtime()
 	{
@@ -51,6 +42,15 @@ if (!function_exists('seller_check_refund_order_info')) {
 	function seller_check_refund_order_info($pay_status,$shipping_status,$order_status)
 	{
 		if($pay_status !=1 || $shipping_status !=0 || $order_status !=3 ){
+			return false;
+		}
+		return true;
+	}
+}
+if (!function_exists('check_refund_order_info')) {
+	function check_refund_order_info($pay_status,$shipping_status,$order_status)
+	{
+		if($pay_status !=1 || $shipping_status !=0 || $order_status >=2 ){
 			return false;
 		}
 		return true;
@@ -111,15 +111,24 @@ if(!function_exists('get_receivable'))
 {
 	function get_receivable($type,$order_info)
 	{
+		if($type == 1)
+		{
+			//学生店铺
+			$receivable = $order_info->total_fee;
+		}
 		if($type == 2)
 		{
 			//商家
 			$receivable = $order_info->total_fee - $order_info->seller_shipping_fee - $order_info->shipping_fee;
-		}else{
-			//学生店铺
-			$receivable = $order_info->total_fee;
 		}
 		return $receivable;
+	}
+}
+if(!function_exists('get_order_receivable'))
+{
+	function get_order_receivable()
+	{
+		
 	}
 }
 /*

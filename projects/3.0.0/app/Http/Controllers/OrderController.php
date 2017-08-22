@@ -521,7 +521,6 @@ class OrderController extends Controller
 		];
         $this->pushService->PushUserTokenDevice('校汇任务', trans('task.task_be_finished'), $owner_id,2,$data);
 
-
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
 
@@ -544,7 +543,7 @@ class OrderController extends Controller
 		}
         $order = $this->orderService->getSingleOrder($request->order_id);
         //检验任务是否已完成
-		if($order->type == 'business'){
+		if($order->type == 'business' || $order->type == 'canteer'){
 	        $order_info = $this->orderInfoService->getOrderInfo($order->order_id);
 	        if($order_info){
 		        $shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);
@@ -554,7 +553,6 @@ class OrderController extends Controller
 	        $this->gameService->freeOrder($this->user,$order);
         }
         $this->orderService->confirmFinishWork($order,$this->walletService,$this->tradeAccountService);
-
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
 

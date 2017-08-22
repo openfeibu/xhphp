@@ -310,8 +310,8 @@ class OrderService
 		{
 			$param['uid'] = $order->uid;
 		}
-        $wallet = $courier->wallet + $order->fee - $order->service_fee;
-        $fee = $order->fee - $order->service_fee;
+        $wallet = $courier->wallet + $order->fee + $order->goods_fee - $order->service_fee;
+        $fee = $order->fee + $order->goods_fee - $order->service_fee;
 		$walletData = array(
 			'uid' => $courier->uid,
 			'out_trade_no' => $order->order_sn,
@@ -376,8 +376,8 @@ class OrderService
 		{
 			$param['uid'] = $order->uid;
 		}
-        $wallet = $courier->wallet + $order->fee - $order->service_fee;
-        $fee = $order->fee - $order->service_fee;
+        $wallet = $courier->wallet + $order->fee + $order->goods_fee - $order->service_fee;
+        $fee = $order->fee + $order->goods_fee - $order->service_fee;
 		$walletData = array(
 			'uid' => $courier->uid,
 			'out_trade_no' => $order->order_sn,

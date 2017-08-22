@@ -301,6 +301,8 @@ class OrderInfoController extends Controller
 		$this->couponService->updateUserCoupon(['uid' => $this->user->uid,'user_coupon_id' => $user_coupon_id],['status' => 'used']);
         $pay_platform = isset($request->platform) ? $request->platform : 'wap';
         $data = [
+			'order_info' => $order_info,
+			'shop_user' => $shop_user,
         	'return_url' => config('common.order_info_return_url').'?order_id='. $order_info->order_id,
         	'order_sn' => $order_sn,
         	'order_id' => $order_info->order_id,
@@ -494,30 +496,10 @@ class OrderInfoController extends Controller
 		$order_info = $this->orderInfoService->sellerCheckShipping($request->order_id,$shop->shop_id);
 
 		//商家
-		if($shop->shop_type == 2){
-			//创建新任务
-			$order_sn = $this->helpService->buildOrderSn('RT');
-			$total_fee = $order_info->shipping_fee + $order_info->seller_shipping_fee;
-			$service_fee = $this->helpService->serviceFee($total_fee) ;
-			//提货码
-			$pick_code = $this->orderInfoService->getPickCode();
-			$this->orderInfoService->updateOrderInfo($order_info->order_sn,['pick_code' => $pick_code]);
+		if($shop->shop_type == 2 || $shop->shop_type == 3){
 			//生成任务
-			//$decimal =
-        	$order = $this->orderService->createOrder(['destination' => $order_info->address,
-                                             'description' => $shop->college_name.' '.$shop->shop_name.' '.$order_info->description,
-                                             'fee' => $total_fee,
-                                             'goods_fee' => 0 ,
-                                             'total_fee' => $total_fee,
-                                             'service_fee' => $service_fee,
-                                             'phone' => $order_info->mobile ? $order_info->mobile : $this->user->mobile_no,
-                                             'order_sn' => $order_sn,
-                                             'status' => 'new',
-                                             'pay_id' => $order_info->pay_id,
-                                             'type' => 'business',
-                                             'order_id' => $order_info->order_id,
-											 'uid' => $this->user->uid
-                                            ]);
+			$order_data = $this->orderInfoService->createOrder($order_info,$shop,$this->user);
+			$order = $this->orderService->createOrder($order_data);
 		}
 		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
 

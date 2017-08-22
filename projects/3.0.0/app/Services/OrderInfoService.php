@@ -265,58 +265,52 @@ class OrderInfoService
 		}
 		return $order_info;
 	}
-	/*public function confirm ($order_id,$shop_id)
-	{
-		$this->updateOrderInfoById($order_id,['order_status' => 2,'shipping_status' => 2,'succ_time' => dtime()]);
-		$goodses = $this->getOrderGoodses($order_id,['goods_id','goods_number']);
-		foreach( $goodses as $key => $goods )
-		{
-			$this->goodsRepository->inGoodsSale(['goods_id' => $goods->goods_id],$goods->goods_number);
-			$this->shopRepository->inSale(['shop_id' => $shop_id],$goods->goods_number);
-		}
-		return true;
-	}*/
+
 	public function confirm ($order_info,$shop,$walletService,$tradeAccountService)
 	{
         $shop_user = $this->userRepository->getUserByUserID($shop->uid);
-		//应得款
 
-		$receivable = get_receivable($shop->shop_type,$order_info);
-		//服务费
-		$service_fee = $this->helpService->shopServiceFee($receivable,$shop->service_rate) ;
+		if($shop->type == 1 || $shop->type == 2)
+		{
+			//应得款
+			$receivable = get_receivable($shop->shop_type,$order_info);
+			//服务费
+			$service_fee = $this->helpService->shopServiceFee($receivable,$shop->service_rate) ;
 
-		$fee = $receivable - $service_fee;
+			$fee = $receivable - $service_fee;
 
-        $wallet = $shop_user->wallet + $fee;
-        //商家加物品费用
-		$walletData = array(
-			'uid' => $shop->uid,
-			'out_trade_no' => $order_info->order_sn,
-			'wallet' => $wallet,
-			'fee'	=> $fee,
-			'service_fee' => $service_fee,
-			'pay_id' => 5,
-			'wallet_type' => 1,
-			'trade_type' => 'Shop',
-			'description' => '商店收入',
-        );
-        $walletService->store($walletData);
-        $trade_no = 'wallet'.$this->helpService->buildOrderSn('XH');
-		$trade = array(
-    		'uid' => $shop->uid,
-			'out_trade_no' => $order_info->order_sn,
-			'trade_no' => $trade_no,
-			'fee' => $fee,
-			'service_fee' => $service_fee,
-			'pay_id' => 5,
-			'wallet_type' => 1,
-			'trade_status' => 'income',
-			'from' => 'shop',
-			'trade_type' => 'Shop',
-			'description' => '商店收入' ,
-		);
-		$tradeAccountService->addThradeAccount($trade);
-		$walletService->updateWallet($shop_user->uid,$wallet);
+	        $wallet = $shop_user->wallet + $fee;
+	        //商家加物品费用
+			$walletData = array(
+				'uid' => $shop->uid,
+				'out_trade_no' => $order_info->order_sn,
+				'wallet' => $wallet,
+				'fee'	=> $fee,
+				'service_fee' => $service_fee,
+				'pay_id' => 5,
+				'wallet_type' => 1,
+				'trade_type' => 'Shop',
+				'description' => '商店收入',
+	        );
+	        $walletService->store($walletData);
+	        $trade_no = 'wallet'.$this->helpService->buildOrderSn('XH');
+			$trade = array(
+	    		'uid' => $shop->uid,
+				'out_trade_no' => $order_info->order_sn,
+				'trade_no' => $trade_no,
+				'fee' => $fee,
+				'service_fee' => $service_fee,
+				'pay_id' => 5,
+				'wallet_type' => 1,
+				'trade_status' => 'income',
+				'from' => 'shop',
+				'trade_type' => 'Shop',
+				'description' => '商店收入' ,
+			);
+			$tradeAccountService->addThradeAccount($trade);
+			$walletService->updateWallet($shop_user->uid,$wallet);
+			$this->shopRepository->inIncome(['shop_id' => $shop->shop_id],$fee);
+		}
 
 		$this->updateOrderInfoById($order_info->order_id,['order_status' => 2,'shipping_status' => 2,'succ_time' => dtime()]);
 		$goodses = $this->getOrderGoodses($order_info->order_id,['goods_id','goods_number']);
@@ -325,7 +319,7 @@ class OrderInfoService
 			$this->goodsRepository->inGoodsSale(['goods_id' => $goods->goods_id],$goods->goods_number);
 			$this->shopRepository->inSale(['shop_id' => $shop->shop_id],$goods->goods_number);
 		}
-		$this->shopRepository->inIncome(['shop_id' => $shop->shop_id],$fee);
+
 		return true;
 	}
 	public function destroy ($where)
@@ -381,5 +375,38 @@ class OrderInfoService
 		}
 
 		$this->orderInfoRepository->updateOrderInfoByWhere($where,['pick_code' => $pick_code]);
+	}
+	public function createOrder($order_info,$shop,$user)
+	{
+		$order_sn = $this->helpService->buildOrderSn('RT');
+		if($shop->shop_type == 2)
+		{
+			$goods_fee = 0;
+			//提货码
+			$pick_code = $this->getPickCode();
+			$this->updateOrderInfo($order_info->order_sn,['pick_code' => $pick_code]);
+			$type = 'business';
+		}else if($shop->shop_type == 3){
+			$goods_fee = $order_info->goods_amount;
+			$type = 'canteer';
+		}
+		$shipping_fee =  $order_info->shipping_fee + $order_info->seller_shipping_fee;
+		$total_fee = $order_info->shipping_fee + $order_info->seller_shipping_fee + $goods_fee ;
+		$service_fee = $this->helpService->serviceFee($total_fee) ;
+		return [
+			'destination' => $order_info->address,
+			'description' => $shop->college_name.' '.$shop->shop_name.' '.$order_info->description,
+			'fee' => $shipping_fee,
+			'goods_fee' => $goods_fee ,
+			'total_fee' => $total_fee,
+			'service_fee' => $service_fee,
+			'phone' => $order_info->mobile ? $order_info->mobile : $user->mobile_no,
+			'order_sn' => $order_sn,
+			'status' => 'new',
+			'pay_id' => $order_info->pay_id,
+			'type' => $type,
+			'order_id' => $order_info->order_id,
+			'uid' => $user->uid
+		];
 	}
 }

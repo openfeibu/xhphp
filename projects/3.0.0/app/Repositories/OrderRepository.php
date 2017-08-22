@@ -201,7 +201,7 @@ class OrderRepository
 			self::$order->destination = $order_info['destination'];
 			self::$order->description = $order_info['description'];
 			self::$order->fee = $order_info['fee'];
-			//self::$order->goods_fee = $order_info['goods_fee'];
+			self::$order->goods_fee = isset($order_info['goods_fee']) ? $order_info['goods_fee'] : 0;
 			self::$order->total_fee = $order_info['total_fee'];
 			self::$order->service_fee = $order_info['service_fee'];
 			self::$order->alt_phone = $order_info['phone'];
