@@ -1,0 +1,21 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class DrivingSchoolEcrollment extends Model
+{
+    protected $table = 'driving_school_enrollment';
+
+    protected $primaryKey = 'enroll_id';
+
+    protected $fillable = [
+        'name',
+        'mobile',
+        'content',
+        'pro_id',
+        'ds_id',
+        'uid'
+    ];
+}
