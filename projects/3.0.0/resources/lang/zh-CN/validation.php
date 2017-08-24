@@ -86,6 +86,7 @@ return [
     'unique'   => ':attribute 已经被占用',
     'url'      => ':attribute 的格式无效',
     'identitycards' => '身份证号错误！',
+    'mobile'    => ':attribute 格式不正确！',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -222,7 +223,8 @@ return [
 		'consignee' => "收货人姓名",
         'address' => "收货地址",
         'cert_name' => '姓名',
-        'cert_no' => '身份证'
+        'cert_no' => '身份证',
+        'content' => '内容',
     ],
 
 ];
