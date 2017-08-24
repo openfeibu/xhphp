@@ -128,7 +128,7 @@ if(!function_exists('get_order_receivable'))
 {
 	function get_order_receivable()
 	{
-		
+
 	}
 }
 /*
@@ -292,5 +292,26 @@ if(!function_exists('friendlyDate')){
 	            return date('Y-m-d H:i:s', $sTime);
 	        }
 	    }
+	}
+}
+/**
+ * 获取字符串的长度
+ *
+ * 计算时, 汉字或全角字符占1个长度, 英文字符占0.5个长度
+ *
+ * @param  string $str
+ * @param  bool   $filter 是否过滤html标签
+ * @return int    字符串的长度
+ */
+if (!function_exists('get_str_length')) {
+
+	function get_str_length($str, $filter = false)
+	{
+	    if ($filter) {
+	        $str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
+	        $str = strip_tags($str);
+	    }
+
+	    return (strlen($str) + mb_strlen($str, 'UTF8')) / 4;
 	}
 }

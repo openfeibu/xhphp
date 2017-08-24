@@ -241,6 +241,12 @@ Route::get('coupon/getCouponPrizes','CouponController@getCouponPrizes')->name('c
 Route::post('coupon/couponLottery','CouponController@couponLottery')->name('coupon_couponLottery');
 Route::get('coupon/getUserPrizes','CouponController@getUserPrizes')->name('coupon_getUserPrizes');
 
+Route::get('drivingSchool/getDrivingSchools','DrivingSchoolController@getDrivingSchools');
+Route::get('drivingSchool/getDrivingSchool','DrivingSchoolController@getDrivingSchool');
+Route::post('drivingSchool/enroll','DrivingSchoolController@enroll');
+Route::get('drivingSchool/getEnrollRecords','DrivingSchoolController@getEnrollRecords');
+Route::get('drivingSchool/getEnrollRecord','DrivingSchoolController@getEnrollRecord');
+
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');
 Route::post('business/goods/store','ShopAdmin\GoodsController@store');
@@ -261,7 +267,6 @@ Route::post('business/orderInfo/revokeShipping','ShopAdmin\OrderInfoController@r
 Route::get('business/user/getUser', 'ShopAdmin\UserController@getUser');
 Route::get('business/user/getShop', 'ShopAdmin\UserController@getShop');
 Route::post('business/shop/updateShop', 'ShopAdmin\UserController@updateShop');
-
 Route::post('business/shop/uploadShopImage','ShopAdmin\UserController@uploadShopImage');
 
 Route::get('schedule/auto', 'ScheduleController@auto');
