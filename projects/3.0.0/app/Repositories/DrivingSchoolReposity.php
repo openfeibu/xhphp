@@ -62,7 +62,7 @@ class DrivingSchoolReposity
     {
         //$records = DrivingSchoolEcrollment::where('uid',$uid)->get(['name','mobile','content','ds_id','pro_id','enroll_id']);
         $records = DrivingSchoolEcrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
-                                          ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.pro_id')
+                                          ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.product_id')
                                           ->where('driving_school_enrollment.uid',$uid)
                                           ->where('status','succ')
                                           ->get(['ds.name','dsp.name as product_name','dsp.price','driving_school_enrollment.enroll_id']);
@@ -72,7 +72,7 @@ class DrivingSchoolReposity
     {
         $columns = $columns ? $columns : ['ds.name','dsp.name as product_name','dsp.price','dsp.desc','driving_school_enrollment.enroll_id','driving_school_enrollment.name as enroll_name','driving_school_enrollment.mobile','driving_school_enrollment.content','ds.ds_id'];
         $record = DrivingSchoolEcrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
-                                          ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.pro_id')
+                                          ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.product_id')
                                           ->where($where)
                                           ->where('status','succ')
                                           ->first($columns);

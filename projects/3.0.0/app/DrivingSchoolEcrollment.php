@@ -14,7 +14,7 @@ class DrivingSchoolEcrollment extends Model
         'name',
         'mobile',
         'content',
-        'pro_id',
+        'product_id',
         'ds_id',
         'status',
         'uid'

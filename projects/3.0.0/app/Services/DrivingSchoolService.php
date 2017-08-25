@@ -81,7 +81,7 @@ class DrivingSchoolService
             'content' => $this->request->content,
             'uid' => $product->uid,
             'ds_id' => $product->ds_id,
-            'pro_id' => $product->product_id,
+            'product_id' => $product->product_id,
         ];
         return $this->drivingSchoolReposity->enroll($enrollment);
     }
