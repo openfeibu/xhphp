@@ -8,7 +8,7 @@ class DrivingSchoolPro extends Model
 {
     protected $table = 'driving_school_product';
 
-    protected $primaryKey = 'pro_id';
+    protected $primaryKey = 'product_id';
 
     protected $fillable = [
         'name',
