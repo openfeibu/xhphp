@@ -47,7 +47,7 @@ class DrivingSchoolReposity
     }
     public function getPros($ds_id)
     {
-        $pros = DrivingSchoolPro::where('ds_id',$ds_id)->get(['name as product_name','desc','price','original_price']);
+        $pros = DrivingSchoolPro::where('ds_id',$ds_id)->get(['name as product_name','desc','price','original_price','product_id']);
         return $pros;
     }
     public function enroll($enrollment)
