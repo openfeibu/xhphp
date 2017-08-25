@@ -18,9 +18,10 @@ class DrivingSchoolEnrollment extends Migration
             $table->string('name',10)->comment('名称') ;
             $table->string('mobile',20)->comment('手机');
             $table->string('content')->default('')->comment('留言内容');
+            $table->enum('status',['succ','canceled'])->default('succ')->comment('取消状态');
             $table->integer('uid')->unsigned();
             $table->integer('ds_id')->unsigned() ;
-            $table->integer('pro_id')->unsigned() ;
+            $table->integer('product_id')->unsigned() ;
             $table->timestamps();
         });
     }
