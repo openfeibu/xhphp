@@ -242,7 +242,7 @@ Route::post('coupon/couponLottery','CouponController@couponLottery')->name('coup
 Route::get('coupon/getUserPrizes','CouponController@getUserPrizes')->name('coupon_getUserPrizes');
 
 Route::get('drivingSchool/getDrivingSchools','DrivingSchoolController@getDrivingSchools');
-Route::get('drivingSchool/getDrivingSchool','DrivingSchoolController@getDrivingSchool');
+Route::get('drivingSchool/getDrivingSchool','DrivingSchoolController@getDrivingSchool')->name('drivingSchool_getDrivingSchool');
 Route::post('drivingSchool/enroll','DrivingSchoolController@enroll');
 Route::get('drivingSchool/getEnrollRecords','DrivingSchoolController@getEnrollRecords');
 Route::get('drivingSchool/getEnrollRecord','DrivingSchoolController@getEnrollRecord');

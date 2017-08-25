@@ -28,6 +28,7 @@ if (!function_exists('round_route')) {
 			'shop_getShopGoodses',
 			'order_getOrderDetail',
 			'association_getAssociations',
+			'drivingSchool_getDrivingSchool',
 			'index',
 		];
 	}

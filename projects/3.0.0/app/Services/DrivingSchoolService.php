@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Session;
 use Illuminate\Http\Request;
+use App\Repositories\UserRepository;
 use App\Repositories\DrivingSchoolReposity;
 
 class DrivingSchoolService
@@ -11,9 +12,11 @@ class DrivingSchoolService
     protected $drivingSchoolReposity;
 
 	public function __construct(Request $request,
+                                UserRepository $userRepository,
                                 DrivingSchoolReposity $drivingSchoolReposity)
 	{
         $this->request = $request;
+        $this->userRepository = $userRepository;
         $this->drivingSchoolReposity = $drivingSchoolReposity;
 	}
     public function getDrivingSchools()
@@ -29,6 +32,17 @@ class DrivingSchoolService
     {
         $driving_school = $this->drivingSchoolReposity->getDrivingSchool($ds_id);
         $driving_school->prodoucts = $this->drivingSchoolReposity->getPros($ds_id);
+        $driving_school->enroll_id  = 0;
+        if($this->request->token)
+        {
+            $user = $this->userRepository->getUserByToken($this->request->token);
+            if($user)
+            {
+                $record = $this->drivingSchoolReposity->getEnrollRecord(['driving_school_enrollment.ds_id' => $ds_id,'driving_school_enrollment.uid' => $user->uid],$columns = ['driving_school_enrollment.enroll_id']);
+                $driving_school->enroll_id  = $record ? $record->enroll_id : 0;
+            }
+
+        }
         return $driving_school;
     }
     public function isExistsDrivingSchool($ds_id)

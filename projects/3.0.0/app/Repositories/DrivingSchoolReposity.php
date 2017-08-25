@@ -63,12 +63,13 @@ class DrivingSchoolReposity
                                           ->get(['ds.name','dsp.name as product_name','dsp.price','driving_school_enrollment.enroll_id']);
         return $records;
     }
-    public function getEnrollRecord($where)
+    public function getEnrollRecord($where,$columns = [])
     {
+        $columns = $columns ? $columns : ['ds.name','dsp.name as product_name','dsp.price','dsp.desc','driving_school_enrollment.enroll_id','driving_school_enrollment.name as enroll_name','driving_school_enrollment.mobile','driving_school_enrollment.content'];
         $record = DrivingSchoolEcrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
                                           ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.pro_id')
                                           ->where($where)
-                                          ->first(['ds.name','dsp.name as product_name','dsp.price','dsp.desc','driving_school_enrollment.enroll_id','driving_school_enrollment.name as enroll_name','driving_school_enrollment.mobile','driving_school_enrollment.content']);
+                                          ->first($columns);
         return $record;
     }
 }
