@@ -54,12 +54,17 @@ class DrivingSchoolReposity
     {
         return DrivingSchoolEcrollment::create($enrollment);
     }
+    public function cancel($where)
+    {
+        return DrivingSchoolEcrollment::where($where)->update(['status' => 'canceled']);
+    }
     public function getEnrollRecords($uid)
     {
         //$records = DrivingSchoolEcrollment::where('uid',$uid)->get(['name','mobile','content','ds_id','pro_id','enroll_id']);
         $records = DrivingSchoolEcrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
                                           ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.pro_id')
                                           ->where('driving_school_enrollment.uid',$uid)
+                                          ->where('status','succ')
                                           ->get(['ds.name','dsp.name as product_name','dsp.price','driving_school_enrollment.enroll_id']);
         return $records;
     }
@@ -69,6 +74,7 @@ class DrivingSchoolReposity
         $record = DrivingSchoolEcrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
                                           ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.pro_id')
                                           ->where($where)
+                                          ->where('status','succ')
                                           ->first($columns);
         return $record;
     }

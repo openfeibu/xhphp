@@ -244,8 +244,10 @@ Route::get('coupon/getUserPrizes','CouponController@getUserPrizes')->name('coupo
 Route::get('drivingSchool/getDrivingSchools','DrivingSchoolController@getDrivingSchools');
 Route::get('drivingSchool/getDrivingSchool','DrivingSchoolController@getDrivingSchool')->name('drivingSchool_getDrivingSchool');
 Route::post('drivingSchool/enroll','DrivingSchoolController@enroll');
+Route::post('drivingSchool/cancel','DrivingSchoolController@cancel');
 Route::get('drivingSchool/getEnrollRecords','DrivingSchoolController@getEnrollRecords');
 Route::get('drivingSchool/getEnrollRecord','DrivingSchoolController@getEnrollRecord');
+
 
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');

@@ -16,6 +16,7 @@ class DrivingSchoolEcrollment extends Model
         'content',
         'pro_id',
         'ds_id',
+        'status',
         'uid'
     ];
 }

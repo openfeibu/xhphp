@@ -70,7 +70,7 @@ class DrivingSchoolService
     }
     public function enroll($product)
     {
-        $record = $this->drivingSchoolReposity->getEnrollRecord(['driving_school_enrollment.uid' => $product->uid,'driving_school_enrollment.pro_id' => $product->product_id ]);
+        $record = $this->drivingSchoolReposity->getEnrollRecord(['driving_school_enrollment.uid' => $product->uid,'driving_school_enrollment.ds_id' => $product->ds_id ]);
         if($record)
         {
             throw new \App\Exceptions\Custom\OutputServerMessageException('请勿重复报名！');
@@ -85,10 +85,23 @@ class DrivingSchoolService
         ];
         return $this->drivingSchoolReposity->enroll($enrollment);
     }
+    public function cancel($where = [])
+    {
+        return $this->drivingSchoolReposity->cancel($where);
+    }
     public function getEnrollRecords($uid)
     {
         $records = $this->drivingSchoolReposity->getEnrollRecords($uid);
         return $records;
+    }
+    public function isExitsEnrollRecord($uid,$enroll_id)
+    {
+        $record = $this->getEnrollRecord($uid,$enroll_id);
+        if(!$record)
+        {
+            throw new \App\Exceptions\Custom\FoundNothingException();
+        }
+        return $record;
     }
     public function getEnrollRecord($uid,$enroll_id)
     {

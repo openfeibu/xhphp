@@ -71,6 +71,17 @@ class DrivingSchoolController extends Controller
         $this->drivingSchoolService->enroll($product);
         throw new \App\Exceptions\Custom\RequestSuccessException('报名成功');
     }
+    public function cancel(Request $request)
+    {
+        $rule = [
+            'enroll_id' => 'required',
+            'token' => 'required'
+        ];
+        $this->helpService->validateParameter($rule);
+        $user = $this->userService->getUser();
+        $this->drivingSchoolService->cancel(['enroll_id' => $request->enroll_id,'uid' => $user->uid]);
+        throw new \App\Exceptions\Custom\RequestSuccessException('取消成功');
+    }
     /*报名记录*/
     public function getEnrollRecords()
     {
@@ -89,7 +100,7 @@ class DrivingSchoolController extends Controller
         $this->helpService->validateParameter($rule);
 
         $user = $this->userService->getUser();
-        $record = $this->drivingSchoolService->getEnrollRecord($user->uid,$request->enroll_id);
+        $record = $this->drivingSchoolService->isExitsEnrollRecord($user->uid,$request->enroll_id);
 
         return [
             'code' => 200,
