@@ -7,6 +7,8 @@ use Session;
 use Validator;
 use Illuminate\Http\Request;
 use App\Events\Integral\Integrals;
+use App\Repositories\TopicRepository;
+use App\Repositories\CouponRepository;
 use App\Repositories\UserRepository;
 
 class UserService
@@ -16,10 +18,14 @@ class UserService
 	protected $userRepository;
 
 	function __construct(Request $request,
-                         UserRepository $userRepository)
+                         UserRepository $userRepository,
+                         TopicRepository $topicRepository,
+                         CouponRepository $couponRepository)
 	{
         $this->request = $request;
 		$this->userRepository = $userRepository;
+        $this->topicRepository = $topicRepository;
+        $this->couponRepository = $couponRepository;
 	}
 
     /**
@@ -280,7 +286,13 @@ class UserService
      */
     public function getMyInfo()
     {
-        return $this->userRepository->getMyInfo();
+        $info = $this->userRepository->getMyInfo();
+
+        $info->topic_count = $this->topicRepository->getCount(['uid' => $info->uid]);
+
+        $info->coupon_count = $this->couponRepository->getCount(['uid' => $info->uid]);
+        
+        return $info;
     }
 
     /**

@@ -269,4 +269,9 @@ class TopicService
 	{
 		return $this->topicRepository->thumbUpCount($param);
 	}
+	/* 获取话题数量 */
+	public function getCount($where = [])
+	{
+		return $this->topicRepository->getCount($where);
+	}
 }

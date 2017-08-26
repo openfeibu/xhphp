@@ -73,4 +73,8 @@ class CouponService
 		   ]);
 		}
 	}
+	public function getCount($where = [])
+	{
+		return $this->couponRepository->getCount($where);
+	}
 }
