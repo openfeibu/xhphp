@@ -74,4 +74,8 @@ class CouponRepository
 	{
 		return UserCoupon::where($where)->update($data);
 	}
+	public function getCount($where)
+	{
+		return UserCoupon::where($where)->count();
+	}
 }

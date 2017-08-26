@@ -182,12 +182,12 @@ class UserRepository
 		{
 			User::where($where)->update($user);
 		}
-		
+
 		if($user_info)
 		{
 			UserInfo::where($where)->update($user_info);
 		}
-		
+
 	}
 	/**
 	 * 检验账号密码是否一致

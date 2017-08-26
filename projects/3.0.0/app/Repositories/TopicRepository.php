@@ -294,4 +294,8 @@ class TopicRepository
 
 		return  $topic->favourites_count;
 	}
+	public function getCount($where)
+	{
+		return Topic::where($where)->count();
+	}
 }
