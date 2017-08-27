@@ -327,7 +327,7 @@ class TopicController extends Controller
 
         $this->topicService->incrementViewCount([$request->topic_id]);
         //获取话题评论
-        $comments = $this->topicService->getTopicCommentsList($param);
+        $comments = $this->topicService->getTopicAllCommentsList($param);
 
         return [
             'code' => 200,
