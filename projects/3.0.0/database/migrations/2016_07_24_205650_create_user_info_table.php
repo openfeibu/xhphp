@@ -25,11 +25,10 @@ class CreateUserInfoTable extends Migration
             $table->integer('favourites_count')->default(0)->comment('点赞数');
             $table->string('introduction')->default('这个家伙很懒，什么都没留下。')->comment('个人简介');
             $table->string('realname', 50)->default('')->comment('真实姓名');
-            $table->string('ID_Number', 18)->default('')->comment('身份证号码');
+            $table->string('id_number', 18)->default('')->comment('身份证号码');
             $table->string('alipay',50)->default('')->comment('支付宝账号');
-            $table->string('alipay_name',50)->default('')->comment('支付宝姓名');$table->tinyInteger('is_author')->default(0)->comment('是否是小编，1为小编，0为读者');      
-            $table->text('pic1')->default('')->comment('身份证照片1');
-            $table->text('pic2')->default('')->comment('身份证照片2');
+            $table->string('alipay_name',50)->default('')->comment('支付宝姓名');$table->tinyInteger('is_author')->default(0)->comment('是否是小编，1为小编，0为读者');
+
             $table->text('address')->default('')->comment('地址');
             $table->timestamps();
         });
