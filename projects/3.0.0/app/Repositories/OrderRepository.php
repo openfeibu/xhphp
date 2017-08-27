@@ -298,8 +298,8 @@ class OrderRepository
                     ->where('order.status','<>','waitpay')
                     ->orderBy('order_status_num','ASC')
                     ->orderBy('order.created_at', 'desc')
-                    ->skip(10 * $page - 10)
-                    ->take(10)
+                    ->skip(20 * $page - 20)
+                    ->take(20)
                     ->get()->toArray();
 
 		foreach($orders as $k => $order){
@@ -358,8 +358,8 @@ class OrderRepository
                     ->orderBy('order_status_num','ASC')
                     ->orderBy('order.created_at', 'desc')
 					->groupBy('order_status_history.oid')
-                    ->skip(10 * $page - 10)
-                    ->take(10)
+                    ->skip(20 * $page - 20)
+                    ->take(20)
                     ->get()->toArray();
 
 		foreach($orders as $k => $order){

@@ -412,6 +412,12 @@ class HelpService
 	    }
 	    curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);
 		$data = curl_exec($curl);
+		Log::debug($data);
+		$data = json_decode($data,true);
+		if(!$data['success'])
+        {
+			throw new \App\Exceptions\Custom\OutputServerMessageException($data['message']);
+        }
 		return $data;
 	}
 

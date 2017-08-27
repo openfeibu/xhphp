@@ -10,6 +10,7 @@ use App\User;
 use App\UserInfo;
 use App\VerifyCode;
 use App\DeviceToken;
+use App\ZhimaCertify;
 use Illuminate\Http\Request;
 
 class UserRepository
@@ -337,5 +338,17 @@ class UserRepository
 	public function getRealUids()
 	{
 		return UserInfo::where('realname','<>','')->lists('uid')->toArray();
+	}
+	public function createZhimaCert($cert_data)
+	{
+		return ZhimaCertify::create($cert_data);
+	}
+	public function getZhimaCert($where)
+	{
+		return ZhimaCertify::where($where)->orderBy('id','desc')->first();
+	}
+	public function updateZhimaCert($where,$update)
+	{
+		return ZhimaCertify::where($where)->update($update);
 	}
 }

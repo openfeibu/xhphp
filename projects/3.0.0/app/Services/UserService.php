@@ -10,6 +10,7 @@ use App\Events\Integral\Integrals;
 use App\Repositories\TopicRepository;
 use App\Repositories\CouponRepository;
 use App\Repositories\UserRepository;
+use App\Services\HelpService;
 
 class UserService
 {
@@ -20,12 +21,14 @@ class UserService
 	function __construct(Request $request,
                          UserRepository $userRepository,
                          TopicRepository $topicRepository,
-                         CouponRepository $couponRepository)
+                         CouponRepository $couponRepository,
+                         HelpService $helpService)
 	{
         $this->request = $request;
 		$this->userRepository = $userRepository;
         $this->topicRepository = $topicRepository;
         $this->couponRepository = $couponRepository;
+        $this->helpService = $helpService;
 	}
 
     /**
@@ -270,6 +273,7 @@ class UserService
     /**
      * 检验用户是否已经实名认证
      */
+
     public function isCurrentUserRealNameAuth()
     {
         $user = $this->userRepository->getUser();
@@ -280,7 +284,6 @@ class UserService
         }
         return true;
     }
-
     /**
      * 获取个人信息
      */
@@ -291,7 +294,7 @@ class UserService
         $info->topic_count = $this->topicRepository->getCount(['uid' => $info->uid]);
 
         $info->coupon_count = $this->couponRepository->getCount(['uid' => $info->uid]);
-        
+
         return $info;
     }
 
@@ -318,7 +321,20 @@ class UserService
     {
         $user = $this->userRepository->getUser()->userInfo;
         if (!$user->realname) {
-            throw new \App\Exceptions\Custom\OutputServerMessageException('请先到个人中心实名后方可发/接任务！');
+            $cert = $this->userRepository->getZhimaCert(['uid' => $user->uid,'status' => 'certifying']);
+            if($cert){
+                $bodys = [
+                    'bizNo' => $cert->bizNo,
+                ];
+                $cert_data = $this->helpService->zhima_query($bodys);
+                if($cert_data['data']['passed'])
+                {
+                    $this->userRepository->updateZhimaCert(['id' => $cert->id],['status' => 'succ']);
+                    $this->updateUser(['uid' => $user->uid],[],['realname' => $cert->cert_name,'id_number' => $cert->cert_no]);
+                    return true;
+                }
+            }
+            throw new \App\Exceptions\Custom\OutputServerMessageException('请先到个人中心实名后');
         }
         return true;
     }
@@ -359,5 +375,9 @@ class UserService
     public function getRealUids()
     {
     	return $this->userRepository->getRealUids();
+    }
+    public function createZhimaCert($cert_data)
+    {
+        return $this->userRepository->createZhimaCert($cert_data);
     }
 }

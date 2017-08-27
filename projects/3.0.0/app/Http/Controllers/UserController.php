@@ -826,10 +826,16 @@ class UserController extends Controller
     {
         $rule = [
             'cert_name' => 'required',
-            'cert_no' => 'required|identitycards'
+            'cert_no' => 'required|identitycards',
+            'token' => 'required'
         ];
         $this->helpService->validateParameter($rule);
-
+        $user = $this->userService->getUser();
+        $user_info = $user->userInfo;
+        if($user_info->realname)
+        {
+            throw new \App\Exceptions\Custom\OutputServerMessageException('请勿重复实名');
+        }
         $identityParam = [
             'identity_type' => 'CERT_INFO',
             'cert_type' => 'IDENTITY_CARD',
@@ -841,11 +847,19 @@ class UserController extends Controller
             'identityParam' => json_encode($identityParam),
         ];
         $initialize_data = $this->helpService->zhima_initialize($bodys);
-
+        $bizNo = $initialize_data['data']['bizNo'];
         $bodys = [
-            'bizNo' => $initialize_data['data']['bizNo'],
+            'bizNo' => $bizNo,
             'returnUrl' => config('web_url'),
         ];
+        /* 记录实名记录 */
+        $this->userService->createZhimaCert([
+            'uid' => $user->uid,
+            'cert_name' => $request->cert_name,
+            'cert_no' => $request->cert_no,
+            'bizNo' => $bizNo,
+            'status' => 'certifying'
+        ]);
         $certify_data = $this->helpService->zhima_certify($bodys);
         return [
             'code' => 200,
@@ -856,8 +870,10 @@ class UserController extends Controller
 
     public function zhimaQuery()
     {
+        $this->userService->isRealnameAuth();
+        exit;
         $bodys = [
-            'bizNo' => 'ZM201708123000000121200565120148',
+            'bizNo' => 'ZM201708273000000646400662366951',
         ];
         $data = $this->helpService->zhima_query($bodys);
         return $data;
