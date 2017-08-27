@@ -32,7 +32,9 @@ class TopicService
 	 */
 	public function getTopic ($tid,$columns = ['*'])
 	{
-		return $this->topicRepository->getTopic($tid,$columns = ['*']);
+		$topic = $this->topicRepository->getTopic($tid,$columns = ['*']);
+		$topic->content = escape_content($topic->content);
+		return $topic;
 	}
 
 	/**
@@ -45,7 +47,9 @@ class TopicService
 		if ($user) {
 			$param['user_id'] = $user->uid;
 		}
-		return $this->topicRepository->getTopicByTopicID($param);
+		$topic = $this->topicRepository->getTopicByTopicID($param);
+		$topic->content = escape_content($topic->content);
+		return $topic;
 	}
 
 	/**
