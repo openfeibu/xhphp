@@ -81,7 +81,7 @@ class OrderController extends Controller
         //检验请求参数
         $rule = [
             'page' => 'required',
-            'type' => 'sometimes|required|in:all,personal,business'
+            'type' => 'sometimes|required|in:all,personal,business,canteer'
         ];
         $this->helpService->validateParameter($rule);
 
