@@ -316,13 +316,13 @@ class TopicController extends Controller
         //检验请求参数
         $rule = [
             'topic_id' => 'required|exists:topic,tid,deleted_at,NULL',
-            'page' => 'required|digits_between:1,100',
+        //    'page' => 'required|digits_between:1,100',
         ];
         $this->helpService->validateParameter($rule);
 
         $param = [
             'topic_id' => $request->topic_id,
-            'page' => $request->page,
+        //    'page' => $request->page,
         ];
 
         $this->topicService->incrementViewCount([$request->topic_id]);

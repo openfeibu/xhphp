@@ -165,7 +165,7 @@ class TopicRepository
 	 */
 	public function getTopicCommentsList(array $param)
 	{
-		return  TopicComment::select(DB::raw("topic_comment.tcid, reviewer_user.openid, reviewer_user.nickname,
+		return  TopicComment::select(DB::raw("topic_comment.uid,topic_comment.tcid, reviewer_user.openid, reviewer_user.nickname,
                                             reviewer_user.avatar_url, topic_comment.content, if(topic_favourite.id>0,1,0) as favorited,
                                             topic_comment.favourites_count, topic_comment.created_at, topic_comment.cid as be_review_id,
                                             topic_comment.cid_username as be_review_username"))
