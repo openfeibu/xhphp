@@ -260,6 +260,7 @@ class GoodsController extends Controller
 	    $shopGoodses = $cat_id ? $this->goodsService->getShopGoodses(['goods.shop_id' =>$shop_id ,'goods.cat_id' => $cat_id],$uid) : [];
         return [
 			'code' => 200 ,
+            'cat_id' => $cat_id,
 			'categories' => $categories,
 			'shop' => $shop,
 			'goodes' => $shopGoodses,
