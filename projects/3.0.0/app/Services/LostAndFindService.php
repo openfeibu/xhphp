@@ -40,6 +40,8 @@ class LostAndFindService{
         foreach ($losses as $key => $loss) {
             $loss->url = config('app.web_url').'/LostAndFound/Lf-detail.html?loss_id='.$loss->loss_id;
             $loss->type_desc = trans('common.loss_type.'.$loss->type);
+            $loss->imgs = explode(',',$loss->img);
+			$loss->thumbs = explode(',',$loss->thumb);
         }
         return $losses;
     }
