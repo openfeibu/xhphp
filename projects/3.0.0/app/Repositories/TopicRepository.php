@@ -61,7 +61,7 @@ class TopicRepository
 											 topic_comment.content, topic_comment.favourites_count, topic_comment.created_at'))
 						   ->join('user', 'topic_comment.uid', '=', 'user.uid')
 						   ->where('topic_comment.tcid', $param['comment_id'])
-						   ->orderBy('tcid','asc')
+						   ->orderBy('tcid','desc')
 						   ->first();
 	}
 
@@ -81,7 +81,24 @@ class TopicRepository
 
 		return $topics;
 	}
+	public function getTopicComment($param)
+	{
+		$topicComment = TopicComment::select(DB::raw("topic_comment.uid,topic_comment.tcid, reviewer_user.openid, reviewer_user.nickname,
+                                            reviewer_user.avatar_url, topic_comment.content, if(topic_favourite.id>0,1,0) as favorited,
+                                            topic_comment.favourites_count, topic_comment.created_at, topic_comment.cid as be_review_id,
+                                            topic_comment.cid_username as be_review_username"))
+                            ->leftJoin('user as reviewer_user', 'topic_comment.uid', '=', 'reviewer_user.uid')
+                            ->leftJoin('topic_favourite', function ($join) {
+	                                $join->on('topic_comment.uid', '=', 'topic_favourite.uid')
+	                                     ->on('topic_comment.tcid', '=', 'topic_favourite.tcid');
+                              })
+                            ->where('topic_comment.tcid', $param['tcid'])
+                            ->whereNull('topic_comment.deleted_at')
+                            ->where('topic_comment.admin_deleted', 0)
+                            ->first();
 
+		return $topicComment;
+	}
 	/**
 	 * 获取用户的评论列表
 	 */
@@ -177,7 +194,7 @@ class TopicRepository
                             ->where('topic_comment.tid', $param['topic_id'])
                             ->whereNull('topic_comment.deleted_at')
                             ->where('topic_comment.admin_deleted', 0)
-                            ->orderBy('topic_comment.created_at', 'asc')
+                            ->orderBy('topic_comment.created_at', 'desc')
                             ->skip(20 * $param['page'] - 20)
                             ->take(20)
                             ->get();
@@ -199,7 +216,7 @@ class TopicRepository
                             ->where('topic_comment.tid', $param['topic_id'])
                             ->whereNull('topic_comment.deleted_at')
                             ->where('topic_comment.admin_deleted', 0)
-                            ->orderBy('topic_comment.created_at', 'asc')
+                            ->orderBy('topic_comment.created_at', 'desc')
                             ->get();
 
 		return $topicComments;

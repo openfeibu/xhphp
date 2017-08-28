@@ -365,7 +365,7 @@ class TopicController extends Controller
         ];
         //创建评论
         $id = $this->topicService->createComment2Topic($param);
-        $comments = $this->topicService->getTopicAllCommentsList($param);
+        $comment = $this->topicService->getTopicComment(['tcid' => $id]);
 		//透传给话题者/被评论者
 		$user = $this->userService->getUser();
 		if($to_uid != $user->uid)
@@ -402,7 +402,7 @@ class TopicController extends Controller
             'code' => 200,
             'detail' => '请求成功',
             'comment_id' => $id,
-            'data' => $comments,
+            'data' => $comment,
         ];
     }
 

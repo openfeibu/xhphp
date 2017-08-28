@@ -110,6 +110,8 @@ class TopicService
 		foreach($topics as $k=>$topic){
 			$topic->content = escape_content($topic->content);
 			$topic->created_at_desc = friendlyDate($topic->created_at->format('Y-m-d H:i:s'));
+			$topic->img_url = explode(',',$topic->img);
+			$topic->thumb_url = explode(',',$topic->thumb);
 			$topicComments = $this->getTopicAllCommentsList(['topic_id'=> $topic->tid]);
 			$topics[$k]['comment'] = $topicComments;
 		}
@@ -126,6 +128,8 @@ class TopicService
 		foreach($topics as $k=>$topic){
 			$topic['content'] = escape_content($topic['content']);
 			$topic->created_at_desc = friendlyDate($topic->created_at->format('Y-m-d H:i:s'));
+			$topic->img_url = explode(',',$topic->img);
+			$topic->thumb_url = explode(',',$topic->thumb);
 		}
 		return $topics;
 	}
@@ -169,6 +173,17 @@ class TopicService
         return true;
 	}
 
+	/**
+	 * 获取话题评论
+	 */
+	public function getTopicComment(array $param)
+	{
+		$topicComment =  $this->topicRepository->getTopicComment($param);
+		$topicComment->content = escape_content($topicComment->content);
+		$created_at = $topicComment->created_at->format('Y-m-d H:i:s');
+		$topicComment->created_at_desc = friendlyDate($created_at);
+		return $topicComment;
+	}
 	/**
 	 * 获取话题评论列表
 	 */

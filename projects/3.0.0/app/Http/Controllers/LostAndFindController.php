@@ -45,10 +45,10 @@ class LostAndFindController extends Controller
     {
         $rules = [
 			'page'  => 'required',
-			'type'  => 'required|in:lose,found'
+			'type'  => 'sometimes|in:lose,found'
 	    ];
 	    $this->helpService->validateParameter($rules);
-        $where = ['loss.type' => $request->type];
+        $where = $request->type ? ['loss.type' => $request->type] : [];
         $loss = $this->lostAndFindService->getList($where);
 
         return [
@@ -62,7 +62,7 @@ class LostAndFindController extends Controller
         //检验请求参数
         $rule = [
             'type'      => 'required|in:lose,found',
-            'cat_id'    => 'required|exists:loss_category,cat_id',
+            'cat_id'    => 'sometimes|exists:loss_category,cat_id',
             'mobile'    => 'required|regex:/^1[34578][0-9]{9}$/',
             'content'   => 'required|string|between:1,120',
             'img'       => 'sometimes',
@@ -100,6 +100,10 @@ class LostAndFindController extends Controller
     }
     public function uploadImage(Request $request)
     {
+        $rules = [
+			'token'  => 'required',
+	    ];
+	    $this->helpService->validateParameter($rules);
         $images_url = $this->imageService->uploadImages(Input::all(), 'loss');
         return [
             'code' => 200,
