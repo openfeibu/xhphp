@@ -34,7 +34,7 @@ class LostAndFindRepository
                            ->where($where)
                            ->orderBy('loss.loss_id','desc')
                            ->join('user','user.uid','=','loss.uid')
-                           ->join('loss_category','loss_category.cat_id','=','loss.cat_id')
+                           ->leftJoin('loss_category','loss_category.cat_id','=','loss.cat_id')
                            ->skip(20 * $this->request->page - 20)
                            ->take(20)
                            ->get();

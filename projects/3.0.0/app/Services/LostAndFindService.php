@@ -27,8 +27,7 @@ class LostAndFindService{
             'college_id'=> $user->college_id,
             'content'   => $this->request->content,
             'type'      => $this->request->type,
-            'cat_id'    => $this->request->cat_id,
-
+            'cat_id'    => isset($this->request->cat_id) ? $this->request->cat_id : 0,
             'img'       => isset($this->request->img) ? $this->request->img : '',
             'thumb'     => isset($this->request->thumb) ? $this->request->thumb : ''
         ];
