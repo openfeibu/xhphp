@@ -209,7 +209,7 @@ class TopicController extends Controller
         //检验请求参数
         $rule = [
             'topic_type' => 'sometimes|exists:topic_type,type',
-            'topic_content' => 'required|string|between:1,140',
+            'topic_content' => 'sometimes|string|between:1,140',
             'img' => 'sometimes|required',
             'thumb' => 'sometimes|required',
         ];
@@ -226,7 +226,10 @@ class TopicController extends Controller
         //         }
         //     }
         // }
-
+        if(!isset($request->topic_content) && !isset($request->img))
+        {
+            throw new \App\Exceptions\Custom\OutputServerMessageException('请上传图片或发表文字');
+        }
         $param = [
             //'type' => $request->topic_type,
             'content' => $request->topic_content,
