@@ -51,7 +51,10 @@ class LostAndFindService{
     }
     public function getLoss($where)
     {
-        return $this->lostAndFindRepository->getLoss($where);
+        $loss = $this->lostAndFindRepository->getLoss($where);
+        $loss->imgs = handle_img($loss->img);
+        $loss->thumbs = handle_img($loss->thumb);
+        return $loss;
     }
     public function delete($where)
     {
