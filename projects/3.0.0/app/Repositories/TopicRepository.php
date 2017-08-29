@@ -158,7 +158,7 @@ class TopicRepository
 		$topic = new Topic;
 		$topic->setConnection('write');
 		$topic->uid = $param['uid'];
-		$topic->type = $param['type'];
+		$topic->type = isset($param['type']) ? $param['type'] : 0;
 		$topic->content = base64_encode($param['content']);
 		$topic->img = $param['img'] ?: '';
 		$topic->thumb = $param['thumb'] ?: '';

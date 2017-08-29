@@ -208,7 +208,7 @@ class TopicController extends Controller
     {
         //检验请求参数
         $rule = [
-            'topic_type' => 'required|exists:topic_type,type',
+            'topic_type' => 'sometimes|exists:topic_type,type',
             'topic_content' => 'required|string|between:1,140',
             'img' => 'sometimes|required',
             'thumb' => 'sometimes|required',
@@ -228,7 +228,7 @@ class TopicController extends Controller
         // }
 
         $param = [
-            'type' => $request->topic_type,
+            //'type' => $request->topic_type,
             'content' => $request->topic_content,
             'img' => isset($request->img) ? $request->img : '',
             'thumb' => isset($request->thumb) ? $request->thumb : '',
