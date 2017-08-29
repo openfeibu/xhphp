@@ -34,6 +34,8 @@ class TopicService
 	{
 		$topic = $this->topicRepository->getTopic($tid,$columns = ['*']);
 		$topic->content = escape_content($topic->content);
+		$topic->imgs = handle_img($topic->img);
+		$topic->thumbs = handle_img($topic->thumb);
 		return $topic;
 	}
 
@@ -49,6 +51,8 @@ class TopicService
 		}
 		$topic = $this->topicRepository->getTopicByTopicID($param);
 		$topic->content = escape_content($topic->content);
+		$topic->imgs = handle_img($topic->img);
+		$topic->thumbs = handle_img($topic->thumb);
 		return $topic;
 	}
 
@@ -110,8 +114,8 @@ class TopicService
 		foreach($topics as $k=>$topic){
 			$topic->content = escape_content($topic->content);
 			$topic->created_at_desc = friendlyDate($topic->created_at->format('Y-m-d H:i:s'));
-			$topic->imgs = explode(',',$topic->img);
-			$topic->thumbs = explode(',',$topic->thumb);
+			$topic->imgs = handle_img($topic->img);
+			$topic->thumbs = handle_img($topic->thumb);
 			$topicComments = $this->getTopicAllCommentsList(['topic_id'=> $topic->tid]);
 			$topics[$k]['comment'] = $topicComments;
 		}
@@ -128,8 +132,8 @@ class TopicService
 		foreach($topics as $k=>$topic){
 			$topic['content'] = escape_content($topic['content']);
 			$topic->created_at_desc = friendlyDate($topic->created_at->format('Y-m-d H:i:s'));
-			$topic->imgs = explode(',',$topic->img);
-			$topic->thumbs = explode(',',$topic->thumb);
+			$topic->imgs = handle_img($topic->img);
+			$topic->thumbs = handle_img($topic->thumb);
 		}
 		return $topics;
 	}

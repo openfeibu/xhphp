@@ -316,3 +316,11 @@ if (!function_exists('get_str_length')) {
 	    return (strlen($str) + mb_strlen($str, 'UTF8')) / 4;
 	}
 }
+
+if (!function_exists('handle_img')) {
+	function handle_img($img)
+	{
+		return array_filter(explode(',',$img));
+	}
+
+}
