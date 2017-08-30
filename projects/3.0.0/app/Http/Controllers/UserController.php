@@ -825,8 +825,8 @@ class UserController extends Controller
     public function zhimaReal(Request $request)
     {
         $rule = [
-            'cert_name' => 'required',
-            'cert_no' => 'required|identitycards',
+            'name' => 'required',
+            'id_number' => 'required|identitycards',
             'token' => 'required'
         ];
         $this->helpService->validateParameter($rule);
@@ -839,8 +839,8 @@ class UserController extends Controller
         $identityParam = [
             'identity_type' => 'CERT_INFO',
             'cert_type' => 'IDENTITY_CARD',
-            'cert_name' => $request->cert_name,
-            'cert_no' => $request->cert_no,
+            'cert_name' => $request->name,
+            'cert_no' => $request->id_number,
         ];
         $bodys = [
             'bizCode' => 'FACE',
@@ -855,8 +855,8 @@ class UserController extends Controller
         /* 记录实名记录 */
         $this->userService->createZhimaCert([
             'uid' => $user->uid,
-            'cert_name' => $request->cert_name,
-            'cert_no' => $request->cert_no,
+            'cert_name' => $request->name,
+            'cert_no' => $request->id_number,
             'bizNo' => $bizNo,
             'status' => 'certifying'
         ]);
