@@ -831,8 +831,8 @@ class UserController extends Controller
         ];
         $this->helpService->validateParameter($rule);
         $user = $this->userService->getUser();
-        $user_info = $user->userInfo;
-        if($user_info->realname)
+        $status = $this->userService->realnameAuth($user);
+        if($status)
         {
             throw new \App\Exceptions\Custom\OutputServerMessageException('请勿重复实名');
         }
@@ -864,7 +864,7 @@ class UserController extends Controller
         return [
             'code' => 200,
             'detail' => '操作成功',
-            'url' => $certify_data['data']
+            'data' => $certify_data['data']
         ];
     }
 

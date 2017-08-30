@@ -314,13 +314,10 @@ class UserService
         $this->userRepository->updateUserInfo(['avatar_url' => $avatar_url]);
     }
 
-    /**
-     * 检验是否已实名
-     */
-    public function isRealnameAuth()
+    public function realnameAuth($user)
     {
-        $user = $this->userRepository->getUser()->userInfo;
-        if (!$user->realname) {
+        $user_info = $user->userInfo;
+        if (!$user_info->realname) {
             $cert = $this->userRepository->getZhimaCert(['uid' => $user->uid,'status' => 'certifying']);
             if($cert){
                 $bodys = [
@@ -334,6 +331,18 @@ class UserService
                     return true;
                 }
             }
+            return false;
+        }else{
+            return true;
+        }
+    }
+    /**
+     * 检验是否已实名
+     */
+    public function isRealnameAuth()
+    {
+        $status = $this->realnameAuth($this->userRepository->getUser());
+        if (!$status) {
             throw new \App\Exceptions\Custom\OutputServerMessageException('请先到个人中心实名后');
         }
         return true;
