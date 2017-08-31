@@ -328,24 +328,25 @@ class UserService
                 {
                     $this->userRepository->updateZhimaCert(['id' => $cert->id],['status' => 'succ']);
                     $this->updateUser(['uid' => $user->uid],[],['realname' => $cert->cert_name,'id_number' => $cert->cert_no]);
-                    return true;
+                    return handle_user($user_info);
                 }
             }
             return false;
         }else{
-            return true;
+
+            return handle_user($user_info);
         }
     }
     /**
      * 检验是否已实名
      */
-    public function isRealnameAuth()
+    public function isRealnameAuth($user)
     {
-        $status = $this->realnameAuth($this->userRepository->getUser());
+        $status = $this->realnameAuth($user);
         if (!$status) {
             throw new \App\Exceptions\Custom\OutputServerMessageException('请先到个人中心实名后');
         }
-        return true;
+        return $status;
     }
 
     public function getAlipayInfo ($uid)

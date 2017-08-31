@@ -51,6 +51,8 @@ Route::post('user/zhimaCertify','UserController@zhimaCertify')->name('user_zhima
 Route::post('user/zhimaQuery','UserController@zhimaQuery')->name('user_zhimaQuery');
 Route::post('user/zhimaReal','UserController@zhimaReal')->name('user_zhimaReal');
 Route::get('user/oauthCallback','UserController@oauthCallback')->name('user_oauthCallback');
+Route::get('user/realInfo','UserController@realInfo')->name('user_realInfo');
+
 
 Route::get('order/getOrderList', 'OrderController@getOrderList')->name('order_getOrderList');
 Route::get('order/getOrder', 'OrderController@getOrder')->name('order_getOrder');

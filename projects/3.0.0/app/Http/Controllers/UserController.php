@@ -537,7 +537,7 @@ class UserController extends Controller
     public function withdrawalsApply (Request $request)
     {
 	    $user = $this->userService->getUser();
-		$this->userService->isRealnameAuth();
+		$this->userService->isRealnameAuth($user);
 	    $alipayInfo = $this->userService->getAlipayInfo($user->uid);
 	    if(!$alipayInfo->is_paypassword){
 		    throw new \App\Exceptions\Custom\OutputServerMessageException('请先设置支付密码');
@@ -652,9 +652,11 @@ class UserController extends Controller
 	    }
     	$rule = [
             'alipay' => 'required|string|max:50',
-            'alipay_name' => 'required|string|max:50'
+            'alipay_name' => 'required|string|max:50',
+            'sms_code' => 'required',
         ];
         $this->helpService->validateParameter($rule);
+        $this->verifyCodeService->checkSMS($user->mobile_no, $request->sms_code, 'changeAli');
         $this->userService->updateAlipay($user->uid);
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
@@ -822,6 +824,23 @@ class UserController extends Controller
 			'data' => $pay,
     	];
 	}
+    public function realInfo(Request $request)
+    {
+        $rule = [
+            'token' => 'required'
+        ];
+        $this->helpService->validateParameter($rule);
+        $user = $this->userService->getUser();
+        $status = $this->userService->isRealnameAuth($user);
+        return [
+            'code' => 200,
+            'detail' => '请求成功',
+            'data' => [
+                'realname' => $status->realname,
+                'id_number' => $status->id_number,
+            ],
+        ];
+    }
     public function zhimaReal(Request $request)
     {
         $rule = [
@@ -870,7 +889,8 @@ class UserController extends Controller
 
     public function zhimaQuery()
     {
-        $this->userService->isRealnameAuth();
+        $user = $this->userService->getUser();
+        $this->userService->isRealnameAuth($user);
         exit;
         $bodys = [
             'bizNo' => 'ZM201708273000000646400662366951',

@@ -256,8 +256,9 @@ class OrderController extends Controller
         ];
         $this->helpService->validateParameter($rule);
 
+        $user = $this->userService->getUser();
         //检验是否已实名
-        $this->userService->isRealnameAuth();
+        $this->userService->isRealnameAuth($user);
 
         //次数限制
         //$this->orderService->checkScalping($request->order_id);

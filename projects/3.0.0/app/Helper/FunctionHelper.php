@@ -316,11 +316,65 @@ if (!function_exists('get_str_length')) {
 	    return (strlen($str) + mb_strlen($str, 'UTF8')) / 4;
 	}
 }
-
+/*图片处理*/
 if (!function_exists('handle_img')) {
 	function handle_img($img)
 	{
 		return array_filter(explode(',',$img));
 	}
 
+}
+/* 用户信息处理 */
+if (!function_exists('handle_user')) {
+	function handle_user($user)
+	{
+		if(isset($user->realname) && !empty($user->realname))
+		{
+			$user->realname = handle_name($user->realname);
+		}
+		if(isset($user->id_number) && !empty($user->id_number))
+		{
+			$user->id_number = handle_idcard($user->id_number);
+		}
+		return $user;
+	}
+
+}
+/*名字处理*/
+if (!function_exists('handle_name')) {
+	function handle_name($str)
+	{
+		//判断是否包含中文字符
+		if(preg_match("/[\x{4e00}-\x{9fa5}]+/u", $str)) {
+		    //按照中文字符计算长度
+		    $len = mb_strlen($str, 'UTF-8');
+		    //echo '中文';
+		    if($len >= 3){
+		        //三个字符或三个字符以上掐头取尾，中间用*代替
+		        $str = mb_substr($str, 0, 1, 'UTF-8') . '*' . mb_substr($str, -1, 1, 'UTF-8');
+		    } elseif($len == 2) {
+		        //两个字符
+		        $str = mb_substr($str, 0, 1, 'UTF-8') . '*';
+		    }
+		} else {
+		    //按照英文字串计算长度
+		    $len = strlen($str);
+		    //echo 'English';
+		    if($len >= 3) {
+		        //三个字符或三个字符以上掐头取尾，中间用*代替
+		        $str = substr($str, 0, 1) . '*' . substr($str, -1);
+		    } elseif($len == 2) {
+		        //两个字符
+		        $str = substr($str2, 0, 1) . '*';
+		    }
+		}
+		return $str;
+	}
+}
+/*身份证处理*/
+if (!function_exists('handle_idcard')) {
+	function handle_idcard($id_number)
+	{
+		return strlen($id_number) == 15 ? substr_replace($id_number,"******",6,6) : (strlen($id_number)==18 ? substr_replace($id_number,"******",8,6) : '');
+	}
 }
