@@ -30,7 +30,7 @@ class DrivingSchoolService
     }
     public function getDrivingSchool($ds_id)
     {
-        $driving_school = $this->drivingSchoolReposity->getDrivingSchool($ds_id);
+        $driving_school = $this->drivingSchoolReposity->getDrivingSchool(['ds_id' => $ds_id]);
         $driving_school->prodoucts = $this->drivingSchoolReposity->getPros($ds_id);
         $driving_school->enroll_id  = 0;
         if($this->request->token)
@@ -107,5 +107,19 @@ class DrivingSchoolService
     {
         $record = $this->drivingSchoolReposity->getEnrollRecord(['driving_school_enrollment.enroll_id' => $enroll_id,'driving_school_enrollment.uid' => $uid]);
         return $record;
+    }
+    public function getAdminDrivingSchool($uid)
+    {
+        $driving_school = $this->drivingSchoolReposity->getDrivingSchool(['uid' => $uid]);
+        if(!$driving_school)
+        {
+            throw new \App\Exceptions\Custom\OutputServerMessageException('没有权限');
+        }
+        return $driving_school;
+    }
+    public function getAdminEnrollRecords($ds_id)
+    {
+        $records = $this->drivingSchoolReposity->getAdminEnrollRecords($ds_id);
+        return $records;
     }
 }

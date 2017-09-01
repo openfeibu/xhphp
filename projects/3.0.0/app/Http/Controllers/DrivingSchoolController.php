@@ -18,7 +18,7 @@ class DrivingSchoolController extends Controller
                                 UserService $userService)
     {
 	    parent::__construct();
-        $this->middleware('auth', ['only' => ['apply','getApplys'] ]);
+        $this->middleware('auth', ['only' => ['apply','getApplys','getAdminEnrollRecords'] ]);
         $this->helpService = $helpService;
         $this->drivingSchoolService = $drivingSchoolService;
         $this->userService = $userService;
@@ -107,5 +107,14 @@ class DrivingSchoolController extends Controller
             'data' => $record
         ];
     }
-
+    public function getAdminEnrollRecords(Request $request)
+    {
+        $user = $this->userService->getUser();
+        $driving_school = $this->drivingSchoolService->getAdminDrivingSchool($user->uid);
+        $records = $this->drivingSchoolService->getAdminEnrollRecords($driving_school->ds_id);
+        return [
+            'code' => 200,
+            'data' => $records
+        ];
+    }
 }

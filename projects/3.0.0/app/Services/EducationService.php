@@ -30,7 +30,7 @@ class EducationService
     }
     public function getEducation($edu_id)
     {
-        $education = $this->educationReposity->getEducation($edu_id);
+        $education = $this->educationReposity->getEducation(['edu_id' => $edu_id]);
         $education->prodoucts = $this->educationReposity->getPros($edu_id);
         $education->enroll_id  = 0;
         if($this->request->token)
@@ -50,7 +50,7 @@ class EducationService
         $education = $this->getEducation($edu_id);
         if(!$education)
         {
-            throw new \App\Exceptions\Custom\FoundNothingException('驾校不存在');
+            throw new \App\Exceptions\Custom\FoundNothingException();
         }
         return $education;
     }
@@ -107,5 +107,19 @@ class EducationService
     {
         $record = $this->educationReposity->getEnrollRecord(['education_enrollment.enroll_id' => $enroll_id,'education_enrollment.uid' => $uid]);
         return $record;
+    }
+    public function getAdminEducation($uid)
+    {
+        $education = $this->educationReposity->getEducation(['uid' => $uid]);
+        if(!$education)
+        {
+            throw new \App\Exceptions\Custom\OutputServerMessageException('没有权限');
+        }
+        return $education;
+    }
+    public function getAdminEnrollRecords($edu_id)
+    {
+        $records = $this->educationReposity->getAdminEnrollRecords($edu_id);
+        return $records;
     }
 }

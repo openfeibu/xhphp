@@ -29,9 +29,9 @@ class EducationReposity
                                         ->get(['education.edu_id', 'education.name','education.desc','education.logo_url']);
         return $educations;
     }
-    public function getEducation($edu_id)
+    public function getEducation($where)
     {
-        $education = Education::where('edu_id',$edu_id)->first(['logo_url','img_url','edu_id','name','desc','content','tell']);
+        $education = Education::where($where)->first(['logo_url','img_url','edu_id','name','desc','content','tell']);
         return $education;
     }
     /*  获取该驾校最低的价格 */
@@ -60,7 +60,6 @@ class EducationReposity
     }
     public function getEnrollRecords($uid)
     {
-        //$recoredu = EducationEcrollment::where('uid',$uid)->get(['name','mobile','content','edu_id','pro_id','enroll_id']);
         $records = EducationEcrollment::join('education as edu','edu.edu_id','=','education_enrollment.edu_id')
                                           ->join('education_product as edup','edup.product_id','=','education_enrollment.product_id')
                                           ->where('education_enrollment.uid',$uid)
@@ -77,5 +76,17 @@ class EducationReposity
                                           ->where('status','succ')
                                           ->first($columns);
         return $record;
+    }
+    public function getAdminEnrollRecords($edu_id)
+    {
+        $records = EducationEcrollment::join('education as edu','edu.edu_id','=','education_enrollment.edu_id')
+                                          ->join('education_product as edup','edup.product_id','=','education_enrollment.product_id')
+                                          ->join('user','user.uid','=','education_enrollment.uid')
+                                          ->where('education_enrollment.edu_id',$edu_id)
+                                          ->where('status','succ')
+                                          ->skip(20 * $this->request->page - 20)
+                                          ->take(20)
+                                          ->get(['edu.name','edup.name as product_name','edup.price','education_enrollment.enroll_id','user.uid','user.nickname','user.avatar_url','education_enrollment.mobile','education_enrollment.content']);
+        return $records;
     }
 }

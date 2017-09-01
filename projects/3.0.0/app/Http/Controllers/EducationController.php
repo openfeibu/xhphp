@@ -18,7 +18,7 @@ class EducationController extends Controller
                                 UserService $userService)
     {
 	    parent::__construct();
-        $this->middleware('auth', ['only' => ['apply','getApplys'] ]);
+        $this->middleware('auth', ['only' => ['apply','getApplys','getAdminEnrollRecords'] ]);
         $this->helpService = $helpService;
         $this->educationService = $educationService;
         $this->userService = $userService;
@@ -107,5 +107,14 @@ class EducationController extends Controller
             'data' => $record
         ];
     }
-
+    public function getAdminEnrollRecords(Request $request)
+    {
+        $user = $this->userService->getUser();
+        $education = $this->educationService->getAdminEducation($user->uid);
+        $records = $this->educationService->getAdminEnrollRecords($education->edu_id);
+        return [
+            'code' => 200,
+            'data' => $records
+        ];
+    }
 }

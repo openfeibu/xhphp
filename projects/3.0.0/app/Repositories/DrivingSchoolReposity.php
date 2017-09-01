@@ -29,9 +29,9 @@ class DrivingSchoolReposity
                                         ->get(['driving_school.ds_id', 'driving_school.name','driving_school.desc','driving_school.logo_url']);
         return $driving_schools;
     }
-    public function getDrivingSchool($ds_id)
+    public function getDrivingSchool($where = [])
     {
-        $driving_school = DrivingSchool::where('ds_id',$ds_id)->first(['logo_url','img_url','ds_id','name','desc','content','tell']);
+        $driving_school = DrivingSchool::where($where)->first(['logo_url','img_url','ds_id','name','desc','content','tell']);
         return $driving_school;
     }
     /*  获取该驾校最低的价格 */
@@ -77,5 +77,17 @@ class DrivingSchoolReposity
                                           ->where('status','succ')
                                           ->first($columns);
         return $record;
+    }
+    public function getAdminEnrollRecords($ds_id)
+    {
+        return DrivingSchoolEcrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
+                                          ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.product_id')
+                                          ->join('user','user.uid','=','driving_school_enrollment.uid')
+                                          ->where('driving_school_enrollment.ds_id',$ds_id)
+                                          //->orderBy('decode(succ,cancel,canceled)')
+                                          ->where('status','succ')
+                                          ->skip(20 * $this->request->page - 20)
+                              			  ->take(20)
+                                          ->get(['dsp.name as product_name','dsp.price','driving_school_enrollment.enroll_id','user.uid','user.nickname','user.avatar_url','driving_school_enrollment.mobile','driving_school_enrollment.content']);
     }
 }
