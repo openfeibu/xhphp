@@ -50,7 +50,7 @@ class NotificationService
 						'content' => $comment ? escape_content($comment->content) : '评论已删除',
 						'object_content' => $topic ? escape_content($topic->content) : '话题已删除',
 					];
-
+					
 					break;
 				case 'comment_comment':
 					$comment = \App\TopicComment::where('tcid',$notification->new_id)->first(['content']);
@@ -64,7 +64,7 @@ class NotificationService
 						'tid' => $notification->top_id,
 						'tcid' => $notification->new_id,
 						'content' => $comment ? escape_content($comment->content) : '评论已删除',
-						'object_content' => $object_comment ? escape_content($object_comment->content) : '话题已删除',
+						'object_content' => $object_comment ? escape_content($object_comment->content) : '评论已删除',
 					];
 					break;
 				default:
@@ -74,7 +74,7 @@ class NotificationService
 			$data['created_at'] = $notification->created_at->format('Y-m-d H:i:s');
 			$datas[] = $data;
 		}
-		$this->notificationRepository->changeRead($where);
+		//$this->notificationRepository->changeRead($where);
 		return $datas;
 	}
 	public function newTopicNotificationCount($where)

@@ -107,6 +107,14 @@ class TopicService
 			$comment->content = escape_content($comment->content);
 			$created_at = $comment->created_at->format('Y-m-d H:i:s');
 			$comment->created_at_desc = friendlyDate($created_at);
+			if($comment->cid){
+				$object_comment = \App\TopicComment::where('tcid',$comment->cid)->first(['content']);
+				$comment->object_content = $object_comment ? escape_content($object_comment->content) : '话题已删除';
+			}else if($comment->tcid)
+			{
+				$topic =  \App\Topic::where('tid',$comment->tid)->first(['content']);
+				$comment->object_content = $topic ? escape_content($topic->content) : '话题已删除';
+			}
 		}
 		return $comments;
 	}

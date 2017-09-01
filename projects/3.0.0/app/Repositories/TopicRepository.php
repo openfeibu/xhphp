@@ -104,9 +104,10 @@ class TopicRepository
 	 */
 	public function getUserComment(array $param)
 	{
-		return TopicComment::select(DB::raw('tid, tcid, cid, cid_username, content, favourites_count, created_at, deleted_at,
-										     if(deleted_at IS NULL,0,1) as is_deleted, admin_deleted'))
-						   ->where('uid', $param['user_id'])
+		return TopicComment::select(DB::raw('topic_comment.tid, topic_comment.tcid, topic_comment.cid, topic_comment.cid_username, topic_comment.content, topic_comment.favourites_count, topic_comment.created_at, topic_comment.deleted_at,
+										     if(topic_comment.deleted_at IS NULL,0,1) as is_deleted, topic_comment.admin_deleted,user.nickname,user.avatar_url,user.uid'))
+						   ->join('user','user.uid','=','topic_comment.uid')
+						   ->where('topic_comment.uid', $param['user_id'])
 						   ->orderBy('created_at', 'desc')
 						   ->skip(20 * $param['page'] - 20)
 						   ->take(20)
