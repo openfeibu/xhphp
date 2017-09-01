@@ -72,10 +72,14 @@ class HomeController extends Controller
             'data' => $order,
         ];
     }
-	public function gethotGoods(Request $request)
+	public function getHotGoods(Request $request)
 	{
 		$number = isset($request->number) ? intval($request->number) : 6;
 		$goodses = $this->goodsService->getTopGoodses($number);
+		foreach($goodses as $key => $goods)
+		{
+			$goods->url = config('app.web_url');
+		}
 		return [
 			'code' => 200,
 			'data' => $goodses,
