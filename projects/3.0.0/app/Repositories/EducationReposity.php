@@ -86,7 +86,7 @@ class EducationReposity
                                           ->where('status','succ')
                                           ->skip(20 * $this->request->page - 20)
                                           ->take(20)
-                                          ->get(['edu.name','edup.name as product_name','edup.price','education_enrollment.enroll_id','user.uid','user.nickname','user.avatar_url','education_enrollment.mobile','education_enrollment.content']);
+                                          ->get(['edu.name','edup.name as product_name','edup.price','education_enrollment.enroll_id','user.uid','user.nickname','user.avatar_url','education_enrollment.name','education_enrollment.mobile','education_enrollment.content']);
         return $records;
     }
 }

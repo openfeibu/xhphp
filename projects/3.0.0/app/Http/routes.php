@@ -251,7 +251,7 @@ Route::post('drivingSchool/cancel','DrivingSchoolController@cancel');
 Route::get('drivingSchool/getEnrollRecords','DrivingSchoolController@getEnrollRecords');
 Route::get('drivingSchool/getEnrollRecord','DrivingSchoolController@getEnrollRecord');
 Route::get('drivingSchool/getAdminEnrollRecords','DrivingSchoolController@getAdminEnrollRecords');
-
+Route::get('drivingSchool/getAdminEnrollRecord','DrivingSchoolController@getAdminEnrollRecord');
 
 Route::get('education/getEducations','EducationController@getEducations');
 Route::get('education/getEducation','EducationController@getEducation')->name('education_getEducation');
@@ -260,6 +260,7 @@ Route::post('education/cancel','EducationController@cancel');
 Route::get('education/getEnrollRecords','EducationController@getEnrollRecords');
 Route::get('education/getEnrollRecord','EducationController@getEnrollRecord');
 Route::get('education/getAdminEnrollRecords','EducationController@getAdminEnrollRecords');
+Route::get('education/getAdminEnrollRecord','EducationController@getAdminEnrollRecord');
 
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');

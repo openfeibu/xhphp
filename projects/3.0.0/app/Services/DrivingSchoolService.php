@@ -122,4 +122,9 @@ class DrivingSchoolService
         $records = $this->drivingSchoolReposity->getAdminEnrollRecords($ds_id);
         return $records;
     }
+    public function getAdminEnrollRecord($ds_id,$enroll_id)
+    {
+        $record = $this->drivingSchoolReposity->getEnrollRecord(['driving_school_enrollment.enroll_id' => $enroll_id,'driving_school_enrollment.ds_id' => $ds_id]);
+        return $record;
+    }
 }

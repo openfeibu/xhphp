@@ -117,4 +117,18 @@ class EducationController extends Controller
             'data' => $records
         ];
     }
+    public function getAdminEnrollRecord(Request $request)
+    {
+        $rule = [
+            'enroll_id' => 'required',
+        ];
+        $this->helpService->validateParameter($rule);
+        $user = $this->userService->getUser();
+        $education = $this->educationService->getAdminEducation($user->uid);
+        $record = $this->educationService->getAdminEnrollRecord($education->edu_id,$request->enroll_id);
+        return [
+            'code' => 200,
+            'data' => $record
+        ];
+    }
 }

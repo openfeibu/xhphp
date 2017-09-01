@@ -88,6 +88,6 @@ class DrivingSchoolReposity
                                           ->where('status','succ')
                                           ->skip(20 * $this->request->page - 20)
                               			  ->take(20)
-                                          ->get(['dsp.name as product_name','dsp.price','driving_school_enrollment.enroll_id','user.uid','user.nickname','user.avatar_url','driving_school_enrollment.mobile','driving_school_enrollment.content']);
+                                          ->get(['dsp.name as product_name','dsp.price','driving_school_enrollment.enroll_id','user.uid','user.nickname','user.avatar_url','driving_school_enrollment.name','driving_school_enrollment.mobile','driving_school_enrollment.content']);
     }
 }

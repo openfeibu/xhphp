@@ -117,4 +117,18 @@ class DrivingSchoolController extends Controller
             'data' => $records
         ];
     }
+    public function getAdminEnrollRecord(Request $request)
+    {
+        $rule = [
+            'enroll_id' => 'required',
+        ];
+        $this->helpService->validateParameter($rule);
+        $user = $this->userService->getUser();
+        $driving_school = $this->drivingSchoolService->getAdminDrivingSchool($user->uid);
+        $record = $this->drivingSchoolService->getAdminEnrollRecord($driving_school->ds_id,$request->enroll_id);
+        return [
+            'code' => 200,
+            'data' => $record
+        ];
+    }
 }

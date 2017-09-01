@@ -122,4 +122,9 @@ class EducationService
         $records = $this->educationReposity->getAdminEnrollRecords($edu_id);
         return $records;
     }
+    public function getAdminEnrollRecord($edu_id,$enroll_id)
+    {
+        $record = $this->educationReposity->getEnrollRecord(['education_enrollment.enroll_id' => $enroll_id,'education_enrollment.edu_id' => $edu_id]);
+        return $record;
+    }
 }
