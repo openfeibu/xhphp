@@ -69,61 +69,6 @@ class OrderInfoController extends Controller
 	 	$this->user = $this->userService->getUser();
 	}
 
-	/*public function index (Request $request)
-	{
-		$rules = [
-        	'token' 	=> 'required',
-        	'cart_ids'  => 'required|string'
-    	];
-    	$this->helpService->validateParameter($rules);
-    	$cart_ids = array_filter(explode(',',$request->cart_ids));
-    	$shop_ids = $this->cartService->getShopIds($cart_ids,$this->user->uid);
-    	if(!count($shop_ids)){
-	    	throw new \App\Exceptions\Custom\OutputServerMessageException('参数错误');
-    	}
-    	$total = 0;
-    	foreach( $shop_ids as $key => $shop_id )
-    	{
-    		$carts = $this->cartService->getShopCartsByCartIds($shop_id,$cart_ids,$this->user->uid);
-			$shopDetail = $this->shopService->getShop($shop_id);
-			$arrCarts[$shop_id] = array(
-				'shop_name' 	=> $shopDetail->shop_name,
-				'shop_id'		=> $shopDetail->shop_id,
-				'shop_status'	=> $shopDetail->shop_status,
-				'shop_status_description' => trans("common.shop_status.$shopDetail->shop_status"),
-			);
-			$shop_total = 0;
-			foreach( $carts as $k => $cartsValue )
-			{
-				$goodsDetail = $this->goodsService->existGoods($cartsValue->goods_id);
-				$goods_total = $cartsValue->goods_price * $cartsValue->goods_number;
-				$arrCarts[$shop_id]['carts'][$cartsValue->cart_id] = array(
-					'goods_desc' 	=> $goodsDetail->goods_desc ,
-					'goods_name' 	=> $goodsDetail->goods_name,
-					'goods_img'  	=> $goodsDetail->goods_img,
-					'is_on_sale'	=> $goodsDetail->is_on_sale,
-					'goods_id'	 	=> $cartsValue->goods_id,
-					'goods_price'	=> $cartsValue->goods_price,
-					'goods_number'	=> $cartsValue->goods_number,
-					'cart_id'		=> $cartsValue->cart_id,
-					'goods_total'	=> $goods_total,
-				);
-				$shop_total += $goods_total;
-			}
-			$arrCarts[$shop_id]['shop_total'] =  $shop_total;
-			$total += $shop_total;
-    	}
-    	$pay = config("pay");
-    	//$address =
-    	return [
-            'code' => 200,
-            'data' => [
-            	'total' => $total,
-            	'allCarts' => $arrCarts,
-            	'pay' => $pay
-            ],
-        ];
-	}*/
 	public function index(Request $request)
 	{
 		$rule = [
@@ -182,6 +127,7 @@ class OrderInfoController extends Controller
 		return [
             'code' => 200,
             'shop_name' =>  $shop->shop_name,
+			'shop_img' => $shop->shop_img,
             'user_address' => $user_address,
             'pay' => $pay,
         	'carts' => $carts['carts'],
