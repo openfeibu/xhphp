@@ -102,7 +102,13 @@ class TopicService
 	public function getCurrentUserComment(array $param)
 	{
 		$param['user_id'] = $this->userRepository->getUser()->uid;
-		return $this->topicRepository->getUserComment($param);
+		$comments = $this->topicRepository->getUserComment($param);
+		foreach ($comments as $key => $comment) {
+			$comment->content = escape_content($comment->content);
+			$created_at = $comment->created_at->format('Y-m-d H:i:s');
+			$comment->created_at_desc = friendlyDate($created_at);
+		}
+		return $comments;
 	}
 
 	/**
