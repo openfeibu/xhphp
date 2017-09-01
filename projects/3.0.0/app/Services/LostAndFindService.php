@@ -51,8 +51,13 @@ class LostAndFindService{
     public function getLoss($where)
     {
         $loss = $this->lostAndFindRepository->getLoss($where);
-        $loss->imgs = handle_img($loss->img);
-        $loss->thumbs = handle_img($loss->thumb);
+        if($loss){
+            $loss->imgs = handle_img($loss->img);
+            $loss->thumbs = handle_img($loss->thumb);
+        }else{
+            throw new \App\Exceptions\Custom\FoundNothingException();
+        }
+
         return $loss;
     }
     public function delete($where)
