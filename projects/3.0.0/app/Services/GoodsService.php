@@ -96,4 +96,8 @@ class GoodsService
 	{
 		return $this->goodsRepository->delete($where);
 	}
+	public function getTopGoodses($number = 6)
+	{
+		return $this->goodsRepository->getTopGoodses($number);
+	}
 }

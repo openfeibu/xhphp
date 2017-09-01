@@ -128,4 +128,12 @@ class GoodsRepository
 	{
 		return Goods::where($where)->delete();
 	}
+	public function getTopGoodses($number)
+	{
+		return Goods::join('shop','shop.shop_id','=','goods.shop_id')
+					->where('shop.shop_status',1)
+					->where('goods.top',1)
+					->take($number)
+					->get(['goods.goods_thumb','goods.goods_name','goods.goods_price']);
+	}
 }

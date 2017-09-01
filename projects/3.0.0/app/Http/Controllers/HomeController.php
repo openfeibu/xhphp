@@ -9,15 +9,16 @@ use Validator;
 use App\Order;
 use App\Advertisement;
 use App\Http\Requests;
+use App\Services\GoodsService;
 use App\Http\Controllers\Controller;
 
 
 class HomeController extends Controller
 {
-	public function __construct ()
+	public function __construct (GoodsService $goodsService)
 	{
 		parent::__construct();
-
+		$this->goodsService = $goodsService ;
 	}
 	public function index ()
 	{
@@ -70,4 +71,13 @@ class HomeController extends Controller
             'data' => $order,
         ];
     }
+	public function gethotGoods(Request $request)
+	{
+		$number = isset($request->number) ? intval($request->number) : 6;
+		$goodses = $this->goodsService->getTopGoodses($number);
+		return [
+			'code' => 200,
+			'data' => $goodses,
+		];
+	}
 }
