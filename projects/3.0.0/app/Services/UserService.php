@@ -295,6 +295,19 @@ class UserService
 
         $info->coupon_count = $this->couponRepository->getCount(['uid' => $info->uid]);
 
+        $info->share_url = config('app.web_url');
+        /*
+        $info->is_driving_school = $info->is_education = 0;
+
+        if($info->drivingSchool)
+        {
+            $info->is_driving_school = 1;
+        }
+        if($info->education)
+        {
+            $info->is_education = 1;
+        }
+*/
         return $info;
     }
 

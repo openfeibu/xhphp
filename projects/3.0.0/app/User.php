@@ -66,6 +66,14 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasOne('App\DeviceToken', 'uid', 'uid');
     }
 
+    public function drivingSchool()
+    {
+        return $this->hasOne('App\DrivingSchool', 'uid', 'uid');
+    }
+    public function education()
+    {
+        return $this->hasOne('App\Education', 'uid', 'uid');
+    }
     #todo 删除
     /**
      * token是否登陆

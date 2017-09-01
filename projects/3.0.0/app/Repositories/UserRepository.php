@@ -266,6 +266,8 @@ class UserRepository
 									 if(user.pay_password<>"",1,0) as is_paypassword,
 									 if(association.level between 1 and 3,1,if(association_review.uid,2,0)) as is_cheif, if(association.level between 1 and 3,association.aid,0) as association_id,
 									 if(shop.shop_status=1,1,0) as is_merchant,
+									 if(driving_school.name<>"",1,0) as is_driving_school,
+									 if(education.name<>"",1,0) as is_education,
 									 if(user_info.realname<>"",1,if(real_name_auth.id>0,2,0)) as is_auth,
 									 user.integral, user.today_integral, if(user.integral>0,max(level.level),0) as level,
 									 if(upgrade_level.integral>0,upgrade_level.integral-user.integral,0) as upgrade'))
@@ -277,6 +279,8 @@ class UserRepository
 				   ->leftJoin('association_review', 'user.uid', '=', 'association_review.uid')
 				   ->leftJoin('level', 'user.integral', '>=', 'level.integral')
 				   ->leftJoin('level as upgrade_level', 'user.integral', '<', 'upgrade_level.integral')
+				   ->leftJoin('driving_school', 'user.uid', '=', 'driving_school.uid')
+				   ->leftJoin('education', 'user.uid', '=', 'education.uid')
 				   ->where('user.uid', self::$user->uid)
 				   ->first();
 	}
