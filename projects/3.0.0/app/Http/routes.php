@@ -116,6 +116,7 @@ Route::post('verify', 'VerifyController@verify');
 Route::get('home/getADList', 'HomeController@getADList');
 Route::get('home/getExtra', 'HomeController@getExtra');
 Route::get('home/gethotGoods', 'HomeController@gethotGoods');
+Route::get('home/getRecommend', 'HomeController@getRecommend');
 
 Route::get('topic/getTopic', 'TopicController@getTopic')->name('topic_getTopic');
 Route::get('topic/getMyTopic', 'TopicController@getMyTopic')->name('topic_getMyTopic');

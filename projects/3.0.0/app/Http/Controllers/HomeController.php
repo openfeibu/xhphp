@@ -8,6 +8,7 @@ use DB;
 use Validator;
 use App\Order;
 use App\Advertisement;
+use App\Recommend;
 use App\Http\Requests;
 use App\Services\GoodsService;
 use App\Http\Controllers\Controller;
@@ -78,6 +79,15 @@ class HomeController extends Controller
 		return [
 			'code' => 200,
 			'data' => $goodses,
+		];
+	}
+	public function getRecommend(Request $request)
+	{
+		$number = isset($request->number) ? intval($request->number) : 3;
+		$recommend = Recommend::orderBy('sort','asc')->take($number)->get();
+		return [
+			'code' => 200,
+			'date' =>$recommend,
 		];
 	}
 }
