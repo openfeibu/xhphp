@@ -71,6 +71,8 @@ class TopicService
 			$topics[$k]['avatar_url'] = $user->avatar_url;
 			$topicComments = $this->getTopicAllCommentsList(['topic_id'=> $topic->tid]  );
 			$topics[$k]['comment'] = $topicComments;
+			$topic->imgs = handle_img($topic->img);
+			$topic->thumbs = handle_img($topic->thumb);
 		}
 		return $topics;
 	}
@@ -88,6 +90,8 @@ class TopicService
 			$topics[$k]['nickname'] = $user->nickname;
 			$topics[$k]['avatar_url'] = $user->avatar_url;
 			$topics[$k]['openid'] = $user->openid;
+			$topic->imgs = handle_img($topic->img);
+			$topic->thumbs = handle_img($topic->thumb);
 		}
 		return $topics;
 	}
