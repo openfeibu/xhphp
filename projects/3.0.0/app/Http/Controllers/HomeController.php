@@ -91,7 +91,7 @@ class HomeController extends Controller
 		$recommend = Recommend::orderBy('sort','asc')->take($number)->get();
 		return [
 			'code' => 200,
-			'date' =>$recommend,
+			'data' =>$recommend,
 		];
 	}
 }
