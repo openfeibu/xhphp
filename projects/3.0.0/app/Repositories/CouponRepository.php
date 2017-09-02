@@ -77,6 +77,6 @@ class CouponRepository
 	}
 	public function getCount($where)
 	{
-		return UserCoupon::where($where)->count();
+		return UserCoupon::where($where)->where('status','unused')->where('overdue','>',date('Y-m-d'))->count();
 	}
 }
