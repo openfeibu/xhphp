@@ -50,7 +50,8 @@ class CouponRepository
 								->where('min_price','<=', $min_price)
 								->where('status','unused')
 								->where('overdue','>',date('Y-m-d'))
-								->OrderBy('user_coupon_id','desc')
+								->OrderBy('price','desc')
+								->OrderBy('user_coupon_id','asc')
 								->get();
 
         return $coupons;
