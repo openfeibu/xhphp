@@ -8,7 +8,7 @@ use Session;
 use App\User;
 use App\Education;
 use App\EducationPro;
-use App\EducationEcrollment;
+use App\EducationEnrollment;
 use Illuminate\Http\Request;
 
 class EducationReposity
@@ -52,15 +52,15 @@ class EducationReposity
     }
     public function enroll($enrollment)
     {
-        return EducationEcrollment::create($enrollment);
+        return EducationEnrollment::create($enrollment);
     }
     public function cancel($where)
     {
-        return EducationEcrollment::where($where)->update(['status' => 'canceled']);
+        return EducationEnrollment::where($where)->update(['status' => 'canceled']);
     }
     public function getEnrollRecords($uid)
     {
-        $records = EducationEcrollment::join('education as edu','edu.edu_id','=','education_enrollment.edu_id')
+        $records = EducationEnrollment::join('education as edu','edu.edu_id','=','education_enrollment.edu_id')
                                           ->join('education_product as edup','edup.product_id','=','education_enrollment.product_id')
                                           ->where('education_enrollment.uid',$uid)
                                           ->where('status','succ')
@@ -70,7 +70,7 @@ class EducationReposity
     public function getEnrollRecord($where,$columns = [])
     {
         $columns = $columns ? $columns : ['edu.name','edup.name as product_name','edup.price','edup.desc','education_enrollment.enroll_id','education_enrollment.name as enroll_name','education_enrollment.mobile','education_enrollment.content','edu.edu_id'];
-        $record = EducationEcrollment::join('education as edu','edu.edu_id','=','education_enrollment.edu_id')
+        $record = EducationEnrollment::join('education as edu','edu.edu_id','=','education_enrollment.edu_id')
                                           ->join('education_product as edup','edup.product_id','=','education_enrollment.product_id')
                                           ->where($where)
                                           ->where('status','succ')
@@ -79,7 +79,7 @@ class EducationReposity
     }
     public function getAdminEnrollRecords($edu_id)
     {
-        $records = EducationEcrollment::join('education as edu','edu.edu_id','=','education_enrollment.edu_id')
+        $records = EducationEnrollment::join('education as edu','edu.edu_id','=','education_enrollment.edu_id')
                                           ->join('education_product as edup','edup.product_id','=','education_enrollment.product_id')
                                           ->join('user','user.uid','=','education_enrollment.uid')
                                           ->where('education_enrollment.edu_id',$edu_id)

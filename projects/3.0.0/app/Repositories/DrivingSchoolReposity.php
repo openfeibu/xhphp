@@ -8,7 +8,7 @@ use Session;
 use App\User;
 use App\DrivingSchool;
 use App\DrivingSchoolPro;
-use App\DrivingSchoolEcrollment;
+use App\DrivingSchoolEnrollment;
 use Illuminate\Http\Request;
 
 class DrivingSchoolReposity
@@ -52,16 +52,16 @@ class DrivingSchoolReposity
     }
     public function enroll($enrollment)
     {
-        return DrivingSchoolEcrollment::create($enrollment);
+        return DrivingSchoolEnrollment::create($enrollment);
     }
     public function cancel($where)
     {
-        return DrivingSchoolEcrollment::where($where)->update(['status' => 'canceled']);
+        return DrivingSchoolEnrollment::where($where)->update(['status' => 'canceled']);
     }
     public function getEnrollRecords($uid)
     {
-        //$records = DrivingSchoolEcrollment::where('uid',$uid)->get(['name','mobile','content','ds_id','pro_id','enroll_id']);
-        $records = DrivingSchoolEcrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
+        //$records = DrivingSchoolEnrollment::where('uid',$uid)->get(['name','mobile','content','ds_id','pro_id','enroll_id']);
+        $records = DrivingSchoolEnrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
                                           ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.product_id')
                                           ->where('driving_school_enrollment.uid',$uid)
                                           ->where('status','succ')
@@ -71,7 +71,7 @@ class DrivingSchoolReposity
     public function getEnrollRecord($where,$columns = [])
     {
         $columns = $columns ? $columns : ['ds.name','dsp.name as product_name','dsp.price','dsp.desc','driving_school_enrollment.enroll_id','driving_school_enrollment.name as enroll_name','driving_school_enrollment.mobile','driving_school_enrollment.content','ds.ds_id'];
-        $record = DrivingSchoolEcrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
+        $record = DrivingSchoolEnrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
                                           ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.product_id')
                                           ->where($where)
                                           ->where('status','succ')
@@ -80,7 +80,7 @@ class DrivingSchoolReposity
     }
     public function getAdminEnrollRecords($ds_id)
     {
-        return DrivingSchoolEcrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
+        return DrivingSchoolEnrollment::join('driving_school as ds','ds.ds_id','=','driving_school_enrollment.ds_id')
                                           ->join('driving_school_product as dsp','dsp.product_id','=','driving_school_enrollment.product_id')
                                           ->join('user','user.uid','=','driving_school_enrollment.uid')
                                           ->where('driving_school_enrollment.ds_id',$ds_id)
