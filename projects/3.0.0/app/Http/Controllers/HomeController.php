@@ -82,23 +82,22 @@ class HomeController extends Controller
 			$goods->url = config('app.web_url');
 		}
 		*/
-		$recommend = Recommend::where('type','hot_goods')->orderBy('sort','asc')->take($number)->get();
+		$recommends = Recommend::where('type','hot_goods')->orderBy('sort','asc')->take($number)->get();
+		foreach ($recommends as $key => $recommend) {
+			$recommend->goods_thumb = $recommend->img;
+		}
 		return [
 			'code' => 200,
-			'data' =>$recommend,
-		];
-		return [
-			'code' => 200,
-			'data' => $recommend,
+			'data' => $recommends,
 		];
 	}
 	public function getRecommend(Request $request)
 	{
 		$number = isset($request->number) ? intval($request->number) : 3;
-		$recommend = Recommend::where('type','featured')->orderBy('sort','asc')->take($number)->get();
+		$recommends = Recommend::where('type','featured')->orderBy('sort','asc')->take($number)->get();
 		return [
 			'code' => 200,
-			'data' =>$recommend,
+			'data' => $recommends,
 		];
 	}
 }
