@@ -75,20 +75,27 @@ class HomeController extends Controller
 	public function getHotGoods(Request $request)
 	{
 		$number = isset($request->number) ? intval($request->number) : 6;
+		/*
 		$goodses = $this->goodsService->getTopGoodses($number);
 		foreach($goodses as $key => $goods)
 		{
 			$goods->url = config('app.web_url');
 		}
+		*/
+		$recommend = Recommend::where('type','hot_goods')->orderBy('sort','asc')->take($number)->get();
 		return [
 			'code' => 200,
-			'data' => $goodses,
+			'data' =>$recommend,
+		];
+		return [
+			'code' => 200,
+			'data' => $recommend,
 		];
 	}
 	public function getRecommend(Request $request)
 	{
 		$number = isset($request->number) ? intval($request->number) : 3;
-		$recommend = Recommend::orderBy('sort','asc')->take($number)->get();
+		$recommend = Recommend::where('type','featured')->orderBy('sort','asc')->take($number)->get();
 		return [
 			'code' => 200,
 			'data' =>$recommend,
