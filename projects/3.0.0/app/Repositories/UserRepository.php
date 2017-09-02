@@ -259,7 +259,7 @@ class UserRepository
 	 */
 	public function getMyInfo()
 	{
-		return User::select(DB::raw('user.uid,user.openid, user.mobile_no, user.nickname, user.avatar_url, user.integral,user.wallet, user_info.gender, user_info.college_id, college.name as college,
+		return User::select(DB::raw('user.uid,user.created_at,user.openid, user.mobile_no, user.nickname, user.avatar_url, user.integral,user.wallet, user_info.gender, user_info.college_id, college.name as college,
 									 user_info.enrollment_year, user_info.birth_year, user_info.birth_month,
 									 user_info.birth_day, user_info.favourites_count, user_info.introduction, user_info.realname, user_info.address,user_info.alipay,user_info.alipay_name,
 									 if(user_info.alipay<>"",1,0) as is_alipay,
