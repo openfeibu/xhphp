@@ -395,7 +395,7 @@ class OrderInfoService
 		$service_fee = $this->helpService->serviceFee($total_fee) ;
 		return [
 			'destination' => $order_info->address,
-			'description' => $shop->college_name.' '.$shop->shop_name.' '.$order_info->description,
+			'description' => $shop->shop_name.' '.$order_info->description,
 			'fee' => $shipping_fee,
 			'goods_fee' => $goods_fee ,
 			'total_fee' => $total_fee,

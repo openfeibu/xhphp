@@ -10,6 +10,7 @@ use App\Services\PushService;
 use App\Services\MessageService;
 use App\Repositories\UserRepository;
 use App\Repositories\OrderRepository;
+use App\Repositories\OrderInfoRepository;
 use App\Events\Integral\Integrals;
 
 class OrderService
@@ -25,13 +26,15 @@ class OrderService
 						 HelpService $helpService,
 						 MessageService $messageService,
 						 OrderRepository $orderRepository,
-						 UserRepository $userRepository)
+						 UserRepository $userRepository,
+						 OrderInfoRepository $orderInfoRepository)
 	{
 		$this->request = $request;
 		$this->messageService = $messageService;
         $this->pushService = $pushService;
         $this->helpService = $helpService;
         $this->orderRepository = $orderRepository;
+		$this->orderInfoRepository = $orderInfoRepository;
         $this->userRepository = $userRepository;
 	}
 
@@ -82,6 +85,15 @@ class OrderService
 		$order = $this->orderRepository->getSingleOrderByToken($order_id);
 		$order['order_status'] = trans('common.task_status.'.$order['status']);
 		$order['share_url'] = config('app.order_share_url').'?oid='.$order['oid'];
+		$goods_desc = '';
+		if($order['type'] == 'canteer' && $order['order_id'])
+		{
+			$order_goods = $this->orderInfoRepository->getOrderGoodses($order['order_id'],['goods_price','goods_number','goods_name']);
+			foreach ($order_goods as $key => $goods) {
+				$goods_desc .= $goods->goods_name . ' ' .$goods->goods_number.'件'. ' '.$goods->goods_price.'/件';
+			}
+		}
+		$order['goods_desc'] = $goods_desc;
 		return $order;
 	}
 

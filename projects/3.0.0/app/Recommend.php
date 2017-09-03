@@ -12,6 +12,7 @@ class Recommend extends Model
     	'id',
         'url',
         'img',
-        'name'
+        'name',
+        'type',
     ];
 }
