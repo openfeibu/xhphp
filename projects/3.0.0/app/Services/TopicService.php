@@ -155,6 +155,17 @@ class TopicService
 		}
 		return $topics;
 	}
+	public function getMapTopics()
+	{
+		 $topics = $this->topicRepository->getMapTopics();
+		 foreach($topics as $k=>$topic){
+			 $topic['content'] = escape_content($topic['content']);
+			 $topic->created_at_desc = friendlyDate($topic->created_at->format('Y-m-d H:i:s'));
+			 $topic->imgs = handle_img($topic->img);
+			 $topic->thumbs = handle_img($topic->thumb);
+		 }
+		 return $topics;
+	}
 	/**
 	 * 增加话题浏览量
 	 */

@@ -133,7 +133,7 @@ Route::post('topic/undoDeleteTopic', 'TopicController@undoDeleteTopic')->name('t
 Route::post('topic/thumbUp', 'TopicController@thumbUp')->name('topic_thumbUp');
 Route::post('topic/uploadImage', 'TopicController@uploadImage')->name('topic_uploadImage');
 Route::post('topic/search', 'TopicController@search')->name('topic_search');
-
+Route::get('topic/getMapTopics', 'TopicController@getMapTopics')->name('topic_getMapTopics');
 
 //Route::get('shop/getShopList', 'ShopController@getShopList')->name('login');
 //Route::get('shop/getShopGoodList', 'ShopController@getShopGoodList')->name('login');

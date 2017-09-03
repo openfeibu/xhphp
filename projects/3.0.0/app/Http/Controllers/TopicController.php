@@ -212,6 +212,8 @@ class TopicController extends Controller
             'topic_content' => 'sometimes|string|between:1,140',
             'img' => 'sometimes|required',
             'thumb' => 'sometimes|required',
+            'longitude' => 'sometimes|required',
+            'latitude' => 'sometimes|required',
         ];
         $this->helpService->validateParameter($rule);
 
@@ -234,14 +236,28 @@ class TopicController extends Controller
             //'type' => $request->topic_type,
             'content' => $request->topic_content,
             'img' => isset($request->img) ? $request->img : '',
-            'thumb' => isset($request->thumb) ? $request->thumb : '',
+            'longitude' => isset($request->longitude) ? $request->longitude : '',
+            'latitude' => isset($request->latitude) ? $request->latitude : '',
         ];
         //创建话题
         $this->topicService->createTopic($param);
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
+    public function getMapTopics(Request $request)
+    {
+        //检验请求参数
+        $rule = [
+            'college' => 'sometimes|required',
+        ];
+        $this->helpService->validateParameter($rule);
 
+        $topics = $this->topicService->getMapTopics();
+        return [
+            'code' => '200',
+            'data' => $topics
+        ];
+    }
     /**
      * 上传话题图片
      */

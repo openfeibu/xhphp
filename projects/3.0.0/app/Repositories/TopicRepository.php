@@ -163,6 +163,8 @@ class TopicRepository
 		$topic->content = base64_encode($param['content']);
 		$topic->img = $param['img'] ?: '';
 		$topic->thumb = $param['thumb'] ?: '';
+		$topic->longitude = $param['longitude'] ?: '';
+		$topic->latitude = $param['latitude'] ?: '';
 		$topic->save();
 	}
 
@@ -315,5 +317,17 @@ class TopicRepository
 	public function getCount($where)
 	{
 		return Topic::where($where)->count();
+	}
+	public function getMapTopics()
+	{
+		$topics = Topic::select(DB::raw("topic.tid, topic.type, topic.content, topic.img, topic.thumb,topic.view_num,
+                                    topic.comment_num, topic.favourites_count, topic.created_at, user.openid, user.nickname,
+                                    user.avatar_url"))
+                           ->join('user', 'topic.uid', '=', 'user.uid')
+                           ->where('longitude','<>','')
+                           ->whereNull('topic.deleted_at')
+                           ->orderBy('topic.created_at', 'desc')
+                           ->get();
+		return $topics;
 	}
 }
