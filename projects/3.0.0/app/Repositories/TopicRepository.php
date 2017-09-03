@@ -321,7 +321,7 @@ class TopicRepository
 	public function getMapTopics()
 	{
 		$topics = Topic::select(DB::raw("topic.tid, topic.type, topic.content, topic.img, topic.thumb,topic.view_num,
-                                    topic.comment_num, topic.favourites_count, topic.created_at, user.openid, user.nickname,
+                                    topic.comment_num, topic.favourites_count, topic.created_at,topic.longitude,topic.latitude, user.openid, user.nickname,
                                     user.avatar_url"))
                            ->join('user', 'topic.uid', '=', 'user.uid')
                            ->where('longitude','<>','')
