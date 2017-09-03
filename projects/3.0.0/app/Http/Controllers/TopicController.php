@@ -236,6 +236,7 @@ class TopicController extends Controller
             //'type' => $request->topic_type,
             'content' => $request->topic_content,
             'img' => isset($request->img) ? $request->img : '',
+            'thumb' => isset($request->thumb) ? $request->thumb : '',
             'longitude' => isset($request->longitude) ? $request->longitude : '',
             'latitude' => isset($request->latitude) ? $request->latitude : '',
         ];
