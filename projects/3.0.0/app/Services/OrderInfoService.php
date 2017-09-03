@@ -390,10 +390,11 @@ class OrderInfoService
 			$goods_fee = $order_info->goods_amount;
 			$type = 'canteer';
 		}
-		$this->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
+
 		$shipping_fee =  $order_info->shipping_fee + $order_info->seller_shipping_fee;
 		$total_fee = $order_info->shipping_fee + $order_info->seller_shipping_fee + $goods_fee ;
 		$service_fee = $this->helpService->serviceFee($total_fee) ;
+		$this->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
 		return [
 			'destination' => $order_info->address,
 			'description' => $shop->shop_name.' '.$order_info->description,

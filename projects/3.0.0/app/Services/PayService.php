@@ -205,6 +205,7 @@ class PayService
 				{
 					$order_data = $this->orderInfoService->createOrder($data['order_info'],$data['shop'],$data['shop_user']);
 					$order = $this->orderService->createOrder($order_data);
+					//$this->orderInfoService->updateOrderInfoById($data['order_id'],['shipping_status' => 1,'shipping_time' => dtime()]);
 				}
 				return '支付成功';
 				break;
