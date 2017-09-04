@@ -24,6 +24,9 @@ class CreateTopicTable extends Migration
             $table->integer('favourites_count')->default(0)->comment('点赞量');
             $table->tinyInteger('is_top')->default(0)->comment('置顶：0普通，1置顶');
             $table->tinyInteger('admin_deleted')->default(0)->comment('是否被管理员删除：0否，1是');
+            $table->decimal('longitude', 10,7)->comment('经度');
+            $table->decimal('latitude', 10,7)->comment('纬度');
+            $table->integer('college_id')-unsigned()->default(1)->comment('学校');
             $table->softDeletes();
             $table->timestamps();
         });
