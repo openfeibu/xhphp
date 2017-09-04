@@ -149,4 +149,8 @@ return [
 		'found' => '招领',
 		'lose' => '寻物'
 	],
+	'recommend_type' => [
+		'hot_goods' => '热销商品',
+		'featured' => '精品推荐',
+	],
 ];
