@@ -74,6 +74,7 @@ class OrderService
 			}
 		}
 		$order['goods_desc'] = $goods_desc;
+		$order['description'] = $goods_desc ? $order['description'] . "\n" . "[商品]".$order['goods_desc'] : $order['description'];
 		return $order;
 	}
 	public function getOrderColumn($where,$columns = ['*'])
@@ -104,6 +105,7 @@ class OrderService
 			}
 		}
 		$order['goods_desc'] = $goods_desc;
+		$order['description'] = $goods_desc ? $order['description'] . "\n" . "[商品]".$order['goods_desc'] : $order['description'];
 		return $order;
 	}
 
