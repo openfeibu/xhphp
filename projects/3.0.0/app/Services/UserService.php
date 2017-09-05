@@ -337,7 +337,7 @@ class UserService
                     'bizNo' => $cert->bizNo,
                 ];
                 $cert_data = $this->helpService->zhima_query($bodys);
-                if($cert_data['data']['passed'] == "true")
+                if(isset($cert_data['data']['passed']) && $cert_data['data']['passed'] == "true")
                 {
                     $this->userRepository->updateZhimaCert(['id' => $cert->id],['status' => 'succ']);
                     $this->updateUser(['uid' => $user->uid],[],['realname' => $cert->cert_name,'id_number' => $cert->cert_no]);
