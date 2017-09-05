@@ -53,6 +53,7 @@ class OrderService
 				$order->courier_openid = $user->openid;
 			}
 			$order->order_status = trans('common.task_status.'.$order->status);
+
 		}
 		return $orders;
 	}
@@ -63,19 +64,7 @@ class OrderService
 	public function getSingleOrder($order_id)
 	{
 		$order = $this->orderRepository->getSingleOrder($order_id);
-		$order->order_status = trans('common.task_status.'.$order['status']);
-		$order['share_url'] = config('app.order_share_url').'?oid='.$order['oid'];
-		$goods_desc = '';
-		if($order['type'] == 'canteer' && $order['order_id'])
-		{
-			$order_goods = $this->orderInfoRepository->getOrderGoodses($order['order_id'],['goods_price','goods_number','goods_name']);
-			foreach ($order_goods as $key => $goods) {
-				$goods_desc .= $goods->goods_name . ' ' .$goods->goods_number.'件'. ' '.$goods->goods_price.'/件';
-			}
-		}
-		$order['goods_desc'] = $goods_desc;
-		$order['description'] = $goods_desc ? $order['description'] . "\n" . "[商品]".$order['goods_desc'] : $order['description'];
-		return $order;
+		return $this->hanle_order_info($order);
 	}
 	public function getOrderColumn($where,$columns = ['*'])
 	{
@@ -94,7 +83,11 @@ class OrderService
 	public function getSingleOrderByToken($order_id)
 	{
 		$order = $this->orderRepository->getSingleOrderByToken($order_id);
-		$order['order_status'] = trans('common.task_status.'.$order['status']);
+		return $this->hanle_order_info($order);
+	}
+	private function hanle_order_info($order)
+	{
+		$order->order_status = trans('common.task_status.'.$order['status']);
 		$order['share_url'] = config('app.order_share_url').'?oid='.$order['oid'];
 		$goods_desc = '';
 		if($order['type'] == 'canteer' && $order['order_id'])

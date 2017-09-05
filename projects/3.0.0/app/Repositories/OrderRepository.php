@@ -34,7 +34,7 @@ class OrderRepository
                     ->take(10)
                     ->get();*/
         $orders = Order::join('user', 'order.owner_id', '=', 'user.uid')
-                    ->select(DB::raw('order.oid,order.owner_id,order.courier_id, user.openid, user.nickname, user.avatar_url, order.type,order.destination, order.description, order.fee, order.created_at ,order.status, CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num'))
+                    ->select(DB::raw('order.oid,order.owner_id,order.courier_id, user.openid, user.nickname, user.avatar_url, order.type,order.destination, order.description, order.fee, order.total_fee,order.goods_fee, order.created_at ,order.status,order.order_id, CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num'))
                     ->whereIn('order.status', ['new','accepted','finish','completed']);
         if(!empty($type) && $type != 'all'){
 	        $orders = $orders->where('type',$type);
@@ -53,7 +53,7 @@ class OrderRepository
 	{
 		return Order::join('user', 'order.owner_id', '=', 'user.uid')
                     ->select(DB::raw('order.oid,order.owner_id, order.type, order.order_id,order.order_sn,user.openid,user.mobile_no,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
-                    				  order.description, order.fee, order.status, order.created_at,order.service_fee,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
+                    				  order.description, order.fee, order.total_fee,order.goods_fee,order.status, order.created_at,order.service_fee,order.order_id,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where('oid', $order_id)
                     ->first();
@@ -63,7 +63,7 @@ class OrderRepository
 	{
 		return Order::join('user', 'order.owner_id', '=', 'user.uid')
                     ->select(DB::raw('order.oid,order.owner_id, order.type, order.order_id,order.order_sn,user.openid,user.mobile_no,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
-                    				  order.description, order.fee, order.status, order.created_at,order.service_fee,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
+                    				  order.description, order.fee, order.total_fee,order.goods_fee,order.status, order.created_at,order.service_fee,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where($where)
 					->where('courier_id','>','0')
@@ -82,7 +82,7 @@ class OrderRepository
 	{
 		$order = Order::join('user', 'order.owner_id', '=', 'user.uid')
                     ->select(DB::raw('order.oid,order.owner_id, order.type,order.order_id,order.order_sn,user.openid,order.pay_id, user.nickname, user.avatar_url,order.courier_id, order.alt_phone,order.destination,
-                    				  order.description, order.fee, order.status, order.created_at,courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
+                    				  order.description, order.fee, order.total_fee,order.goods_fee,order.status, order.created_at,order.total_fee, courier.mobile_no as courier_mobile_no,courier.avatar_url as courier_avatar_url,courier.nickname as courier_nickname'))
                     ->leftJoin('user as courier', 'order.courier_id', '=', 'courier.uid')
                     ->where('oid', $order_id)
                     ->first()->toArray();
@@ -125,7 +125,7 @@ class OrderRepository
 	public function getSingleOrderBySn($order_sn)
 	{
 		return Order::join('user', 'order.owner_id', '=', 'user.uid')
-                    ->select(DB::raw('order.oid, order.description, order.fee, order.status, order.created_at,order_sn'))
+                    ->select(DB::raw('order.oid, order.description, order.fee, order.total_fee,order.goods_fee, order.status, order.created_at,order_sn'))
                     ->where('order_sn', $order_sn)
                     ->first();
 	}
@@ -134,7 +134,7 @@ class OrderRepository
 	 */
 	public function getSingleOrderAllInfo($order_id)
 	{
-		return Order::select(DB::raw('order.oid, order.owner_id, order.courier_id,order.pay_id, order.fee, order.service_fee,order.total_fee,order.alt_phone, order.description,
+		return Order::select(DB::raw('order.oid, order.owner_id, order.courier_id,order.pay_id, order.fee, order.total_fee,order.goods_fee, order.service_fee,order.alt_phone, order.description,
 									  order.destination, order.status, order.created_at,order.order_sn,order.type,order.order_id,
 									  owner.uid as owner_id, owner.mobile_no as owner_mobile_no, owner.nickname as owner_nickname,
 									  owner.avatar_url as owner_avatar_url, owner.today_integral as owner_today_integral,
@@ -248,7 +248,7 @@ class OrderRepository
 	{
 		$order = Order::select(DB::raw('order.oid, if(user_courier.nickname IS NOT NULL,user_courier.nickname,"") as nickname, if(user_courier.avatar_url IS NOT NULL,user_courier.avatar_url,"") as avatar_url, if(order.courier_id!=0,user_courier.openid,"") as openid,
 									  if(user_courier.mobile_no IS NOT NULL,user_courier.mobile_no,"") as phone, order.destination, order.description,
-									  order.fee, order.alt_phone as alt_phone,CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num, order.status,order.created_at'))
+									  order.fee, order.total_fee,order.goods_fee, order.alt_phone as alt_phone,CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num, order.status,order.created_at'))
                     ->join('user as user_owner', 'order.owner_id', '=', 'user_owner.uid')
                     ->leftJoin('user as user_courier', 'order.courier_id', '=', 'user_courier.uid')
                     ->where('order.oid', $order_id)
@@ -291,7 +291,7 @@ class OrderRepository
 	{
 		$orders = Order::select(DB::raw('order.oid, if(user_courier.nickname IS NOT NULL,user_courier.nickname,"") as nickname, if(user_courier.avatar_url IS NOT NULL,user_courier.avatar_url,"") as avatar_url, if(order.courier_id!=0,user_courier.openid,"") as openid,
 									  if(user_courier.mobile_no IS NOT NULL,user_courier.mobile_no,"") as phone, order.destination, order.description,
-									  order.fee, order.alt_phone as alt_phone,CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num, order.status,order.created_at'))
+									  order.fee, order.total_fee,order.goods_fee, order.alt_phone as alt_phone,CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num, order.status,order.created_at'))
                     ->join('user as user_owner', 'order.owner_id', '=', 'user_owner.uid')
                     ->leftJoin('user as user_courier', 'order.courier_id', '=', 'user_courier.uid')
                     ->where('order.owner_id', $uid)
@@ -349,7 +349,7 @@ class OrderRepository
 	{
 		$orders = Order::select(DB::raw('order.oid, if(user_owner.nickname IS NOT NULL,user_owner.nickname,"") as nickname, if(user_owner.avatar_url IS NOT NULL,user_owner.avatar_url,"") as avatar_url, user_owner.openid as openid,
 									  if(user_owner.mobile_no IS NOT NULL,user_owner.mobile_no,"") as phone, order.alt_phone as alt_phone, order.destination, order.description,
-									  order.fee, CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num, order.status,order.created_at'))
+									  order.fee, order.total_fee,order.goods_fee, CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num, order.status,order.created_at'))
                     ->join('user as user_courier', 'order.courier_id', '=', 'user_courier.uid')
                     ->leftJoin('user as user_owner', 'order.owner_id', '=', 'user_owner.uid')
 					->leftJoin('order_status_history', 'order.oid', '=', 'order_status_history.oid')
@@ -478,7 +478,7 @@ class OrderRepository
 	public function getRecommendOrders ($number)
 	{
 		return Order::join('user', 'order.owner_id', '=', 'user.uid')
-                    ->select(DB::raw('order.oid, user.openid, user.nickname, user.avatar_url, order.destination, order.description, order.fee, order.created_at,order.status as status,order.is_recommend'))
+                    ->select(DB::raw('order.oid, user.openid, user.nickname, user.avatar_url, order.destination, order.description, order.fee, order.total_fee,order.goods_fee, order.created_at,order.status as status,order.is_recommend'))
                     ->whereIn('order.status', ['new'])
                    	->orderBy('is_recommend','DESC')
                    	->orderBy('fee','DESC')
