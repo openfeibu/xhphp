@@ -889,11 +889,11 @@ class UserController extends Controller
 
     public function zhimaQuery()
     {
-        $user = $this->userService->getUser();
-        $this->userService->isRealnameAuth($user);
-        exit;
+        // $user = $this->userService->getUser();
+        // $this->userService->isRealnameAuth($user);
+        // exit;
         $bodys = [
-            'bizNo' => 'ZM201708273000000646400662366951',
+            'bizNo' => 'ZM201709053000000757500715190773',
         ];
         $data = $this->helpService->zhima_query($bodys);
         return $data;
