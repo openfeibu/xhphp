@@ -87,7 +87,7 @@ class OrderService
 	public function getSingleOrderByToken($order_id)
 	{
 		$order = $this->orderRepository->getSingleOrderByToken($order_id);
-		$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
+		$order->created_at_desc = friendlyDate($order['created_at']);
 		return $this->hanle_order_info($order);
 	}
 	private function hanle_order_info($order)
