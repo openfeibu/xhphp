@@ -268,7 +268,7 @@ class UserRepository
 									 if(shop.shop_status=1,1,0) as is_merchant,
 									 if(driving_school.name<>"",1,0) as is_driving_school,
 									 if(education.name<>"",1,0) as is_education,
-									 if(user_info.realname<>"",1,if(real_name_auth.id>0,2,0)) as is_auth,
+									 if(user_info.realname<>"",1,0) as is_auth,
 									 user.integral, user.today_integral, if(user.integral>0,max(level.level),0) as level,
 									 if(upgrade_level.integral>0,upgrade_level.integral-user.integral,0) as upgrade'))
 				   ->join('user_info', 'user.uid', '=', 'user_info.uid')
