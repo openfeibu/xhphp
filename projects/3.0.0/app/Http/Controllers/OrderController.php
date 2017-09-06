@@ -290,6 +290,7 @@ class OrderController extends Controller
         {
             $order_info = $this->orderInfoService->getOrderInfoCustom(['order_id' => $order->order_id],['pick_code']);
             $rst = $this->smsService->sendSMS($order->courier_mobile_no,$type = 'pick_code',$data = ['sms_template_code' => config('sms.pick_code'),'code' => $order_info->pick_code,'uid' => $order->courier_id]);
+            $this->messageService->SystemMessage2SingleOne($user->uid, '取货码：'.$order_info->pick_code);
         }
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
