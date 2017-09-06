@@ -127,7 +127,6 @@ class OrderService
 	public function getOrder($where = [],$columns = ['*'],$is_exception = true)
 	{
 		$order = $this->orderRepository->getOrder($where,$columns,$is_exception);
-		$order['created_at_desc'] = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $order;
 	}
 	public function getOrderDetail($order_id)
