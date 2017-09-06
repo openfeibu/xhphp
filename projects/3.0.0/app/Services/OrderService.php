@@ -97,10 +97,12 @@ class OrderService
 		$goods_desc = '';
 		if($order['type'] == 'canteen' && $order['order_id'])
 		{
+			$order_info = $this->orderInfoRepository->isExistsOrderInfo(['order_id' => $order['order_id']],['postscript']);
 			$order_goods = $this->orderInfoRepository->getOrderGoodses($order['order_id'],['goods_price','goods_number','goods_name']);
 			foreach ($order_goods as $key => $goods) {
 				$goods_desc .= $goods->goods_name . ' ' .$goods->goods_number.'件'. ' '.$goods->goods_price.'/件';
 			}
+			$goods_desc = $order_info->postscript ? $goods_desc. "\n". "[备注]" .$order_info->postscript : $goods_desc;
 		}
 		$order['goods_desc'] = $goods_desc;
 		$order['description'] = $goods_desc ? $order['description'] . "\n" . "[商品]".$order['goods_desc'] : $order['description'];
