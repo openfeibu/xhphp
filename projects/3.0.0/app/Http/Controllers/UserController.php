@@ -79,7 +79,7 @@ class UserController extends Controller
             'mobile_no' => 'required',
             'password' => 'required|alpha_dash',
             'sms_code' => 'required',
-            'nickname' => 'sometimes|alpha_dash|unique:user,nickname',
+            'nickname' => 'sometimes|alpha_dash|unique:user,nickname|between:2,8',
             'gender' => 'sometimes|in:0,1,2',
             'enrollment_year' => 'sometimes|required|after:2000|before:' . (date('Y')+1),
             'avatar_url' => 'sometimes|required|string',
