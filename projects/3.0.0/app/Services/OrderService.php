@@ -87,7 +87,7 @@ class OrderService
 	}
 	private function hanle_order_info($order)
 	{
-		$order->order_status = trans('common.task_status.'.$order['status']);
+		$order['order_status'] = trans('common.task_status.'.$order['status']);
 		$order['share_url'] = config('app.order_share_url').'?oid='.$order['oid'];
 		$goods_desc = '';
 		if($order['type'] == 'canteer' && $order['order_id'])
