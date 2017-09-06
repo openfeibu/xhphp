@@ -270,8 +270,9 @@ class OrderInfoService
 	{
         $shop_user = $this->userRepository->getUserByUserID($shop->uid);
 
-		if($shop->type == 1 || $shop->type == 2)
+		if($shop->shop_type == 1 || $shop->shop_type == 2)
 		{
+
 			//应得款
 			$receivable = get_receivable($shop->shop_type,$order_info);
 			//服务费
