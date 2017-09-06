@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Log;
 use Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\HelpService;
 use App\Services\PushService;
@@ -53,7 +54,7 @@ class OrderService
 				$order->courier_openid = $user->openid;
 			}
 			$order->order_status = trans('common.task_status.'.$order->status);
-
+			$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		}
 		return $orders;
 	}
@@ -64,16 +65,19 @@ class OrderService
 	public function getSingleOrder($order_id)
 	{
 		$order = $this->orderRepository->getSingleOrder($order_id);
+		$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $this->hanle_order_info($order);
 	}
 	public function getOrderColumn($where,$columns = ['*'])
 	{
 		$order = $this->orderRepository->getOrderColumn($where,$columns);
+		$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $order;
 	}
 	public function isExistsOrderColumn($where,$columns = ['*'])
 	{
 		$order = $this->orderRepository->getOrderColumn($where,$columns);
+		$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		if(!$order)
 		{
 			throw new \App\Exceptions\Custom\FoundNothingException();
@@ -83,6 +87,7 @@ class OrderService
 	public function getSingleOrderByToken($order_id)
 	{
 		$order = $this->orderRepository->getSingleOrderByToken($order_id);
+		$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $this->hanle_order_info($order);
 	}
 	private function hanle_order_info($order)
@@ -99,6 +104,7 @@ class OrderService
 		}
 		$order['goods_desc'] = $goods_desc;
 		$order['description'] = $goods_desc ? $order['description'] . "\n" . "[商品]".$order['goods_desc'] : $order['description'];
+		$order['created_at_desc'] = friendlyDate($order['created_at']);
 		return $order;
 	}
 
@@ -109,17 +115,20 @@ class OrderService
 	{
 		$order = $this->orderRepository->getSingleOrderAllInfo($order_id);
 		$order->order_status = trans('common.task_status.'.$order['status']);
+		$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $order;
 	}
 	public function getOrderBySn($order_sn)
 	{
 		$order = $this->orderRepository->getOrderBySn($order_sn);
 		$order->order_status = trans('common.task_status.'.$order['status']);
+		$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $order;
 	}
 	public function getOrder($where = [],$columns = ['*'],$is_exception = true)
 	{
 		$order = $this->orderRepository->getOrder($where,$columns,$is_exception);
+		$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $order;
 	}
 	public function getOrderDetail($order_id)
@@ -127,6 +136,7 @@ class OrderService
 		$order = $this->orderRepository->getOrderDetail($order_id);
 		$order->order_status = trans('common.task_status.'.$order['status']);
 		$order->share_url = config('app.order_share_url').'?oid='.$order->oid;
+		$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $order;
 	}
 	/**
