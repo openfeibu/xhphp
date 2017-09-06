@@ -389,7 +389,7 @@ class OrderInfoService
 			$type = 'business';
 		}else if($shop->shop_type == 3){
 			$goods_fee = $order_info->goods_amount;
-			$type = 'canteer';
+			$type = 'canteen';
 		}
 
 		$shipping_fee =  $order_info->shipping_fee + $order_info->seller_shipping_fee;

@@ -81,7 +81,7 @@ class OrderController extends Controller
         //检验请求参数
         $rule = [
             'page' => 'required',
-            'type' => 'sometimes|required|in:all,personal,business,canteer'
+            'type' => 'sometimes|required|in:all,personal,business,canteen'
         ];
         $this->helpService->validateParameter($rule);
 
@@ -545,7 +545,7 @@ class OrderController extends Controller
 		}
         $order = $this->orderService->getSingleOrder($request->order_id);
         //检验任务是否已完成
-		if($order->type == 'business' || $order->type == 'canteer'){
+		if($order->type == 'business' || $order->type == 'canteen'){
 	        $order_info = $this->orderInfoService->getOrderInfo($order->order_id);
 	        if($order_info){
 		        $shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);

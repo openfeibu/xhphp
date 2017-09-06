@@ -95,7 +95,7 @@ class OrderService
 		$order['order_status'] = trans('common.task_status.'.$order['status']);
 		$order['share_url'] = config('app.order_share_url').'?oid='.$order['oid'];
 		$goods_desc = '';
-		if($order['type'] == 'canteer' && $order['order_id'])
+		if($order['type'] == 'canteen' && $order['order_id'])
 		{
 			$order_goods = $this->orderInfoRepository->getOrderGoodses($order['order_id'],['goods_price','goods_number','goods_name']);
 			foreach ($order_goods as $key => $goods) {

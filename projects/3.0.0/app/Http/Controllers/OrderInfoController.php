@@ -224,7 +224,7 @@ class OrderInfoController extends Controller
 
 		$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
 
-		//$is_show = $shop->shop_type == 'canteer' ? 0 : 1;
+		//$is_show = $shop->shop_type == 'canteen' ? 0 : 1;
         $order_info = $this->orderInfoService->create([
         											'order_sn' => $order_sn,
         											'uid' => $this->user->uid,
