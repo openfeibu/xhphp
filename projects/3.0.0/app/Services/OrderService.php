@@ -115,7 +115,6 @@ class OrderService
 	{
 		$order = $this->orderRepository->getSingleOrderAllInfo($order_id);
 		$order->order_status = trans('common.task_status.'.$order['status']);
-		$order['created_at_desc'] = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $order;
 	}
 	public function getOrderBySn($order_sn)
@@ -238,7 +237,7 @@ class OrderService
 			$orders[$key]['order_status'] =  trans('common.task_status.'.$order['status']);
 			$orders[$key]['share_url'] = config('app.order_share_url').'?oid='.$order['oid'];
 			$orders[$key]['type'] = 'task';
-			$orders[$key]['created_at_desc'] = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
+			$orders[$key]['created_at_desc'] = friendlyDate($order['created_at']);
 		}
 		return $orders;
 	}
