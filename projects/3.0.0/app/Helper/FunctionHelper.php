@@ -102,7 +102,7 @@ if(!function_exists('get_pick_code'))
 {
 	function get_pick_code()
 	{
-		return rand(100000,999999);
+		return rand(1000,9999);
 	}
 }
 /*
