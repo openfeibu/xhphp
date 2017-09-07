@@ -29,6 +29,7 @@
     25 => 'App\\Providers\\RouteServiceProvider',
     26 => 'App\\Providers\\AlipayServiceProvider',
     27 => 'Overtrue\\LaravelWechat\\ServiceProvider',
+    28 => 'zgldh\\QiniuStorage\\QiniuFilesystemServiceProvider',
   ),
   'eager' => 
   array (
@@ -47,6 +48,7 @@
     12 => 'App\\Providers\\RouteServiceProvider',
     13 => 'App\\Providers\\AlipayServiceProvider',
     14 => 'Overtrue\\LaravelWechat\\ServiceProvider',
+    15 => 'zgldh\\QiniuStorage\\QiniuFilesystemServiceProvider',
   ),
   'deferred' => 
   array (

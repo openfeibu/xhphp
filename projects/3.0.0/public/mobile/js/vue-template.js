@@ -1274,7 +1274,7 @@ var productDe = Vue.extend({
                 duration: 3000
             });
           return false;
-        }else if(parseInt(that.productDeList.goods_price) <= 0 || isNaN(that.productDeList.goods_price)){
+        }else if(parseFloat(that.productDeList.goods_price) <= 0 || isNaN(that.productDeList.goods_price)){
           that.$toast({
                 message: '商品价格不可为空并且必须为数字',
                 duration: 3000

@@ -26,13 +26,17 @@ return [
     |
     */
 
-    'web_url' => 'http://web.feibu.info',
+    'web_url' => 'http://192.168.2.3:33',
 
     'url' => 'http://xhplus.feibu.info',
-
+	
+	'turl' => 'http://txhapi.feibu.info',
+	
     'upload_url' => 'http://xhplus.feibu.info/uploads/',
 
     'order_share_url' => 'http://web.feibu.info/works/schoolwork_de.html',
+	
+	'img_url' => 'http://img.feibu.info',
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -153,6 +157,8 @@ return [
 		App\Providers\AlipayServiceProvider::class,
 
         Overtrue\LaravelWechat\ServiceProvider::class,
+		zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
+		
     ],
 
     /*
@@ -205,6 +211,7 @@ return [
     ],
 
     //是否允许跨域请求
-    //'allow_origin' => env('allow_origin', 'http://web.feibu.info'),
-    'allow_origin' => env('allow_origin', 'http://192.168.3.33:33'),
+   // 'allow_origin' => env('allow_origin', '*'),
+    'allow_origin' => env('allow_origin', 'http://192.168.2.3:33'),
+  // 'allow_origin' => env('allow_origin', 'http://tweb.feibu.info'),
 ];
