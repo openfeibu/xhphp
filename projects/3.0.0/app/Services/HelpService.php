@@ -310,6 +310,17 @@ class HelpService
 		}
 		return $shipping_fee;
 	}
+	public function getCanteenShippingFee($weight,$fee)
+	{
+		$shipping_fee = 0;
+
+		$shipping_config = DB::table('shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->where('payer','canteen')->first();
+		if($shipping_config)
+		{
+			$shipping_fee += $shipping_config->shipping_fee;
+		}
+		return $shipping_fee;
+	}
 	/*初始化*/
 	public function zhima_initialize($bodys)
 	{
