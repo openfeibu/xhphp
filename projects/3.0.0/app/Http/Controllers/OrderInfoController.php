@@ -387,7 +387,46 @@ class OrderInfoController extends Controller
 
     	$order_info = $this->orderInfoService->checkRefund($request->order_id,$this->user->uid);
 
-    	$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 3,'cancelling_time' => dtime()]);
+		$shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);
+		if($shop->shop_type == 3)
+		{
+			$user = $this->userService->getUserByUserID($order_info->uid);
+
+			$fee = 	$user->wallet + $order_info->total_fee;
+
+	        $this->walletService->updateWallet($user->uid,$fee);
+
+	       	$walletData = array(
+				'uid' => $user->uid,
+				'wallet' => $fee,
+				'fee'	=> $order_info->total_fee,
+				'service_fee' => 0,
+				'out_trade_no' => $order_info->order_sn,
+				'pay_id' => 3,
+				'wallet_type' => 1,
+				'trade_type' => 'CancelOrder',
+				'description' => '取消订单',
+	        );
+	        $this->walletService->store($walletData);
+	        $tradeData = array(
+				'wallet_type' => 1,
+				'trade_type' => 'CancelOrder',
+				'description' => '取消订单',
+				'trade_status' => 'income',
+			);
+
+			$update = $this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
+
+			if($update)
+			{
+				$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
+				$this->orderInfoService->inGoodsNumber($order_info->order_id);
+				$this->couponService->updateUserCoupon(['uid' => $order_info->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
+				throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额将返回用户钱包');
+			}
+		}else{
+			$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 3,'cancelling_time' => dtime()]);
+		}
 
     	throw new \App\Exceptions\Custom\RequestSuccessException('请等待商家退款，退款金额将返回钱包');
     }

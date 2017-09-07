@@ -286,10 +286,17 @@ class OrderController extends Controller
 		];
         $this->pushService->PushUserTokenDevice('校汇任务', trans('task.task_be_accepted'), $order->owner_id,2,$data);
 
-        if($order->type == 'business' && $order->order_id)
+        if($order->order_id)
         {
-            $order_info = $this->orderInfoService->getOrderInfoCustom(['order_id' => $order->order_id],['pick_code']);
-            $rst = $this->smsService->sendSMS($order->courier_mobile_no,$type = 'pick_code',$data = ['sms_template_code' => config('sms.pick_code'),'code' => $order_info->pick_code,'uid' => $order->courier_id]);
+            if($order->type == 'business')
+            {
+                $order_info = $this->orderInfoService->getOrderInfoCustom(['order_id' => $order->order_id],['pick_code']);
+                $rst = $this->smsService->sendSMS($order->courier_mobile_no,$type = 'pick_code',$data = ['sms_template_code' => config('sms.pick_code'),'code' => $order_info->pick_code,'uid' => $order->courier_id]);
+            }else if($order->type == 'canteen')
+            {
+                $this->orderInfoService->updateOrderInfoById($order->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
+            }
+
         }
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
@@ -371,6 +378,10 @@ class OrderController extends Controller
             if($order->type == 'business')
             {
                 $this->orderInfoService->uploadPickCode(['order_id' => $order->order_id]);
+            }
+            else if($order->type == 'canteen')
+            {
+                $this->orderInfoService->updateOrderInfoById($order->order_id,['shipping_status' => 0]);
             }
 
 	        $this->orderService->updateOrderStatus($param);
