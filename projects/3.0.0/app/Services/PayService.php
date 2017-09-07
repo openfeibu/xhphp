@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Log;
 use Session;
 use Validator;
 use Illuminate\Http\Request;
@@ -240,6 +241,9 @@ class PayService
 				$result = $payment->prepare($order);
 				if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
 					$prepayId = $result->prepay_id;
+				}else{
+					Log::debug('微信支付错误result'.$result);
+					throw new \App\Exceptions\Custom\OutputServerMessageException('未知错误,请使用其他支付方式！');
 				}
 				$pay_data = $payment->configForPayment($prepayId);
 				break;

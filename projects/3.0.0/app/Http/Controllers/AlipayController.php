@@ -232,6 +232,7 @@ class AlipayController extends Controller
 			}
 			return true;
 		});
+		Log::debug('微信支付reponse'.$reponse);
 		return $response;
 	}
 	private function handleNotify($out_trade_no,$trade_no)
