@@ -283,6 +283,7 @@ class PayService
 				$alipay_config_parameter['return_url'] = $data['return_url'];
 				$parameter = array_merge($parameter,$alipay_config_parameter);
 				$pay_data = $alipay->buildRequestForm($parameter,"get", "确认");
+				break;
 			default:
 				$alipay_config = array_merge(config('alipay-mobile'),config('alipay'));
 				$alipay = app('alipay.mobile');
@@ -295,7 +296,8 @@ class PayService
 				$pay_data = $alipay->createLinkstring($parameter);
 				$rsa_sign=urlencode($alipay->rsaSign($pay_data, $alipay_config['private_key']));
 				$pay_data = $pay_data.'&sign='.'"'.$rsa_sign.'"'.'&sign_type='.'"'.$alipay_config['sign_type'].'"';
-		}
+				break;
+		}	
 		return $pay_data;
 	}
 	/*
