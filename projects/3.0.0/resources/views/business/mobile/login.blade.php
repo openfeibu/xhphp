@@ -6,7 +6,7 @@
 		<section class='main' style="height:100%;" >
 			<!--登陆 S-->
 			<div class="login" style="height:100%;">
-				<h1 class="logo" ><img src="http://web.feibu.info/images/loginReg/icon_login_headpor.png" alt="校汇"></h1>
+				<h1 class="logo" ><img src="http://web.feibu.info/images/logo.png" alt="校汇"></h1>
 				<div class="outer-main">
 					<form method="POST" class="login_form" @submit="return login()"  action="{{ url('mbusiness/login') }}">
 						<input type="text" id="account" placeholder="手机号" v-model="loginData.account" value="{{ old('mobile_no') }}" name="mobile_no"><br>

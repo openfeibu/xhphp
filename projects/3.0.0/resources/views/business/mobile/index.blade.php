@@ -8,11 +8,11 @@
     </transition>
     <mt-tabbar v-model="selected" :fixed="true" v-cloak>
       <mt-tab-item id="1" href="#/home" >
-        <img slot="icon" :src="selected == 1 ? 'http://web.feibu.info/images/footer03h.png' : 'http://web.feibu.info/images/footer03.png' ">
+        <img slot="icon" :src="selected == 1 ? 'http://web.feibu.info/images/home/ic_home_sel.png' : 'http://web.feibu.info/images/home/ic_home_nor.png' ">
           工作台
       </mt-tab-item>
       <mt-tab-item id="2" href="#/center">
-        <img slot="icon" :src="selected == 2 ? 'http://web.feibu.info/images/footer04h.png' : 'http://web.feibu.info/images/footer04.png' ">
+        <img slot="icon" :src="selected == 2 ? 'http://web.feibu.info/images/home/ic_shop_sel.png' : 'http://web.feibu.info/images/home/ic_shop_nor.png' ">
         店铺
       </mt-tab-item>
     </mt-tabbar>
@@ -66,10 +66,10 @@
           <li class="power01 web-active">
             <a onclick="winGo('{{ url('/mbusiness/product') }}#/product')">我的宝贝</a>
           </li>
-          <li class="power01 web-active">
+          <li class="power02 web-active">
             <a onclick="winGo('{{ url('/mbusiness/product') }}#/classify')">分类管理</a>
           </li>
-          <li class="power01 web-active">
+          <li class="power03 web-active">
             <a @click="veriCode">验证提货码</a>
           </li>
 
@@ -82,10 +82,10 @@
   </template>
   <!-- 首页 -->
   <template id="center">
-    <div class="main pd bgf5 boxSizing" style=" min-height:100%;">
+    <div class="main pd bgf5 boxSizing center" style=" min-height:100%;">
         <mt-header :title="shopInfo.shop_name" :fixed="true">
         </mt-header>
-        <mt-cell  title="店铺LOGO" class="mt01">
+        <mt-cell  title="店铺LOGO" class="mt01 cellHeight">
           <div class="img"><img :src="shopInfo.shop_img" alt=""></div>
         </mt-cell>
 
@@ -116,7 +116,7 @@
         <mt-cell  title="联系客服"  is-link class="mt01">
           <div  v-on:click="call('020-32168995')">020-32168995</div>
         </mt-cell>
-        <mt-button style="margin-top:0.5rem" size="large" type="danger" onclick="window.location.href='{{ url('mbusiness/logout') }}'">注销</mt-button>
+        <mt-button style="margin:0.64rem 0.32rem 0 0.32rem;width:90%;height:0.88rem;background:#ffe00f;color:#262626;" size="large" type="danger" onclick="window.location.href='{{ url('mbusiness/logout') }}'">注销</mt-button>
         <!-- 日期修改 -->
           <mt-datetime-picker
               ref="open"

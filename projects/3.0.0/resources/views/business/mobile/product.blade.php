@@ -202,7 +202,7 @@
         </mt-button>
          <mt-button icon="add" slot="right" @click="addClassify"></mt-button>
       </mt-header>
-      <ul>
+      <ul class="classify">
         <li v-for = "(item,index) in productClassAll">
            <mt-cell-swipe  :right="[
                           {
