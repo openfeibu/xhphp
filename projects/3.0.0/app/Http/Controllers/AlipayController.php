@@ -230,9 +230,9 @@ class AlipayController extends Controller
 				Log::debug("wechat_trade_no:".$trade_no);
 				return $this->handleNotify($out_trade_no,$trade_no);
 			}
-			return true;
+			return "true";
 		});
-		Log::debug('微信支付reponse'.$reponse);
+		Log::debug('微信支付response'.$response);
 		return $response;
 	}
 	private function handleNotify($out_trade_no,$trade_no)
@@ -301,6 +301,6 @@ class AlipayController extends Controller
 
 		}
 		$this->tradeAccountService->addThradeAccount($trade);
-		return true;
+		return "true";
 	}
 }
