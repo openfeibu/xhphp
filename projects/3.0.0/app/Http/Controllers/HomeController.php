@@ -23,6 +23,7 @@ class HomeController extends Controller
 	}
 	public function index ()
 	{
+		return "true";
 		return view('welcome');
 	}
     public function getADList(Request $request)
