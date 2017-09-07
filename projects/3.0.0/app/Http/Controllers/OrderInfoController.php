@@ -298,29 +298,6 @@ class OrderInfoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -345,24 +322,54 @@ class OrderInfoController extends Controller
     	$rules = [
         	'token' 	=> 'required',
 			'order_id'  => 'required|exists:order_info,order_id',
+			'pay_id' 	=> "required|integer|in:1,2,3",
+        	'pay_password' => 'sometimes|required|string',
+			'platform' => 'required|in:and,ios,wap,wechat',
     	];
-
-    	$pay_platform = isset($request->platform) ? $request->platform : 'web';
-
-    	$this->helpService->validateParameter($rules);
-
-    	$order_info = $this->orderInfoService->checkPay($request->order_id,$this->user->uid);
-
-    	$data = [
-        	'return_url' => config('common.order_info_return_url'),
+		$this->helpService->validateParameter($rules);
+		$this->user = $this->userService->getUser();
+		$order_info = $this->orderInfoService->checkPay($request->order_id,$this->user->uid);
+		$alipayInfo = $this->userService->getAlipayInfo($this->user->uid);
+		if($request->pay_id == 3 ){
+			if(!$alipayInfo->is_paypassword)
+			{
+				return [
+					'code' => 3001,
+					'detail' => '未设置支付密码',
+				];
+			}
+			if (!password_verify($request->pay_password, $this->user->pay_password)) {
+				throw new \App\Exceptions\Custom\OutputServerMessageException('支付密码错误');
+			}
+			$wallet = $this->user->wallet;
+			if($order_info->total_fee > $wallet){
+				return [
+					'code' => '110',
+					'detail' => '余额（'.$this->user->wallet.'）不足,请选择其他支付方式',
+				];
+			}
+		}
+    	$pay_platform = isset($request->platform) ? $request->platform : 'wap';
+		$shop = $this->shopService->getShop(['shop_id' => $order_info->shop_id]);
+		$shop_user = $this->userService->getUserByUserID($shop->uid);
+		$data = [
+			'order_info' => $order_info,
+			'shop_user' => $shop_user,
+        	'return_url' => config('common.order_info_return_url').'?order_id='. $order_info->order_id,
         	'order_sn' => $order_info->order_sn,
+        	'order_id' => $order_info->order_id,
         	'subject' => '校汇商店订单',
         	'body' => '校汇商店订单',
         	'total_fee' => $order_info->total_fee,
         	'trade_type' => 'Shopping',
-        	'mobile_no' => $this->user->mobile_no
+        	'mobile_no' => $shop_user->mobile_no,
+			'pay_id' => $request->pay_id,
+			'shop' => $shop,
+			'pay_from' => 'shop',
+			'pay_platform' => $pay_platform,
         ];
-        $data = $this->payService->payHandle(1,$pay_platform,'shop',$data);
+		$this->orderInfoService->updateOrderInfo($order_info->order_sn,['pay_id' => $request->pay_id,'pay_name' => trans('common.pay_name.'.$request->pay_id)]);
+        $data = $this->payService->payHandle($data);
 
         return [
 			'code' => 200,
