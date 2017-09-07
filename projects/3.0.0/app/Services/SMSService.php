@@ -77,8 +77,8 @@ class SMSService
 
 		$random = rand(1000, 9999);
 		//发送短信
-        //$result = $this->sendSMS($mobile_no, 'verify',['code' => $random,'sms_template_code' => config('sms.'.$usage)]);
-		$result = ture;
+        $result = $this->sendSMS($mobile_no, 'verify',['code' => $random,'sms_template_code' => config('sms.'.$usage)]);
+	//	$result = ture;
         //将手机及其对应的短信验证码保存到数据库
         $this->saveVerifyCode($mobile_no, $random, $usage, $result);
 
