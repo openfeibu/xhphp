@@ -419,6 +419,8 @@ class OrderInfoController extends Controller
 
 			if($update)
 			{
+				$order = $this->orderService->isExistsOrderColumn(['order_id' => $order_info->order_id,'type' => 'canteen']);
+		        $this->orderService->delete(['oid' => $order->oid]);
 				$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
 				$this->orderInfoService->inGoodsNumber($order_info->order_id);
 				$this->couponService->updateUserCoupon(['uid' => $order_info->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
