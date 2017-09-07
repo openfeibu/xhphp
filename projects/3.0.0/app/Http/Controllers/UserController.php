@@ -288,7 +288,7 @@ class UserController extends Controller
         $user = $oauth->user();
         $wxopenid = $user->getId();
         $this->userService->updateUser(['token' => $request->token],['wxopenid' => $wxopenid]);
-        header('location:http://tweb.feibu.info');
+        header('location:'.config('app.web_url'));
     }
     public function logout()
     {
