@@ -17,7 +17,8 @@ var home =  Vue.extend({
    data:function(){
     return {
           userInfo:{},
-          shopInfo:{}
+          shopInfo:{},
+
     }
   },
   methods: {
@@ -258,7 +259,7 @@ var center =  Vue.extend({
             });
           setTimeout(function(){
             $(".mint-msgbox-input input").val(that.shopInfo.shipping_fee)
-          },500)
+          },300)
 
         },
       changeStatus:function(){
@@ -322,13 +323,6 @@ var wfh = Vue.extend({
               that.wpage++;
               if(flag){
                 that.wpage = 1;
-              }else{
-                //有緩存 就跳出
-                if(window.localStorage.wlist && JSON.parse(window.localStorage.wlist).length > 0 && that.wpage == 1){
-                  that.wlist = JSON.parse(window.localStorage.wlist);
-                  return;
-                };
-
               }
               that.$indicator.open();
 
@@ -422,13 +416,14 @@ var yfh = Vue.extend({
               that.ypage++;
               if(flag){
                 that.ypage = 1;
-              }else{
-                //有緩存 就跳出
-                if(window.localStorage.ylist && JSON.parse(window.localStorage.ylist).length > 0 && that.ypage == 1){
-                  that.ylist = JSON.parse(window.localStorage.ylist);
-                  return;
-              	};
               }
+			  // else{
+                // //有緩存 就跳出
+                // if(window.localStorage.ylist && JSON.parse(window.localStorage.ylist).length > 0 && that.ypage == 1){
+                  // that.ylist = JSON.parse(window.localStorage.ylist);
+                  // return;
+              	// };
+              // }
 			       	that.$indicator.open();
               //获取列表
               $.getJSON(this.localhost+'/business/orderInfo/orderInfos?page='+ that.ypage+'&type=shipping',function(data){
@@ -523,13 +518,6 @@ var ywc = Vue.extend({
               that.cpage++;
               if(flag){
                 that.cpage = 1;
-              }else{
-                //有緩存 就跳出
-                if(window.localStorage.clist && JSON.parse(window.localStorage.clist).length > 0 && that.cpage == 1){
-                  that.clist = JSON.parse(window.localStorage.clist);
-                  return;
-                };
-
               }
 
               that.$indicator.open();
@@ -621,13 +609,6 @@ var thsh = Vue.extend({
               that.tpage++;
               if(flag){
                 that.tpage = 1;
-              }else{
-                //有緩存 就跳出
-                if(window.localStorage.tlist && JSON.parse(window.localStorage.tlist).length > 0 && that.tpage == 1){
-                  that.tlist = JSON.parse(window.localStorage.tlist);
-                  return;
-                };
-
               }
               that.$indicator.open();
               //获取列表
@@ -731,7 +712,7 @@ var worderDe = Vue.extend({
         delivery:function(order_id,seller_shipping_fee){
 
           var that = this;
-          that.$messagebox.confirm('货物已打包,任务费用为：'+seller_shipping_fee+'元,确定发货？').then(function(action){
+          that.$messagebox.confirm('货物已打包,你需要支付任务费用为：'+seller_shipping_fee+'元,确定发货？').then(function(action){
               that.deliveryGoods(order_id)
           });
         },
@@ -1438,7 +1419,7 @@ var addProduct = Vue.extend({
       data:function(){
         return {
           productDeList:{
-            "goods_thumb":"http://web.feibu.info/images/ass_add.png",
+            "goods_thumb":"http://web.feibu.info/images/post.png",
             "goods_name":"",
             "goods_price":"",
             "goods_number":"",
@@ -1630,6 +1611,9 @@ var classify = Vue.extend({
                   });
               })
           });
+		   setTimeout(function(){
+            $(".mint-msgbox-input input").val(catName)
+          },300)
         },
         deleteClassify: function(catId,catName,index){
           var that = this;

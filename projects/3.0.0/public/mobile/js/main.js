@@ -48,10 +48,10 @@ function winClose(){
           JavaScriptInterface.closeWindow()
       }
   } catch(e) {
-      window.history.go(-1)
+       window.history.back(-1);
   }
 
 }
 function returnUp(){
-      window.history.go(-1)
+       window.history.back(-1);
 }

@@ -11,14 +11,14 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    background-color: #26a2ff;
+    background-color: #ffe00f;
     box-sizing: border-box;
-    color: #fff;
+    color: #262626;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    font-size: 14px;
-    height: 45px;
+    font-size: 16px;
+    height: 0.96rem;
     line-height: 1;
     padding: 0 10px;
     position: relative;
@@ -190,8 +190,7 @@
 }
 .mint-cell-wrapper {
     position: relative;
-    background-image:-webkit-linear-gradient(top, #d9d9d9, #d9d9d9 50%, transparent 50%);
-    background-image:linear-gradient(180deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
+
     background-size: 120% 1px;
     background-repeat: no-repeat;
     background-position: top left;
@@ -203,13 +202,16 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    font-size: 16px;
+    font-size: 0.28rem;
     line-height: 1;
     min-height: inherit;
     overflow: hidden;
-    padding: 0 10px;
+    padding: 0 0.32rem;
     width: 100%;
+	min-height:0.96rem;
+	
 }
+.cellHeight .mint-cell-wrapper{height:1.6rem;}
 .mint-cell-mask {}
 .mint-cell-mask::after {
     background-color: #000;
@@ -494,8 +496,8 @@
     display: none;
 }
 .mint-switch-input:checked + .mint-switch-core {
-    border-color: #26a2ff;
-    background-color: #26a2ff;
+    border-color: #ffe00f;
+    background-color: #ffe00f;
 }
 .mint-switch-input:checked + .mint-switch-core::before {
     -webkit-transform: scale(0);
@@ -1654,10 +1656,10 @@ display: inline-block;
 }
 .mint-msgbox-header {
   padding: 15px 0 0;
+  display:none;
 }
 .mint-msgbox-content {
-  padding: 10px 20px 15px;
-  border-bottom: 1px solid #ddd;
+  padding:  0.32rem ;
   min-height: 36px;
   position: relative;
 }
@@ -1666,13 +1668,13 @@ display: inline-block;
 }
 .mint-msgbox-input input {
   border: 1px solid #dedede;
-  border-radius: 5px;
-  padding: 4px 5px;
   width: 100%;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
   outline: none;
+  height:0.64rem;
+  text-indent:1em;
 }
 .mint-msgbox-input input.invalid {
   border-color: #ff4949;
@@ -1695,27 +1697,27 @@ display: inline-block;
   color: #333;
 }
 .mint-msgbox-message {
-  color: #999;
+  color: #262626;
   margin: 0;
-  text-align: center;
+  text-align: left;
   line-height: 36px;
 }
 .mint-msgbox-btns {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 40px;
-  line-height: 40px;
+padding:0 0.32rem;
+  height: 0.96rem;
+  line-height: 0.96rem;
+  text-align:right;
 }
 .mint-msgbox-btn {
   line-height: 35px;
-  display: block;
+  display: inline-block;
+  *display:inline;
+  *zoom:1;
   background-color: #fff;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  text-align:center;
   margin: 0;
   border: 0;
+  font-size:0.28rem;
 }
 .mint-msgbox-btn:focus {
   outline: none;
@@ -1724,18 +1726,19 @@ display: inline-block;
   background-color: #fff;
 }
 .mint-msgbox-cancel {
-  width: 50%;
-  border-right: 1px solid #ddd;
+  width: 20%;
+  color:#999;
+  /* border-right: 1px solid #ddd; */
 }
 .mint-msgbox-cancel:active {
   color: #000;
 }
 .mint-msgbox-confirm {
-  color: #26a2ff;
-  width: 50%;
+  color: #0e7fff;
+  width: 20%;
 }
 .mint-msgbox-confirm:active {
-  color: #26a2ff;
+  color: #0e7fff;
 }
 .msgbox-bounce-enter {
   opacity: 0;
