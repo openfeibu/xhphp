@@ -81,7 +81,7 @@ class OrderController extends Controller
         //检验请求参数
         $rule = [
             'page' => 'required',
-            'type' => 'sometimes|required|in:all,personal,business,canteen'
+            'type' => 'sometimes|required|in:all,personal,business,canteer'
         ];
         $this->helpService->validateParameter($rule);
 
@@ -249,6 +249,7 @@ class OrderController extends Controller
      */
     public function claimOrder(Request $request)
     {
+    //    $this->messageService->SystemMessage2SingleOne(77, '取货码：1233');exit;
         //检验请求参数
         $rule = [
 			'token' => 'required',
@@ -290,7 +291,6 @@ class OrderController extends Controller
         {
             $order_info = $this->orderInfoService->getOrderInfoCustom(['order_id' => $order->order_id],['pick_code']);
             $rst = $this->smsService->sendSMS($order->courier_mobile_no,$type = 'pick_code',$data = ['sms_template_code' => config('sms.pick_code'),'code' => $order_info->pick_code,'uid' => $order->courier_id]);
-            $this->messageService->SystemMessage2SingleOne($user->uid, '取货码：'.$order_info->pick_code);
         }
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
@@ -545,7 +545,7 @@ class OrderController extends Controller
 		}
         $order = $this->orderService->getSingleOrder($request->order_id);
         //检验任务是否已完成
-		if($order->type == 'business' || $order->type == 'canteen'){
+		if($order->type == 'business' || $order->type == 'canteer'){
 	        $order_info = $this->orderInfoService->getOrderInfo($order->order_id);
 	        if($order_info){
 		        $shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);
