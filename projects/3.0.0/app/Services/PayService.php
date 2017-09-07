@@ -95,7 +95,7 @@ class PayService
 					'detail'           => $data['body'],
 					'out_trade_no'     => $data['order_sn'],
 					'total_fee'        => $data['total_fee'] * 100, // 单位：分
-					'notify_url'       => config('app.url').'/order-notify',
+					'notify_url'       => config('common.wechat_notify_url'),
 				];
 				return $this->wechat($data,$parameter);
 				break;
@@ -160,7 +160,7 @@ class PayService
 					'detail'           => $data['body'],
 					'out_trade_no'     => $data['order_sn'],
 					'total_fee'        => $data['total_fee'] * 100, // 单位：分
-					'notify_url'       => config('app.url').'/order-notify',
+					'notify_url'       => config('common.wechat_notify_url'),
 				];
 				return $this->wechat($data,$parameter);
 				break;
