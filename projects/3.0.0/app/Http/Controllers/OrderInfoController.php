@@ -202,13 +202,17 @@ class OrderInfoController extends Controller
 				$total_fee = $goods_amount + $shop->shipping_fee;
 				$shipping_fee = $shop->shipping_fee;
 			}
-		}
-		else
+			$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
+		}else if($shop->shop_type == 2)
 		{
 			//外面商家
 			$shipping_fee = $this->helpService->getBuyerShippingFee($carts['weight'],$goods_amount);
 			$total_fee += $shipping_fee;
+			$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
+		}else if($shop->shop_type == 3){
+			$seller_shipping_fee = 
 		}
+
         if($request->pay_id == 3){
 	       	if (!password_verify($request->pay_password, $this->user->pay_password)) {
 			 	throw new \App\Exceptions\Custom\OutputServerMessageException('支付密码错误');
@@ -221,8 +225,6 @@ class OrderInfoController extends Controller
 		        ];
 	        }
         }
-
-		$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
 
 		//$is_show = $shop->shop_type == 'canteen' ? 0 : 1;
         $order_info = $this->orderInfoService->create([
