@@ -18,6 +18,7 @@ use App\Services\TelecomService;
 use App\Services\OrderInfoService;
 use App\Services\SMSService;
 use App\Services\ShopService;
+use EasyWeChat\Foundation\Application;
 
 class AlipayController extends Controller
 {
@@ -273,7 +274,7 @@ class AlipayController extends Controller
 			if (!$order_info) {
 				return 'Order not exist.';
 			}
-			if ($order->pay_time) {
+			if ($order_info->pay_time) {
 			   return true;
 			}
 			$this->orderInfoService->updateOrderInfo($out_trade_no,['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);

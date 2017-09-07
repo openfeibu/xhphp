@@ -77,6 +77,7 @@ Route::post('alipay/alipayAppNotify','AlipayController@alipayAppNotify');
 Route::post('alipay/alipayAppReturn','AlipayController@alipayAppReturn');
 Route::post('alipay/alipayWapNotify','AlipayController@alipayWapNotify');
 Route::post('alipay/alipayTelecomWapNotify','AlipayController@alipayTelecomWapNotify');
+Route::post('wechat/wechatNotify','AlipayController@wechatNotify');
 
 Route::post('association/join', 'AssociationController@join')->name('association_join');
 Route::post('association/uploadJoinFiles', 'AssociationController@uploadJoinFiles')->name('association_uploadJoinFiles');
