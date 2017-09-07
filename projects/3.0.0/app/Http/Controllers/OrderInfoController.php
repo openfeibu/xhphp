@@ -452,7 +452,7 @@ class OrderInfoController extends Controller
 			$order_data = $this->orderInfoService->createOrder($order_info,$shop,$this->user);
 			$order = $this->orderService->createOrder($order_data);
 		}
-	//	$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
+		$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
 
 		throw new \App\Exceptions\Custom\RequestSuccessException('操作成功');
     }

@@ -297,7 +297,7 @@ class PayService
 				$rsa_sign=urlencode($alipay->rsaSign($pay_data, $alipay_config['private_key']));
 				$pay_data = $pay_data.'&sign='.'"'.$rsa_sign.'"'.'&sign_type='.'"'.$alipay_config['sign_type'].'"';
 				break;
-		}	
+		}
 		return $pay_data;
 	}
 	/*
