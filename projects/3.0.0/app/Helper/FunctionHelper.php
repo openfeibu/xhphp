@@ -299,7 +299,7 @@ if(!function_exists('friendlyDate')){
 	            return $dTime.'秒前';
 	        } elseif ($dTime < 3600) {
 	            return intval($dTime / 60).'分钟前';
-	        } elseif ($dTime >= 3600 && $dDay == 0) {
+	        } elseif ($dTime >= 3600 && $dTime < 3600 * 24) {
 	            return intval($dTime / 3600).'小时前';
 	        } elseif ($dDay > 0 && $dDay <= 7) {
 	            return intval($dDay).'天前';
