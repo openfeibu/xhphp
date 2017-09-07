@@ -210,7 +210,7 @@ class OrderInfoController extends Controller
 			$total_fee += $shipping_fee;
 			$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
 		}else if($shop->shop_type == 3){
-			$seller_shipping_fee = 
+			$seller_shipping_fee = 1;
 		}
 
         if($request->pay_id == 3){
