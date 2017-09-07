@@ -393,8 +393,8 @@ class OrderInfoService
 		}
 
 		$shipping_fee =  $order_info->shipping_fee + $order_info->seller_shipping_fee;
-		$total_fee = $order_info->shipping_fee + $order_info->seller_shipping_fee + $goods_fee ;
-		$service_fee = $this->helpService->serviceFee($total_fee) ;
+		$total_fee = $shipping_fee + $goods_fee ;
+		$service_fee = $this->helpService->serviceFee($shipping_fee) ;
 		$this->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
 		return [
 			'destination' => $order_info->address,

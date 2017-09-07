@@ -314,7 +314,7 @@ class HelpService
 	{
 		$shipping_fee = 0;
 
-		$shipping_config = DB::table('shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->where('payer','canteen')->first();
+		$shipping_config = DB::table('canteen_shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->first();
 		if($shipping_config)
 		{
 			$shipping_fee += $shipping_config->shipping_fee;
