@@ -221,6 +221,7 @@ class AlipayController extends Controller
 			],
 		];
 		$app = new Application($options);
+		Log::debug("微信支付开始");
 		$response = $app->payment->handleNotify(function($notify, $successful){
 		    if ($successful) {
 				$out_trade_no = $notify->out_trade_no;
