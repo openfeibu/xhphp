@@ -6,6 +6,7 @@ return [
 	'telecom_show_url'	=> config('app.url'),
 	'order_return_url' => config("app.web_url").'/index.html#/work/all',
 	'order_info_return_url' => config("app.web_url").'/shop/shop-paysucc.html',
+	'wechat_notify_url' => config("app.url").'/wechat/wechatNotify',
 	'order_show_url'	=> config('app.url'),
 	'img_type' => [
 		'jpeg','jpg','gif','gpeg','png'
