@@ -115,12 +115,15 @@ class OrderInfoController extends Controller
 				$total_fee = $goods_amount + $shop->shipping_fee;
 				$shipping_fee = $shop->shipping_fee;
 			}
-		}
-		else
+		}elseif($shop->shop_type ==2)
 		{
 			$shipping_fee = $this->helpService->getBuyerShippingFee($carts['weight'],$total_fee);
 			$total_fee += $shipping_fee;
+		}else if($shop->shop_type == 3){
+			$shipping_fee = 0;
+			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount);
 		}
+
 		$coupons = $this->couponService->getOrderInfoCoupons(['user_coupon.uid' => $this->user->uid],$goods_amount);
 
 		$count = $this->cartService->getCount(['uid' => $this->user->uid,'shop_id' => $request->shop_id]);
