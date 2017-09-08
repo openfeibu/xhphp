@@ -232,6 +232,15 @@ class ScheduleController extends Controller
 			$shop->uid = $order_info->shop_uid;
 			$shop->service_rate = $order_info->service_rate;
             $shop->shop_type = $order_info->shop_type;
+
+            $this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
+    		$task = $this->orderService->getOrder(['order_id' => $order_info->order_id],['*'],false);
+
+    		if($task) {
+    			$task->uid = $shop->uid;
+    			$this->orderService->autoConfirmFinishWork($task,$this->walletService,$this->tradeAccountService);
+    		}
+            /*
             if($shop->shop_type == 1)
             {
                 $this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
@@ -242,6 +251,7 @@ class ScheduleController extends Controller
 				$task->uid = $order_info->shop_uid;
 				$this->orderService->autoConfirmFinishWork($task,$this->walletService,$this->tradeAccountService);
 			}
+            */
 			$data = [
 				'refresh' => 1,
 				'target' => '',

@@ -324,6 +324,7 @@ class OrderService
 	{
 		return $this->orderRepository->getOrderCount($where);
 	}
+	//切记，修改此方法必须修改   autoConfirmFinishWork  。以后修改
 	public function confirmFinishWork($order,$walletService,$tradeAccountService)
 	{
 		if ($order->status != 'finish') {
