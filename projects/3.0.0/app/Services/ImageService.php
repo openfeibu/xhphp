@@ -95,8 +95,8 @@ class ImageService
 			$all_files[] = $files['uploadfile'];
 		}
 		$this->helpService->isVaildImage($all_files);
-		//return $this->uploadImagesHandle($all_files,$usage,$id,$thumb);
-		return $this->qiniuService->uploadImages($all_files, $usage,$id,$thumb);
+		return $this->uploadImagesHandle($all_files,$usage,$id,$thumb);
+		//return $this->qiniuService->uploadImages($all_files, $usage,$id,$thumb);
 	}
 
 	private function uploadImagesHandle($files, $usage,$id = 0,$thumb = 1)

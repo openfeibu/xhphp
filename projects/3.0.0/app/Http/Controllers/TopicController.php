@@ -266,10 +266,11 @@ class TopicController extends Controller
     {
         //频率限制
 
-
+		$user = $this->userService->getUser();
         //上传资讯图片文件
-        $images_url = $this->imageService->uploadImages(Input::all(), 'topic');
+        $images_url = $this->imageService->uploadImages(Input::all(), 'topic',1,$user->uid);
     //    $images_url = $this->qiniuService->uploadImages(Input::all(), 'topic');
+
         return [
             'code' => 200,
             'detail' => '请求成功',

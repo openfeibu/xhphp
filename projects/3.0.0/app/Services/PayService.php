@@ -161,7 +161,7 @@ class PayService
 					'detail'           => $data['body'],
 					'out_trade_no'     => $data['order_sn'],
 					'total_fee'        => $data['total_fee'] * 100, // 单位：分
-					'notify_url'       => config('common.wechat_notify_url'),
+					//'notify_url'       => config('common.wechat_notify_url'),
 				];
 				return $this->wechat($data,$parameter);
 				break;
@@ -237,6 +237,7 @@ class PayService
 				$payment = $app->payment;
 				$parameter['trade_type'] = 'JSAPI';
 				$parameter['openid'] = $this->user->wxopenid;
+				$parameter['notify_url'] = config('common.wechat_notify_url');
 				$order = new Order($parameter);
 				$result = $payment->prepare($order);
 				if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
@@ -258,6 +259,7 @@ class PayService
 				$app = new Application($options);
 				$payment = $app->payment;
 				$parameter['trade_type'] = 'APP';
+				$parameter['notify_url'] = config('common.wechat_app_notify_url');
 				$order = new Order($parameter);
 				$result = $payment->prepare($order);
 				if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){

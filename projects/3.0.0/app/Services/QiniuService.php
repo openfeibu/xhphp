@@ -45,16 +45,29 @@ class QiniuService
             $extension = $file->getClientOriginalExtension();
 		    $imageName = time().rand(100000, 999999) . '.' . $extension;
             $img = $url.'/'.$imageName;
-            $disk->put($img,file_get_contents($file->getRealPath()));
-            $images_url['img_url'] =  config('app.img_url').'/'. $img;
+			
+			$opts=array(
+					"http"=>array(
+							"method"=>"POST",
+							"timeout"=>1000
+							),
+					);
+			////创建数据流上下文
+			$context = stream_context_create($opts);
+            $disk->put($img,file_get_contents($file->getRealPath(),false,$context));
+			$img_url = config('app.img_url').'/'. $img;
+            $images_url['img_url'] =  $img_url;
 		    $images_url['usage'] = $usage;
 		    $images_url['created_at'] = date("Y-m-d H:i:s");
-
-            $imgs_url[] =  $images_url['img_url'];
-		    $thumbs_url[] = $images_url['img_url'].'?imageMogr2/thumbnail/'.$thumbnail;
+			$images_url['uid'] = $id ? $id : 0;
+			
+            $imgs_url[] =  $img_url;
+		    $thumbs_url[] = $img_url.'?imageMogr2/thumbnail/'.$thumbnail;
+			$this->imageRepository->saveImages($images_url);
+			$i++;
         }
         //保存图片信息到数据库
-        $this->imageRepository->saveImages($images_url);
+       
 
 		$image_url = implode(',',$imgs_url);
 		$thumb_img_url = implode(',',$thumbs_url);

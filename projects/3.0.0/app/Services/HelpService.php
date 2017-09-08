@@ -198,7 +198,7 @@ class HelpService
 				$error.= $name."类型错误;";
 			}
 			if($file->getClientSize() > config('common.img_size')){
-				$img_size = config('common.img_size')/1024;
+				$img_size = config('common.img_size')/(1024*1024);
 				$error.= $name.'超过'.$img_size.'M';
 			}
 		}

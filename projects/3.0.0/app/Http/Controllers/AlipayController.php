@@ -235,6 +235,30 @@ class AlipayController extends Controller
 		Log::debug('微信支付response'.$response);
 		return $response;
 	}
+	public function wechatAppNotify()
+	{
+		$options = [
+			'app_id' => config('wechat.app_payment.app_id'),
+			'payment' => [
+				'merchant_id'        => config('wechat.app_payment.merchant_id'),
+				'key'                => config('wechat.app_payment.key'),
+			],
+		];
+		$app = new Application($options);
+		Log::debug("微信支付开始");
+		$response = $app->payment->handleNotify(function($notify, $successful){
+		    if ($successful) {
+				$out_trade_no = $notify->out_trade_no;
+				$trade_no = $notify->transaction_id;
+				Log::debug("wechat_out_trade_no:".$out_trade_no);
+				Log::debug("wechat_trade_no:".$trade_no);
+				return $this->handleNotify($out_trade_no,$trade_no);
+			}
+			return "true";
+		});
+		Log::debug('微信支付response'.$response);
+		return $response;
+	}
 	private function handleNotify($out_trade_no,$trade_no)
 	{
 		$type = substr($out_trade_no,0,2);
