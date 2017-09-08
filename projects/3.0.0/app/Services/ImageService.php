@@ -109,7 +109,7 @@ class ImageService
         $thumb_url = $url.'/thumb';
         if (!File::isDirectory($directory)) {
             File::makeDirectory($directory, 0755, true);
-			if($thumb)
+			if($is_thumb)
 			{
 				$thumb_directory = $directory . DIRECTORY_SEPARATOR . 'thumb';
 				File::makeDirectory($thumb_directory, 0755, true);
