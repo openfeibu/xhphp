@@ -85,7 +85,7 @@ class ImageService
 	 *
 	 * @return array        图片链接
 	 */
-	public function uploadImages($files, $usage,$thumb = 1,$id = 0)
+	public function uploadImages($files, $usage,$is_thumb = 1,$id = 0)
 	{
 		if(is_array($files['uploadfile']))
 		{
@@ -95,11 +95,11 @@ class ImageService
 			$all_files[] = $files['uploadfile'];
 		}
 		$this->helpService->isVaildImage($all_files);
-		return $this->uploadImagesHandle($all_files,$usage,$id,$thumb);
-		//return $this->qiniuService->uploadImages($all_files, $usage,$id,$thumb);
+		return $this->uploadImagesHandle($all_files,$usage,$id,$is_thumb);
+		//return $this->qiniuService->uploadImages($all_files, $usage,$id,$is_thumb);
 	}
 
-	private function uploadImagesHandle($files, $usage,$id = 0,$thumb = 1)
+	private function uploadImagesHandle($files, $usage,$id = 0,$is_thumb = 1)
 	{
 		//获取用户信息
 		$user = $this->userRepository->getUserByToken($this->request->token);
@@ -145,7 +145,7 @@ class ImageService
 	    $this->imageRepository->saveImages($images_url);
 
 		$image_url = implode(',',$imgs_url);
-		if($thumb)
+		if($is_thumb)
         {
 			$thumb_img_url = implode(',',$thumbs_url);
             return [

@@ -481,7 +481,7 @@ class UserController extends Controller
     public function uploadAvatarFile(Request $request)
     {
         //上传头像文件
-        $images_url = $this->imageService->uploadImages(Input::all(), 'avatar',0);
+        $images_url = $this->imageService->uploadImages(Input::all(), 'avatar',0,0);
 
         //更新用户头像链接
         $img_url = $this->userService->updateAvatar($images_url);
