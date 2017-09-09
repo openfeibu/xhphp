@@ -147,7 +147,7 @@ class OrderRepository
 	}
 	public function getOrderBySn ($order_sn)
 	{
-		return Order::select(DB::raw('order.oid,order.order_id, order.owner_id,order.order_sn,order.total_fee, owner.mobile_no as owner_mobile_no, owner.nickname as owner_nickname '))
+		return Order::select(DB::raw('order.oid,order.order_id, order.owner_id,order.order_sn,order.total_fee, owner.mobile_no as owner_mobile_no, owner.nickname as owner_nickname,order.created_at '))
                     ->join('user as owner', 'order.owner_id', '=', 'owner.uid')
                     ->where('order_sn', $order_sn)
                     ->first();
