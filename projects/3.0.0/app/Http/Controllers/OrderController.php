@@ -414,7 +414,7 @@ class OrderController extends Controller
             else
             {
                 //个人任务取消
-    			if($order->pay_id == 3 || $order->pay_id == 1){
+    			if($order->pay_id == 3){
     				$walletData = array(
     					'uid' => $this->user->uid,
     					'wallet' => $this->user->wallet + $order->fee,
