@@ -225,6 +225,7 @@ return [
         'cert_name' => '姓名',
         'cert_no' => '身份证',
         'content' => '内容',
+        'time_id' => '时间',
     ],
 
 ];
