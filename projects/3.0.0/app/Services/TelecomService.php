@@ -110,12 +110,17 @@ class TelecomService
 			{
 				$time->count = max($time->count - $count_data->count,0);
 			}
+			$time->time_start = substr($time->time_start,0,5);
+			$time->time_end = substr($time->time_end,0,5);
 		}
 		return $times;
 	}
 	public function getTelecomEnrollmentTime($time_id)
 	{
-		return $this->telecomRepository->getTelecomEnrollmentTime(['time_id' => $time_id]);
+		$time = $this->telecomRepository->getTelecomEnrollmentTime(['time_id' => $time_id]);
+		$time->time_start = substr($time->time_start,0,5);
+		$time->time_end = substr($time->time_end,0,5);
+		return $time;
 	}
 	public function getTelecomEnrollmentCount($time_id)
 	{
@@ -125,7 +130,10 @@ class TelecomService
 	}
 	public function	enrollData($where)
 	{
-		return $this->telecomRepository->getEnrollData($where);
+		$enroll_data = $this->telecomRepository->getEnrollData($where);
+		$enroll_data->time_start = substr($enroll_data->time_start,0,5);
+		$enroll_data->time_end = substr($enroll_data->time_end,0,5);
+		return $enroll_data;
 	}
 	public function enroll($data)
 	{
