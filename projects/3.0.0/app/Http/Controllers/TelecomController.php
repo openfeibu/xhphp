@@ -237,7 +237,7 @@ class TelecomController extends Controller
 		$times = $this->telecomService->getTelecomEnrollmentTimes();
 		return [
 			'code' => 200,
-			'data' => $times,
+			'data' => $times ? $times : [],
 		];
 	}
 	public function enroll(Request $request)
@@ -271,7 +271,7 @@ class TelecomController extends Controller
 		$enroll_data = $this->telecomService->enrollData(['uid' => $user->uid]);
 		return [
 			'code' => 200,
-			'data' => $enroll_data
+			'data' => $enroll_data ? $enroll_data : []
 		];
 	}
 }
