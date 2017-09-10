@@ -8,6 +8,9 @@ use App\TelecomPackage;
 use App\TelecomRealName;
 use App\TelecomOrder;
 use App\TelecomOrderTem;
+use App\TelecomEnrollment;
+use App\TelecomEnrollmentTime;
+use App\TelecomEnrollmentCount;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,7 +24,7 @@ class TelecomRepository
 	}
 	public function getLastReal ($uid)
 	{
-		return TelecomRealName::where('uid',$uid)->orderBy('real_id','DESC')->first();		
+		return TelecomRealName::where('uid',$uid)->orderBy('real_id','DESC')->first();
 	}
 	public function getPackageList ()
 	{
@@ -43,7 +46,7 @@ class TelecomRepository
 	}
 	public function getRealByPhone ($telecom_phone)
 	{
-		return TelecomRealName::where('telecom_phone',$telecom_phone)->orderBy('real_id','DESC')->first();	
+		return TelecomRealName::where('telecom_phone',$telecom_phone)->orderBy('real_id','DESC')->first();
 	}
 	public function getTelecomPackage ($package_id)
 	{
@@ -56,13 +59,13 @@ class TelecomRepository
     	$telecomOrder->trade_no = $telecomOrderData['trade_no'];
     	$telecomOrder->uid = $telecomOrderData['uid'];
     	$telecomOrder->transactor = $telecomOrderData['transactor'];
-    	$telecomOrder->telecom_iccid = $telecomOrderData['telecom_iccid'];    	
+    	$telecomOrder->telecom_iccid = $telecomOrderData['telecom_iccid'];
 		$telecomOrder->telecom_phone = $telecomOrderData['telecom_phone'];
 		$telecomOrder->telecom_outOrderNumber = $telecomOrderData['telecom_outOrderNumber'];
-    	$telecomOrder->idcard = $telecomOrderData['idcard'];   		  
+    	$telecomOrder->idcard = $telecomOrderData['idcard'];
     	$telecomOrder->major = $telecomOrderData['major'];
     	$telecomOrder->dormitory_no = $telecomOrderData['dormitory_no'];
-    	$telecomOrder->student_id = $telecomOrderData['student_id'];	
+    	$telecomOrder->student_id = $telecomOrderData['student_id'];
     	$telecomOrder->name = $telecomOrderData['name'];
     	$telecomOrder->fee = $telecomOrderData['fee'];
     	$telecomOrder->package_id = $telecomOrderData['package_id'];
@@ -77,13 +80,13 @@ class TelecomRepository
     	$telecomOrder->trade_no = $telecomOrderData['trade_no'];
     	$telecomOrder->uid = $telecomOrderData['uid'];
     	$telecomOrder->transactor = $telecomOrderData['transactor'];
-    	$telecomOrder->telecom_iccid = $telecomOrderData['telecom_iccid'];  
+    	$telecomOrder->telecom_iccid = $telecomOrderData['telecom_iccid'];
 		$telecomOrder->telecom_phone = $telecomOrderData['telecom_phone'];
 		$telecomOrder->telecom_outOrderNumber = $telecomOrderData['telecom_outOrderNumber'];
-    	$telecomOrder->idcard = $telecomOrderData['idcard'];   		  
+    	$telecomOrder->idcard = $telecomOrderData['idcard'];
     	$telecomOrder->major = $telecomOrderData['major'];
     	$telecomOrder->dormitory_no = $telecomOrderData['dormitory_no'];
-    	$telecomOrder->student_id = $telecomOrderData['student_id'];	
+    	$telecomOrder->student_id = $telecomOrderData['student_id'];
     	$telecomOrder->name = $telecomOrderData['name'];
     	$telecomOrder->fee = $telecomOrderData['fee'];
     	$telecomOrder->package_id = $telecomOrderData['package_id'];
@@ -94,14 +97,14 @@ class TelecomRepository
 		$telecomOrder->save();
 	}
 	public function updateTelecomTemOrder($telecom_trade_no,$updateArr)
-	{		
+	{
 		TelecomOrderTem::where('telecom_trade_no', $telecom_trade_no)->where('pay_status','0')->update($updateArr);
-		if(!$this->getTelecomOrderByNo ($telecom_trade_no))	
+		if(!$this->getTelecomOrderByNo ($telecom_trade_no))
 		{
 			$telecomOrderData = TelecomOrderTem::where('telecom_trade_no',$telecom_trade_no)->first();
 			$this->storeTelecomOrderStore($telecomOrderData);
 		}
-		
+
 	}
 	public function getTelecomOrderByNo ($telecom_trade_no)
 	{
@@ -163,5 +166,33 @@ class TelecomRepository
 	public function updateTelecomOrdersById ($id,$updateArr)
 	{
 		return TelecomOrder::where('id', $id)->update($updateArr);
+	}
+	public function getTelecomEnrollmentTimes()
+	{
+		return TelecomEnrollmentTime::orderBy('time_id','asc')->get(['time_id','count','time_start','time_end']);
+	}
+	public function getTelecomEnrollmentTime($where)
+	{
+		return TelecomEnrollmentTime::where($where)->first(['time_id','count','time_start','time_end']);
+	}
+	public function getTelecomEnrollmentCount($where)
+	{
+		return TelecomEnrollmentCount::where($where)->first(['time_id','count','date']);
+	}
+	public function enroll($data)
+	{
+		return TelecomEnrollment::create($data);
+	}
+	public function getEnrollData($where)
+	{
+		return TelecomEnrollment::where($where)->first();
+	}
+	public function createEnrollmentCount($data)
+	{
+		return TelecomEnrollmentCount::create($data);
+	}
+	public function incrementEnrollCount($where)
+	{
+		return TelecomEnrollmentCount::where($where)->increment('count');
 	}
 }

@@ -25,7 +25,7 @@ class TelecomController extends Controller
 	{
 
 		parent::__construct();
-		$this->middleware('auth');
+		$this->middleware('auth',['except' => ['getTelecomEnrollmentTimes']]);
 		$this->helpService = $helpService;
 		$this->userService = $userService;
 		$this->telecomService = $telecomService;
@@ -231,4 +231,47 @@ class TelecomController extends Controller
 
     	$count_data = $this->telecomService->getTelecomOrdersCount();
     }
+	public function getTelecomTimes(Request $request)
+	{
+
+		$times = $this->telecomService->getTelecomEnrollmentTimes();
+		return [
+			'code' => 200,
+			'data' => $times,
+		];
+	}
+	public function enroll(Request $request)
+	{
+		$rules = [
+			'token' => 'required',
+			'name' => 'required',
+			'time_id' => 'required|exists:telecom_enrollment_time,time_id'
+		];
+		$this->helpService->validateParameter($rules);
+		$user = $this->userService->getUser();
+		$enroll_data = $this->telecomService->enrollData(['uid' => $user->uid]);
+		if($enroll_data){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('已经预约过，请勿重复预约');
+		}
+		$time = $this->telecomService->getTelecomEnrollmentTime($request->time_id);
+		$date = date("Y-m-d",strtotime("+1 day"));
+		$this->telecomService->enroll([
+			'time_id' => $time->time_id,
+			'uid' => $user->uid,
+			'date' => $date,
+			'time_start' => $time->time_start,
+			'time_end' => $time->time_end,
+			'name' => $request->name,
+		]);
+		throw new \App\Exceptions\Custom\RequestSuccessException('报名成功');
+	}
+	public function getEnroll(Request $request)
+	{
+		$user = $this->userService->getUser();
+		$enroll_data = $this->telecomService->enrollData(['uid' => $user->uid]);
+		return [
+			'code' => 200,
+			'data' => $enroll_data
+		];
+	}
 }

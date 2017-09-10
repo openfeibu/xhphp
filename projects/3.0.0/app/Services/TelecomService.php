@@ -23,52 +23,52 @@ class TelecomService
 		$this->telecomRepository = $telecomRepository;
 		$this->userRepository = $userRepository;
 	}
-	//»ñÈ¡ÓÃ»§×îĞÂÒ»¸öÊµÃû¼¸ÂÊ
+	//è·å–ç”¨æˆ·æœ€æ–°ä¸€ä¸ªå®åå‡ ç‡
 	public function getLastReal ($uid)
 	{
 		return $this->telecomRepository->getLastReal($uid);
 	}
-	//»ñÈ¡µçĞÅÌ×²Í
+	//è·å–ç”µä¿¡å¥—é¤
 	public function getPackageList ()
 	{
 		return $this->telecomRepository->getPackageList();
 	}
-	//²åÈëÊµÃû¼ÇÂ¼
+	//æ’å…¥å®åè®°å½•
 	public function storeRealName ($realData)
 	{
 		return $this->telecomRepository->storeRealName($realData);
 	}
-	//¸ù¾İµçĞÅÊÖ»ú²éÑ¯´æÔÚÒÑÖ§¸¶¶©µ¥
+	//æ ¹æ®ç”µä¿¡æ‰‹æœºæŸ¥è¯¢å­˜åœ¨å·²æ”¯ä»˜è®¢å•
 	public function hasTelecomOrder ($telecom_phone)
 	{
 		return $this->telecomRepository->hasTelecomOrder($telecom_phone);
 	}
-	//¸ù¾İµçĞÅÊÖ»ú»ñÈ¡ÊµÃûĞÅÏ¢
+	//æ ¹æ®ç”µä¿¡æ‰‹æœºè·å–å®åä¿¡æ¯
 	public function getRealByPhone ($telecom_phone)
 	{
 		return $this->telecomRepository->getRealByPhone($telecom_phone);
 	}
-	//»ñÈ¡µçĞÅÌ×²Í
+	//è·å–ç”µä¿¡å¥—é¤
 	public function getTelecomPackage ($package_id)
 	{
 		return $this->telecomRepository->getTelecomPackage($package_id);
 	}
-	//²åÈëµçĞÅ¶©µ¥
+	//æ’å…¥ç”µä¿¡è®¢å•
 	public function storeTelecomOrderStore ($telecomOrderData)
 	{
 		return $this->telecomRepository->storeTelecomOrderStore($telecomOrderData);
 	}
-	//²åÈëµçĞÅÁÙÊ±¶©µ¥
+	//æ’å…¥ç”µä¿¡ä¸´æ—¶è®¢å•
 	public function storeTelecomOrderTemStore ($telecomOrderData)
 	{
 		return $this->telecomRepository->storeTelecomOrderTemStore($telecomOrderData);
 	}
-	//¸üĞÂµçĞÅ¶©µ¥
+	//æ›´æ–°ç”µä¿¡è®¢å•
 	public function updateTelecomTemOrder($telecom_trade_no,$updateArr)
 	{
 		return $this->telecomRepository->updateTelecomTemOrder($telecom_trade_no,$updateArr);
 	}
-	//¸ù¾İµçĞÅ¶©µ¥ºÅ»ñÈ¡¶©µ¥ÏêÇé
+	//æ ¹æ®ç”µä¿¡è®¢å•å·è·å–è®¢å•è¯¦æƒ…
 	public function getTelecomOrderByNo ($telecom_trade_no)
 	{
 		return $this->telecomRepository->getTelecomOrderByNo($telecom_trade_no);
@@ -100,5 +100,57 @@ class TelecomService
 	public function updateTelecomOrdersById ($id,$updateArr)
 	{
 		return $this->telecomRepository->updateTelecomOrdersById($id,$updateArr);
+	}
+	public function getTelecomEnrollmentTimes()
+	{
+		$times = $this->telecomRepository->getTelecomEnrollmentTimes();
+		foreach ($times as $key => $time) {
+			$count_data = $this->getTelecomEnrollmentCount($time->time_id);
+			if($count_data)
+			{
+				$time->count = max($time->count - $count_data->count,0);
+			}
+		}
+		return $times;
+	}
+	public function getTelecomEnrollmentTime($time_id)
+	{
+		return $this->telecomRepository->getTelecomEnrollmentTime(['time_id' => $time_id]);
+	}
+	public function getTelecomEnrollmentCount($time_id)
+	{
+		$date = date("Y-m-d",strtotime("+1 day"));
+		$count_data = $this->telecomRepository->getTelecomEnrollmentCount(['date' => $date ,'time_id' => $time_id]);
+		return $count_data;
+	}
+	public function	enrollData($where)
+	{
+		return $this->telecomRepository->getEnrollData($where);
+	}
+	public function enroll($data)
+	{
+		$enroll = $this->telecomRepository->enroll($data);
+		if($enroll){
+			$this->changeEnrollmentCount($data);
+			return $enroll;
+		}
+		else{
+			throw new \App\Exceptions\Custom\OutputServerMessageException('æŠ¥åå¤±è´¥ï¼Œè¯·ç¨åå†è¯•ï¼');
+		}
+	}
+	public function changeEnrollmentCount($data)
+	{
+		$count_data = $this->telecomRepository->getTelecomEnrollmentCount(['date' => $data['date'] ,'time_id' => $data['time_id']]);
+		if(!$count_data)
+		{
+			$this->telecomRepository->createEnrollmentCount([
+				'time_id' => $data['time_id'],
+				'date' => $data['date'],
+				'count' => 1,
+				'time_start' => $data['time_start'],
+			]);
+		}else{
+			$this->telecomRepository->incrementEnrollCount(['time_id' => $count_data['time_id'],'date' => $count_data['date']]);
+		}
 	}
 }

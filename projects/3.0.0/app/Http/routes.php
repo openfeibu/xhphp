@@ -214,6 +214,9 @@ Route::get('telecom/hasTelecomOrder','TelecomController@hasTelecomOrder')->name(
 Route::get('telecom/getTransactorTelecomOrders','TelecomController@getTransactorTelecomOrders')->name('telecom_getTransactorTelecomOrders');
 Route::get('telecom/getTelecomOrdersCount','TelecomController@getTelecomOrdersCount')->name('telecom_getTelecomOrdersCount');
 Route::get('telecom/autoCheckRealName', 'ScheduleController@autoCheckRealName');
+Route::get('telecom/getTelecomTimes', 'TelecomController@getTelecomTimes');
+Route::post('telecom/enroll', 'TelecomController@enroll');
+Route::get('telecom/getEnroll', 'TelecomController@getEnroll');
 
 Route::get('version','VersionController@index')->name('other_version');
 Route::get('api','ApiController@getApi');
