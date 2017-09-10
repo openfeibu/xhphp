@@ -131,8 +131,10 @@ class TelecomService
 	public function	enrollData($where)
 	{
 		$enroll_data = $this->telecomRepository->getEnrollData($where);
-		$enroll_data->time_start = substr($enroll_data->time_start,0,5);
-		$enroll_data->time_end = substr($enroll_data->time_end,0,5);
+		if($enroll_data){
+			$enroll_data->time_start = substr($enroll_data->time_start,0,5);
+			$enroll_data->time_end = substr($enroll_data->time_end,0,5);
+		}
 		return $enroll_data;
 	}
 	public function enroll($data)
