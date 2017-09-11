@@ -118,8 +118,15 @@ class TelecomService
 	public function getTelecomEnrollmentTime($time_id)
 	{
 		$time = $this->telecomRepository->getTelecomEnrollmentTime(['time_id' => $time_id]);
-		$time->time_start = substr($time->time_start,0,5);
-		$time->time_end = substr($time->time_end,0,5);
+		if($time){
+			$time->time_start = substr($time->time_start,0,5);
+			$time->time_end = substr($time->time_end,0,5);
+			$count_data = $this->getTelecomEnrollmentCount($time->time_id);
+			if($count_data)
+			{
+				$time->count = max($time->count - $count_data->count,0);
+			}
+		}
 		return $time;
 	}
 	public function getTelecomEnrollmentCount($time_id)

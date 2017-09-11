@@ -254,6 +254,10 @@ class TelecomController extends Controller
 			throw new \App\Exceptions\Custom\OutputServerMessageException('已经预约过，请勿重复预约');
 		}
 		$time = $this->telecomService->getTelecomEnrollmentTime($request->time_id);
+		if($time->count <=0)
+		{
+			throw new \App\Exceptions\Custom\OutputServerMessageException('人数已满，请选择其他时间段');
+		}
 		$date = date("Y-m-d",strtotime("+1 day"));
 		$this->telecomService->enroll([
 			'time_id' => $time->time_id,
