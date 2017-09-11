@@ -145,7 +145,8 @@ class UserController extends Controller
         $this->helpService->validateParameter($rule);
 
         //检验短信验证码
-        $this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg_verify');
+        //$this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'reg_verify');
+        $this->verifyCodeService->checkSMS($request->mobile_no, $request->sms_code, 'telecom_verify');
 
         $user = $this->userService->getUserByVerify(['mobile_no' => $request->mobile_no]);
         if($user)
@@ -516,8 +517,9 @@ class UserController extends Controller
         $this->helpService->validateParameter($rule);
 
         //发送短信
-        $this->smsService->sendSMS2Phone($request->mobile_no, 'reg_verify');
-
+        //$this->smsService->sendSMS2Phone($request->mobile_no, 'reg_verify');
+        $this->smsService->sendSMS2Phone($request->mobile_no, 'telecom_verify');
+        
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
     public function sendResetPasswordSMS(Request $request)

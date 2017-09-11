@@ -41,7 +41,7 @@ class SMSService
 		if (Session::get($mobile_no.'SMSLimit') and ($se_time <= 60)) {
 			throw new \App\Exceptions\Custom\RequestTooFrequentException((60-$se_time).'秒');
 		}
-
+		$type = 'verify';
 		switch ($usage) {
 			case 'reg':
 				$user = $this->userRepository->findMobileNo($mobile_no);
@@ -51,6 +51,10 @@ class SMSService
 				break;
 			case 'reg_verify':
 				$user = $this->userRepository->findMobileNo($mobile_no);
+				break;
+			case 'telecom_verify':
+				$user = $this->userRepository->findMobileNo($mobile_no);
+				$type = 'telecom_verify';
 				break;
 			case 'reset':
 				$user = $this->userRepository->findMobileNo($mobile_no);
@@ -77,7 +81,7 @@ class SMSService
 
 		$random = rand(1000, 9999);
 		//发送短信
-        $result = $this->sendSMS($mobile_no, 'verify',['code' => $random,'sms_template_code' => config('sms.'.$usage)]);
+        $result = $this->sendSMS($mobile_no, $type,['code' => $random,'sms_template_code' => config('sms.'.$usage)]);
 	//	$result = ture;
         //将手机及其对应的短信验证码保存到数据库
         $this->saveVerifyCode($mobile_no, $random, $usage, $result);
@@ -151,13 +155,21 @@ class SMSService
 		$c = new TopClient;
 		$req = new AlibabaAliqinFcSmsNumSendRequest;
 		$req->setSmsType("normal");
-		$req->setSmsFreeSignName(config('sms.signName'));
+		if(in_array($type,['telecom_verify'])){
+			$req->setSmsFreeSignName(config('sms.telecomSignName'));
+		}else{
+			$req->setSmsFreeSignName(config('sms.signName'));
+		}
 		$req->setRecNum($mobile_no);
 		$req->setSmsTemplateCode($data['sms_template_code']);
 		switch ($type) {
 			case 'verify':
 				$code = $data['code'];
 				$req->setSmsParam("{\"code\":\"$code\",\"product\":\"校汇\"}");
+				break;
+			case 'telecom_verify':
+				$code = $data['code'];
+				$req->setSmsParam("{\"code\":\"$code\",\"product\":\"预约开网\"}");
 				break;
 			case 'order_info':
 				$req->setSmsParam("{\"product\":\"校汇\"}");
@@ -180,6 +192,7 @@ class SMSService
 				break;
 		}
 		$resp = $c->execute($req);
+		Log::debug('阿里大于resp：' . serialize($resp));
 		if (!isset($resp->result->err_code) or $resp->result->err_code !== '0') {
 			throw new \App\Exceptions\Custom\RequestFailedException('短信发送失败');
 			Log::error('----------------------------------------------------------------');
