@@ -192,7 +192,7 @@ class SMSService
 				break;
 		}
 		$resp = $c->execute($req);
-		Log::debug('阿里大于resp：' . serialize($resp));
+		Log::debug('阿里短信开始 resp'.serialize($resp));
 		if (!isset($resp->result->err_code) or $resp->result->err_code !== '0') {
 			throw new \App\Exceptions\Custom\RequestFailedException('短信发送失败');
 			Log::error('----------------------------------------------------------------');
