@@ -251,6 +251,8 @@ class OrderController extends Controller
     {
     //    $this->messageService->SystemMessage2SingleOne(77, '取货码：1233');exit;
         //检验请求参数
+        $fp = fopen("lock.txt", "w+");
+		if (flock($fp, LOCK_NB | LOCK_EX)) {
         $rule = [
 			'token' => 'required',
             'order_id' => 'required|integer',
@@ -299,7 +301,12 @@ class OrderController extends Controller
 
         }
 
-        throw new \App\Exceptions\Custom\RequestSuccessException();
+        throw new \App\Exceptions\Custom\RequestSuccessException("恭喜，接单成功！");
+        }
+        else {
+            throw new \App\Exceptions\Custom\OutputServerMessageException('接单失败，系统繁忙！');
+        }
+        @fclose($fp);
     }
 
     /**
