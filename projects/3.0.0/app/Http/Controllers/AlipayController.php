@@ -272,7 +272,7 @@ class AlipayController extends Controller
 				'from' => 'order',
 				'fee' => $order->total_fee,
 				'service_fee'=> 0,
-				'pay_id' => 1,
+				'pay_id' => 2,
 				'trade_type' => 'ReleaseTask',
 				'wallet_type' => -1,
 				'trade_status' => 'success',
@@ -292,7 +292,7 @@ class AlipayController extends Controller
 					'fee' => $telecomOrder->fee,
 					'service_fee' => 0,
 					'wallet_type' => -1,
-					'pay_id' => 1,
+					'pay_id' => 2,
 					'description' => '电信套餐',
 			);
 		}else if($type == 'SP'){
@@ -319,7 +319,7 @@ class AlipayController extends Controller
 				'trade_type' => 'Shop',
 				'fee' => $order_info->total_fee,
 				'service_fee' => 0,
-				'pay_id' => 1,
+				'pay_id' => 2,
 				'description' => '校汇商店订单',
 			);
 
