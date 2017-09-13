@@ -305,10 +305,17 @@ class AlipayController extends Controller
 			}
 			$this->orderInfoService->updateOrderInfo($out_trade_no,['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
 
-			$shop = $this->shopService->getShop(['shop_id' =>$order_info->shop_id],['uid']) ;
+			$shop = $this->shopService->getShop(['shop_id' =>$order_info->shop_id],['*']) ;
 			$user = $this->userService->getUserByUserID($shop->uid);
 			$this->orderInfoService->deGoodsNumber($order_info->order_id);
 			$this->smsService->sendSMS($user->mobile_no,'order_info',['sms_template_code' => config('sms.order_info'),'uid' => $shop->uid]);
+
+			if($shop->shop_type == 3)
+			{
+				$order_data = $this->orderInfoService->createOrder($order_info,$shop,$user);
+				$order = $this->orderService->createOrder($order_data);
+				//$this->orderInfoService->updateOrderInfoById($data['order_id'],['shipping_status' => 1,'shipping_time' => dtime()]);
+			}
 			$trade = array(
 				'uid' => $order_info->uid,
 				'out_trade_no' => $out_trade_no,
