@@ -75,7 +75,7 @@ class AlipayController extends Controller
 
 	    		}
 	    		else if (Input::get('trade_status') == 'TRADE_SUCCESS') {
-					$this->handleNotify($out_trade_no,$trade_no);
+					$this->handleNotify($out_trade_no,$trade_no,1);
 	    		}
 
 				Log::debug("android支付宝支付回调 success");
@@ -128,7 +128,7 @@ class AlipayController extends Controller
 
     		}
     		else if (Input::get('trade_status') == 'TRADE_SUCCESS') {
-	    		$this->handleNotify($out_trade_no,$trade_no);
+	    		$this->handleNotify($out_trade_no,$trade_no,1);
     		}
 		    Log::debug('Alipay notify get data verification success.', [
             	'out_trade_no' => Input::get('out_trade_no'),
@@ -228,7 +228,7 @@ class AlipayController extends Controller
 				$trade_no = $notify->transaction_id;
 				Log::debug("wechat_out_trade_no:".$out_trade_no);
 				Log::debug("wechat_trade_no:".$trade_no);
-				return $this->handleNotify($out_trade_no,$trade_no);
+				return $this->handleNotify($out_trade_no,$trade_no,2);
 			}
 			return "true";
 		});
@@ -252,14 +252,14 @@ class AlipayController extends Controller
 				$trade_no = $notify->transaction_id;
 				Log::debug("wechat_out_trade_no:".$out_trade_no);
 				Log::debug("wechat_trade_no:".$trade_no);
-				return $this->handleNotify($out_trade_no,$trade_no);
+				return $this->handleNotify($out_trade_no,$trade_no,2);
 			}
 			return "true";
 		});
 		Log::debug('微信支付response'.$response);
 		return $response;
 	}
-	private function handleNotify($out_trade_no,$trade_no)
+	private function handleNotify($out_trade_no,$trade_no,$pay_id)
 	{
 		$type = substr($out_trade_no,0,2);
 		if($type == 'RT'){
@@ -272,7 +272,7 @@ class AlipayController extends Controller
 				'from' => 'order',
 				'fee' => $order->total_fee,
 				'service_fee'=> 0,
-				'pay_id' => 2,
+				'pay_id' => $pay_id,
 				'trade_type' => 'ReleaseTask',
 				'wallet_type' => -1,
 				'trade_status' => 'success',
@@ -292,7 +292,7 @@ class AlipayController extends Controller
 					'fee' => $telecomOrder->fee,
 					'service_fee' => 0,
 					'wallet_type' => -1,
-					'pay_id' => 2,
+					'pay_id' => $pay_id,
 					'description' => '电信套餐',
 			);
 		}else if($type == 'SP'){
@@ -319,7 +319,7 @@ class AlipayController extends Controller
 				'trade_type' => 'Shop',
 				'fee' => $order_info->total_fee,
 				'service_fee' => 0,
-				'pay_id' => 2,
+				'pay_id' => $pay_id,
 				'description' => '校汇商店订单',
 			);
 
