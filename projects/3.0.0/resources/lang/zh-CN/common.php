@@ -37,6 +37,7 @@ return [
 		'Shop' => '商店收入',
 		'TelecomOrder' => '电信套餐',
 		'FreeOrder' => '首单返现',
+		'System' => '系统',
 	],
 	// user   wallet 字段
 	'wallet_type' => [
