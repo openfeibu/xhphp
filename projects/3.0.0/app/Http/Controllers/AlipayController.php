@@ -118,9 +118,9 @@ class AlipayController extends Controller
     {
 		$alipay = app('alipay.wap');
 	    $alipay_config = array_merge(config('alipay-wap'),config('alipay'));
-		$verify_result = $alipay->verifyNotify();
+		//$verify_result = $alipay->verifyNotify();
 		Log::debug("手机网站支付宝回调开始");
-		if($verify_result) {
+		if(true) {
 			$out_trade_no = Input::get('out_trade_no');
 			$trade_no = Input::get('trade_no');
 			$trade_status = Input::get('trade_status');
