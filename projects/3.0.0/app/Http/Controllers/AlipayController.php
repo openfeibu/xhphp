@@ -314,7 +314,7 @@ class AlipayController extends Controller
 			{
 				$order_data = $this->orderInfoService->createOrder($order_info,$shop,$user);
 				$order = $this->orderService->createOrder($order_data);
-				$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
+				//$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
 			}
 			$trade = array(
 				'uid' => $order_info->uid,
