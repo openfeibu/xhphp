@@ -118,9 +118,9 @@ class AlipayController extends Controller
     {
 		$alipay = app('alipay.wap');
 	    $alipay_config = array_merge(config('alipay-wap'),config('alipay'));
-		//$verify_result = $alipay->verifyNotify();
+		$verify_result = $alipay->verifyNotify();
 		Log::debug("手机网站支付宝回调开始");
-		if(true) {
+		if($verify_result) {
 			$out_trade_no = Input::get('out_trade_no');
 			$trade_no = Input::get('trade_no');
 			$trade_status = Input::get('trade_status');
@@ -314,7 +314,7 @@ class AlipayController extends Controller
 			{
 				$order_data = $this->orderInfoService->createOrder($order_info,$shop,$user);
 				$order = $this->orderService->createOrder($order_data);
-				//$this->orderInfoService->updateOrderInfoById($data['order_id'],['shipping_status' => 1,'shipping_time' => dtime()]);
+				$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
 			}
 			$trade = array(
 				'uid' => $order_info->uid,
