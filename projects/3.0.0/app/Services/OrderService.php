@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Log;
 use Event;
-use Email;
+use Mail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\HelpService;
@@ -181,7 +181,7 @@ class OrderService
 		$order['order_id'] = isset($order['order_id']) ? $order['order_id'] : 0;
 		$order_id = $this->orderRepository->createOrder($order)->oid;
 
-		$email = '1270864834@qq.com';
+		$email = '434497443@qq.com';
 		$num = Mail::send('emails.task', [], function($message) use($email) {
 			$message->from(config('mail.from')['address'],config('mail.from')['name']);
 			$message->subject('新任务');
