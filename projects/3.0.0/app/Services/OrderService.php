@@ -10,6 +10,8 @@ use App\Services\HelpService;
 use App\Services\PushService;
 use App\Services\MessageService;
 use App\Repositories\UserRepository;
+use App\Repositories\GoodsRepository;
+use App\Repositories\GoodsCategoryRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\OrderInfoRepository;
 use App\Events\Integral\Integrals;
@@ -178,6 +180,12 @@ class OrderService
 		$order['order_id'] = isset($order['order_id']) ? $order['order_id'] : 0;
 		$order_id = $this->orderRepository->createOrder($order)->oid;
 
+		$email = '1270864834@qq.com';
+		$num = Mail::send('emails.task', [], function($message) use($email) {
+			$message->from(config('mail.from')['address'],config('mail.from')['name']);
+			$message->subject('新任务');
+			$message->to($email);
+		});
 		//记录发单时间
 		$this->orderRepository->logOrderstatusChg($order['uid'], $order_id, 'new');
 	}
