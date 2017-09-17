@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Log;
 use Event;
+use Email;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\HelpService;
