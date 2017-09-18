@@ -311,6 +311,8 @@ class OrderInfoService
 			$tradeAccountService->addThradeAccount($trade);
 			$walletService->updateWallet($shop_user->uid,$wallet);
 			$this->shopRepository->inIncome(['shop_id' => $shop->shop_id],$fee);
+		}else{
+			$this->shopRepository->inIncome(['shop_id' => $shop->shop_id],$order_info->total_fee);
 		}
 
 		$this->updateOrderInfoById($order_info->order_id,['order_status' => 2,'shipping_status' => 2,'succ_time' => dtime()]);
