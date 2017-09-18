@@ -270,8 +270,8 @@ class OrderInfoService
 	{
         $shop_user = $this->userRepository->getUserByUserID($shop->uid);
 
-		if($shop->shop_type == 1 || $shop->shop_type == 2)
-		{
+		// if($shop->shop_type == 1 || $shop->shop_type == 2)
+		// {
 
 			//应得款
 			$receivable = get_receivable($shop->shop_type,$order_info);
@@ -311,9 +311,9 @@ class OrderInfoService
 			$tradeAccountService->addThradeAccount($trade);
 			$walletService->updateWallet($shop_user->uid,$wallet);
 			$this->shopRepository->inIncome(['shop_id' => $shop->shop_id],$fee);
-		}else{
-			$this->shopRepository->inIncome(['shop_id' => $shop->shop_id],$order_info->total_fee);
-		}
+		// }else{
+		// 	$this->shopRepository->inIncome(['shop_id' => $shop->shop_id],$order_info->total_fee);
+		// }
 
 		$this->updateOrderInfoById($order_info->order_id,['order_status' => 2,'shipping_status' => 2,'succ_time' => dtime()]);
 		$goodses = $this->getOrderGoodses($order_info->order_id,['goods_id','goods_number']);

@@ -122,6 +122,11 @@ if(!function_exists('get_receivable'))
 			//商家
 			$receivable = $order_info->total_fee - $order_info->seller_shipping_fee - $order_info->shipping_fee;
 		}
+		if($type == 3)
+		{
+			//食堂
+			$receivable = 0 - $order_info->seller_shipping_fee;
+		}
 		return $receivable;
 	}
 }
