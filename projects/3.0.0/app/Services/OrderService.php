@@ -114,7 +114,7 @@ class OrderService
 			$goods_desc = $order_info->postscript ? $goods_desc. "\n". "[备注]" .$order_info->postscript : $goods_desc;
 		}
 		$order['goods_desc'] = $goods_desc;
-		$order['description'] = $goods_desc ? $order['description'] . "\n" . "[商品]".$order['goods_desc'] : $order['description'];
+		$order['description'] = $goods_desc ? $order['description'] . "\n" . $order['goods_desc'] : $order['description'];
 		$order['created_at_desc'] = friendlyDate($order['created_at']);
 		return $order;
 	}
