@@ -245,7 +245,8 @@ class TelecomController extends Controller
 		$rules = [
 			'token' => 'required',
 			'name' => 'required',
-			'time_id' => 'required|exists:telecom_enrollment_time,time_id'
+			'dormitory_number' => 'required',
+			//'time_id' => 'required|exists:telecom_enrollment_time,time_id'
 		];
 		$this->helpService->validateParameter($rules);
 		$user = $this->userService->getUser();
@@ -253,19 +254,22 @@ class TelecomController extends Controller
 		if($enroll_data){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('已经预约过，请勿重复预约');
 		}
+		/*
 		$time = $this->telecomService->getTelecomEnrollmentTime($request->time_id);
 		if($time->count <=0)
 		{
 			throw new \App\Exceptions\Custom\OutputServerMessageException('人数已满，请选择其他时间段');
 		}
-		$date = date("Y-m-d",strtotime("+1 day"));
+		*/
+		$date = date("Y-m-d");
 		$this->telecomService->enroll([
-			'time_id' => $time->time_id,
+			//'time_id' => $time->time_id,
 			'uid' => $user->uid,
 			'date' => $date,
-			'time_start' => $time->time_start,
-			'time_end' => $time->time_end,
+		//	'time_start' => $time->time_start,
+			//'time_end' => $time->time_end,
 			'name' => $request->name,
+			'dormitory_number' => $request->dormitory_number,
 		]);
 		throw new \App\Exceptions\Custom\RequestSuccessException('报名成功');
 	}

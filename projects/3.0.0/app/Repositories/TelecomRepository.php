@@ -185,7 +185,7 @@ class TelecomRepository
 	}
 	public function getEnrollData($where)
 	{
-		return TelecomEnrollment::where($where)->first();
+		return TelecomEnrollment::where($where)->first(['enroll_id','name','date','created_at','dormitory_number']);
 	}
 	public function createEnrollmentCount($data)
 	{

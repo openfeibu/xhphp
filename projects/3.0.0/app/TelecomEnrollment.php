@@ -17,6 +17,7 @@ class TelecomEnrollment extends Model
         'time_id',
         'time_start',
         'time_end',
+        'dormitory_number',
         'created_at',
         'updated_at'
     ];
