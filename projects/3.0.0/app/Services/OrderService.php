@@ -31,7 +31,9 @@ class OrderService
 						 MessageService $messageService,
 						 OrderRepository $orderRepository,
 						 UserRepository $userRepository,
-						 OrderInfoRepository $orderInfoRepository)
+						 OrderInfoRepository $orderInfoRepository,
+						 GoodsCategoryRepository $goodsCategoryRepository,
+						 GoodsRepository $goodsRepository)
 	{
 		$this->request = $request;
 		$this->messageService = $messageService;
@@ -40,6 +42,8 @@ class OrderService
         $this->orderRepository = $orderRepository;
 		$this->orderInfoRepository = $orderInfoRepository;
         $this->userRepository = $userRepository;
+		$this->goodsCategoryRepository = $goodsCategoryRepository;
+		$this->goodsRepository = $goodsRepository;
 	}
 
 	/**
@@ -101,9 +105,11 @@ class OrderService
 		if($order['type'] == 'canteen' && $order['order_id'])
 		{
 			$order_info = $this->orderInfoRepository->isExistsOrderInfo(['order_id' => $order['order_id']],['postscript']);
-			$order_goods = $this->orderInfoRepository->getOrderGoodses($order['order_id'],['goods_price','goods_number','goods_name']);
+			$order_goods = $this->orderInfoRepository->getOrderGoodses($order['order_id'],['goods_price','goods_number','goods_name','goods_id']);
 			foreach ($order_goods as $key => $goods) {
-				$goods_desc .= $goods->goods_name . ' ' .$goods->goods_number.'件'. ' '.$goods->goods_price.'/件';
+				$org_goods = $this->goodsRepository->existGoods($goods->goods_id);
+				$cat = $this->goodsCategoryRepository->isExistsCat(['cat_id' => $org_goods->cat_id],['cat_name']);
+				$goods_desc .= "[".$cat->cat_name."]".$goods->goods_name . ' ' .$goods->goods_number.'件'. ' '.$goods->goods_price."/件\n";
 			}
 			$goods_desc = $order_info->postscript ? $goods_desc. "\n". "[备注]" .$order_info->postscript : $goods_desc;
 		}
