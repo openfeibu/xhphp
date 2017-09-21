@@ -108,6 +108,10 @@ return [
         'business' =>[
 			'driver' => 'session',
             'provider' => 'business',
+        ],
+        'telecom' =>[
+			'driver' => 'session',
+            'provider' => 'telecom',
         ]
     ],
 
@@ -129,7 +133,7 @@ return [
     */
 
     'providers' => [
-    
+
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
@@ -142,7 +146,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-        
+        'telecom' => [
+            'driver' => 'eloquent',
+            'model' => App\User::class,
+        ],
+
     ],
 
     /*
