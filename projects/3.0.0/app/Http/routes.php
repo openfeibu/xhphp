@@ -221,6 +221,8 @@ Route::get('telecom/getSchoolCampusBuildings', 'TelecomController@getSchoolCampu
 Route::get('telecom/getSchoolBuildings', 'TelecomController@getSchoolBuildings');
 Route::get('telecom/getEnrolls', 'Telecom\TelecomController@getEnrolls');
 Route::get('telecom/getEnrollSettings', 'Telecom\TelecomController@getEnrollSettings');
+Route::post('telecom/updateEnrollSetting', 'Telecom\TelecomController@updateEnrollSetting');
+
 
 Route::get('version','VersionController@index')->name('other_version');
 Route::get('api','ApiController@getApi');

@@ -201,4 +201,8 @@ class TelecomService
 	{
 		return $this->telecomRepository->getEnrollSettings();
 	}
+	public function updateEnrollSetting($where = [],$update = [])
+	{
+		return $this->telecomRepository->updateEnrollSetting($where,$update);
+	}
 }

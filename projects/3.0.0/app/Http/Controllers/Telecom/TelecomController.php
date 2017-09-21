@@ -60,4 +60,14 @@ class TelecomController extends Controller
             'data' => $setting,
         ];
     }
+    public function updateEnrollSetting(Request $request)
+    {
+        $rules = [
+			'setting_id' => 'required|integer',
+            'count' => 'required|integer',
+	    ];
+	    $this->helpService->validateParameter($rules);
+        $this->telecomService->updateEnrollSetting(['setting_id' => $request->setting_id],['count' => $request->count]);
+        throw new \App\Exceptions\Custom\RequestSuccessException('更新成功');
+    }
 }

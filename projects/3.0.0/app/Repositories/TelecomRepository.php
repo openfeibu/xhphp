@@ -227,4 +227,8 @@ class TelecomRepository
 		return TelecomEnrollSetting::join('school_campus','school_campus.campus_id','=','telecom_enroll_setting.campus_id')
 							->get(['telecom_enroll_setting.count','school_campus.campus_name','telecom_enroll_setting.setting_id']);
 	}
+	public function updateEnrollSetting($where = [],$update = [])
+	{
+		return TelecomEnrollSetting::where($where)->update($update);
+	}
 }
