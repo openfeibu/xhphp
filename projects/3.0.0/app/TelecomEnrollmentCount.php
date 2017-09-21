@@ -11,10 +11,9 @@ class TelecomEnrollmentCount extends Model
     protected $primaryKey = 'cid';
 
     protected $fillable = [
-        'time_id',
-        'time_start',
         'date',
         'count',
+        'campus_id',
         'created_at',
         'updated_at',
     ];

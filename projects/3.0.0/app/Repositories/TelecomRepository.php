@@ -252,4 +252,8 @@ class TelecomRepository
 	{
 		return TelecomEnrollment::where($where)->count();
 	}
+	public function getTelecomEnrollSettingCount($where)
+	{
+		return TelecomEnrollSetting::where($where)->value('count');
+	}
 }

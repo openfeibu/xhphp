@@ -172,15 +172,16 @@ class TelecomService
 	}
 	public function changeEnrollmentCount($data)
 	{
-		$count_data = $this->telecomRepository->getTelecomEnrollmentCount(['date' => $data['date']]);
+		$count_data = $this->telecomRepository->getTelecomEnrollmentCount(['date' => $data['date'],'campus_id' => $data['campus_id']]);
 		if(!$count_data)
 		{
 			$this->telecomRepository->createEnrollmentCount([
 				'date' => $data['date'],
 				'count' => 1,
+				'campus_id' => $data['campus_id'],
 			]);
 		}else{
-			$this->telecomRepository->incrementEnrollCount(['date' => $count_data['date']]);
+			$this->telecomRepository->incrementEnrollCount(['date' => $count_data['date'],'campus_id' => $data['campus_id']]);
 		}
 	}
 	public function getSchoolCampusBuildings()
@@ -218,5 +219,11 @@ class TelecomService
 	{
 		return $this->telecomRepository->get_enrollment_count($where);
 	}
-
+	public function getTelecomEnrollmentSurplusCount($where)
+	{
+		$count = $this->telecomRepository->getTelecomEnrollSettingCount($where);
+		$enroll_count = $this->telecomRepository->get_enrollment_count($where);
+		$surplus_count = $count - $enroll_count;
+		return $surplus_count;
+	}
 }

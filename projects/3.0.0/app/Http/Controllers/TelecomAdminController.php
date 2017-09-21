@@ -254,12 +254,14 @@ class TelecomController extends Controller
 		if($enroll_data){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('已经预约过，请勿重复预约');
 		}
-		$school_building = $this->telecomService->getSchoolBuilding($request->building_id);
-		$count = $this->telecomService->getTelecomEnrollmentSurplusCount(['campus_id' => $school_building->campus_id]);
-		if($count <=0)
+		/*
+		$time = $this->telecomService->getTelecomEnrollmentTime($request->time_id);
+		if($time->count <=0)
 		{
 			throw new \App\Exceptions\Custom\OutputServerMessageException('人数已满，请选择其他时间段');
 		}
+		*/
+		$school_building = $this->telecomService->getSchoolBuilding($request->building_id);
 		$date = date("Y-m-d");
 		$this->telecomService->enroll([
 			'uid' => $user->uid,
