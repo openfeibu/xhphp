@@ -187,7 +187,7 @@ class TelecomRepository
 	}
 	public function getEnrollData($where)
 	{
-		return TelecomEnrollment::where($where)->first(['enroll_id','name','date','created_at','dormitory_number']);
+		return TelecomEnrollment::where($where)->first(['enroll_id','name','date','created_at','dormitory_number','building_id','campus_id']);
 	}
 	public function createEnrollmentCount($data)
 	{
@@ -211,6 +211,6 @@ class TelecomRepository
 	}
 	public function getSchoolBuilding($building_id)
 	{
-		return SchoolBuilding::where('building_id',$building_id)->first();
+		return SchoolBuilding::join('school_campus','school_campus.campus_id','=','school_building.campus_id')->where('school_building.building_id',$building_id)->first();
 	}
 }

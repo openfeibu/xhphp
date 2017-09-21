@@ -138,6 +138,10 @@ class TelecomService
 	public function	enrollData($where)
 	{
 		$enroll_data = $this->telecomRepository->getEnrollData($where);
+		if($enroll_data){
+			$building = $this->getSchoolBuilding($enroll_data->building_id);
+			$enroll_data->building_name = $building->campus_name.$building->building_no;
+		}
 		return $enroll_data;
 	}
 	public function enroll($data)
