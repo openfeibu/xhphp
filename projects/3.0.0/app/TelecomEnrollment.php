@@ -14,10 +14,9 @@ class TelecomEnrollment extends Model
         'uid',
         'name',
         'date',
-        'time_id',
-        'time_start',
-        'time_end',
         'dormitory_number',
+        'building_id',
+        'campus_id',
         'created_at',
         'updated_at'
     ];

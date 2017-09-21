@@ -261,11 +261,14 @@ class TelecomController extends Controller
 			throw new \App\Exceptions\Custom\OutputServerMessageException('人数已满，请选择其他时间段');
 		}
 		*/
+		$school_building = $this->telecomService->getSchoolBuilding($request->building_id);
 		$date = date("Y-m-d");
 		$this->telecomService->enroll([
 			'uid' => $user->uid,
 			'date' => $date,
 			'name' => $request->name,
+			'campus_id' => $school_building->campus_id,
+			'building_id' => $request->building_id,
 			'dormitory_number' => $request->dormitory_number,
 		]);
 		throw new \App\Exceptions\Custom\RequestSuccessException('报名成功');

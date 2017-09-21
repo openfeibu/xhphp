@@ -180,4 +180,8 @@ class TelecomService
 	{
 		return $this->telecomRepository->getSchoolBuildings($campus_id);
 	}
+	public function getSchoolBuilding($building_id)
+	{
+		return $this->telecomRepository->getSchoolBuilding($building_id);
+	}
 }

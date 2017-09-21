@@ -179,7 +179,7 @@ class TelecomRepository
 	}
 	public function getTelecomEnrollmentCount($where)
 	{
-		return TelecomEnrollmentCount::where($where)->first(['time_id','count','date']);
+		return TelecomEnrollmentCount::where($where)->first(['count','date']);
 	}
 	public function enroll($data)
 	{
@@ -208,5 +208,9 @@ class TelecomRepository
 	public function getSchoolCampuses()
 	{
 		return SchoolCampus::orderBy('campus_id','asc')->get();
+	}
+	public function getSchoolBuilding($building_id)
+	{
+		return SchoolBuilding::where('building_id',$building_id)->first();
 	}
 }
