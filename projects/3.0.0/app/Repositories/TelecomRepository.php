@@ -188,15 +188,18 @@ class TelecomRepository
 	}
 	public function getEnrollData($where)
 	{
-		return TelecomEnrollment::where($where)->first(['enroll_id','name','date','created_at','dormitory_number','building_id','campus_id']);
+		return TelecomEnrollment::join('user','user.uid','=','telecom_enrollment.uid')
+								->where($where)
+								->first(['telecom_enrollment.enroll_id','telecom_enrollment.name','telecom_enrollment.date','telecom_enrollment.created_at','telecom_enrollment.dormitory_number','telecom_enrollment.building_id','telecom_enrollment.campus_id','user.mobile_no']);
 	}
 	public function getEnrolls($where)
 	{
-		return TelecomEnrollment::where($where)
+		return TelecomEnrollment::join('user','user.uid','=','telecom_enrollment.uid')
+								->where($where)
 								->skip(20 * $this->request->page - 20)
 								->take(20)
 								->orderBy('enroll_id', 'desc')
-								->get(['enroll_id','name','date','created_at','dormitory_number','building_id','campus_id']);
+								->get(['telecom_enrollment.enroll_id','telecom_enrollment.name','telecom_enrollment.date','telecom_enrollment.created_at','telecom_enrollment.dormitory_number','telecom_enrollment.building_id','telecom_enrollment.campus_id','user.mobile_no']);
 	}
 	public function createEnrollmentCount($data)
 	{
@@ -230,5 +233,9 @@ class TelecomRepository
 	public function updateEnrollSetting($where = [],$update = [])
 	{
 		return TelecomEnrollSetting::where($where)->update($update);
+	}
+	public function get_enrollment_count($where)
+	{
+		return TelecomEnrollment::where($where)->count();
 	}
 }

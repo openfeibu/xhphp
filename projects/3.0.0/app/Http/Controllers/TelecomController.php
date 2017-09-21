@@ -250,7 +250,7 @@ class TelecomController extends Controller
 		];
 		$this->helpService->validateParameter($rules);
 		$user = $this->userService->getUser();
-		$enroll_data = $this->telecomService->enrollData(['uid' => $user->uid]);
+		$enroll_data = $this->telecomService->enrollData(['telecom_enrollment.uid' => $user->uid]);
 		if($enroll_data){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('已经预约过，请勿重复预约');
 		}
@@ -276,7 +276,7 @@ class TelecomController extends Controller
 	public function getEnroll(Request $request)
 	{
 		$user = $this->userService->getUser();
-		$enroll_data = $this->telecomService->enrollData(['uid' => $user->uid]);
+		$enroll_data = $this->telecomService->enrollData(['telecom_enrollment.uid' => $user->uid]);
 		return [
 			'code' => 200,
 			'data' => $enroll_data ? $enroll_data : []

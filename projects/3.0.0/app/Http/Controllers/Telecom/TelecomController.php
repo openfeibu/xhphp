@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Session;
 use Cache;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Services\HelpService;
 use App\Services\UserService;
 use App\Services\TelecomService;
+use App\Http\Controllers\Telecom\Controller;
 
 class TelecomController extends Controller
 {
@@ -23,6 +23,7 @@ class TelecomController extends Controller
 								 TelecomService $telecomService,
 								 HelpService $helpService)
 	{
+        parent::__construct();
 		$this->helpService = $helpService;
 		$this->userService = $userService;
 		$this->telecomService = $telecomService;
@@ -38,18 +39,22 @@ class TelecomController extends Controller
 	    $this->helpService->validateParameter($rules);
         $where = [];
         if(isset($request->date) && !empty($request->date)){
-            $where['date'] =  $request->date;
+            $where['telecom_enrollment.date'] =  $request->date;
         }
         if(isset($request->campus_id) && !empty($request->campus_id)){
-            $where['campus_id'] =  $request->campus_id;
+            $where['telecom_enrollment.campus_id'] =  $request->campus_id;
         }
         if(isset($request->building_id) && !empty($request->building_id)){
-            $where['building_id'] =  $request->building_id;
+            $where['telecom_enrollment.building_id'] =  $request->building_id;
         }
         $enrolls = $this->telecomService->getEnrolls($where);
+
+        $enrollment_count = $this->telecomService->get_enrollment_count($where);
+
         return [
             'code' => '200',
-            'data' => $enrolls
+            'data' => $enrolls,
+            'count' => $enrollment_count
         ];
     }
     public function getEnrollSettings(Request $request)

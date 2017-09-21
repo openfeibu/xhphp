@@ -205,4 +205,8 @@ class TelecomService
 	{
 		return $this->telecomRepository->updateEnrollSetting($where,$update);
 	}
+	public function get_enrollment_count($where = [])
+	{
+		return $this->telecomRepository->get_enrollment_count($where);
+	}
 }
