@@ -155,6 +155,15 @@ class TelecomService
 			throw new \App\Exceptions\Custom\OutputServerMessageException('报名失败，请稍后再试！');
 		}
 	}
+	public function getEnrolls($where = [])
+	{
+		$enrolls = $this->telecomRepository->getEnrolls($where);
+		foreach ($enrolls as $key => $enroll) {
+			$building = $this->getSchoolBuilding($enroll->building_id);
+			$enroll->building_name = $building->campus_name.$building->building_no;
+		}
+		return $enrolls;
+	}
 	public function changeEnrollmentCount($data)
 	{
 		$count_data = $this->telecomRepository->getTelecomEnrollmentCount(['date' => $data['date']]);

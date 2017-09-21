@@ -282,6 +282,7 @@ class TelecomController extends Controller
 			'data' => $enroll_data ? $enroll_data : []
 		];
 	}
+	
 	public function getSchoolBuildings(Request $request)
 	{
 		$buildings = $this->telecomService->getSchoolBuildings();
