@@ -219,9 +219,9 @@ Route::post('telecom/enroll', 'TelecomController@enroll');
 Route::get('telecom/getEnroll', 'TelecomController@getEnroll');
 Route::get('telecom/getSchoolCampusBuildings', 'TelecomController@getSchoolCampusBuildings');
 Route::get('telecom/getSchoolBuildings', 'TelecomController@getSchoolBuildings');
-Route::get('telecom/getEnrolls', 'Telecom\TelecomController@getEnrolls');
-Route::get('telecom/getEnrollSettings', 'Telecom\TelecomController@getEnrollSettings');
-Route::post('telecom/updateEnrollSetting', 'Telecom\TelecomController@updateEnrollSetting');
+Route::get('telecom/getEnrolls', 'TelecomAdmin\TelecomController@getEnrolls');
+Route::get('telecom/getEnrollSettings', 'TelecomAdmin\TelecomController@getEnrollSettings');
+Route::post('telecom/updateEnrollSetting', 'TelecomAdmin\TelecomController@updateEnrollSetting');
 
 
 Route::get('version','VersionController@index')->name('other_version');
@@ -321,4 +321,15 @@ Route::group(['middleware' => 'mbusiness'], function () {
     Route::get('mbusiness', 'ShopAdmin\Mobile\BusinessController@index');
     Route::get('mbusiness/order', 'ShopAdmin\Mobile\BusinessController@order');
     Route::get('mbusiness/product', 'ShopAdmin\Mobile\BusinessController@product');
+});
+
+Route::group(['middleware' => 'telecom'], function () {
+
+    Route::get('telecomAdmin/login', 'TelecomAdmin\AuthController@getLogin');
+    Route::get('telecomAdmin/logout', 'TelecomAdmin\AuthController@getLogout');
+    Route::post('telecomAdmin/login', 'TelecomAdmin\AuthController@postLogin');
+    // Route::get('business/register', 'ShopAdmin\AuthController@getRegister');
+    // Route::post('business/register', 'ShopAdmin\AuthController@postRegister');
+    Route::get('telecomAdmin', 'TelecomAdmin\TelecomController@index');
+
 });

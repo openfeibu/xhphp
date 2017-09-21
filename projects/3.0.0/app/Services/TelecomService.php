@@ -181,7 +181,10 @@ class TelecomService
 	{
 		$campuses = $this->getSchoolCampuses();
 		foreach ($campuses as $key => $campus) {
-			$campus->buildings = $this->getSchoolBuildings($campus->campus_id);
+			$all_buildings = [["building_id" => 0,"campus_id" => $campus->campus_id,"building_no" => "全部" ]];
+			$buildings = $this->getSchoolBuildings($campus->campus_id);
+			$buildings = $buildings ? $buildings->toArray() : [];
+			$campus->buildings = array_merge($all_buildings,$buildings);
 		}
 		return $campuses;
 	}
