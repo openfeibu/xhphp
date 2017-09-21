@@ -201,6 +201,20 @@ class TelecomRepository
 								->orderBy('enroll_id', 'desc')
 								->get(['telecom_enrollment.enroll_id','telecom_enrollment.name','telecom_enrollment.date','telecom_enrollment.created_at','telecom_enrollment.dormitory_number','telecom_enrollment.building_id','telecom_enrollment.campus_id','user.mobile_no']);
 	}
+	public function getAllEnrolls($where)
+	{
+		return TelecomEnrollment::select(DB::raw('telecom_enrollment.name as "姓名",user.mobile_no as "手机号码",telecom_enrollment.date as "日期",school_campus.campus_name as "校区",school_building.building_no as "栋",telecom_enrollment.dormitory_number as "宿舍号"'))
+								->join('user','user.uid','=','telecom_enrollment.uid')
+								->leftJoin('school_campus','school_campus.campus_id','=','telecom_enrollment.campus_id')
+								->leftJoin('school_building','school_building.building_id','=','school_building.building_id')
+								->where($where)
+								->orderBy('school_campus.campus_id', 'asc')
+								->orderBy('school_building.building_id', 'asc')
+								->orderBy('telecom_enrollment.enroll_id', 'desc')
+								->distinct()
+								->groupBy('telecom_enrollment.enroll_id')
+								->get();
+	}
 	public function createEnrollmentCount($data)
 	{
 		return TelecomEnrollmentCount::create($data);

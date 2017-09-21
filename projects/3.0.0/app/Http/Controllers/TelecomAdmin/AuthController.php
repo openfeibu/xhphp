@@ -23,7 +23,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('business:business', ['except' => ['getLogout','getLogin','postLogin']]);
+        $this->middleware('telecom:telecom', ['except' => ['getLogout','getLogin','postLogin']]);
     }
 
     protected function validator(array $data)
@@ -38,10 +38,10 @@ class AuthController extends Controller
 	  // 登出
      public function getLogout()
      {
-        if(Auth::guard('business')->user()){
-            Auth::guard('business')->logout();
+        if(Auth::guard('telecom')->user()){
+            Auth::guard('telecom')->logout();
         }
-          return Redirect::to('business/login');
+          return Redirect::to('telecomAdmin/login');
      }
     protected function create(array $data)
     {

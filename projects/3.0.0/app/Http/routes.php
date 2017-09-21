@@ -222,7 +222,7 @@ Route::get('telecom/getSchoolBuildings', 'TelecomController@getSchoolBuildings')
 Route::get('telecom/getEnrolls', 'TelecomAdmin\TelecomController@getEnrolls');
 Route::get('telecom/getEnrollSettings', 'TelecomAdmin\TelecomController@getEnrollSettings');
 Route::post('telecom/updateEnrollSetting', 'TelecomAdmin\TelecomController@updateEnrollSetting');
-
+Route::get('telecom/explodeEnrolls', 'TelecomAdmin\TelecomController@explodeEnrolls');
 
 Route::get('version','VersionController@index')->name('other_version');
 Route::get('api','ApiController@getApi');

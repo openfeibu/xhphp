@@ -5,6 +5,7 @@ namespace App\Http\Controllers\TelecomAdmin;
 use Illuminate\Http\Request;
 use Session;
 use Cache;
+use Excel;
 use App\Http\Requests;
 use App\Services\HelpService;
 use App\Services\UserService;
@@ -78,5 +79,33 @@ class TelecomController extends Controller
 	    $this->helpService->validateParameter($rules);
         $this->telecomService->updateEnrollSetting(['setting_id' => $request->setting_id],['count' => $request->count]);
         throw new \App\Exceptions\Custom\RequestSuccessException('更新成功');
+    }
+    public function explodeEnrolls(Request $request)
+    {
+        $rules = [
+            'campus_id' => 'sometimes',
+            'building_id' => 'sometimes',
+            'date' => 'sometimes',
+	    ];
+	    $this->helpService->validateParameter($rules);
+        $where = [];
+        if(isset($request->date) && !empty($request->date)){
+            $where['telecom_enrollment.date'] =  $request->date;
+        }
+        if(isset($request->campus_id) && $request->campus_id){
+            $where['telecom_enrollment.campus_id'] =  $request->campus_id;
+        }
+        if(isset($request->building_id) && $request->building_id){
+            $where['telecom_enrollment.building_id'] =  $request->building_id;
+        }
+        $enrolls = $this->telecomService->getAllEnrolls($where);
+        $name = '预约名单';
+        Excel::create($name,function($excel) use ($enrolls){
+		  $excel->sheet('score', function($sheet) use ($enrolls){
+			$sheet->fromArray($enrolls);
+		  });
+		})->export('xls');
+
+
     }
 }

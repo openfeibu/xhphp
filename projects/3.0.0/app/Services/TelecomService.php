@@ -164,6 +164,12 @@ class TelecomService
 		}
 		return $enrolls;
 	}
+	public function getAllEnrolls($where = [])
+	{
+		$enrolls = $this->telecomRepository->getAllEnrolls($where);
+
+		return $enrolls;
+	}
 	public function changeEnrollmentCount($data)
 	{
 		$count_data = $this->telecomRepository->getTelecomEnrollmentCount(['date' => $data['date']]);
@@ -212,4 +218,5 @@ class TelecomService
 	{
 		return $this->telecomRepository->get_enrollment_count($where);
 	}
+
 }

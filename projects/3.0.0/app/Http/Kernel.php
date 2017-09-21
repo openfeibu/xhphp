@@ -29,6 +29,9 @@ class Kernel extends HttpKernel
 	    'business' =>[
 
 	    ],
+		'telecom' => [
+
+		],
     ];
 
     /**
@@ -41,5 +44,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'business' => \App\Http\Middleware\BusinessAuthenticate::class,
 		'mbusiness' => \App\Http\Middleware\MobileBusinessAuthenticate::class,
+		'telecom' => \App\Http\Middleware\TelecomAuthenticate::class,
     ];
 }
