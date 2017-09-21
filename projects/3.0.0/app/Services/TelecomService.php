@@ -197,4 +197,8 @@ class TelecomService
 	{
 		return $this->telecomRepository->getSchoolBuilding($building_id);
 	}
+	public function getEnrollSettings()
+	{
+		return $this->telecomRepository->getEnrollSettings();
+	}
 }

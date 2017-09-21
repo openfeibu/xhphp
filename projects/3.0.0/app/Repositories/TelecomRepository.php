@@ -11,6 +11,7 @@ use App\TelecomOrderTem;
 use App\TelecomEnrollment;
 use App\TelecomEnrollmentTime;
 use App\TelecomEnrollmentCount;
+use App\TelecomEnrollSetting;
 use App\SchoolBuilding;
 use App\SchoolCampus;
 use Illuminate\Http\Request;
@@ -220,5 +221,10 @@ class TelecomRepository
 	public function getSchoolBuilding($building_id)
 	{
 		return SchoolBuilding::join('school_campus','school_campus.campus_id','=','school_building.campus_id')->where('school_building.building_id',$building_id)->first();
+	}
+	public function getEnrollSettings()
+	{
+		return TelecomEnrollSetting::join('school_campus','school_campus.campus_id','=','telecom_enroll_setting.campus_id')
+							->get(['telecom_enroll_setting.count','school_campus.campus_name','telecom_enroll_setting.setting_id']);
 	}
 }

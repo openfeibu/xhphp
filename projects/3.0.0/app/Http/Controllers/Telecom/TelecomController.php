@@ -52,4 +52,12 @@ class TelecomController extends Controller
             'data' => $enrolls
         ];
     }
+    public function getEnrollSettings(Request $request)
+    {
+        $setting = $this->telecomService->getEnrollSettings();
+        return [
+            'code' => 200,
+            'data' => $setting,
+        ];
+    }
 }
