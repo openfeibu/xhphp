@@ -18,6 +18,8 @@ class CreateTableTelecomEnrollment extends Migration
             $table->string('name',50)->comment('姓名') ;
             $table->date('date')->comment('报名日期');
             $table->char('dormitory_number',20)->comment('宿舍号') ;
+            $table->integer('campus_id')->unsigned()->comment('校区id') ;
+            $table->integer('building_id')->unsigned()->comment('宿舍楼号') ;
             $table->timestamps();
 		});
     }
