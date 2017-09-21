@@ -179,13 +179,15 @@ class ScheduleController extends Controller
 	public function auto()
 	{
 		$this->shipping();
-		$this->shipped();
+		$this->shipped(1);
+        $this->shipped(3,4);
 	}
 	/*  24小时后通知收货 */
 	private function shipping()
 	{
 		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid,order_info.total_fee,order_info.order_sn,shop.shop_id,shop.uid as shop_uid,shop.service_rate,shop.shop_type'))
                                 ->Join('shop','shop.shop_id','=','order_info.shop_id')
+                                ->where('shop.shop_type',1)
 								->where('shipping_status','<>',2)
                                 ->where('notice',0)
 								->where('shipping_time','<=',DB::raw('(select date_sub(now(), interval 24 HOUR))'))
@@ -215,13 +217,15 @@ class ScheduleController extends Controller
 		}
 	}
 	/*  48小时后自动收货 */
-	private function shipped()
+	private function shipped($shop_type,$hour = '48')
 	{
+
 		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid,order_info.total_fee,order_info.order_sn,shop.shop_id,shop.uid as shop_uid,shop.service_rate,shop.shop_type'))
 								->Join('shop','shop.shop_id','=','order_info.shop_id')
 								->Join('user','user.uid','=','shop.uid')
+                                ->where('shop.shop_type',$shop_type)
 								->where('order_info.shipping_status','<>',2)
-								->where('order_info.shipping_time','<=',DB::raw('(select date_sub(now(), interval 48 HOUR))'))
+								->where('order_info.shipping_time','<=',DB::raw('(select date_sub(now(), interval '.$hour.' HOUR))'))
                                 ->orderBy('order_info.order_id','desc')
 								->get();
 
