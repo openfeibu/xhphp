@@ -25,7 +25,7 @@ class TelecomController extends Controller
 	{
 
 		parent::__construct();
-		$this->middleware('auth',['except' => ['getTelecomEnrollmentTimes']]);
+		$this->middleware('auth',['except' => ['getTelecomEnrollmentTimes','getSchoolCampusBuildings']]);
 		$this->helpService = $helpService;
 		$this->userService = $userService;
 		$this->telecomService = $telecomService;
@@ -246,7 +246,7 @@ class TelecomController extends Controller
 			'token' => 'required',
 			'name' => 'required',
 			'dormitory_number' => 'required',
-			//'time_id' => 'required|exists:telecom_enrollment_time,time_id'
+			'building_id' => 'required|exists:school_building,building_id'
 		];
 		$this->helpService->validateParameter($rules);
 		$user = $this->userService->getUser();
@@ -263,11 +263,8 @@ class TelecomController extends Controller
 		*/
 		$date = date("Y-m-d");
 		$this->telecomService->enroll([
-			//'time_id' => $time->time_id,
 			'uid' => $user->uid,
 			'date' => $date,
-		//	'time_start' => $time->time_start,
-			//'time_end' => $time->time_end,
 			'name' => $request->name,
 			'dormitory_number' => $request->dormitory_number,
 		]);
@@ -280,6 +277,22 @@ class TelecomController extends Controller
 		return [
 			'code' => 200,
 			'data' => $enroll_data ? $enroll_data : []
+		];
+	}
+	public function getSchoolBuildings(Request $request)
+	{
+		$buildings = $this->telecomService->getSchoolBuildings();
+		return [
+			'code' => '200',
+			'data' => $buildings,
+		];
+	}
+	public function getSchoolCampusBuildings(Request $request)
+	{
+		$campus_buildings = $this->telecomService->getSchoolCampusBuildings();
+		return [
+			'code' => '200',
+			'data' => $campus_buildings,
 		];
 	}
 }

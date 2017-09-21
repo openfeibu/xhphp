@@ -11,6 +11,8 @@ use App\TelecomOrderTem;
 use App\TelecomEnrollment;
 use App\TelecomEnrollmentTime;
 use App\TelecomEnrollmentCount;
+use App\SchoolBuilding;
+use App\SchoolCampus;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 
@@ -194,5 +196,17 @@ class TelecomRepository
 	public function incrementEnrollCount($where)
 	{
 		return TelecomEnrollmentCount::where($where)->increment('count');
+	}
+	public function getSchoolBuildings($campus_id)
+	{
+		if($campus_id){
+			return SchoolBuilding::where('campus_id',$campus_id)->orderBy('building_id','asc')->get();
+		}
+		$school_buildings =  SchoolBuilding::join('school_campus','school_campus.campus_id','=','school_building.campus_id')->orderBy('school_building.campus_id','asc')->orderBy('school_building.building_id','asc')->get();
+		return $school_buildings;
+	}
+	public function getSchoolCampuses()
+	{
+		return SchoolCampus::orderBy('campus_id','asc')->get();
 	}
 }

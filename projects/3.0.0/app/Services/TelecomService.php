@@ -138,10 +138,6 @@ class TelecomService
 	public function	enrollData($where)
 	{
 		$enroll_data = $this->telecomRepository->getEnrollData($where);
-		// if($enroll_data){
-		// 	$enroll_data->time_start = substr($enroll_data->time_start,0,5);
-		// 	$enroll_data->time_end = substr($enroll_data->time_end,0,5);
-		// }
 		return $enroll_data;
 	}
 	public function enroll($data)
@@ -161,13 +157,27 @@ class TelecomService
 		if(!$count_data)
 		{
 			$this->telecomRepository->createEnrollmentCount([
-			//	'time_id' => $data['time_id'],
 				'date' => $data['date'],
 				'count' => 1,
-				//'time_start' => $data['time_start'],
 			]);
 		}else{
 			$this->telecomRepository->incrementEnrollCount(['date' => $count_data['date']]);
 		}
+	}
+	public function getSchoolCampusBuildings()
+	{
+		$campuses = $this->getSchoolCampuses();
+		foreach ($campuses as $key => $campus) {
+			$campus->buildings = $this->getSchoolBuildings($campus->campus_id);
+		}
+		return $campuses;
+	}
+	public function getSchoolCampuses()
+	{
+		return $this->telecomRepository->getSchoolCampuses();
+	}
+	public function getSchoolBuildings($campus_id = '')
+	{
+		return $this->telecomRepository->getSchoolBuildings($campus_id);
 	}
 }
