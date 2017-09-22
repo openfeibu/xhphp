@@ -19,11 +19,7 @@ class Controller extends CommonController
    {
 	   	$this->middleware('telecom:telecom');
    		$this->user = Auth::guard('telecom')->user();
-        if(!$this->user->is_admin)
-        {
-            Auth::guard('telecom')->logout();
-            return Redirect::to('telecomAdmin/login')->withErrors(['mobile_no' => '没有权限']);
-        }
+
 
    }
 }
