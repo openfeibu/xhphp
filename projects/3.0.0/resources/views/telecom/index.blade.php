@@ -15,7 +15,7 @@
 		  <!-- <el-menu-item index="1">首页</el-menu-item> -->
 		  <el-submenu index="2">
 		    <template slot="title">@{{userInfo.nickname}}</template>
-		    <el-menu-item index="2-1"><a @click="exit">退出</a></el-menu-item>
+		    <el-menu-item index="2-1"><a href="{{ url('telecomAdmin/logout') }}">退出</a></el-menu-item>
 		  </el-submenu>
 		  <el-menu-item index="4"><div class="timg"><img :src="userInfo.avatar_url" alt=""></div></el-menu-item>
 		</el-menu>
