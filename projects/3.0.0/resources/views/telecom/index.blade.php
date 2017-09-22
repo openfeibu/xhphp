@@ -23,15 +23,17 @@
   	</header>
   	<el-col :span="4" class="cNav">
   		<a-logo></a-logo>
+
 	    <el-menu  theme="dark" unique-opened :default-active="defaultActive" class="el-menu-vertical-demo" >
-	      <el-menu-item index="1"><router-link to="order"><i class="el-icon-document"></i>预约订单</router-link></el-menu-item>
+	   		 <el-menu-item index="1"><router-link to="home"><i class="el-icon-view"></i>首页</router-link></el-menu-item>
+	      <el-menu-item index="2"><router-link to="order"><i class="el-icon-document"></i>预约订单</router-link></el-menu-item>
 	      <!-- <el-submenu index="3">
 	        <template slot="title"><i class="el-icon-picture"></i>钱包</template>
 	        <el-menu-item-group>
 		        <el-menu-item index="3-2" ><router-link to="classify">钱包记录</router-link></el-menu-item>
 	        </el-menu-item-group>
 	      </el-submenu> -->
-	      <el-menu-item index="2"><router-link to="setting"><i class="el-icon-setting"></i>预约人数设置</router-link></el-menu-item>
+	      <el-menu-item index="3"><router-link to="setting"><i class="el-icon-setting"></i>预约人数设置</router-link></el-menu-item>
 	    </el-menu>
 
 	 </el-col>
@@ -159,7 +161,7 @@
 
 	<!-- 店铺设置 -->
 	<template id="setting">
-		 <el-form :model="numberData"  ref="numberData" label-width="100px" class="ruleForm" v-loading.body="loading" element-loading-text="正在获取信息...">
+		 <el-form :model="numberData"  ref="numberData" label-width="100px" class="ruleForm" v-loading.body="loading" element-loading-text="正在获取信息..." style="margin-top: 30px;">
 		  <el-form-item v-for="item in numberData" :label="item.campus_name" >
 		    <el-input  v-model="item.count" auto-complete="off" :name="item.setting_id" @focus="ssHandleFocus(item.count)"  @blur="ssHandleChange(item.setting_id,item.count)"></el-input>
 		  </el-form-item>
@@ -170,6 +172,37 @@
 
 	</template>
 	<!-- 店铺设置 -->
+	<!-- home -->
+	<template id="home">
+		 <div class="home">
+			<div class="home-item" style="background: #1D8CE0">
+				<span>@{{count}}</span>
+				<p>总预约数</p>
+			</div>
+			<div class="home-item" style="background: #20A0FF">
+				<span>@{{count_yk}}</span>
+				<p>粤垦总预约数</p>
+			</div>
+			<div class="home-item" style="background: #58B7FF">
+				<span>@{{count_zc}}</span>
+				<p>增城总预约数</p>
+			</div>
+			<div class="home-item" style="background: #1D8CE0">
+				<span>@{{today_count}}</span>
+				<p>今天预约数</p>
+			</div>
+			<div class="home-item" style="background: #20A0FF">
+				<span>@{{today_count_yk}}</span>
+				<p>今日粤垦预约数</p>
+			</div>
+			<div class="home-item" style="background:#58B7FF">
+				<span>@{{today_count_zc}}</span>
+				<p>今日增城预约数</p>
+			</div>
+		 </div>
+
+	</template>
+	<!-- home -->
 </body>
   <!-- 先引入 Vue -->
   <script src="{{ asset('/telecom/js/jquery2.1.1.min.js') }}"></script>
@@ -180,6 +213,7 @@
   <script src="{{ asset('/telecom/js/vue-template.js') }}"></script>
   <script src="{{ asset('/telecom/js/routes.js') }}"></script>
   <script>
+
   	var Main = {
 	    methods: {
 	    		//路由变化
@@ -221,8 +255,8 @@
 		    },
 		 data:function() {
 	        return {
-	          snavs:[{"value":"首页","path":""},{"value":"商品管理","path":""}],
-		  	  defaultActive:"1-1",
+	          snavs:[{"value":"首页","path":""},{"value":"","path":""}],
+		  	  defaultActive:"",
 		  	  userInfo:{
 		  	  	"nickname":"",
       			"avatar_url":"",
