@@ -75,9 +75,29 @@ class TelecomController extends Controller
         return [
             'code' => '200',
             'data' => $enrolls,
-            'count' => $enrollment_count
+            'count' => $enrollment_count,
         ];
     }
+	public function statistics(Request $request)
+	{
+		$date = date('Y-m-d');
+		$today_count = $this->telecomService->get_enrollment_count(['date' => $date]);
+		$today_count_yk = $this->telecomService->get_enrollment_count(['campus_id' => 1,'date' => $date]);
+		$today_count_zc = $this->telecomService->get_enrollment_count(['campus_id' => 2,'date' => $date]);
+		$count = $this->telecomService->get_enrollment_count();
+		$count_yk = $this->telecomService->get_enrollment_count(['campus_id' => 1]);
+		$count_zc = $this->telecomService->get_enrollment_count(['campus_id' => 2]);
+		return [
+			'code' => 200,
+			'count' => $count,
+			'count_yk' => $count_yk,
+			'count_zc' => $count_zc,
+			'today_count' => $today_count,
+			'today_count_yk' => $today_count_yk,
+			'today_count_zc' => $today_count_zc,
+
+		];
+	}
     public function getEnrollSettings(Request $request)
     {
         $setting = $this->telecomService->getEnrollSettings();

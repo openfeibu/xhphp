@@ -226,6 +226,7 @@ Route::get('telecom/getEnrollSettings', 'TelecomAdmin\TelecomController@getEnrol
 Route::post('telecom/updateEnrollSetting', 'TelecomAdmin\TelecomController@updateEnrollSetting');
 Route::get('telecom/explodeEnrolls', 'TelecomAdmin\TelecomController@explodeEnrolls');
 Route::get('telecom/getUser', 'TelecomAdmin\TelecomController@getUser');
+Route::get('telecom/statistics', 'TelecomAdmin\TelecomController@statistics');
 
 Route::get('version','VersionController@index')->name('other_version');
 Route::get('api','ApiController@getApi');
