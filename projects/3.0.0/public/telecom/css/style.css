@@ -1,0 +1,51 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{padding:0;margin:0;-webkit-tap-highlight-color:rgba(255,255,255,0);}
+section,article,aside,header,footer,nav,dialog,figure{display:block;}
+ol,ul{list-style:none;}
+h1,h2,h3,h4,h5,h6{font-size:100%; font-weight:normal;}
+img{border:0;vertical-align:middle;}
+input{vertical-align:middle;}
+table{border-collapse:collapse;border-spacing:0;}
+address,caption,cite,code,dfn,em,th,var,i{font-weight:normal;font-style:normal;}
+
+/*body,html{height: 100%;}*/
+header{height: 60px;border-bottom: 1px solid #3c92cb;background: #fff;position: fixed;width: 100%;z-index: 9;}
+header .el-menu{float: right;background: #fff;}
+header .el-menu li:hover{}
+.el-menu-item a{color:#bfcbd9;}
+.el-menu-item.is-active a{color: #20a0ff}
+.timg{width: 50px;height: 50px;border-radius: 50%;overflow: hidden;border:1px solid #3c92cb;margin-top: 4px;}
+.timg img{width: 100%;height: 100%;display: block;}
+.logo{width: 260px;height:70px;background:#fff url("../images/logo.png") no-repeat center;background-size: auto 70px;margin:20px auto 30px auto;}
+.logo a{display: block;width: 200px;height: 80px;}
+.cNav{position: fixed;left:0;top:0;height: 100%;z-index: 10;background: #005534; }
+.cNav > ul{height: 100%;padding-top: 20px;}
+.c-userInfo{position: absolute;bottom:10px;}
+.c-userInfo p{padding-left: 20px;line-height: 35px;font-size: 12px;color: #fff;}
+.c-userInfo span{color: #ff4949;padding: 0 5px 0 0}
+#main{width: 80%;overflow: hidden;margin: 0 1.5% 0 18%;padding-top: 60px}
+.c{color: #999;font-size: 14px;}
+.snav{padding:20px 0;}
+.productTable > .el-input{margin:10px 0;width:250px;}
+.pageBlock{text-align: left;margin:30px 0;}
+.opacityBackground{background: rgba(0,0,0,0.5);}
+
+.avatar-uploader img{max-width:200px;max-height:200px; }
+
+.loginBg{background: #7fd3f8;position: relative;height: 100%;}
+.loginBg:before{content: "";width: 1200px;height: 900px;background: rgba(255,255,255,0.3);border-radius: 50%;position: absolute;left:-400px;top:-750px;}
+.loginBg:after{content: "";width: 1500px;height: 900px;background: rgba(255,255,255,0.3);border-radius: 50%;position: absolute;right:-350px;top:-800px;}
+.ruleForm .el-input{width: 220px;}
+.ruleForm .el-textarea{width: 600px;}
+.login{width: 450px;height: 300px;background: #fff;position: absolute;top:50%;margin-top: -150px;left:50%;margin-left: -225px;border-radius: 10px;z-index: 999;box-shadow: 0 10px 20px #999;}
+.login:before{content: "";width: 20px;height: 20px;position: absolute;background: #fff;top:25px;right:-25px;border-radius: 25px;z-index: 2;box-shadow: 5px 0px 5px #f5f5f5;}
+.login:after{content: "";width: 80px;height: 20px;position: absolute;background: #7fd3f8;top:25px;right:-40px;border-radius: 25px;z-index: 1}
+.login .logo{margin-top: -40px;}
+.login .el-input{width: 280px;}
+.login .el-form-item{margin-top: 20px;}
+.login .el-button{width: 280px;margin-top: 20px;}
+footer{padding-left: 20%;margin-top: 50px;}
+.copy{text-align: center;font-size: 12px;color: #999;line-height: 40px;}
+
+.table_header{padding:20px 0;}
+.productTable .el-input{width: 200px;}
+.table_header2{padding-bottom: 20px;color: #999}
