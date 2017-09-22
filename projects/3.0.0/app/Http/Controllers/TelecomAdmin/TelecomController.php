@@ -95,6 +95,7 @@ class TelecomController extends Controller
             'campus_id' => 'sometimes',
             'building_id' => 'sometimes',
             'date' => 'sometimes',
+			'keyword' => 'sometimes'
 	    ];
 	    $this->helpService->validateParameter($rules);
         $where = [];
@@ -106,6 +107,13 @@ class TelecomController extends Controller
         }
         if(isset($request->building_id) && $request->building_id){
             $where['telecom_enrollment.building_id'] =  $request->building_id;
+        }
+		if(isset($request->keyword) && !empty($request->keyword)){
+			if(preg_match("/^1[34578]\d{9}$/", $request->keyword)){
+				$where[] =  ['user.mobile_no' ,'like','%'.$request->keyword.'%'];
+			}else{
+				$where[] =  ['telecom_enrollment.name' ,'like','%'.$request->keyword.'%'];
+			}
         }
         $enrolls = $this->telecomService->getAllEnrolls($where);
         $name = '预约名单';
