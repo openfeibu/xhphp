@@ -258,7 +258,7 @@ class TelecomController extends Controller
 		$count = $this->telecomService->getTelecomEnrollmentSurplusCount(['campus_id' => $school_building->campus_id]);
 		if($count <=0)
 		{
-			throw new \App\Exceptions\Custom\OutputServerMessageException('人数已满，请选择其他时间段');
+			throw new \App\Exceptions\Custom\OutputServerMessageException('人数已满，请留意下次预约时间');
 		}
 		$date = date("Y-m-d");
 		$this->telecomService->enroll([
