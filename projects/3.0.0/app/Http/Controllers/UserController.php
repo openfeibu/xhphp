@@ -519,7 +519,7 @@ class UserController extends Controller
         //发送短信
         //$this->smsService->sendSMS2Phone($request->mobile_no, 'reg_verify');
         $this->smsService->sendSMS2Phone($request->mobile_no, 'telecom_verify');
-        
+
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
     public function sendResetPasswordSMS(Request $request)
