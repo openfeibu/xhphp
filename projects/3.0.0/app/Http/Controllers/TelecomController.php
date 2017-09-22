@@ -307,8 +307,6 @@ class TelecomController extends Controller
 		$campus_buildings = $this->telecomService->getSchoolCampusBuildings();
 		return [
 			'code' => '200',
-			'count_1' => $this->telecomService->getTelecomEnrollmentSurplusCount(['campus_id' => 1]),
-			'count_2' => $this->telecomService->getTelecomEnrollmentSurplusCount(['campus_id' => 2]),
 			'data' => $campus_buildings,
 		];
 	}
