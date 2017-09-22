@@ -35,5 +35,6 @@ return [
     'real_name_error' => 'SMS_67151333',
 
     //身份验证验证码
-    'telecom_verify' => 'SMS_94680136',
+    //'telecom_verify' => 'SMS_94680136',
+    'telecom_verify' => 'SMS_98855014',
 ];
