@@ -33,6 +33,13 @@ class TelecomController extends Controller
     {
         return view('telecom.index');
     }
+	public function getUser ()
+	{
+		return [
+			'code' => 200,
+			'user' => $this->user,
+		];
+	}
     public function getEnrolls(Request $request)
     {
         $rules = [

@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers\TelecomAdmin;
 
-use App\ShopAdmin;
 use Validator;
 use Auth;
 use View;
@@ -36,13 +35,17 @@ class AuthController extends Controller
 
     }
 	  // 登出
-     public function getLogout()
-     {
+    public function getLogout()
+    {
         if(Auth::guard('telecom')->user()){
             Auth::guard('telecom')->logout();
         }
-          return Redirect::to('telecomAdmin/login');
-     }
+        return Redirect::to('telecomAdmin/login');
+    }
+    public function getLogin()
+    {
+        return view('telecom.login');
+    }
     protected function create(array $data)
     {
 
