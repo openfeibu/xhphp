@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\TelecomAdmin;
 
+use Input;
 use Validator;
 use Auth;
 use View;
@@ -18,7 +19,7 @@ class AuthController extends Controller
     protected $guard = 'telecom';
     protected $loginView = 'telecom.login';
     protected $registerView = 'telecom.register';
-    protected $redirectPath =  '/telecom';
+    protected $redirectPath =  '/telecomAdmin';
 
     public function __construct()
     {
