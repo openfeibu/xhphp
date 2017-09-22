@@ -49,3 +49,8 @@ footer{padding-left: 20%;margin-top: 50px;}
 .table_header{padding:20px 0;}
 .productTable .el-input{width: 200px;}
 .table_header2{padding-bottom: 20px;color: #999}
+
+.home{width: 1000px;text-align: center;margin-top: 30px;}
+.home .home-item{width:250px;height: 120px;text-align: center;border-radius: 5px;display: inline-block;*display: inline-block;*zoom:1;color: #fff;margin:10px 20px;}
+.home .home-item p{font-size: 16px;}
+.home .home-item span{font-size: 48px;line-height:80px;}
