@@ -72,7 +72,7 @@ var table = Vue.extend({
 				          	 	var children = {
 				          	 		value:v.building_id,
 				          	 		label:v.building_no
-				          	 	} 
+				          	 	}
 
 				          	 	childrens.push(children);
 				          	 })
@@ -140,7 +140,7 @@ var table = Vue.extend({
 		  	var that = this;
 		    that.getData(1);
 		    that.getSchoolCampusBuildings();
-		  	
+
 		},
 		data: function() {
 			return {
@@ -170,7 +170,7 @@ var classify = Vue.extend({
 			//弹出修改分类层
 			PThandleEdit(index, row) {
 			  	this.dialogFormVisible = true;
-			  	this.form = { 
+			  	this.form = {
 			  		"index":index,
 			  		"cat_name":row.cat_name,
 		  			"cat_id":row.cat_id,
@@ -207,7 +207,7 @@ var classify = Vue.extend({
 				          }else{
 				          	that.updataloading = false;
 				          	that.$message.error(data.detail);
-				          }     
+				          }
 				          }).error(function(){
 				          	 that.updataloading = false;
 				             that.$message.error('服务器开小差了');
@@ -278,13 +278,13 @@ var classify = Vue.extend({
 					            type: 'error',
 					            message: data.detail
 					         });
-				        } 
+				        }
 
 			          }).error(function(){
 			          	that.loading = false;
 			            that.$message.error('服务器开小差了');
 			          })
-					
+
 				},
 			    PThandleDelete(index, row) {
 			        var that = this;
@@ -294,12 +294,12 @@ var classify = Vue.extend({
 			          type: 'warning'
 			        }).then(() => {
 						that.deleclassify(index,row.cat_id)
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消删除'
-			          });          
+			          });
 			        });
 			    },
 		      //更改页数
@@ -368,7 +368,7 @@ var notShipped = Vue.extend({
 				//弹出详情
 				PThandleEdit(index, b) {
 				  	this.dialogFormVisible = true;
-				  	this.form = { 
+				  	this.form = {
 				  		"address":b.address,
 	          			"consignee":b.consignee,
 	          			"created_at":b.created_at,
@@ -437,12 +437,12 @@ var notShipped = Vue.extend({
 					            type: 'error',
 					            message: data.detail
 					         });
-				        } 
+				        }
 			          }).error(function(){
 			          	that.loading = false;
 			            that.$message.error('服务器开小差了');
 			          })
-					
+
 				},
 			    delivery(index, row) {
 			        var that = this;
@@ -452,12 +452,12 @@ var notShipped = Vue.extend({
 			          type: 'success'
 			        }).then(() => {
 						that.deliveryGoods(index,row.order_id)
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消发货'
-			          });          
+			          });
 			        });
 			    },
 		      //更改页数
@@ -523,7 +523,7 @@ var shipped = Vue.extend({
 				//弹出详情
 				PThandleEdit(index, b) {
 				  	this.dialogFormVisible = true;
-				  	this.form = { 
+				  	this.form = {
 				  		"address":b.address,
 	          			"consignee":b.consignee,
 	          			"created_at":b.created_at,
@@ -594,12 +594,12 @@ var shipped = Vue.extend({
 					            type: 'error',
 					            message: data.detail
 					         });
-				        } 
+				        }
 			          }).error(function(){
 			          	that.loading = false;
 			            that.$message.error('服务器开小差了');
 			          })
-					
+
 				},
 			    delivery(index, row) {
 			        var that = this;
@@ -609,12 +609,12 @@ var shipped = Vue.extend({
 			          type: 'success'
 			        }).then(() => {
 						that.deliveryGoods(index,row.order_id)
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消发货'
-			          });          
+			          });
 			        });
 			    },
 		      //更改页数
@@ -681,7 +681,7 @@ var succ = Vue.extend({
 				//弹出详情
 				PThandleEdit(index, b) {
 				  	this.dialogFormVisible = true;
-				  	this.form = { 
+				  	this.form = {
 				  		"address":b.address,
 	          			"consignee":b.consignee,
 	          			"created_at":b.created_at,
@@ -736,7 +736,7 @@ var succ = Vue.extend({
 				            that.$message.error('服务器开小差了');
 				          })
 				},
-				
+
 		      //更改页数
 			    handleCurrentChange(val) {
 			        this.currentPage = val;
@@ -801,7 +801,7 @@ var cancell = Vue.extend({
 				//弹出详情
 				PThandleEdit(index, b) {
 				  	this.dialogFormVisible = true;
-				  	this.form = { 
+				  	this.form = {
 				  		"address":b.address,
 	          			"consignee":b.consignee,
 	          			"created_at":b.created_at,
@@ -879,11 +879,11 @@ var cancell = Vue.extend({
 					            type: 'error',
 					            message: data.detail
 					         });
-				        } 
+				        }
 			          }).error(function(){
 			          	that.loading = false;
 			            that.$message.error('服务器开小差了');
-			          })	
+			          })
 				},
 			    refund(index, row) {
 			        var that = this;
@@ -893,12 +893,12 @@ var cancell = Vue.extend({
 			          type: 'success'
 			        }).then(() => {
 						that.refundGoods(index,row.order_id)
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消退款'
-			          });          
+			          });
 			        });
 			    },
 		      //更改页数
@@ -968,7 +968,7 @@ var setting = Vue.extend({
 			  	var that = this;
 			  	console.log(that.numberData)
 			  	$.post(this.localhost+'telecom/updateEnrollSetting',that.shopInfo,function(data){
-	  				if(data.code == 200){	
+	  				if(data.code == 200){
 	  					that.loading = false;
 		            	that.$message.success('修改成功');
 	  				}else{
@@ -989,7 +989,7 @@ var setting = Vue.extend({
 			 		}
 			 		that.loading = true;
 			 		$.post(this.localhost+'telecom/updateEnrollSetting',postData,function(data){
-		  				if(data.code == 200){	
+		  				if(data.code == 200){
 		  					that.loading = false;
 			            	that.$message.success('修改成功');
 		  				}else{
@@ -1030,5 +1030,3 @@ var setting = Vue.extend({
 					}
 				}
 });
-
-
