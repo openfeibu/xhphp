@@ -187,12 +187,15 @@ class TelecomService
 	public function getSchoolCampusBuildings()
 	{
 		$campuses = $this->getSchoolCampuses();
+		$campuses = $campuses ? $campuses->toArray() : [];
+		$all_campus = [['campus_id' => 0,'campus_name' => '全部','buildings' => []]];
 		foreach ($campuses as $key => $campus) {
-			$all_buildings = [["building_id" => 0,"campus_id" => $campus->campus_id,"building_no" => "全部" ]];
-			$buildings = $this->getSchoolBuildings($campus->campus_id);
+			$all_buildings = [["building_id" => 0,"campus_id" => $campus['campus_id'],"building_no" => "全部" ]];
+			$buildings = $this->getSchoolBuildings($campus['campus_id']);
 			$buildings = $buildings ? $buildings->toArray() : [];
-			$campus->buildings = array_merge($all_buildings,$buildings);
+			$campuses[$key]['buildings'] = array_merge($all_buildings,$buildings);
 		}
+		$campuses = array_merge($all_campus,$campuses);
 		return $campuses;
 	}
 	public function getSchoolCampuses()
