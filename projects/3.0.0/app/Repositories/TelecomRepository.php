@@ -250,7 +250,7 @@ class TelecomRepository
 	}
 	public function get_enrollment_count($where)
 	{
-		return TelecomEnrollment::where($where)->count();
+		return TelecomEnrollment::leftJoin('user','user.uid','=','telecom_enrollment.uid')->where($where)->count();
 	}
 	public function getTelecomEnrollSettingCount($where)
 	{

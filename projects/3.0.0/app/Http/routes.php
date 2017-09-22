@@ -219,6 +219,8 @@ Route::post('telecom/enroll', 'TelecomController@enroll');
 Route::get('telecom/getEnroll', 'TelecomController@getEnroll');
 Route::get('telecom/getSchoolCampusBuildings', 'TelecomController@getSchoolCampusBuildings');
 Route::get('telecom/getSchoolBuildings', 'TelecomController@getSchoolBuildings');
+Route::get('telecom/getTelecomEnrollmentSurplusCount', 'TelecomController@getTelecomEnrollmentSurplusCount');
+
 Route::get('telecom/getEnrolls', 'TelecomAdmin\TelecomController@getEnrolls');
 Route::get('telecom/getEnrollSettings', 'TelecomAdmin\TelecomController@getEnrollSettings');
 Route::post('telecom/updateEnrollSetting', 'TelecomAdmin\TelecomController@updateEnrollSetting');

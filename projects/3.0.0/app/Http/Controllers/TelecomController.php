@@ -280,7 +280,18 @@ class TelecomController extends Controller
 			'data' => $enroll_data ? $enroll_data : []
 		];
 	}
-
+	public function getTelecomEnrollmentSurplusCount(Request $request)
+	{
+		$rules = [
+			'campus_id' => 'required',
+		];
+		$this->helpService->validateParameter($rules);
+		$count = $this->telecomService->getTelecomEnrollmentSurplusCount(['campus_id' => $request->campus_id]);
+		return [
+			'code' => 200,
+			'count' => $count,
+		];
+	}
 	public function getSchoolBuildings(Request $request)
 	{
 		$buildings = $this->telecomService->getSchoolBuildings();
