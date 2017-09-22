@@ -100,7 +100,8 @@ class TelecomController extends Controller
 	    $this->helpService->validateParameter($rules);
         $where = [];
         if(isset($request->date) && !empty($request->date)){
-            $where['telecom_enrollment.date'] =  $request->date;
+			$date = date('Y-m-d',$request->date);
+            $where['telecom_enrollment.date'] =  $date;
         }
         if(isset($request->campus_id) && $request->campus_id > 0){
             $where['telecom_enrollment.campus_id'] =  $request->campus_id;
