@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\ShopAdmin;
+namespace App\Http\Controllers\TelecomAdmin;
 
 use App\ShopAdmin;
 use Validator;

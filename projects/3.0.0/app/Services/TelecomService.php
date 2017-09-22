@@ -188,9 +188,9 @@ class TelecomService
 	{
 		$campuses = $this->getSchoolCampuses();
 		$campuses = $campuses ? $campuses->toArray() : [];
-		$all_campus = [['campus_id' => 0,'campus_name' => '全部','buildings' => [["building_id" => 0,"campus_id" => 0,"building_no" => "全部" ]]]];
+		$all_campus = [['campus_id' => -1,'campus_name' => '全部','buildings' => [["building_id" => 0,"campus_id" => 0,"building_no" => "全部" ]]]];
 		foreach ($campuses as $key => $campus) {
-			$all_buildings = [["building_id" => 0,"campus_id" => $campus['campus_id'],"building_no" => "全部" ]];
+			$all_buildings = [["building_id" => -1,"campus_id" => $campus['campus_id'],"building_no" => "全部" ]];
 			$buildings = $this->getSchoolBuildings($campus['campus_id']);
 			$buildings = $buildings ? $buildings->toArray() : [];
 			$campuses[$key]['buildings'] = array_merge($all_buildings,$buildings);

@@ -17,7 +17,7 @@ class Controller extends CommonController
 {
    public function __construct ()
    {
-	  // 	$this->middleware('business:business');
-   	//	$this->user = Auth::guard('business')->user();
+	  // 	$this->middleware('telecom:telecom');
+   		//$this->user = Auth::guard('telecom')->user();
    }
 }
