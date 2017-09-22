@@ -48,10 +48,10 @@ class TelecomController extends Controller
 			$date = date('Y-m-d',$request->date);
             $where['telecom_enrollment.date'] =  $date;
         }
-        if(isset($request->campus_id) && $request->campus_id){
+        if(isset($request->campus_id) && $request->campus_id >0){
             $where['telecom_enrollment.campus_id'] =  $request->campus_id;
         }
-        if(isset($request->building_id) && $request->building_id){
+        if(isset($request->building_id) && $request->building_id >0){
             $where['telecom_enrollment.building_id'] =  $request->building_id;
         }
 		if(isset($request->keyword) && !empty($request->keyword)){
