@@ -172,6 +172,7 @@ class TelecomService
 	}
 	public function changeEnrollmentCount($data)
 	{
+		$this->telecomRepository->deTelecomEnrollSettingCount(['campus_id' => $data['campus_id']]);
 		$count_data = $this->telecomRepository->getTelecomEnrollmentCount(['date' => $data['date'],'campus_id' => $data['campus_id']]);
 		if(!$count_data)
 		{
@@ -225,8 +226,8 @@ class TelecomService
 	public function getTelecomEnrollmentSurplusCount($where)
 	{
 		$count = $this->telecomRepository->getTelecomEnrollSettingCount($where);
-		$enroll_count = $this->telecomRepository->get_enrollment_count($where);
-		$surplus_count = $count - $enroll_count;
-		return $surplus_count;
+		// $enroll_count = $this->telecomRepository->get_enrollment_count($where);
+		// $surplus_count = $count - $enroll_count;
+		return $count;
 	}
 }

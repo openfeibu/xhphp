@@ -256,4 +256,8 @@ class TelecomRepository
 	{
 		return TelecomEnrollSetting::where($where)->value('count');
 	}
+	public function deTelecomEnrollSettingCount($where)
+	{
+		return TelecomEnrollSetting::where($where)->decrement('count');
+	}
 }

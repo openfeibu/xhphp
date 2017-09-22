@@ -19,7 +19,7 @@ class AuthController extends Controller
     protected $guard = 'telecom';
     protected $loginView = 'telecom.login';
     protected $registerView = 'telecom.register';
-    protected $redirectPath =  '/telecomAdmin';
+    protected $redirectPath =  '/telecomAdmin#/home';
 
     public function __construct()
     {
