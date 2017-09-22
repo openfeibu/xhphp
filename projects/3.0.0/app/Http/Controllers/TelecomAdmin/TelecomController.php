@@ -62,7 +62,7 @@ class TelecomController extends Controller
             $where['telecom_enrollment.building_id'] =  $request->building_id;
         }
 		if(isset($request->keyword) && !empty($request->keyword)){
-			if(preg_match("/^1[34578]\d{9}$/", $request->keyword)){
+			if(preg_match("/^\d*$/", $request->keyword)){
 				$where[] =  ['user.mobile_no' ,'like','%'.$request->keyword.'%'];
 			}else{
 				$where[] =  ['telecom_enrollment.name' ,'like','%'.$request->keyword.'%'];
@@ -117,7 +117,7 @@ class TelecomController extends Controller
             $where['telecom_enrollment.building_id'] =  $request->building_id;
         }
 		if(isset($request->keyword) && !empty($request->keyword)){
-			if(preg_match("/^1[34578]\d{9}$/", $request->keyword)){
+			if(preg_match("/^\d*$/", $request->keyword)){
 				$where[] =  ['user.mobile_no' ,'like','%'.$request->keyword.'%'];
 			}else{
 				$where[] =  ['telecom_enrollment.name' ,'like','%'.$request->keyword.'%'];
