@@ -150,7 +150,5 @@ class TelecomController extends Controller
 			$sheet->fromArray($enrolls);
 		  });
 		})->export('xls');
-
-
     }
 }

@@ -155,6 +155,11 @@ class TelecomService
 			throw new \App\Exceptions\Custom\OutputServerMessageException('报名失败，请稍后再试！');
 		}
 	}
+	public function updateEnroll($where = [],$update = [])
+	{
+		$enroll = $this->telecomRepository->updateEnroll($where,$update);
+		return $enroll;
+	}
 	public function getEnrolls($where = [])
 	{
 		$enrolls = $this->telecomRepository->getEnrolls($where);

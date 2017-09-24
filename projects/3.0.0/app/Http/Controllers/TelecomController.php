@@ -271,6 +271,26 @@ class TelecomController extends Controller
 		]);
 		throw new \App\Exceptions\Custom\RequestSuccessException('报名成功');
 	}
+	public function updateEnroll(Request $request)
+	{
+		$rules = [
+			'token' => 'required',
+			'dormitory_number' => 'required',
+			'building_id' => 'required|exists:school_building,building_id'
+		];
+		$this->helpService->validateParameter($rules);
+		$user = $this->userService->getUser();
+		$enroll_data = $this->telecomService->enrollData(['telecom_enrollment.uid' => $user->uid]);
+		$where = ['uid' => $user->uid,'enroll_id' => $enroll_data->enroll_id];
+		$school_building = $this->telecomService->getSchoolBuilding($request->building_id);
+		$update = [
+			'campus_id' => $school_building->campus_id,
+			'building_id' => $request->building_id,
+			'dormitory_number' => $request->dormitory_number,
+		];
+		$update = $this->telecomService->updateEnroll($where,$update);
+		throw new \App\Exceptions\Custom\RequestSuccessException('修改成功');
+	}
 	public function getEnroll(Request $request)
 	{
 		$user = $this->userService->getUser();

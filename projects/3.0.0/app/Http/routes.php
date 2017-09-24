@@ -216,6 +216,7 @@ Route::get('telecom/getTelecomOrdersCount','TelecomController@getTelecomOrdersCo
 Route::get('telecom/autoCheckRealName', 'ScheduleController@autoCheckRealName');
 Route::get('telecom/getTelecomTimes', 'TelecomController@getTelecomTimes');
 Route::post('telecom/enroll', 'TelecomController@enroll');
+Route::post('telecom/updateEnroll', 'TelecomController@updateEnroll');
 Route::get('telecom/getEnroll', 'TelecomController@getEnroll');
 Route::get('telecom/getSchoolCampusBuildings', 'TelecomController@getSchoolCampusBuildings');
 Route::get('telecom/getSchoolBuildings', 'TelecomController@getSchoolBuildings');

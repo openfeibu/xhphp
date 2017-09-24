@@ -192,6 +192,10 @@ class TelecomRepository
 								->where($where)
 								->first(['telecom_enrollment.enroll_id','telecom_enrollment.name','telecom_enrollment.date','telecom_enrollment.created_at','telecom_enrollment.dormitory_number','telecom_enrollment.building_id','telecom_enrollment.campus_id','user.mobile_no']);
 	}
+	public function updateEnroll($where,$update)
+	{
+		return TelecomEnrollment::where($where)->update($update);
+	}
 	public function getEnrolls($where)
 	{
 		return TelecomEnrollment::join('user','user.uid','=','telecom_enrollment.uid')
