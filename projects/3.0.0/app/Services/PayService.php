@@ -92,7 +92,7 @@ class PayService
 			//微信
 			case 2:
 				$parameter = [
-					'body'             => $data['body'],
+					'body'             => '发布任务',
 					'detail'           => $data['body'],
 					'out_trade_no'     => $data['order_sn'],
 					'total_fee'        => $data['total_fee'] * 100, // 单位：分
@@ -157,7 +157,7 @@ class PayService
 			//微信
 			case 2:
 				$parameter = [
-					'body'             => $data['body'],
+					'body'             => '购物',
 					'detail'           => $data['body'],
 					'out_trade_no'     => $data['order_sn'],
 					'total_fee'        => $data['total_fee'] * 100, // 单位：分
