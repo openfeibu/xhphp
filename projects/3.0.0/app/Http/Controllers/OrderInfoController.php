@@ -424,13 +424,13 @@ class OrderInfoController extends Controller
 				$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
 				$this->orderInfoService->inGoodsNumber($order_info->order_id);
 				$this->couponService->updateUserCoupon(['uid' => $order_info->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
-				throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额已返回钱包');
+				throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额已返回校汇钱包');
 			}
 		}else{
 			$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 3,'cancelling_time' => dtime()]);
 		}
 
-    	throw new \App\Exceptions\Custom\RequestSuccessException('请等待商家退款，退款金额将返回钱包');
+    	throw new \App\Exceptions\Custom\RequestSuccessException('请等待商家退款，退款金额将返回校汇钱包');
     }
     public function agreeCancel(Request $request)
     {
