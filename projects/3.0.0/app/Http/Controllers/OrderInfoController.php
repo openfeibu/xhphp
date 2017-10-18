@@ -120,9 +120,15 @@ class OrderInfoController extends Controller
 			$shipping_fee = $this->helpService->getBuyerShippingFee($carts['weight'],$total_fee);
 			$total_fee += $shipping_fee;
 		}else if($shop->shop_type == 3){
-			$shipping_fee = 0;
-			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount);
+			$shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount);
+			$total_fee += $shipping_fee;
+			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount,'seller');
 		}
+
+		$shipping_adjust_fee = $this->helpService->getShippingAdjustFee();
+		$shipping_fee += $shipping_adjust_fee;
+
+		$adjust_content = $this->helpService->getShippingAdjustContent();
 
 		$coupons = $this->couponService->getOrderInfoCoupons(['user_coupon.uid' => $this->user->uid],$goods_amount);
 
@@ -138,7 +144,8 @@ class OrderInfoController extends Controller
         	'shipping_fee' => $shipping_fee,
 			'weight' => $carts['weight'],
         	'goods_count' => $count,
-			'coupons' => $coupons
+			'coupons' => $coupons,
+			'adjust_content' => $adjust_content
         ];
 	}
     /**
@@ -213,8 +220,14 @@ class OrderInfoController extends Controller
 			$total_fee += $shipping_fee;
 			$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
 		}else if($shop->shop_type == 3){
-			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount);
+			$shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount);
+			$total_fee += $shipping_fee;
+			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount,'seller');
 		}
+		$shipping_adjust_fee = $this->helpService->getShippingAdjustFee();
+		$shipping_fee += $shipping_adjust_fee;
+
+		$adjust_content = $this->helpService->getShippingAdjustContent();
 
         if($request->pay_id == 3){
 	       	if (!password_verify($request->pay_password, $this->user->pay_password)) {
@@ -266,6 +279,7 @@ class OrderInfoController extends Controller
 			'shop' => $shop,
 			'pay_from' => 'shop',
 			'pay_platform' => $pay_platform,
+			'adjust_content' => $adjust_content
         ];
 
         $data = $this->payService->payHandle($data);
@@ -419,8 +433,7 @@ class OrderInfoController extends Controller
 
 			if($update)
 			{
-				$order = $this->orderService->isExistsOrderColumn(['order_id' => $order_info->order_id,'type' => 'canteen']);
-		        $this->orderService->delete(['oid' => $order->oid]);
+		        $this->orderService->delete(['order_id' => $order_info->order_id]);
 				$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
 				$this->orderInfoService->inGoodsNumber($order_info->order_id);
 				$this->couponService->updateUserCoupon(['uid' => $order_info->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);

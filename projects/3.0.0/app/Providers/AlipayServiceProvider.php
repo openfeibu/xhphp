@@ -42,8 +42,8 @@ class AlipayServiceProvider extends ServiceProvider
 				->setSellerId($app->config->get('alipay.seller'))
 				->setKey($app->config->get('alipay.key'))
 				->setSignType($app->config->get('alipay-web.sign_type'))
-				->setNotifyUrl($app->config->get('alipay-web.notify_url'))
-				->setReturnUrl($app->config->get('alipay-web.return_url'))
+				// ->setNotifyUrl($app->config->get('alipay-web.notify_url'))
+				// ->setReturnUrl($app->config->get('alipay-web.return_url'))
 				->setExterInvokeIp($app->request->getClientIp());
 
 			return $alipay;

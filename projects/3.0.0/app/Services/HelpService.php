@@ -310,16 +310,38 @@ class HelpService
 		}
 		return $shipping_fee;
 	}
-	public function getCanteenShippingFee($weight,$fee)
+	/*
+		获取食堂应该担负的任务费
+	*/
+	public function getCanteenShippingFee($weight,$fee,$type = 'buyer')
 	{
 		$shipping_fee = 0;
 
 		$shipping_config = DB::table('canteen_shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->first();
 		if($shipping_config)
 		{
-			$shipping_fee += $shipping_config->shipping_fee;
+			if($shipping_config->payer == $type)
+			{
+				$shipping_fee += $shipping_config->shipping_fee;
+			}
 		}
 		return $shipping_fee;
+	}
+	public function getShippingAdjustFee()
+	{
+		$price  = DB::table('shipping_adjust')->where('status',1)->sum('price');
+		return $price;
+	}
+	public function getShippingAdjustContent()
+	{
+		$adjust_content = '';
+		$adjusts  = DB::table('shipping_adjust')->where('status',1)->get();
+		foreach($adjusts as $key => $adjust)
+		{
+			$adjust_content .= $adjust->name.'加'.$adjust->price.'元;';
+		}
+		//$adjust_content = substr($adjust_content,0,strlen($adjust_content)-1);
+		return $adjust_content;
 	}
 	/*初始化*/
 	public function zhima_initialize($bodys)

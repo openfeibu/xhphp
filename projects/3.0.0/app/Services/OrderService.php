@@ -84,11 +84,11 @@ class OrderService
 	public function isExistsOrderColumn($where,$columns = ['*'])
 	{
 		$order = $this->orderRepository->getOrderColumn($where,$columns);
-		$order['created_at_desc'] = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		if(!$order)
 		{
 			throw new \App\Exceptions\Custom\FoundNothingException();
 		}
+		$order['created_at_desc'] = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
 		return $order;
 	}
 	public function getSingleOrderByToken($order_id)

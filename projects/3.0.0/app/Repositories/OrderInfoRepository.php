@@ -26,7 +26,7 @@ class OrderInfoRepository
 			$order_info = OrderInfo::create($order_info);
 			$goodses = 	Cart::select(DB::raw("$order_info->order_id as order_id ,goods_name,goods_price,goods_sn,goods_id,goods_number,goods_desc"))->where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->get()->toArray();
         	OrderGoods::insert($goodses);
-        	Cart::where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->delete();
+        	//Cart::where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->delete();
         	return $order_info;
         } catch (Exception $e) {
         	throw new \App\Exceptions\Custom\RequestFailedException('无法创建订单');
