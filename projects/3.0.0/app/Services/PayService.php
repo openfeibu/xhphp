@@ -201,12 +201,13 @@ class PayService
 				}
 				$this->orderInfoService->updateOrderInfo($data['order_sn'],['pay_status' => 1,'order_status' => 1,'pay_time' => dtime()]);
 				$this->orderInfoService->deGoodsNumber($data['order_id']);
-				$this->smsService->sendSMS($data['mobile_no'],'order_info',['sms_template_code' => config('sms.order_info'),'uid' => $data['shop']->uid ]);
 				if($data['shop']->shop_type == 3)
 				{
 					$order_data = $this->orderInfoService->createOrder($data['order_info'],$data['shop'],$data['shop_user']);
 					$order = $this->orderService->createOrder($order_data);
 					//$this->orderInfoService->updateOrderInfoById($data['order_id'],['shipping_status' => 1,'shipping_time' => dtime()]);
+				}else{
+					$this->smsService->sendSMS($data['mobile_no'],'order_info',['sms_template_code' => config('sms.order_info'),'uid' => $data['shop']->uid ]);
 				}
 				return '支付成功';
 				break;
