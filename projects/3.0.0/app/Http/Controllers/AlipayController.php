@@ -308,13 +308,14 @@ class AlipayController extends Controller
 			$shop = $this->shopService->getShop(['shop_id' =>$order_info->shop_id],['*']) ;
 			$user = $this->userService->getUserByUserID($shop->uid);
 			$this->orderInfoService->deGoodsNumber($order_info->order_id);
-			$this->smsService->sendSMS($user->mobile_no,'order_info',['sms_template_code' => config('sms.order_info'),'uid' => $shop->uid]);
 
 			if($shop->shop_type == 3)
 			{
 				$order_data = $this->orderInfoService->createOrder($order_info,$shop,$user);
 				$order = $this->orderService->createOrder($order_data);
 				//$this->orderInfoService->updateOrderInfoById($order_info->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
+			}else{
+				$this->smsService->sendSMS($user->mobile_no,'order_info',['sms_template_code' => config('sms.order_info'),'uid' => $shop->uid]);
 			}
 			$trade = array(
 				'uid' => $order_info->uid,
