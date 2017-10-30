@@ -550,11 +550,11 @@ class UserController extends Controller
     	$rule = [
             'money' => 'required|integer|min:10',
             'pay_password' => 'required|string',
-            'type' => 'required|in:common,quick',
+            'type' => 'sometimes|in:common,quick',
         ];
 
         $this->helpService->validateParameter($rule);
-
+        $type = isset($request->type) ? $request->type : 'common';
         if (!password_verify($request->pay_password, $user->pay_password)) {
 		 	throw new \App\Exceptions\Custom\OutputServerMessageException('支付密码错误');
 		}
@@ -601,7 +601,7 @@ class UserController extends Controller
  			'service_fee' => $service_fee,
  			'total_fee' => $total_fee,
  			'status' => 'wait',
-            'type' => $request->type,
+            'type' => $type,
  			'description' => '',
  			'alipay' => $alipayInfo->alipay,
  			'alipay_name' => $alipayInfo->alipay_name,
@@ -902,5 +902,5 @@ class UserController extends Controller
         $data = $this->helpService->zhima_query($bodys);
         return $data;
     }
-    
+
 }
