@@ -438,3 +438,19 @@ if (!function_exists('handle_idcard')) {
 		return strlen($id_number) == 15 ? substr_replace($id_number,"******",6,6) : (strlen($id_number)==18 ? substr_replace($id_number,"******",8,6) : '');
 	}
 }
+function handleGoodsPrice($goods_price = 0)
+{
+	$goods_raise_price_rate = get_setting_value('goods_raise_price_rate','value');
+	$goods_raise_min_price = get_setting_value('goods_raise_min_price','value');
+
+	if($goods_price >= $goods_raise_min_price)
+	{
+		$goods_price = $goods_price * $goods_raise_price_rate;
+	}
+	return number_format($goods_price,2);
+}
+//获取配置值
+function get_setting_value($name,$value)
+{
+	return DB::table('settings')->where('name',$name)->value($value);
+}

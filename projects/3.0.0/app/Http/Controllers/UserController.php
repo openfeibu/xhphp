@@ -550,6 +550,7 @@ class UserController extends Controller
     	$rule = [
             'money' => 'required|integer|min:10',
             'pay_password' => 'required|string',
+            'type' => 'required|in:common,quick',
         ];
 
         $this->helpService->validateParameter($rule);
@@ -600,6 +601,7 @@ class UserController extends Controller
  			'service_fee' => $service_fee,
  			'total_fee' => $total_fee,
  			'status' => 'wait',
+            'type' => $request->type,
  			'description' => '',
  			'alipay' => $alipayInfo->alipay,
  			'alipay_name' => $alipayInfo->alipay_name,

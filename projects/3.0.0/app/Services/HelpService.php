@@ -5,6 +5,7 @@ namespace App\Services;
 use Validator;
 use DB;
 use Log;
+use App\Setting;
 use App\TradeAccount;
 use App\ShippingConfig;
 use Illuminate\Http\Request;
@@ -343,6 +344,7 @@ class HelpService
 		//$adjust_content = substr($adjust_content,0,strlen($adjust_content)-1);
 		return $adjust_content;
 	}
+	
 	/*初始化*/
 	public function zhima_initialize($bodys)
 	{

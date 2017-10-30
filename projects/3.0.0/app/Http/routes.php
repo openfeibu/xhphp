@@ -12,7 +12,8 @@
 */
 Route::group(['middleware' => 'web'], function () {
 
-Route::get('/','HomeController@index')->name('home_index');;
+Route::get('/','HomeController@index')->name('home_index');
+Route::get('paper/announcement','PaperController@getAnnouncement')->name('home_getAnnouncement');
 
 Route::post('user/register', 'UserController@register')->name('user_register');
 Route::post('user/isMobileExist', 'UserController@isMobileExist')->name('user_isMobileExist');

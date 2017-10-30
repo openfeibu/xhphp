@@ -112,21 +112,20 @@ class OrderInfoController extends Controller
 		if($shop->shop_type == 1)
 		{
 			if($goods_amount < $shop->min_goods_amount){
-				$total_fee = $goods_amount + $shop->shipping_fee;
 				$shipping_fee = $shop->shipping_fee;
 			}
 		}elseif($shop->shop_type ==2)
 		{
 			$shipping_fee = $this->helpService->getBuyerShippingFee($carts['weight'],$total_fee);
-			$total_fee += $shipping_fee;
 		}else if($shop->shop_type == 3){
 			$shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount);
-			$total_fee += $shipping_fee;
 			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount,'seller');
 		}
 
 		$shipping_adjust_fee = $this->helpService->getShippingAdjustFee();
+		//提交订单界面的配送费跟提交订单入库的配送费不一样，切记
 		$shipping_fee += $shipping_adjust_fee;
+		$total_fee += $shipping_fee;
 
 		$adjust_content = $this->helpService->getShippingAdjustContent();
 
@@ -209,7 +208,6 @@ class OrderInfoController extends Controller
 		{
 			//学生店铺
 			if($goods_amount < $shop->min_goods_amount){
-				$total_fee = $goods_amount + $shop->shipping_fee;
 				$shipping_fee = $shop->shipping_fee;
 			}
 			$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
@@ -217,15 +215,14 @@ class OrderInfoController extends Controller
 		{
 			//外面商家
 			$shipping_fee = $this->helpService->getBuyerShippingFee($carts['weight'],$goods_amount);
-			$total_fee += $shipping_fee;
 			$seller_shipping_fee = $this->helpService->getSellerShippingFee($carts['weight'],$goods_amount);
 		}else if($shop->shop_type == 3){
 			$shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount);
-			$total_fee += $shipping_fee;
 			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount,'seller');
 		}
 		$shipping_adjust_fee = $this->helpService->getShippingAdjustFee();
 		$shipping_fee += $shipping_adjust_fee;
+		$total_fee += $shipping_fee;
 
 		$adjust_content = $this->helpService->getShippingAdjustContent();
 

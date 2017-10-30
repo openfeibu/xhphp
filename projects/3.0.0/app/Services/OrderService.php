@@ -109,7 +109,7 @@ class OrderService
 			foreach ($order_goods as $key => $goods) {
 				$org_goods = $this->goodsRepository->existGoods($goods->goods_id);
 				$cat = $this->goodsCategoryRepository->isExistsCat(['cat_id' => $org_goods->cat_id],['cat_name']);
-				$goods_desc .= "[".$cat->cat_name."]".$goods->goods_name . ' ' .$goods->goods_number.'件'. ' '.$goods->goods_price."/件\n";
+				$goods_desc .= "[".$cat->cat_name."]".$goods->goods_name . ' ' .$goods->goods_number.'件'. ' '.$org_goods->goods_price."/件\n";
 			}
 			$goods_desc = $order_info->postscript ? $goods_desc. "\n". "[备注]" .$order_info->postscript : $goods_desc;
 		}

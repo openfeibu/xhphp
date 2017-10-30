@@ -51,6 +51,7 @@ class GoodsService
 			}else{
 				$goods->cart_goods_number = 0;
 			}
+			$goods->goods_price = handleGoodsPrice($goods->goods_price);
 		}
 		return $goodses;
 	}

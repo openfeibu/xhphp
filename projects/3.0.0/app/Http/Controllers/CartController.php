@@ -19,13 +19,13 @@ class CartController extends Controller
 	protected $goodsService;
 
 	protected $shopService;
-	
+
 	protected $userService;
 
 	protected $cartService;
 
 	protected $user;
-	
+
 	public function __construct (UserService $userService,
 								ShopService $shopService,
 								GoodsService $goodsService,
@@ -39,7 +39,7 @@ class CartController extends Controller
 		$this->shopService = $shopService ;
 		$this->cartService = $cartService;
 	 	$this->helpService = $helpService;
-	 	$this->user = $this->userService->getUser(); 
+	 	$this->user = $this->userService->getUser();
 	}
 	public function store ($goods_id,$goods_number)
 	{
@@ -55,12 +55,12 @@ class CartController extends Controller
 		}
 		if($goods_number > $exitGoods->goods_number){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('操作失败，选择的数量超出库存,最多可购买'.$exitGoods->goods_number.'件');
-		}      
+		}
         $newCartId = $this->cartService->addToCart($exitGoods,$this->user->uid);
 		if($newCartId){
 			throw new \App\Exceptions\Custom\RequestSuccessException('添加成功');
 		}
-		throw new \App\Exceptions\Custom\OutputServerMessageException('系统出错');	
+		throw new \App\Exceptions\Custom\OutputServerMessageException('系统出错');
 	}
 	public function getCarts (Request $request)
 	{
@@ -87,7 +87,7 @@ class CartController extends Controller
     	if($this->user){
 	    	$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
     	}
-		
+
 		return [
             'code' => 200,
         	'shop_total' => $carts['shop_total'],
@@ -113,8 +113,8 @@ class CartController extends Controller
     	if(!$exitCart){
 	    	$this->store($request->goods_id,$request->goods_number);
     	}
-    	
-    	if($request->goods_number > $goods->goods_number){	
+
+    	if($request->goods_number > $goods->goods_number){
 	        throw new \App\Exceptions\Custom\OutputServerMessageException('操作失败，选择的数量超出库存,最多可购买'.$goods->goods_number.'件');
     	}
     	$this->cartService->updateCartGoodsNumber($exitCart->cart_id,$request->goods_number,$this->user->uid);

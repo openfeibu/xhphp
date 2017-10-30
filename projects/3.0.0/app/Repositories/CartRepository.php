@@ -17,7 +17,7 @@ class CartRepository
 	protected $user;
 
 	protected $userRepository;
-	
+
 	public function __construct(Request $request,
 								UserRepository $userRepository)
 	{
@@ -29,9 +29,9 @@ class CartRepository
 		$cart = new Cart;
 		$cart->setConnection('write');
 		$cart->uid = $uid;
-		$cart->shop_id = $goods->shop_id;	
-		$cart->goods_id = $goods->goods_id;		
-		$cart->goods_name = $goods->goods_name;                 
+		$cart->shop_id = $goods->shop_id;
+		$cart->goods_id = $goods->goods_id;
+		$cart->goods_name = $goods->goods_name;
 		$cart->goods_price = $goods->goods_price;
 		$cart->goods_desc = $goods->goods_desc;
 		$cart->goods_number = $this->request->goods_number;
@@ -46,7 +46,7 @@ class CartRepository
 	}
 	public function updateCartGoodsNumber ($cart_id,$goods_number,$uid )
 	{
-		return Cart::where('cart_id', $cart_id)->where('uid',$uid)->update(['goods_number' => $goods_number]);		 
+		return Cart::where('cart_id', $cart_id)->where('uid',$uid)->update(['goods_number' => $goods_number]);
 	}
 	public function updateGoodsNumber ($goods_id,$goods_number,$uid)
 	{

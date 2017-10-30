@@ -31,6 +31,7 @@ class CartService
 	}
 	public function addToCart($goods,$uid)
 	{
+		$goods->goods_price = handleGoodsPrice($goods->goods_price)  ;
 		return $this->cartRepository->addToCart($goods,$uid);
 	}
 	public function existCartGoods ($goods,$uid)
