@@ -164,8 +164,9 @@ class OrderInfoController extends Controller
 			'user_coupon_id' => 'sometimes|integer|string',
         	'address_id' => 'required|integer',
 			'platform' => 'required|in:and,ios,wap,wechat',
-			'raise_fee' => 'required',
+			'raise_fee' => 'sometimes',
     	];
+
     	$this->helpService->validateParameter($rules);
 		$this->user = $this->userService->getUser();
 		$user_address = $this->userAddressService->getUserAddress(['address_id' => $request->address_id,'uid' => $this->user->uid]);
@@ -196,7 +197,9 @@ class OrderInfoController extends Controller
 		$shop_user = $this->userService->getUserByUserID($shop->uid);
 		buyerHandle($shop);
 		$shipping_adjust_fee = $this->helpService->getShippingAdjustFee();
-		if($request->raise_fee < $shipping_adjust_fee){
+		//额外费 + 自愿加价
+		$raise_fee = isset($request->raise_fee) ? $request->raise_fee : $shipping_adjust_fee;
+		if($raise_fee < $shipping_adjust_fee){
 			throw new \App\Exceptions\Custom\OutputServerMessageException('额外费用错误');
 		}
 		//使用优惠券
@@ -225,9 +228,9 @@ class OrderInfoController extends Controller
 			$shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount);
 			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount,'seller');
 		}
-
-		$raise_fee = $request->raise_fee - $shipping_adjust_fee;
 		$shipping_fee += $request->raise_fee;
+		$raise_fee = $raise_fee - $shipping_adjust_fee;
+
 		$total_fee += $shipping_fee;
 
 		$adjust_content = $this->helpService->getShippingAdjustContent();
