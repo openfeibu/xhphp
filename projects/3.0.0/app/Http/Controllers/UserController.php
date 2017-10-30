@@ -902,4 +902,5 @@ class UserController extends Controller
         $data = $this->helpService->zhima_query($bodys);
         return $data;
     }
+    
 }

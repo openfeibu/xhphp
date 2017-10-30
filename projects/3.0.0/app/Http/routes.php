@@ -73,6 +73,8 @@ Route::get('order/orderAgreement', 'OrderController@orderAgreement')->name('orde
 Route::get('order/getRecommendOrders', 'OrderController@getRecommendOrders');
 Route::get('order/autoFinishWork', 'ScheduleController@autoFinishWork');
 Route::get('order/remindOrder', 'OrderController@remindOrder');
+Route::get('order/getOrderBonus', 'OrderController@getOrderBonus');
+Route::get('order/getOrderBonusSetting', 'OrderController@getOrderBonusSetting');
 
 Route::post('alipay/alipayAppNotify','AlipayController@alipayAppNotify');
 Route::post('alipay/alipayAppReturn','AlipayController@alipayAppReturn');

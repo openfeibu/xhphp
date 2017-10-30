@@ -8,5 +8,5 @@ class DataVersion extends Model
 {
     protected $table = 'data_version';
 
-	public $timestamp = false;
+	public $timestamps = false;
 }

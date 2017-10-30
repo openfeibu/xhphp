@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use DB;
 use App\Order;
+use App\OrderBonusSetting;
 use Carbon\Carbon;
 use App\OrderHistory;
 use Illuminate\Http\Request;
@@ -493,5 +494,17 @@ class OrderRepository
 	public function delete($where)
 	{
 		return Order::where($where)->delete();
+	}
+	public function getOrderBonusCount($uid,$date)
+	{
+		return OrderHistory::whereRaw(" DATE_FORMAT(order_status_history.created_at,'%Y-%m-%d') = '".$date."'")
+					->where('new_status','finish')
+					->where('uid',$uid)
+					->count();
+	}
+	public function getOrderBonus($number = 0)
+	{
+		$bonus = OrderBonusSetting::where('number','<=',$number)->orderBy('number','desc')->value('bonus');
+		return $bonus ? $bonus : 0;
 	}
 }

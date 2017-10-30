@@ -9,6 +9,7 @@ use Log;
 use Event;
 use App\TradeAccount;
 use App\Http\Requests;
+use App\OrderBonusSetting;
 use App\Services\SMSService;
 use App\Services\HelpService;
 use App\Services\UserService;
@@ -298,7 +299,6 @@ class OrderController extends Controller
             {
                 $this->orderInfoService->updateOrderInfoById($order->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
             }
-
         }
 
         throw new \App\Exceptions\Custom\RequestSuccessException("恭喜，接单成功！");
@@ -736,5 +736,28 @@ $ret = $this->pushService->PushUserTokenDevice('系统通知', '这是内容', 9
 			'data' => $orders,
         ];
 	}
+    public function getOrderBonus(Request $request)
+    {
+        $rule = [
+            'token' => 'required',
+        ];
+        $this->helpService->validateParameter($rule);
 
+		$user = $this->userService->getUser();
+
+        $weekOrderBonus = $this->orderService->getOrderBonus($user->uid);
+
+        return [
+            'code' => 200,
+            'date' => $weekOrderBonus
+        ];
+    }
+    public function getOrderBonusSetting()
+    {
+        $bonus_setting = OrderBonusSetting::orderBy('id','asc')->get();
+        return [
+            'code' => 200,
+            'date' => $bonus_setting
+        ];
+    }
 }

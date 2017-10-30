@@ -8,5 +8,5 @@ class ApiVersion extends Model
 {
     protected $table = 'api_version';
 
-	public $timestamp = false;
+	public $timestamps = false;
 }

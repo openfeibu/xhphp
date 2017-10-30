@@ -144,7 +144,8 @@ class OrderInfoController extends Controller
 			'weight' => $carts['weight'],
         	'goods_count' => $count,
 			'coupons' => $coupons,
-			'adjust_content' => $adjust_content
+			'adjust_content' => $adjust_content,
+			'adjust_fee' => $shipping_adjust_fee,
         ];
 	}
     /**
@@ -163,6 +164,7 @@ class OrderInfoController extends Controller
 			'user_coupon_id' => 'sometimes|integer|string',
         	'address_id' => 'required|integer',
 			'platform' => 'required|in:and,ios,wap,wechat',
+			'raise_fee' => 'required',
     	];
     	$this->helpService->validateParameter($rules);
 		$this->user = $this->userService->getUser();
@@ -238,7 +240,7 @@ class OrderInfoController extends Controller
 		        ];
 	        }
         }
-
+		$raise_fee = $request->raise_fee - $shipping_adjust_fee;
 		//$is_show = $shop->shop_type == 'canteen' ? 0 : 1;
         $order_info = $this->orderInfoService->create([
         											'order_sn' => $order_sn,
@@ -256,6 +258,8 @@ class OrderInfoController extends Controller
 													'seller_shipping_fee' => $seller_shipping_fee,
 													'user_coupon_id' => $user_coupon_id,
 													'description' => $description,
+													'raise_fee' => $raise_fee,
+													'shipping_adjust_fee' => $shipping_adjust_fee
 													//'is_show' => $is_show,
         										]);
 
@@ -276,7 +280,8 @@ class OrderInfoController extends Controller
 			'shop' => $shop,
 			'pay_from' => 'shop',
 			'pay_platform' => $pay_platform,
-			'adjust_content' => $adjust_content
+			'adjust_content' => $adjust_content,
+			'adjust_fee' => $shipping_adjust_fee,
         ];
 
         $data = $this->payService->payHandle($data);

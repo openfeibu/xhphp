@@ -331,7 +331,7 @@ class HelpService
 	public function getShippingAdjustFee()
 	{
 		$price  = DB::table('shipping_adjust')->where('status',1)->sum('price');
-		return $price;
+		return $price ? $price : 0;
 	}
 	public function getShippingAdjustContent()
 	{
@@ -344,7 +344,7 @@ class HelpService
 		//$adjust_content = substr($adjust_content,0,strlen($adjust_content)-1);
 		return $adjust_content;
 	}
-	
+
 	/*初始化*/
 	public function zhima_initialize($bodys)
 	{

@@ -471,4 +471,24 @@ class OrderService
 	{
 		return $this->orderRepository->delete($where);
 	}
+	public function getOrderBonus($uid)
+	{
+		$today = date("Y-m-d");
+		$w = date('w',strtotime($today));
+		$week_start = date('Y-m-d',strtotime("$today -".($w ? $w : 6).' days'));
+		$dates = [];
+		for ($i=0; $i <= 6; $i++) {
+			$dates[$i] = date('Y-m-d',strtotime($week_start." +$i day"));
+		}
+		$weekarray = array("日","一","二","三","四","五","六");
+		foreach($dates as $k => $v)
+		{
+			$dates[$k] = [];
+			$dates[$k]['date'] = '周'.$weekarray[$k].' '.date('m-d',strtotime($v));;
+			$dates[$k]['number'] = $this->orderRepository->getOrderBonusCount($uid,$v);
+			$bonus = $this->orderRepository->getOrderBonus($dates[$k]['number']);
+			$dates[$k]['bonus'] = $bonus;
+		}
+		return $dates;
+	}
 }
