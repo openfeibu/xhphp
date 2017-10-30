@@ -195,7 +195,10 @@ class OrderInfoController extends Controller
 		$shop = $this->shopService->getShop(['shop_id' => $request->shop_id]);
 		$shop_user = $this->userService->getUserByUserID($shop->uid);
 		buyerHandle($shop);
-
+		$shipping_adjust_fee = $this->helpService->getShippingAdjustFee();
+		if($request->raise_fee < $shipping_adjust_fee){
+			throw new \App\Exceptions\Custom\OutputServerMessageException('额外费用错误');
+		}
 		//使用优惠券
 		$user_coupon_id = isset($request->user_coupon_id) ? intval($request->user_coupon_id): 0;
 		$coupon = [];
@@ -222,8 +225,9 @@ class OrderInfoController extends Controller
 			$shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount);
 			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount,'seller');
 		}
-		$shipping_adjust_fee = $this->helpService->getShippingAdjustFee();
-		$shipping_fee += $shipping_adjust_fee;
+
+		$raise_fee = $request->raise_fee - $shipping_adjust_fee;
+		$shipping_fee += $request->raise_fee;
 		$total_fee += $shipping_fee;
 
 		$adjust_content = $this->helpService->getShippingAdjustContent();
@@ -240,7 +244,7 @@ class OrderInfoController extends Controller
 		        ];
 	        }
         }
-		$raise_fee = $request->raise_fee - $shipping_adjust_fee;
+
 		//$is_show = $shop->shop_type == 'canteen' ? 0 : 1;
         $order_info = $this->orderInfoService->create([
         											'order_sn' => $order_sn,
