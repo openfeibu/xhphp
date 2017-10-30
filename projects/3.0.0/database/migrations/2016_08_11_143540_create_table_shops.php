@@ -94,9 +94,11 @@ class CreateTableShops extends Migration
 			$table->string('pay_name',60)->comment('支付名称');
 			$table->timestamp('pay_time')->comment('支付时间');
 			$table->decimal('goods_amount',10,2)->comment('商品总金额');
-			$table->decimal('shipping_fee',10,2)->comment('买家出配送费用');
+			$table->decimal('shipping_fee',10,2)->comment('买家出总配送费用');
             $table->decimal('seller_shipping_fee',10,2)->comment('卖家出配送费用');
-			$table->decimal('task_fee',10,0)->comment('任务费');
+            $table->decimal('shipping_adjust_fee',10,2)->comment('配送费调价');
+            $table->decimal('raise_fee',10,2)->comment('运费加价');
+			//$table->decimal('task_fee',10,0)->comment('任务费');
             $table->char('pick_code', 10)->comment('取货码');
 			$table->decimal('insure_fee',10,2)->comment('保价费用');
             $table->decimal('total_fee',10,2)->comment('应付费用');
