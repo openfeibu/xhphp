@@ -124,7 +124,7 @@ class OrderInfoController extends Controller
 
 		$shipping_adjust_fee = $this->helpService->getShippingAdjustFee();
 		//提交订单界面的配送费跟提交订单入库的配送费不一样，切记
-		$shipping_fee += $shipping_adjust_fee;
+		$total_fee += $shipping_adjust_fee;
 		$total_fee += $shipping_fee;
 
 		$adjust_content = $this->helpService->getShippingAdjustContent();
