@@ -31,7 +31,7 @@ class CartService
 	}
 	public function addToCart($goods,$uid)
 	{
-		$goods->goods_price = handleGoodsPrice($goods->goods_price)  ;
+		//$goods->goods_price = handleGoodsPrice($goods->goods_price)  ;
 		return $this->cartRepository->addToCart($goods,$uid);
 	}
 	public function existCartGoods ($goods,$uid)
@@ -57,6 +57,12 @@ class CartService
 				$this->removeCartGoods([$cart->cart_id],$uid);
 				return $this->getShopCarts($shop_id,$uid);
 			}
+			$shop = $this->shopService->getShop(['shop_id' => $shop_id]);
+			//饭堂加价
+			if($shop->shop_type == 3)
+			{
+				$cart->goods_price = handleGoodsPrice($cart->goods_price);
+			}
 			$goods_total = $cart->goods_price * $cart->goods_number;
 			$goods_weight = $goods->weight * $cart->goods_number;
 			$cart->goods_thumb = $goods->goods_thumb;
@@ -79,6 +85,13 @@ class CartService
 		foreach( $carts as $k => $cart )
 		{
 			$goods = $this->goodsService->existGoods($cart->goods_id);
+			$shop = $this->shopService->getShop(['shop_id' => $shop_id]);
+			//饭堂加价
+			$original_goods_total = $cart->goods_price * $cart->goods_number;
+			if($shop->shop_type == 3)
+			{
+				$cart->goods_price = handleGoodsPrice($cart->goods_price);
+			}
 			$goods_total = $cart->goods_price * $cart->goods_number;
 			if($goods->goods_number <= 0){
 				$str.= '商品 '.$goods->goods_name.' 已售罄；';
@@ -88,6 +101,7 @@ class CartService
 			$cart->goods_thumb = $goods->goods_thumb;
 			$cart->goods_img = $goods->goods_img;
 			$cart->goods_total = $goods_total;
+			$cart->original_goods_total = $original_goods_total;
 			$shop_total += $goods_total;
 			$goods_weight = $goods->weight * $cart->goods_number;
 			$weight += $goods_weight;
