@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Input;
 use App\Feedback;
 use App\Http\Controllers\Controller;
 use App\Services\UserService;
 use App\Services\HelpService;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -13,13 +15,16 @@ class FeedbackController extends Controller
 	protected $help;
     protected $userRepository;
 
-	function __construct(HelpService $help,UserService $userService)
+	function __construct(HelpService $help,
+						 UserService $userService,
+						 ImageService $imageService)
     {
 	    parent::__construct();
 	    $this->middleware('auth', ['except' => 'feedback']);
 
         $this->help = $help;
         $this->userService = $userService;
+		$this->imageService = $imageService;
     }
 
     public function feedback(Request $request){
@@ -32,6 +37,8 @@ class FeedbackController extends Controller
 
         $user = $this->userService->getUserByToken();
 
+		$file_url = $this->imageService->uploadFile(Input::all(), 'feedback',0);
+
         $feedback = new Feedback;
         $feedback->uid = isset($user->uid) ? $user->uid : 0;
         $feedback->content = $request->content;
@@ -40,4 +47,14 @@ class FeedbackController extends Controller
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
     }
+	public function uploadFile()
+	{
+		$file_url = $this->imageService->uploadFile(Input::all(), 'feedback',0);
+
+		return [
+            'code' => 200,
+            'detail' => '请求成功',
+            'url' => $file_url,
+        ];
+	}
 }

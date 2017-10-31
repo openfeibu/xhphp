@@ -75,7 +75,28 @@ class ImageService
 		Session::forget('captcha');
 		Session::forget('login.failure');
 	}
+	public function uploadFile($file,$usage,$id = 0)
+	{
+		$file = $file['uploadfile'];
+		$directory = $id ? public_path('uploads') . DIRECTORY_SEPARATOR . $usage. DIRECTORY_SEPARATOR .$id : public_path('uploads') . DIRECTORY_SEPARATOR . $usage;
+		$url = $id ?  '/uploads/'.$usage.'/'.$id : '/uploads/'.$usage;
+		if (!File::isDirectory($directory)) {
+            File::makeDirectory($directory, 0755, true);
+		}
+		if ($file->isValid()) {
+			// 获取文件相关信息
+			$originalName = $file->getClientOriginalName(); // 文件原名
+			$extension = $file->getClientOriginalExtension();     // 扩展名
+		   	$realPath = $file->getRealPath();   //临时文件的绝对路径
+		   	$type = $file->getClientMimeType();     // image/jpeg
+		   	// 上传文件
+			$filename = date('Y-m-d-H-i-s') . '-' . uniqid() . '.' . $extension;
+		   	// 使用我们新建的uploads本地存储空间（目录）
+			Storage::put($url.'/'.$filename, file_get_contents($file->getRealPath()));
+	   }
 
+	   return $this->request->getSchemeAndHttpHost() . $this->request->getBasePath() . $url.'/'.$filename;
+	}
 	/**
 	 * 上传图片
 	 * 注意：用户必须是已登录状态

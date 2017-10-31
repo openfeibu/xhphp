@@ -15,6 +15,8 @@ Route::group(['middleware' => 'web'], function () {
 Route::get('/','HomeController@index')->name('home_index');
 Route::get('paper/announcement','PaperController@getAnnouncement')->name('home_getAnnouncement');
 
+Route::post('uploadFile','uploadController@uploadFile');
+
 Route::post('user/register', 'UserController@register')->name('user_register');
 Route::post('user/isMobileExist', 'UserController@isMobileExist')->name('user_isMobileExist');
 Route::post('user/login', 'UserController@login')->name('user_login');
@@ -208,6 +210,7 @@ Route::post('/accusation', 'ReportController@report')->name('other_accusation');
 Route::post('/reportCrash', 'ReportController@reportCrash')->name('other_reportCrash');
 
 Route::post('/feedback', 'FeedbackController@feedback')->name('other_feedback');
+Route::post('/feedback/uploadFile', 'FeedbackController@uploadFile')->name('other_feedbackuploadFile');
 
 Route::post('telecom/queryRealName','TelecomController@queryRealName')->name('telecom_queryRealName');
 Route::get('telecom/telecomPackage','TelecomController@telecomPackage')->name('telecom_telecomPackage');
