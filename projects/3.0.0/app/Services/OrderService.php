@@ -488,6 +488,7 @@ class OrderService
 			$dates[$k]['number'] = $this->orderRepository->getOrderBonusCount($uid,$v);
 			$bonus = $this->orderRepository->getOrderBonus($dates[$k]['number']);
 			$dates[$k]['bonus'] = $bonus;
+			$dates[$k]['is_today'] = $today == $v ? 1 : 0; 
 		}
 		return $dates;
 	}
