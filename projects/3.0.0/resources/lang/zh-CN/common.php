@@ -39,6 +39,7 @@ return [
 		'TelecomOrder' => '电信套餐',
 		'FreeOrder' => '首单返现',
 		'System' => '系统',
+		'OrderBonus' => '任务奖励金',
 	],
 	// user   wallet 字段
 	'wallet_type' => [
