@@ -11,6 +11,7 @@ use DB;
 use App\Order;
 use App\OrderInfo;
 use App\TradeAccount;
+use App\UserOrderBonus;
 use App\Http\Requests;
 use App\Services\HelpService;
 use App\Services\UserService;
@@ -269,5 +270,44 @@ class ScheduleController extends Controller
 			$this->messageService->SystemMessage2SingleOne($order_info->uid, '您的订单已经发货超过48小时已自动收货，如未收到货物请联系管理员');
 			$ret = $this->pushService->PushUserTokenDevice($data['data']['title'], $data['data']['content'], $order_info->uid,2,$data);
 		}
+	}
+    public function finalUserOrderBonus()
+	{
+        $user_order_bonuses = UserOrderBonus::select(DB::raw("SUM(bonus) as bonus,uid"))->where('status',0)->groupBy('uid') ->get();
+        foreach($user_order_bonuses as $key => $user_order_bonus)
+        {
+            $user = $this->userService->getUserByUserID($user_order_bonus->uid);
+            $wallet = $user->wallet + $user_order_bonus->bonus;
+            $this->walletService->updateWallet($user->uid,$wallet);
+            $order_sn = $this->helpService->buildOrderSn('BONUS');
+            $walletData = array(
+                'uid' => $user->uid,
+                'out_trade_no' => $order_sn,
+                'wallet' => $wallet ,
+                'fee'	=> $user_order_bonus->bonus,
+                'service_fee' => 0,
+                'pay_id' => 5,
+                'wallet_type' => 1,
+                'trade_type' => 'OrderBonus',
+                'description' => '任务奖励金',
+            );
+            $this->walletService->store($walletData);
+            $trade_no = 'wallet'.$this->helpService->buildOrderSn('XH');
+            $trade = array(
+                'uid' => $user->uid,
+                'out_trade_no' => $order_sn,
+                'trade_no' => $trade_no,
+                'fee' => $user_order_bonus->bonus,
+                'service_fee' => 0,
+                'pay_id' => 5,
+                'wallet_type' => 1,
+                'trade_status' => 'income',
+                'from' => 'order_bonus',
+                'trade_type' => 'OrderBonus',
+                'description' => '任务奖励金' ,
+            );
+            $this->tradeAccountService->addThradeAccount($trade);
+        }
+        return true;
 	}
 }
