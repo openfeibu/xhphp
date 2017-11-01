@@ -77,6 +77,7 @@ Route::get('order/autoFinishWork', 'ScheduleController@autoFinishWork');
 Route::get('order/remindOrder', 'OrderController@remindOrder');
 Route::get('order/getOrderBonus', 'OrderController@getOrderBonus');
 Route::get('order/getOrderBonusSetting', 'OrderController@getOrderBonusSetting');
+Route::get('order/finalUserOrderBonus', 'ScheduleController@finalUserOrderBonus');
 
 Route::post('alipay/alipayAppNotify','AlipayController@alipayAppNotify');
 Route::post('alipay/alipayAppReturn','AlipayController@alipayAppReturn');
