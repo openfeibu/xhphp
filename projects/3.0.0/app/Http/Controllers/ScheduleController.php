@@ -276,6 +276,7 @@ class ScheduleController extends Controller
         $user_order_bonuses = UserOrderBonus::select(DB::raw("SUM(bonus) as bonus,uid"))->where('status',0)->groupBy('uid') ->get();
         foreach($user_order_bonuses as $key => $user_order_bonus)
         {
+            UserOrderBonus::where('status',0)->where('uid',$user_order_bonus->uid)->update(['status' => 1]);
             $user = $this->userService->getUserByUserID($user_order_bonus->uid);
             $wallet = $user->wallet + $user_order_bonus->bonus;
             $this->walletService->updateWallet($user->uid,$wallet);
@@ -308,6 +309,6 @@ class ScheduleController extends Controller
             );
             $this->tradeAccountService->addThradeAccount($trade);
         }
-        return true;
+        return "true";
 	}
 }
