@@ -156,4 +156,12 @@ return [
 		'hot_goods' => '热销商品',
 		'featured' => '精品推荐',
 	],
+	'bonus_status' => [
+		'0' => '未结算',
+		'1' => '已结算',
+	],
+	'payer' => [
+		'buyer' => '买家',
+		'seller' => '卖家',
+	],
 ];
