@@ -25,6 +25,9 @@ class OrderInfoRepository
 	        config(['database.default' => 'write']);
 			$order_info = OrderInfo::create($order_info);
 			$goodses = 	Cart::select(DB::raw("$order_info->order_id as order_id ,goods_name,goods_price,goods_sn,goods_id,goods_number,goods_desc"))->where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->get()->toArray();
+			foreach ($goodses as $key => $goods) {
+				$goodses[$key]['goods_price'] = handleGoodsPrice($goods['goods_price']);
+			}
         	OrderGoods::insert($goodses);
         	//Cart::where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->delete();
         	return $order_info;
@@ -81,7 +84,7 @@ class OrderInfoRepository
 	}
 	public function getOrderInfo($order_id)
 	{
-		return OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.order_id,order_info.order_sn,order_info.pay_status,order_info.order_status,order_info.shipping_status,order_info.goods_amount,order_info.shipping_fee,order_info.total_fee,order_info.consignee,order_info.address,order_info.mobile,order_info.postscript,order_info.pay_time,order_info.user_coupon_id,order_info.created_at'))
+		return OrderInfo::select(DB::raw('shop.shop_id,shop.shop_name,shop.shop_img,order_info.order_id,order_info.order_sn,order_info.pay_status,order_info.order_status,order_info.shipping_status,order_info.goods_amount,order_info.shipping_fee,order_info.total_fee,order_info.consignee,order_info.address,order_info.mobile,order_info.postscript,order_info.pay_time,order_info.user_coupon_id,order_info.shipping_adjust_fee,order_info.raise_fee,order_info.created_at'))
 							->leftJoin('shop', 'shop.shop_id', '=', 'order_info.shop_id')
 							->where('order_info.order_id',$order_id)
                           	->first();

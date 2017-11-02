@@ -390,7 +390,7 @@ class OrderInfoService
 			$this->updateOrderInfo($order_info->order_sn,['pick_code' => $pick_code]);
 			$type = 'business';
 		}else if($shop->shop_type == 3){
-			$goods_fee = $order_info->goods_amount;
+			$goods_fee = $order_info->original_goods_amount;
 			$type = 'canteen';
 		}
 

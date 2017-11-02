@@ -3,10 +3,11 @@
 namespace App\Repositories;
 
 use DB;
-use App\Order;
-use App\OrderBonusSetting;
 use Carbon\Carbon;
+use App\Order;
 use App\OrderHistory;
+use App\UserOrderBonus;
+use App\OrderBonusSetting;
 use Illuminate\Http\Request;
 
 class OrderRepository
@@ -506,5 +507,17 @@ class OrderRepository
 	{
 		$bonus = OrderBonusSetting::where('number','<=',$number)->orderBy('number','desc')->value('bonus');
 		return $bonus ? $bonus : 0;
+	}
+	public function getUserOrderBonus($where)
+	{
+		return UserOrderBonus::where($where)->first();
+	}
+	public function createUserOrderBonus($data)
+	{
+		return UserOrderBonus::create($data);
+	}
+	public function updateUserOrderBonus($where,$update)
+	{
+		return UserOrderBonus::where($where)->update($update);
 	}
 }

@@ -484,12 +484,33 @@ class OrderService
 		foreach($dates as $k => $v)
 		{
 			$dates[$k] = [];
-			$dates[$k]['date'] = '周'.$weekarray[$k].' '.date('m-d',strtotime($v));;
-			$dates[$k]['number'] = $this->orderRepository->getOrderBonusCount($uid,$v);
-			$bonus = $this->orderRepository->getOrderBonus($dates[$k]['number']);
-			$dates[$k]['bonus'] = $bonus;
-			$dates[$k]['is_today'] = $today == $v ? 1 : 0; 
+			$dates[$k]['date'] = '周'.$weekarray[$k].' '.date('m-d',strtotime($v));
+			$user_bonus = $this->orderRepository->getUserOrderBonus(['date' => $v,'uid' => $uid ]);
+			$dates[$k]['number'] = $user_bonus ? $user_bonus->number : 0;
+			$dates[$k]['bonus'] = $user_bonus ? $user_bonus->bonus : 0;
+			$dates[$k]['is_today'] = $today == $v ? 1 : 0;
 		}
 		return $dates;
 	}
+	public function updateUserOrderBonus($user)
+	{
+		$today = date("Y-m-d");
+		$number = $this->orderRepository->getOrderBonusCount($user->uid,$today);
+		$bonus = $this->orderRepository->getOrderBonus($number);
+		$today_bonus = $this->orderRepository->getUserOrderBonus(['date' => $today,'uid' => $user->uid ]);
+		if($today_bonus){
+			$today_bonus = $this->orderRepository->updateUserOrderBonus(['date' => $today,'uid' => $user->uid ],['number' => $number,'bonus' => $bonus]);
+		}else{
+			$data = [
+				'uid' => $user->uid,
+				'number' => $number,
+				'bonus' => $bonus,
+				'date' => $today,
+				'status' => 0,
+			];
+			$this->orderRepository->createUserOrderBonus($data);
+		}
+		return true;
+	}
+
 }

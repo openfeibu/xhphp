@@ -80,7 +80,7 @@ class CartService
 	public function checkGoodsNumber($shop_id,$uid)
 	{
 		$carts = $this->cartRepository->getShopCarts($shop_id,$uid);
-		$shop_total = $weight = $goods_count = 0;
+		$shop_total = $weight = $goods_count = $original_shop_total = 0;
 		$str = "";
 		foreach( $carts as $k => $cart )
 		{
@@ -103,6 +103,7 @@ class CartService
 			$cart->goods_total = $goods_total;
 			$cart->original_goods_total = $original_goods_total;
 			$shop_total += $goods_total;
+			$original_shop_total += $original_goods_total;
 			$goods_weight = $goods->weight * $cart->goods_number;
 			$weight += $goods_weight;
 			$goods_count += $cart->goods_number;
@@ -114,6 +115,7 @@ class CartService
 			'carts' => $carts,
 			'weight' => $weight,
 			'shop_total' => $shop_total,
+			'original_shop_total' => $original_shop_total,
 			'goods_count' => $goods_count,
 		];
 	}
