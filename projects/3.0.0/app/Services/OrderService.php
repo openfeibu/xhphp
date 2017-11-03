@@ -99,6 +99,17 @@ class OrderService
 	{
 		$order = $this->orderRepository->getSingleOrderByToken($order_id);
 		$order['created_at_desc'] = friendlyDate($order['created_at']);
+		$is_user = false;
+		if(isset($this->request->token))
+		{
+			$user = $this->userRepository->getUserByToken($this->request->token);
+			if($user->uid == $order['courier_id'] || $user->uid == $order['owner_id'])
+			{
+				$is_user = true;
+			}
+		}
+
+		$order['description'] = $is_user ? $order['description'] : handleOrderDescription($order['description']);
 		return $this->hanle_order_info($order);
 	}
 	private function hanle_order_info($order)
