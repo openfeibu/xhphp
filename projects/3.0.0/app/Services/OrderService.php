@@ -62,6 +62,10 @@ class OrderService
 			}
 			$order->order_status = trans('common.task_status.'.$order->status);
 			$order->created_at_desc = friendlyDate($order['created_at']->format('Y-m-d H:i:s'));
+			if($order->type == 'personal')
+			{
+				$order->description = handleOrderDescription($order->description);
+			}
 		}
 		return $orders;
 	}

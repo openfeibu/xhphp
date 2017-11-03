@@ -140,8 +140,10 @@ class HelpService
 	*/
 	public function image_png_size_add($imgsrc,$imgdst){
 	  	list($width,$height,$type)=getimagesize($imgsrc);
-	  	$new_width = ($width>600?600:$width)*0.9;
-	  	$new_height =($height>600?600:$height)*0.9;
+		$ratio = $width>600 ? 600/$width : 1 ;
+	  	$new_width = $ratio * $width * 0.9;
+	  	$new_height =$ratio * $height * 0.9;
+
 	  	switch($type){
 	    	case 1:
 	      		$giftype=$this->check_gifcartoon($imgsrc);

@@ -438,6 +438,7 @@ if (!function_exists('handle_idcard')) {
 		return strlen($id_number) == 15 ? substr_replace($id_number,"******",6,6) : (strlen($id_number)==18 ? substr_replace($id_number,"******",8,6) : '');
 	}
 }
+//处理商品加价
 function handleGoodsPrice($goods_price = 0)
 {
 	$goods_raise_price_rate = get_setting_value('goods_raise_price_rate','value');
@@ -453,4 +454,11 @@ function handleGoodsPrice($goods_price = 0)
 function get_setting_value($name,$value)
 {
 	return DB::table('settings')->where('name',$name)->value($value);
+}
+//处理任务详情中的敏感字段
+function handleOrderDescription($description)
+{
+	$description = preg_replace('#(\d{3})\d{5}(\d{3})#', '${1}*****${2}', $description);
+	$description = preg_replace('#(\d{4,})#', '****', $description);
+	return $description;
 }
