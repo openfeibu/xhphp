@@ -40,7 +40,7 @@ class GoodsService
 		$goods_id = intval($goods_id);
 		return $this->goodsRepository->existGoods($goods_id);
 	}
-	public function getShopGoodses ($where,$uid = 0)
+	public function getShopGoodses ($where,$uid = 0,$shop)
 	{
 		$goodses = $this->goodsRepository->getShopGoodses($where);
 		foreach( $goodses as $key => $goods )
@@ -51,7 +51,10 @@ class GoodsService
 			}else{
 				$goods->cart_goods_number = 0;
 			}
-			$goods->goods_price = handleGoodsPrice($goods->goods_price);
+			if($shop->shop_type == 3)
+			{
+				$goods->goods_price = handleGoodsPrice($goods->goods_price);
+			}
 		}
 		return $goodses;
 	}

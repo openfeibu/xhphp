@@ -257,7 +257,7 @@ class GoodsController extends Controller
 		    $cat_id = 0;
 	    }
 	    $uid = $user ? $user->uid : 0;
-	    $shopGoodses = $cat_id ? $this->goodsService->getShopGoodses(['goods.shop_id' =>$shop_id ,'goods.cat_id' => $cat_id],$uid) : [];
+	    $shopGoodses = $cat_id ? $this->goodsService->getShopGoodses(['goods.shop_id' =>$shop_id ,'goods.cat_id' => $cat_id],$uid,$shop) : [];
         return [
 			'code' => 200 ,
             'cat_id' => $cat_id,
