@@ -283,7 +283,7 @@ class HelpService
 	{
 		$shipping_fee = 0;
 
-		$shipping_config = DB::table('shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->first();
+		$shipping_config = DB::table('shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->orderBy('cid','asc')->first();
 		if($shipping_config)
 		{
 			if($shipping_config->payer == 'buyer')
@@ -303,7 +303,7 @@ class HelpService
 	{
 		$shipping_fee = 0;
 
-		$shipping_config = DB::table('shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->first();
+		$shipping_config = DB::table('shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->orderBy('cid','asc')->first();
 		if($shipping_config)
 		{
 			if($shipping_config->payer == 'seller')
@@ -320,7 +320,7 @@ class HelpService
 	{
 		$shipping_fee = 0;
 
-		$shipping_config = DB::table('canteen_shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->first();
+		$shipping_config = DB::table('canteen_shipping_config')->where('min','<=',$fee)->where('max','>=',$fee)->orderBy('cid','asc')->first();
 		if($shipping_config)
 		{
 			if($shipping_config->payer == $type)
