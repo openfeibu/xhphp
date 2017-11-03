@@ -23,7 +23,7 @@ class PaperController extends Controller
 
             'id' => 'required',
         ];
-        $help->validateParameter($rule);
+        $this->help->validateParameter($rule);
         $paper = Paper::where('id',$request->id)->first();
         return [
             'code' => 200,
