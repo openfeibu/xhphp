@@ -273,10 +273,11 @@ class OrderInfoController extends Controller
 													'user_coupon_id' => $user_coupon_id,
 													'description' => $description,
 													'raise_fee' => $raise_fee,
-													'shipping_adjust_fee' => $shipping_adjust_fee
+													'shipping_adjust_fee' => $shipping_adjust_fee,
+													'original_goods_amount' => $carts['original_shop_total']
 													//'is_show' => $is_show,
         										]);
-		$order_info->original_goods_amount = $carts['original_shop_total'];
+	//	$order_info->original_goods_amount = $carts['original_shop_total'];
 		$this->couponService->updateUserCoupon(['uid' => $this->user->uid,'user_coupon_id' => $user_coupon_id],['status' => 'used']);
         $pay_platform = isset($request->platform) ? $request->platform : 'wap';
         $data = [
