@@ -343,6 +343,7 @@ class HelpService
 		{
 			$adjust_content .= $adjust->name.'加'.$adjust->price.'元;';
 		}
+		$adjust_content .= "（天气恶劣等情况会增加额外配送费，自己也可以增加配送费给接单人）";
 		//$adjust_content = substr($adjust_content,0,strlen($adjust_content)-1);
 		return $adjust_content;
 	}
