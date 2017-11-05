@@ -103,7 +103,7 @@ class OrderService
 		if(isset($this->request->token))
 		{
 			$user = $this->userRepository->getUserByToken($this->request->token);
-			if($user->uid == $order['courier_id'] || $user->uid == $order['owner_id'])
+			if($user && ($user->uid == $order['courier_id'] || $user->uid == $order['owner_id']))
 			{
 				$is_user = true;
 			}

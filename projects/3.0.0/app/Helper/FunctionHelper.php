@@ -27,6 +27,7 @@ if (!function_exists('round_route')) {
 			'shop_getShopList',
 			'shop_getShopGoodses',
 			'order_getOrderDetail',
+			'order_getOrderByToken',
 			'association_getAssociations',
 			'drivingSchool_getDrivingSchool',
 			'index',
