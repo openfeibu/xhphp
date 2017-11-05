@@ -421,40 +421,59 @@ class OrderInfoController extends Controller
 		$shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);
 		if($shop->shop_type == 3)
 		{
-			$user = $this->userService->getUserByUserID($order_info->uid);
+			if($order_info->pay_id == 3){
+				$user = $this->userService->getUserByUserID($order_info->uid);
 
-			$fee = 	$user->wallet + $order_info->total_fee;
+				$fee = 	$user->wallet + $order_info->total_fee;
 
-	        $this->walletService->updateWallet($user->uid,$fee);
+		        $this->walletService->updateWallet($user->uid,$fee);
 
-	       	$walletData = array(
-				'uid' => $user->uid,
-				'wallet' => $fee,
-				'fee'	=> $order_info->total_fee,
-				'service_fee' => 0,
-				'out_trade_no' => $order_info->order_sn,
-				'pay_id' => 3,
-				'wallet_type' => 1,
-				'trade_type' => 'CancelOrder',
-				'description' => '取消订单',
-	        );
-	        $this->walletService->store($walletData);
-	        $tradeData = array(
-				'wallet_type' => 1,
-				'trade_type' => 'CancelOrder',
-				'description' => '取消订单',
-				'trade_status' => 'income',
-			);
+		       	$walletData = array(
+					'uid' => $user->uid,
+					'wallet' => $fee,
+					'fee'	=> $order_info->total_fee,
+					'service_fee' => 0,
+					'out_trade_no' => $order_info->order_sn,
+					'pay_id' => 3,
+					'wallet_type' => 1,
+					'trade_type' => 'CancelOrder',
+					'description' => '取消订单',
+		        );
+		        $this->walletService->store($walletData);
+		        $tradeData = array(
+					'wallet_type' => 1,
+					'trade_type' => 'CancelOrder',
+					'description' => '取消订单',
+					'trade_status' => 'income',
+				);
 
-			$update = $this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
+				$update = $this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 4,'shipping_status' => 3,'cancelled_time' => dtime()]);
 
-			if($update)
-			{
-		        $this->orderService->delete(['order_id' => $order_info->order_id]);
+				if($update)
+				{
+			        $this->orderService->delete(['order_id' => $order_info->order_id]);
+					$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
+					$this->orderInfoService->inGoodsNumber($order_info->order_id);
+					$this->couponService->updateUserCoupon(['uid' => $order_info->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
+					throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额已返回校汇钱包');
+				}
+			}else{
+				$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 3,'shipping_status' => 3,'cancelling_time' => dtime()]);
+				$tradeData = array(
+					'wallet_type' => 1,
+					'trade_type' => 'CancelOrder',
+					'trade_status' => 'refunding',
+					'description' => '取消订单',
+				);
 				$this->tradeAccountService->updateTradeAccount($order_info->order_sn,$tradeData);
+				//取消任务
+				$this->orderService->delete(['order_id' => $order_info->order_id]);
 				$this->orderInfoService->inGoodsNumber($order_info->order_id);
 				$this->couponService->updateUserCoupon(['uid' => $order_info->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
-				throw new \App\Exceptions\Custom\RequestSuccessException('操作成功，退款金额已返回校汇钱包');
+				return [
+					'code' => 200,
+					'detail' => '取消成功，请等待管理员操作',
+				];
 			}
 		}else{
 			$this->orderInfoService->updateOrderInfoById($order_info->order_id,['order_status' => 3,'cancelling_time' => dtime()]);
