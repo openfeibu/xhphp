@@ -472,7 +472,7 @@ class OrderInfoController extends Controller
 				$this->couponService->updateUserCoupon(['uid' => $order_info->uid,'user_coupon_id' => $order_info->user_coupon_id],['status' => 'unused']);
 				return [
 					'code' => 200,
-					'detail' => '取消成功，请等待管理员操作',
+					'detail' => '取消成功，请等待管理员操作。退款金额将原路退回。',
 				];
 			}
 		}else{
