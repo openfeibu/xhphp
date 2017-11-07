@@ -67,10 +67,10 @@ class GoodsController extends Controller
 
     	$this->helpService->validateData(trim($request->goods_name),"商品名称");
 
-		if($this->shop->shop_type == 2 && !isset($request->weight) && !$request->weight)
-		{
-			 throw new \App\Exceptions\Custom\OutputServerMessageException('重量不能为空');
-		}
+		// if($this->shop->shop_type == 2 && !isset($request->weight) && !$request->weight)
+		// {
+		// 	 throw new \App\Exceptions\Custom\OutputServerMessageException('重量不能为空');
+		// }
     	switch ($this->shop->shop_status)
     	{
     		case 0:
