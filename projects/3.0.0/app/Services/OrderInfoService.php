@@ -275,6 +275,7 @@ class OrderInfoService
 
 			//应得款
 			$receivable = get_receivable($shop->shop_type,$order_info);
+			//var_dump($receivable);exit;
 			//服务费
 			$service_fee = $this->helpService->shopServiceFee($receivable,$shop->service_rate) ;
 

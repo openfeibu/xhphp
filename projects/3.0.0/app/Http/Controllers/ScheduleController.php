@@ -221,7 +221,7 @@ class ScheduleController extends Controller
 	private function shipped($shop_type,$hour = '48')
 	{
 
-		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid,order_info.total_fee,order_info.order_sn,shop.shop_id,shop.uid as shop_uid,shop.service_rate,shop.shop_type'))
+		$order_infos = OrderInfo::select(DB::raw('order_info.order_id,order_info.uid,order_info.seller_shipping_fee,order_info.shipping_fee,order_info.total_fee,order_info.order_sn,shop.shop_id,shop.uid as shop_uid,shop.service_rate,shop.shop_type'))
 								->Join('shop','shop.shop_id','=','order_info.shop_id')
 								->Join('user','user.uid','=','shop.uid')
                                 ->where('shop.shop_type',$shop_type)
