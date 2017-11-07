@@ -59,7 +59,7 @@ class GoodsController extends Controller
 	        'goods_img'    	=> 'required|string',
 	        'goods_thumb'   => 'required|string',
 	        'goods_price' 	=> 'required|numeric|min:0.01',
-	      //  'goods_desc' 	=> 'sometimes|string|max:255',
+	        'goods_desc' 	=> 'sometimes|string|max:255',
 	        'goods_number' 	=> 'required|integer|min:0',
 			'is_on_sale'    => 'required|in:0,1',
 	    ];
@@ -134,16 +134,16 @@ class GoodsController extends Controller
 	        'goods_img'    	=> 'sometimes|required|string',
 	        'goods_thumb'   => 'sometimes|required|string',
 	        'goods_price' 	=> 'sometimes|required|numeric|min:0.01',
-	        'goods_desc' 	=> 'sometimes|required|string|max:255',
+	        'goods_desc' 	=> 'sometimes|string|max:255',
 	        'goods_number' 	=> 'sometimes|required|integer|min:0',
 	        'is_on_sale'    => 'sometimes|required|integer|in:0,1',
 	    ];
 	    $this->helpService->validateParameter($rules);
 
-		if($this->shop->shop_type == 2 && !isset($request->weight) && !$request->weight)
-		{
-			 throw new \App\Exceptions\Custom\OutputServerMessageException('重量不能为空');
-		}
+		// if($this->shop->shop_type == 2 && !isset($request->weight) && !$request->weight)
+		// {
+		// 	 throw new \App\Exceptions\Custom\OutputServerMessageException('重量不能为空');
+		// }
 
 	    $goods =  $this->goodsService->isExistsGoods(['goods_id' => intval($request->goods_id),'shop_id' => $this->shop->shop_id]);
 
