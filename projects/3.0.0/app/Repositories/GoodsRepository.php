@@ -26,11 +26,11 @@ class GoodsRepository
 		$goods->goods_name = trim($this->request->goods_name);
 		$goods->goods_img = $this->request->goods_img;
 		$goods->goods_thumb = $this->request->goods_thumb;
-		$goods->goods_desc = trim($this->request->goods_desc);
+		$goods->goods_desc = isset($this->request->goods_desc) ? trim($this->request->goods_desc) : '';
 		$goods->goods_number = $this->request->goods_number;
 		$goods->goods_price = $this->request->goods_price;
 		$goods->is_on_sale = $this->request->is_on_sale;
-		$goods->weight = $this->request->weight;
+		$goods->weight = isset($this->request->weight) ? $this->request->weight : 0;
 		$goods->created_at = date('Y-m-d H:i:s');
 		$goods->save();
 		return $goods;

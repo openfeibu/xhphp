@@ -59,7 +59,7 @@ class GoodsController extends Controller
 	        'goods_img'    	=> 'required|string',
 	        'goods_thumb'   => 'required|string',
 	        'goods_price' 	=> 'required|numeric|min:0.01',
-	        'goods_desc' 	=> 'required|string|max:255',
+	        'goods_desc' 	=> 'sometimes|string|max:255',
 	        'goods_number' 	=> 'required|integer|min:0',
 			'is_on_sale'    => 'required|in:0,1',
 	    ];
