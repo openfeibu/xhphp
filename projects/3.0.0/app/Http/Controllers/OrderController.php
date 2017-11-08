@@ -254,54 +254,54 @@ class OrderController extends Controller
         //检验请求参数
         $fp = fopen("lock.txt", "w+");
 		if (flock($fp, LOCK_NB | LOCK_EX)) {
-        $rule = [
-			'token' => 'required',
-            'order_id' => 'required|integer',
-        ];
-        $this->helpService->validateParameter($rule);
+            $rule = [
+    			'token' => 'required',
+                'order_id' => 'required|integer',
+            ];
+            $this->helpService->validateParameter($rule);
 
-        $user = $this->userService->getUser();
-        //检验是否已实名
-        $this->userService->isRealnameAuth($user);
+            $user = $this->userService->getUser();
+            //检验是否已实名
+            $this->userService->isRealnameAuth($user);
 
-        //次数限制
-        //$this->orderService->checkScalping($request->order_id);
+            //次数限制
+            //$this->orderService->checkScalping($request->order_id);
 
-        //接受任务
-        $this->orderService->claimOrder(['order_id' => $request->order_id]);
+            //接受任务
+            $this->orderService->claimOrder(['order_id' => $request->order_id]);
 
-        $order = $this->orderService->getSingleOrderAllInfo($request->order_id);
+            $order = $this->orderService->getSingleOrderAllInfo($request->order_id);
 
-        //发送纸条给发单者
-        $this->messageService->SystemMessage2SingleOne($order->owner_id, trans('task.task_be_accepted'));
 
-        //推送给发单者
 
-		$data = [
-			'refresh' => 1,
-			'target' => '',
-			'open' => 'task',
-			'data' => [
-				'id' => $request->order_id,
-				'title' => '校汇任务',
-				'content' => trans('task.task_be_accepted'),
-			],
-		];
-        $this->pushService->PushUserTokenDevice('校汇任务', trans('task.task_be_accepted'), $order->owner_id,2,$data);
-
-        if($order->order_id)
-        {
-            if($order->type == 'business')
+            if($order->order_id)
             {
-                $order_info = $this->orderInfoService->getOrderInfoCustom(['order_id' => $order->order_id],['pick_code']);
-                $rst = $this->smsService->sendSMS($order->courier_mobile_no,$type = 'pick_code',$data = ['sms_template_code' => config('sms.pick_code'),'code' => $order_info->pick_code,'uid' => $order->courier_id]);
-            }else if($order->type == 'canteen')
-            {
-                $this->orderInfoService->updateOrderInfoById($order->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
+                if($order->type == 'business')
+                {
+                    $order_info = $this->orderInfoService->getOrderInfoCustom(['order_id' => $order->order_id],['pick_code']);
+                    $rst = $this->smsService->sendSMS($order->courier_mobile_no,$type = 'pick_code',$data = ['sms_template_code' => config('sms.pick_code'),'code' => $order_info->pick_code,'uid' => $order->courier_id]);
+                }else if($order->type == 'canteen')
+                {
+                    $this->orderInfoService->updateOrderInfoById($order->order_id,['shipping_status' => 1,'shipping_time' => dtime()]);
+                }
             }
-        }
+            //发送纸条给发单者
+            $this->messageService->SystemMessage2SingleOne($order->owner_id, trans('task.task_be_accepted'));
 
-        throw new \App\Exceptions\Custom\RequestSuccessException("恭喜，接单成功！");
+            //推送给发单者
+
+    		$data = [
+    			'refresh' => 1,
+    			'target' => '',
+    			'open' => 'task',
+    			'data' => [
+    				'id' => $request->order_id,
+    				'title' => '校汇任务',
+    				'content' => trans('task.task_be_accepted'),
+    			],
+    		];
+            $this->pushService->PushUserTokenDevice('校汇任务', trans('task.task_be_accepted'), $order->owner_id,2,$data);
+            throw new \App\Exceptions\Custom\RequestSuccessException("恭喜，接单成功！");
         }
         else {
             throw new \App\Exceptions\Custom\OutputServerMessageException('接单失败，系统繁忙！');
