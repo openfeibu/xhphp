@@ -77,6 +77,10 @@ class ShopService
 			}
 	    }
 	    if($shop){
+			$time = strtotime(date('H:i:s',time()));
+			if($shop->shop_status == 1 && ($time < strtotime($shop->open_time) || $time > strtotime($shop->close_time))){
+				$shop->shop_status = 3;
+			}
 		    $shop->goods_count = $this->goodsRepository->getCount(['shop_id' =>$shop->shop_id,'is_on_sale' => 1]);
 	    }
 		return $shop;
