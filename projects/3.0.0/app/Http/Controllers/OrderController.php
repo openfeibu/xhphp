@@ -557,7 +557,12 @@ class OrderController extends Controller
         $this->helpService->validateParameter($rule);
 
 		$this->user = $this->userService->getUser();
-
+        if(!$this->user->pay_password){
+			return [
+				'code' => 3001,
+				'detail' => '未设置支付密码',
+			];
+		}
 		if (!password_verify($request->pay_password, $this->user->pay_password)) {
 		 	throw new \App\Exceptions\Custom\OutputServerMessageException('支付密码错误');
 		}
