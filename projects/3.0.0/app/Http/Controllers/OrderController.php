@@ -272,8 +272,6 @@ class OrderController extends Controller
 
             $order = $this->orderService->getSingleOrderAllInfo($request->order_id);
 
-
-
             if($order->order_id)
             {
                 if($order->type == 'business')
