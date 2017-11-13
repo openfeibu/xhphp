@@ -16,6 +16,8 @@ class WechatController extends Controller
     }
     public function getConfig(Request $request)
     {
+		$url = $request->url;
+
         $options = [
             'app_id' => config('wechat.app_id'),
 			'secret'             => config('wechat.secret'),
@@ -26,7 +28,7 @@ class WechatController extends Controller
         ];
         $app = new Application($options);
         $js = $app->js;
-		$wx_config = $js->config(array('onMenuShareQQ', 'onMenuShareWeibo'), true);
+		$wx_config = $js->config(array('onMenuShareQQ', 'onMenuShareWeibo'), true,false,true,$url);
 		//var_dump(json_decode($wx_config,true));
 		return [
 			'code' => 200,
