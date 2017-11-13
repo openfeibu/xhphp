@@ -264,10 +264,10 @@ class ScheduleController extends Controller
 				'data' => [
 					'url' => '',
 					'title' => '订单通知',
-					'content' => '您的订单已经发货超过48小时已自动收货，如未收到货物请联系管理员',
+					'content' => '您的订单已经发货超过'.$hour.'小时已自动收货，如未收到货物请联系管理员',
 				],
 			];
-			$this->messageService->SystemMessage2SingleOne($order_info->uid, '您的订单已经发货超过48小时已自动收货，如未收到货物请联系管理员');
+			$this->messageService->SystemMessage2SingleOne($order_info->uid, '您的订单已经发货超过'.$hour.'小时已自动收货，如未收到货物请联系管理员');
 			$ret = $this->pushService->PushUserTokenDevice($data['data']['title'], $data['data']['content'], $order_info->uid,2,$data);
 		}
 	}
