@@ -285,6 +285,8 @@ Route::get('education/getEnrollRecord','EducationController@getEnrollRecord');
 Route::get('education/getAdminEnrollRecords','EducationController@getAdminEnrollRecords');
 Route::get('education/getAdminEnrollRecord','EducationController@getAdminEnrollRecord');
 
+Route::get('wechat/getConfig', 'WechatController@getConfig');
+
 Route::get('business/goods/getGoodses','ShopAdmin\GoodsController@goodses');
 Route::post('business/goods/delete','ShopAdmin\GoodsController@delete');
 Route::post('business/goods/store','ShopAdmin\GoodsController@store');
