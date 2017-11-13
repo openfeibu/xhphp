@@ -567,7 +567,7 @@ class OrderController extends Controller
         $order = $this->orderService->getSingleOrder($request->order_id);
         //检验任务是否已完成
 		if($order->type == 'business' || $order->type == 'canteen'){
-            $order_info = $this->orderInfoService->isExistsOrderInfo(['order_id' => $order_id]);
+            $order_info = $this->orderInfoService->isExistsOrderInfo(['order_id' => $order->order_id]);
 	        if($order_info){
 		        $shop = $this->shopService->isExistsShop(['shop_id' => $order_info->shop_id]);
 		        $this->orderInfoService->confirm($order_info,$shop,$this->walletService,$this->tradeAccountService);
