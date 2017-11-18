@@ -341,6 +341,12 @@ class OrderInfoController extends Controller
         $is_exists = $this->orderInfoService->isExistsOrderInfo(['order_id' => $request->order_id],$columns = ['order_id']);
         $type = isset($request->type) ?  $request->type : 'buyer';
         $order_info = $this->orderInfoService->getOrderInfo($request->order_id,$type);
+
+		$goods_service_fee_content = trans('order_info.goods_service_fee_content');
+		$goods_service_fee_detail = trans('order_info.goods_service_fee_detail');
+
+		$order_info['goods_service_fee_content'] = $goods_service_fee_content;
+		$order_info['goods_service_fee_detail'] = $goods_service_fee_detail;
         return [
         	'code' => 200,
 			'order_info' => $order_info,
