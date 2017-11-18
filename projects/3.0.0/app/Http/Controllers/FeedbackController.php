@@ -37,12 +37,18 @@ class FeedbackController extends Controller
 
         $user = $this->userService->getUserByToken();
 
-		$file_url = $this->imageService->uploadFile(Input::all(), 'feedback',0);
+		$file_url = '';
+
+		if(isset($request->uploadfile))
+		{
+			$file_url = $this->imageService->uploadFile(Input::all(), 'feedback',0);
+		}
 
         $feedback = new Feedback;
         $feedback->uid = isset($user->uid) ? $user->uid : 0;
         $feedback->content = $request->content;
         $feedback->contact_way = isset($request->contact_way) ?  $request->contact_way  : '';
+		$feedback->file_url = $file_url;
         $feedback->save();
 
         throw new \App\Exceptions\Custom\RequestSuccessException();
