@@ -108,7 +108,7 @@ class OrderInfoController extends Controller
 		$carts = $this->cartService->getShopCarts($request->shop_id,$this->user->uid);
     	$shop = $this->shopService->getShop(['shop_id' => $request->shop_id],['min_goods_amount','shipping_fee','shop_name','shop_img','shop_type']);
 		$total_fee = $goods_amount = $carts['shop_total'];
-		$shipping_fee = 0;
+		$shipping_fee = $goods_service_fee = 0;
 		if($shop->shop_type == 1)
 		{
 			if($goods_amount < $shop->min_goods_amount){
@@ -122,12 +122,20 @@ class OrderInfoController extends Controller
 			$seller_shipping_fee = $this->helpService->getCanteenShippingFee($carts['weight'],$goods_amount,'seller');
 		}
 
+		$goods_service_fee_rate = get_setting_value('goods_service_fee_rate');
+		$goods_service_fee = get_goods_service_fee($goods_amount);
+		$goods_service_fee_content = trans('order_info.goods_service_fee_content');
+		$goods_service_fee_detail = trans('order_info.goods_service_fee_detail');
+
 		$shipping_adjust_fee = $this->helpService->getShippingAdjustFee();
 		//提交订单界面的配送费跟提交订单入库的配送费不一样，切记
 		$total_fee += $shipping_adjust_fee;
 		$total_fee += $shipping_fee;
+		$total_fee += $goods_service_fee;
 
 		$adjust_content = $this->helpService->getShippingAdjustContent();
+
+
 
 		$coupons = $this->couponService->getOrderInfoCoupons(['user_coupon.uid' => $this->user->uid],$goods_amount);
 
@@ -146,6 +154,10 @@ class OrderInfoController extends Controller
 			'coupons' => $coupons,
 			'adjust_content' => $adjust_content,
 			'adjust_fee' => $shipping_adjust_fee,
+			'goods_service_fee_rate' => $goods_service_fee_rate,
+			'goods_service_fee' => $goods_service_fee,
+			'goods_service_fee_content' => $goods_service_fee_content,
+			'goods_service_fee_detail' => $goods_service_fee_detail,
         ];
 	}
     /**
@@ -218,7 +230,7 @@ class OrderInfoController extends Controller
 			$total_fee = $coupon ? $total_fee - $coupon->price : $total_fee;
 		}
 
-		$shipping_fee = 0;
+		$shipping_fee = $goods_service_fee = 0;
 		if($shop->shop_type == 1)
 		{
 			//学生店铺
@@ -238,7 +250,13 @@ class OrderInfoController extends Controller
 		$shipping_fee += $request->raise_fee;
 		$raise_fee = $raise_fee - $shipping_adjust_fee;
 
+		$goods_service_fee_rate = get_setting_value('goods_service_fee_rate');
+		$goods_service_fee = get_goods_service_fee($goods_amount);
+		$goods_service_fee_content = trans('order_info.goods_service_fee_content');
+		$goods_service_fee_detail = trans('order_info.goods_service_fee_detail');
+
 		$total_fee += $shipping_fee;
+		$total_fee += $goods_service_fee;
 
 		$adjust_content = $this->helpService->getShippingAdjustContent();
 
@@ -274,7 +292,8 @@ class OrderInfoController extends Controller
 													'description' => $description,
 													'raise_fee' => $raise_fee,
 													'shipping_adjust_fee' => $shipping_adjust_fee,
-													'original_goods_amount' => $carts['original_shop_total']
+													'original_goods_amount' => $carts['original_shop_total'],
+													'goods_service_fee' => $goods_service_fee,
 													//'is_show' => $is_show,
         										]);
 	//	$order_info->original_goods_amount = $carts['original_shop_total'];

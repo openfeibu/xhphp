@@ -452,7 +452,7 @@ function handleGoodsPrice($goods_price = 0)
 	return number_format($goods_price,2);
 }
 //获取配置值
-function get_setting_value($name,$value)
+function get_setting_value($name,$value = 'value')
 {
 	return DB::table('settings')->where('name',$name)->value($value);
 }
@@ -462,4 +462,12 @@ function handleOrderDescription($description)
 	$description = preg_replace('#(\d{3})\d{5}(\d{3})#', '${1}*****${2}', $description);
 	$description = preg_replace('#(\d{4,})#', '****', $description);
 	return $description;
+}
+
+function get_goods_service_fee($fee)
+{
+	$goods_service_fee_rate = get_setting_value('goods_service_fee_rate');
+	$goods_service_fee = $fee * $goods_service_fee_rate;
+	$goods_service_fee = floor($goods_service_fee * 100 + 1)/100;
+	return $goods_service_fee;
 }
