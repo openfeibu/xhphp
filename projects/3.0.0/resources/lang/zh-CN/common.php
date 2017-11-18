@@ -164,4 +164,8 @@ return [
 		'buyer' => '买家',
 		'seller' => '卖家',
 	],
+	'shipping_adjust_status' => [
+		'0' => '关闭',
+		'1' => '开启',
+	],
 ];
