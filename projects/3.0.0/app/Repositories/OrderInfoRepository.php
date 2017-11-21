@@ -33,7 +33,7 @@ class OrderInfoRepository
 				}
 			}
         	OrderGoods::insert($goodses);
-        	Cart::where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->delete();
+        	//Cart::where('shop_id',$order_info->shop_id)->where('uid',$order_info->uid)->delete();
         	return $order_info;
         } catch (Exception $e) {
         	throw new \App\Exceptions\Custom\RequestFailedException('无法创建订单');

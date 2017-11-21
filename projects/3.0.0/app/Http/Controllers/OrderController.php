@@ -520,7 +520,10 @@ class OrderController extends Controller
             'status' => 'finish',
         ];
         $this->orderService->updateOrderStatus($param);
-        $this->orderService->updateUserOrderBonus($this->user);
+        if($order->type == 'canteen' || $order->type == 'business')
+        {
+            $this->orderService->updateUserOrderBonus($this->user);
+        }
         //纸条通知发单人
         $owner_id = $this->orderService->getSingleOrderAllInfo($request->order_id)->owner_id;
         $this->messageService->SystemMessage2SingleOne($owner_id, trans('task.task_be_finished'));
