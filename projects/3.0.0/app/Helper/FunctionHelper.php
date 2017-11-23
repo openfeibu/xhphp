@@ -460,7 +460,7 @@ function get_setting_value($name,$value = 'value')
 function handleOrderDescription($description)
 {
 	$description = preg_replace('#(\d{3})\d{5}(\d{3})#', '${1}*****${2}', $description);
-	$description = preg_replace('#(\d{4,})#', '****', $description);
+	$description = preg_replace('#(([a-zA-Z]|\d){4,})#', '****', $description);
 	return $description;
 }
 
