@@ -128,6 +128,7 @@ if(!function_exists('get_receivable'))
 			//食堂
 			$receivable = 0 - $order_info->seller_shipping_fee;
 		}
+		$receivable = $receivable - $order_info->goods_service_fee;
 		return $receivable;
 	}
 }
