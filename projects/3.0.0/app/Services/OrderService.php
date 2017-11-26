@@ -490,7 +490,7 @@ class OrderService
 	{
 		$today = date("Y-m-d");
 		$w = date('w',strtotime($today));
-		$week_start = date('Y-m-d',strtotime("$today -".($w ? $w : 6).' days'));
+		$week_start = date('Y-m-d',strtotime("$today - $w days"));
 		$dates = [];
 		for ($i=0; $i <= 6; $i++) {
 			$dates[$i] = date('Y-m-d',strtotime($week_start." +$i day"));
