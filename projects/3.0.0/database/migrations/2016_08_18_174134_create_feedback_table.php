@@ -17,6 +17,7 @@ class CreateFeedbackTable extends Migration
             $table->integer('uid')->comment('用户id');
             $table->string('content',200)->comment('意见反馈内容');
             $table->string('contact_way',50)->comment('用户联系方式');
+            $table->string('file_url',255)->comment('文件路径');
             $table->timestamps();
         });
     }
