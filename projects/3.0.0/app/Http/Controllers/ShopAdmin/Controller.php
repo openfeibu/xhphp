@@ -10,7 +10,7 @@ use Route;
 use App\User;
 use App\OrderInfo;
 use App\WalletAccount;
-use Redirect;
+use Redirect,Input;
 use App\Http\Requests;
 use App\Services\ShopService;
 use App\Http\Controllers\CommonController;
@@ -22,10 +22,14 @@ class Controller extends CommonController
    {
 	   	$this->middleware('business:business');
 	   	$this->shopService = $shopService ;
-	//	$this->user = User::where('uid','85')->first();
+		//$this->user = User::where('uid','83')->first();
    		$this->user = Auth::guard('business')->user();
-
-   		$this->shop = $this->shopService->isExistsShop(['uid' => $this->user->uid]);
+        $where = ['uid' => $this->user->uid];
+        if( Input::get('shop_id')){
+            $where['shop_id'] = Input::get('shop_id');
+        }
+   		$this->shop = $this->shopService->isExistsShop($where);
+        //var_dump(	$this->shop);exit;
         $t = time();
         $beginThisToday = mktime(0,0,0,date("m",$t),date('d',$t),date('Y',$t));
         $endThisToday = mktime(23,59,59,date("m",$t),date('d',$t),date('Y',$t));

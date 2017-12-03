@@ -306,6 +306,7 @@ Route::post('business/orderInfo/checkPickCode','ShopAdmin\OrderInfoController@ch
 Route::post('business/orderInfo/revokeShipping','ShopAdmin\OrderInfoController@revokeShipping');
 Route::get('business/user/getUser', 'ShopAdmin\UserController@getUser');
 Route::get('business/user/getShop', 'ShopAdmin\UserController@getShop');
+Route::get('business/user/getShops', 'ShopAdmin\UserController@getUserShops');
 Route::post('business/shop/updateShop', 'ShopAdmin\UserController@updateShop');
 Route::post('business/shop/uploadShopImage','ShopAdmin\UserController@uploadShopImage');
 

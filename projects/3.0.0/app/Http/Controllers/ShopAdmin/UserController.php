@@ -36,6 +36,15 @@ class UserController extends Controller
 			'shop' => $this->shop
 		];
 	}
+    public function getUserShops ()
+	{
+        $shops = \App\Shop::where(['uid' => $this->user->uid])->get();
+        return [
+			'code' => 200,
+            'shop_count' => $shops->count(),
+			'shops' => $shops
+		];
+	}
     public function updateShop (Request $request)
 	{
 		$rules = [
