@@ -111,7 +111,7 @@ class ShopController extends Controller
     {
 	    $rules = [
 			'page' => 'required',
-			'type' => 'sometimes|in:1,2,3',
+			//'type' => 'sometimes|in:1,2,3',
 			'token' => 'sometimes|required|string',
 	    ];
 	    $this->helpService->validateParameter($rules);

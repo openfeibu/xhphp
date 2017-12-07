@@ -26,22 +26,16 @@ class OrderRepository
 	 */
 	public function getOrderList($page,$type)
 	{
-
-        /*return Order::join('user', 'order.owner_id', '=', 'user.uid')
-                    ->select(DB::raw('order.oid,order.order_id, user.openid, user.nickname, user.avatar_url, order.destination, order.description, order.fee, order.created_at'))
-                    ->where('order.status', 'new')
-                    ->where('order.created_at', '>', date('Y-m-d H:i:s',strtotime("-1 day")))
-                    ->orderBy('order.created_at', 'desc')
-                    ->skip(10 * $page - 10)
-                    ->take(10)
-                    ->get();*/
         $orders = Order::join('user', 'order.owner_id', '=', 'user.uid')
-                    ->select(DB::raw('order.oid,order.order_id,order.owner_id,order.courier_id, user.openid, user.nickname, user.avatar_url, order.type,order.destination, order.description, order.fee, order.total_fee,order.goods_fee, order.created_at ,order.status, CASE order.status WHEN "new" THEN 1 WHEN "accepted" THEN 2 WHEN "cancelling" THEN 3 WHEN "finish" THEN 4 WHEN "completed" THEN 5 WHEN "cancelled" THEN 6 END as order_status_num'))
+                    ->select(DB::raw('order.oid,order.order_id,order.owner_id,order.courier_id, user.openid, user.nickname, user.avatar_url, order.type,order.destination, order.description, order.fee, order.total_fee,order.goods_fee, order.created_at ,order.status, CASE order.status WHEN "new" THEN 1 ELSE 2 END as order_status_num,order.type'))
                     ->whereIn('order.status', ['new','accepted','finish','completed']);
         if(!empty($type) && $type != 'all'){
-	        $orders = $orders->where('type',$type);
+			$types = explode(',',$type);
+	        $orders = $orders->whereIn('type',$types);
 	    }
-	    return $orders->orderBy('order.created_at', 'desc')
+	    return $orders
+					->orderBy('order_status_num','asc')
+					->orderBy('order.created_at', 'desc')
                     ->skip(20 * $page - 20)
                     ->take(20)
                     ->get();
