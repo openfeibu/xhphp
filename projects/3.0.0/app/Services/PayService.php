@@ -15,6 +15,7 @@ use App\Services\SMSService;
 use EasyWeChat\Foundation\Application;
 use EasyWeChat\Payment\Order;
 use App\Services\OrderService;
+use App\Services\GameService;
 
 class PayService
 {
@@ -32,6 +33,7 @@ class PayService
 								WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
 								OrderInfoService $orderInfoService,
+								GameService $gameService,
 								OrderService $orderService)
 	{
 		$this->userService = $userService;
@@ -41,7 +43,7 @@ class PayService
 	 	$this->orderInfoService = $orderInfoService;
 	 	$this->smsService = $smsService;
 		$this->orderService = $orderService;
-
+		$this->gameService = $gameService;
 	}
 	/**
 		* 支付处理
@@ -132,6 +134,7 @@ class PayService
 		    		);
 					$this->tradeAccountService->addThradeAccount($trade);
 					$this->orderService->updateOrderStatusNew($data['order_sn']);
+					$this->gameService->OrderCoupon($this->user->uid);
 					return '支付成功';
 		        }else{
 		        	throw new \App\Exceptions\Custom\OutputServerMessageException('支付失败');

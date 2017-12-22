@@ -196,7 +196,6 @@ class OrderInfoController extends Controller
     	];
     	$this->helpService->validateParameter($rules);
 
-
 		$order_info = $this->orderInfoService->sellerCheckRefund($request->order_id,$this->shop->shop_id);
 
 		$user = $this->userService->getUserByUserID($order_info->uid);

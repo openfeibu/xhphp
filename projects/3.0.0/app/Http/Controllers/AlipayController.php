@@ -18,6 +18,7 @@ use App\Services\TelecomService;
 use App\Services\OrderInfoService;
 use App\Services\SMSService;
 use App\Services\ShopService;
+use App\Services\GameService;
 use EasyWeChat\Foundation\Application;
 
 class AlipayController extends Controller
@@ -43,6 +44,7 @@ class AlipayController extends Controller
                          		WalletService $walletService,
                          		TradeAccountService $tradeAccountService,
                          		OrderInfoService $orderInfoService,
+								GameService $gameService,
                          		TelecomService $telecomService){
 	    parent::__construct();
 		$this->orderService = $orderService;
@@ -54,6 +56,7 @@ class AlipayController extends Controller
         $this->telecomService = $telecomService;
         $this->shopService = $shopService ;
         $this->orderInfoService = $orderInfoService;
+		$this->gameService = $gameService;
 	}
 	 public function alipayAppNotify ()
     {
@@ -278,6 +281,7 @@ class AlipayController extends Controller
 				'trade_status' => 'success',
 				'description' => '发布任务' ,
 			);
+			$this->gameService->OrderCoupon($order->owner_id);
 		}else if($type == 'TP'){
 			$this->telecomService->updateTelecomTemOrder($out_trade_no,array('pay_status'=>1,'trade_no'=>$trade_no));
 			$telecomOrder = $this->telecomService->getTelecomOrderByNo($out_trade_no);

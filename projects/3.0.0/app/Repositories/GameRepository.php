@@ -28,6 +28,12 @@ class GameRepository
 	{
 		return GameUserCount::where($where)->first();
 	}
+	public function getGameTodayUserCount($where)
+	{
+		$start_time = date('Y-m-d')." 00:00:00";
+		$end_time = date('Y-m-d')." 23:59:59";
+		return GameUserCount::where($where)->whereBetween('lasttime',[$start_time,$end_time])->first();
+	}
 	public function getCouponPrizes()
 	{
 		return GameCouponPrize::select(DB::raw('coupon.*,game_coupon_prize.prize_id,game_coupon_prize.prize_value'))

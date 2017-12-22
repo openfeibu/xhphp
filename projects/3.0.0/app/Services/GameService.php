@@ -13,6 +13,7 @@ use App\Services\MessageService;
 use App\Services\PushService;
 use App\Services\TradeAccountService;
 use App\Services\WalletService;
+use App\Services\CouponService;
 use DB;
 
 class GameService
@@ -35,6 +36,7 @@ class GameService
                          HelpService $helpService,
                          OrderService $orderService,
 						 MessageService $messageService,
+						 CouponService $couponService,
 						 PushService $pushService)
 	{
 		$this->orderService = $orderService;
@@ -44,6 +46,7 @@ class GameService
 		$this->walletService = $walletService;
 		$this->pushService = $pushService;
         $this->tradeAccountService = $tradeAccountService;
+		$this->couponService = $couponService;
 	}
 	public function freeOrder ($user,$order)
 	{
@@ -84,6 +87,33 @@ class GameService
 			Game::where('id',$game->id)->increment('count');
 		}
 	}
+	public function OrderCoupon ($uid)
+	{
+		$game = $this->checkGameNoThrow(['name' => 'order_coupon']);
+		if($game)
+		{
+			$game_user_count = $this->getGameTodayUserCount(['uid' => $uid,'game_id' => $game->id]);
+			if(!$game_user_count)
+			{
+				$this->couponService->createUserCoupon([
+					'uid' => $uid,
+					'overdue' => date("Y-m-d H:i:s",strtotime("+1week",time())) ,
+					'receive' => dtime(),
+					'status' => 'unused',
+					'min_price' => 1,
+					'price' => 1,
+				]);
+				$this->createGameUserCount([
+					'uid' => $uid,
+					'game_id' => $game->id,
+			        'num' => 1,
+			        'count' => 1,
+			        'lasttime' => dtime(),
+			        'share_num' => 0,
+				]);
+			}
+		}
+	}
 	public function checkStatus ($name)
 	{
 		$game = $this->gameRepository->getGame(['name' => $name]);
@@ -107,9 +137,26 @@ class GameService
 		}
 		return $game;
 	}
+	public function checkGameNoThrow($where){
+		$game = $this->gameRepository->getGame($where);
+		$time = time();
+		if($game->status !=1 || $time < strtotime($game->starttime))
+		{
+			 return false;
+		}
+		if($time > strtotime($game->endtime))
+		{
+			return false;
+		}
+		return $game;
+	}
 	public function getGameUserCount($where)
 	{
 		return $this->gameRepository->getGameUserCount($where);
+	}
+	public function getGameTodayUserCount($where)
+	{
+		return $this->gameRepository->getGameTodayUserCount($where);
 	}
 	/*获取所有奖项*/
 	public function getCouponPrizes()

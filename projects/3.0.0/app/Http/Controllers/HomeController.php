@@ -11,15 +11,19 @@ use App\Advertisement;
 use App\Recommend;
 use App\Http\Requests;
 use App\Services\GoodsService;
+use App\Services\GameService;
+use App\Services\UserService;
 use App\Http\Controllers\Controller;
 
 
 class HomeController extends Controller
 {
-	public function __construct (GoodsService $goodsService)
+	public function __construct (GoodsService $goodsService,UserService $userService,GameService $gameService)
 	{
 		parent::__construct();
 		$this->goodsService = $goodsService ;
+		$this->gameService = $gameService;
+		$this->userService = $userService;
 	}
 	public function index ()
 	{
