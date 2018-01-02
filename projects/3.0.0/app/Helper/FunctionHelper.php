@@ -246,7 +246,7 @@ if(!function_exists('friendlyDate')){
 	    //sTime=源时间，cTime=当前时间，dTime=时间差
 	    $cTime = time();
 	    $dTime = $cTime - $sTime;
-	    $dDay = intval(date('z', $cTime)) - intval(date('z', $sTime));
+	    $dDay = ceil($dTime/3600/24);
 	    //$dDay     =   intval($dTime/3600/24);
 	    $dYear = intval(date('Y', $cTime)) - intval(date('Y', $sTime));
 	    //normal：n秒前，n分钟前，n小时前，日期
