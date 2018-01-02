@@ -236,7 +236,7 @@ if(!function_exists('handle_alipay_parameter'))
  * @return string
  */
 if(!function_exists('friendlyDate')){
-	function friendlyDate($sTime, $type = 'normal', $alt = 'false')
+	function friendlyDate($sTime, $type = 'mohu', $alt = 'false')
 	{
 	    if (!$sTime) {
 	        return '';
