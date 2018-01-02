@@ -236,7 +236,7 @@ if(!function_exists('handle_alipay_parameter'))
  * @return string
  */
 if(!function_exists('friendlyDate')){
-	function friendlyDate($sTime, $type = 'mohu', $alt = 'false')
+	function friendlyDate($sTime, $type = 'normal', $alt = 'false')
 	{
 	    if (!$sTime) {
 	        return '';
@@ -315,6 +315,7 @@ if(!function_exists('friendlyDate')){
 	        } elseif ($dDay > 30) {
 	            return intval($dDay / 30).'个月前';
 	        }
+			var_dump($dDay);exit;
 	        //full: Y-m-d , H:i:s
 	    } elseif ($type == 'full') {
 	        return date('Y-m-d , H:i:s', $sTime);
